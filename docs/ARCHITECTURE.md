@@ -71,7 +71,7 @@ A Godot `Node` can host an Estragon root, expose state to a Godot scene or bridg
 
 ## What is actually implemented today?
 
-- Strict standard-library Python Gogo XML parser.
+- Strict TypeScript Gogo XML parser executed at build time by Bun.
 - Tiny, versioned JSON IR: `View` root + absolute-positioned `Rect` leaves.
 - A checked-in sample IR and a Godot host `Node` that submits rectangles through `RenderingServer.canvas_item_add_rect()`.
 - Compiler unit tests and GitHub Actions test runner.

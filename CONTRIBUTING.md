@@ -13,11 +13,12 @@ Estragon is at an experimental design and scaffold stage. Read [VISION.md](docs/
 ## Development
 
 ```sh
-python3 tools/gogo.py examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
-python3 -m unittest discover -s tests -v
+bun install --frozen-lockfile
+bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
+bun run check
 ```
 
-When changing Gogo, update the language specification, examples, golden IR and tests. When changing graphics behavior, document the backend assumptions and add reproducible smoke-test steps. CI currently covers only the Python compiler.
+When changing Gogo, update the language specification, examples, golden IR and tests. When changing graphics behavior, document the backend assumptions and add reproducible smoke-test steps. CI typechecks the TypeScript tooling, runs Bun compiler tests, and checks generated IR. It does not run Godot.
 
 Pull requests should explain intent, changes, verification, compatibility and whether an architecture decision is affected. Keep speculative features in issues/docs until a functioning prototype demonstrates their viability.
 
