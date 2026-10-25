@@ -23,4 +23,4 @@ Pull requests should explain intent, changes, verification, compatibility and wh
 
 ## License
 
-Estragon is licensed under the [MIT License](LICENSE). By contributing, you agree that your contributions will be distributed under this license. Please do not submit third-party assets, fonts, or source files without confirming redistribution rights.
+Estragon is licensed under the [MIT License](LICENSE). By contributing, you agree that your contributions will be distributed under this license. Please do not submit third-party assets or source files without confirming redistribution rights.

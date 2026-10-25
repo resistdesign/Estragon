@@ -36,7 +36,7 @@ Favor Godot's editable text-file workflow plus editor plugin first; do not conve
 
 **Status: accepted. 2026-10-25.**
 
-Estragon is distributed under the [MIT License](../LICENSE). Third-party assets retain their own permissions. The original [`LondonTwo.ttf`](../Assets/Fonts/LondonTwo.ttf) font by François Bruel is included unchanged under his separate free-use and free-redistribution terms (not MIT); it must not be sold separately. The earlier decision to omit it based only on an embedded “All rights reserved” notice was incorrect.
+Estragon is distributed under the [MIT License](../LICENSE).
 
 ## Unresolved, intentionally not invented
 
