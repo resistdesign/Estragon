@@ -5,12 +5,10 @@
 export.cfg
 export_presets.cfg
 
-# Python
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.venv/
-*.egg-info/
+# Bun / TypeScript tooling
+node_modules/
+*.tsbuildinfo
+coverage/
 
 # Local tooling / OS
 .idea/
