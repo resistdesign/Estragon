@@ -59,7 +59,7 @@ def _number(element: ET.Element, name: str, default: float | None = None,
     if raw is None:
         if default is None:
             raise GogoError(f"<{_tag_name(element)}> requires '{name}'")
-        value = default
+        value = float(default)
     else:
         try:
             value = float(raw)
