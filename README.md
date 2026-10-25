@@ -44,4 +44,4 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 - **Gogo:** the declarative UI language and compiler; files end in `.gogo`
 - **Godot:** the host engine, not the component library
 
-This project is at the prototype stage; all syntax not explicitly described as supported is a **proposal**, not a working feature. Estragon is released under the [MIT License](LICENSE). See [Assets](Assets/README.md) for the original logo files.
+This project is at the prototype stage; all syntax not explicitly described as supported is a **proposal**, not a working feature. Estragon is released under the [MIT License](LICENSE). See [Assets](Assets/) for the original logo files.
