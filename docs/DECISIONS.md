@@ -32,9 +32,14 @@ Prefer a compiler-assisted extended GDScript source format (working extension `.
 
 Favor Godot's editable text-file workflow plus editor plugin first; do not convert Gogo source to a `.tscn` tree. Later, add semantic editing, build integration and a preview backed by the actual Estragon renderer.
 
+## ADR-0006 — Project license
+
+**Status: accepted. 2026-10-25.**
+
+Estragon is distributed under the [MIT License](../LICENSE). Do not distribute third-party fonts or other assets without confirming their separate rights. The source design uses letter shapes associated with LondonTwo, but the uploaded font binary is not distributed in this repository because its embedded notice says 'All rights reserved.'
+
 ## Unresolved, intentionally not invented
 
-- **License:** no license has been selected; the repository is public but unlicensed at present.
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.
 - **Source language for reactive scripts:** `.bgd` proposal vs alternative compiler frontend.
 - **Gogo language:** XML shape, component tags, style/event syntax, expression grammar and interoperability.

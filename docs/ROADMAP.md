@@ -11,7 +11,7 @@ All milestone statuses below describe *project work*, not a claim of features av
 - [x] Establish compiler tests and CI configuration.
 - [x] Capture architecture, binding and editor strategy.
 - [ ] Verify Godot demo visually on supported desktop platforms.
-- [ ] Select and document a project license.
+- [x] Select and document a project license (MIT; see [LICENSE](../LICENSE)).
 
 ## P1 — Independent component runtime
 
