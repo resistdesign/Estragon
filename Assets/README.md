@@ -4,13 +4,12 @@ Original logo files contributed by the project owner, preserved without alterati
 
 | File | Format | Intended use |
 | --- | --- | --- |
-| [Estragon Centered Logo.png](Estragon%20Centered%20Logo.png) | PNG (531 × 531) | Raster export, centered lockup |
 | [Estragon Centered Logo.svg](Estragon%20Centered%20Logo.svg) | SVG | Vector centered lockup |
 | [Estragon Horizontal Logo Black.svg](Estragon%20Horizontal%20Logo%20Black.svg) | SVG | Horizontal black lockup, light backgrounds |
 | [Estragon Horizontal Logo White.svg](Estragon%20Horizontal%20Logo%20White.svg) | SVG | Horizontal white lockup, dark backgrounds |
 | [Estragon Logo.vectorcraft](Estragon%20Logo.vectorcraft) | VectorCraft native document | Original editable design source |
 
-These are the uploaded originals, including the editable VectorCraft project and its SVG exports. Do not assume the VectorCraft file format is compatible with other design programs.
+These are the uploaded original vector files, including the editable VectorCraft project and its SVG exports. The separately supplied centered PNG export is **not included in this PR** because its binary upload could not be completed; no substituted raster has been committed. Do not assume the VectorCraft file format is compatible with other design programs.
 
 ## Font
 
