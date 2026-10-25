@@ -36,7 +36,7 @@ Favor Godot's editable text-file workflow plus editor plugin first; do not conve
 
 **Status: accepted. 2026-10-25.**
 
-Estragon is distributed under the [MIT License](../LICENSE). Third-party assets retain their own permissions. The logo uses **LondonTwo by François Bruel**; the author permits use and free redistribution of his London font provided the font is not sold (see [author notes](https://fontspy.com/fonts/london.font)). The earlier decision to exclude the supplied font based only on its embedded “All rights reserved” notice was overly restrictive. The binary is not currently bundled; the outlined logo files work without it. See [Assets/README.md](../Assets/README.md).
+Estragon is distributed under the [MIT License](../LICENSE). Third-party assets retain their own permissions. The original [`LondonTwo.ttf`](../Assets/Fonts/LondonTwo.ttf) font by François Bruel is included unchanged under his separate free-use and free-redistribution terms (not MIT); it must not be sold separately. The earlier decision to omit it based only on an embedded “All rights reserved” notice was incorrect. See [Assets/README.md](../Assets/README.md).
 
 ## Unresolved, intentionally not invented
 
