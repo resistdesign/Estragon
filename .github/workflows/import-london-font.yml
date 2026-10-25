@@ -1,0 +1,49 @@
+name: Import LondonTwo font
+on:
+  push:
+    branches:
+      - chore/logo-assets-mit-license
+    paths:
+      - .github/workflows/import-london-font.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import-font:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch and verify original LondonTwo.ttf
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 3 --connect-timeout 20 --max-time 90 'https://dl.dafont.com/dl/?f=london_between' -o /tmp/london-font.zip
+          python3 - <<'PY'
+          import hashlib
+          from pathlib import Path
+          from zipfile import ZipFile
+          expected = "7f3f89a71a9e95f47b92a8bdb29ab185ebb89a672497f9c17aa3943008b168fe"
+          with ZipFile("/tmp/london-font.zip") as archive:
+              candidates = [name for name in archive.namelist() if name.split("/")[-1] == "LondonTwo.ttf"]
+              if len(candidates) != 1:
+                  raise RuntimeError("Expected exactly one LondonTwo.ttf in the official package")
+              data = archive.read(candidates[0])
+          digest = hashlib.sha256(data).hexdigest()
+          if digest != expected or len(data) != 32092:
+              raise RuntimeError("Official download differs from the user-supplied LondonTwo.ttf: " + digest)
+          dest = Path("Assets/Fonts/LondonTwo.ttf")
+          dest.parent.mkdir(parents=True, exist_ok=True)
+          dest.write_bytes(data)
+          print("Verified original LondonTwo.ttf:", len(data), "bytes", digest)
+          PY
+      - name: Commit original font into pull request branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Assets/Fonts/LondonTwo.ttf
+          git diff --cached --quiet && exit 0
+          git commit -m "assets: add verified LondonTwo TrueType font"
+          git push origin HEAD:chore/logo-assets-mit-license
