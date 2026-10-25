@@ -21,6 +21,6 @@ When changing Gogo, update the language specification, examples, golden IR and t
 
 Pull requests should explain intent, changes, verification, compatibility and whether an architecture decision is affected. Keep speculative features in issues/docs until a functioning prototype demonstrates their viability.
 
-## Licensing status
+## License
 
-The project has **not yet chosen a license**. Public source availability does not grant an open-source license. A license decision is a prerequisite for establishing normal external contribution expectations; please discuss significant outside contributions with the maintainers until that is resolved.
+Estragon is licensed under the [MIT License](LICENSE). By contributing, you agree that your contributions will be distributed under this license. Please do not submit third-party assets or source files without confirming redistribution rights.
