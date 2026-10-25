@@ -14,10 +14,12 @@ These are the uploaded originals, including the editable VectorCraft project, it
 
 ## Font
 
-The original design uses **LondonTwo**, one of François Bruel's three London typefaces. It is available from the [author's London font listing on DaFont](https://www.dafont.com/london-between.font) and is listed there as **100% Free**. The author's original notes explicitly permit using and distributing the font at no charge; see [the published README excerpt](https://fontspy.com/fonts/london.font) and [the author's commercial-use clarification](https://www.dafont.com/font-comment.php?file=london_between&fpp=200). The embedded “All rights reserved” copyright notice identifies the author and is not, by itself, a prohibition on use.
+The original logo uses **LondonTwo** by François Bruel. The exact, unmodified TrueType font supplied by the project owner is included as [`Fonts/LondonTwo.ttf`](Fonts/LondonTwo.ttf), so the original VectorCraft design can be edited without a separate font download.
 
-The font binary is **not bundled in this repository**. The SVG exports contain outlined letterforms, so they display correctly without an installed font. To edit text objects in the original VectorCraft project, obtain LondonTwo from its distribution page.
+François Bruel permits free use and redistribution of the London family, provided the font itself is not sold. The font retains his copyright and **is not relicensed under Estragon's MIT License**. See [the font attribution](Fonts/README.md).
+
+The SVG logo exports contain outlined letters and do not require the font to display.
 
 ## Licensing
 
-Estragon is [MIT licensed](../LICENSE). **LondonTwo is a separate François Bruel work**, offered under the author's free-use/free-redistribution terms (provided it is not sold separately), not the Estragon MIT license. Preserve attribution if distributing a copy. Verify the rights of other third-party assets independently.
+Estragon's framework code is [MIT licensed](../LICENSE). The included LondonTwo font remains separately copyrighted by François Bruel and is distributed under his free-use and free-redistribution terms. Verify other third-party assets' rights before adding them.
