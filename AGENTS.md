@@ -31,10 +31,10 @@ The current host reads precompiled IR and renders fixed rectangles directly. The
 
 **Implemented:**
 
-- `tools/gogo.py`: Python 3.10+ standard-library-only, strict XML-shaped Gogo parser and deterministic JSON IR compiler.
+- `tools/gogo.ts`: strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun.
 - A `View` document root containing zero or more `Rect` leaves at explicit canvas coordinates; no nested containers or component registry.
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
-- A checked-in Gogo example plus generated IR, Python `unittest` coverage, and GitHub Actions compiler checks.
+- A checked-in Gogo example plus generated IR, Bun test coverage, strict TypeScript typechecking, and GitHub Actions compiler checks.
 - An optional editor plugin that registers `.gogo` as an editable text extension.
 
 **Not implemented:**
@@ -49,8 +49,8 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 
 | Path | Responsibility |
 | --- | --- |
-| `tools/gogo.py` | Source parsing, strict validation, canonical IR generation, CLI |
-| `tests/test_gogo.py` | Compiler behavior, negative cases, and checked-in example consistency |
+| `tools/gogo.ts` | Source parsing, strict validation, canonical IR generation, CLI |
+| `tests/gogo.test.ts` | Compiler behavior, negative cases, and checked-in example consistency |
 | `examples/hello/Main.gogo` | Authoritative source for the stage-0 demo |
 | `examples/hello/generated/Main.gogo.json` | Generated, versioned example IR; checked into Git |
 | `addons/estragon/runtime/gogo_view.gd` | Experimental Godot host and low-level drawing |
@@ -69,7 +69,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 2. **Classify the work.** Is this a change to the implemented stage-0 contract, an experiment, or a proposed future capability? Say which; do not collapse those categories.
 3. **Make the smallest coherent change.** Follow the user's actual request. Avoid unrelated refactors, speculative scaffolding, extra documentation, dependency churn, or changes to supplied assets.
 4. **Preserve a working vertical slice.** Source, compiled IR, Godot consumer, tests, and docs must agree whenever their shared contract changes.
-5. **Verify and report accurately.** Run the relevant checks; name checks you could not run. Never say a Godot runtime behavior was tested when only Python tests ran.
+5. **Verify and report accurately.** Run the relevant checks; name checks you could not run. Never say a Godot runtime behavior was tested when only compiler tests ran.
 
 Use ordinary engineering judgment for routine implementation details. Surface genuinely undecided architectural choices rather than assuming approval for a new language, backend, engine fork, or incompatible IR format.
 
@@ -90,11 +90,11 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Gogo compiler and language
 
-- Work in `tools/gogo.py` and `tests/test_gogo.py`; keep the compiler independent of the running Godot editor.
+- Work in `tools/gogo.ts` and `tests/gogo.test.ts`; keep the compiler independent of the running Godot editor.
 - Preserve strict schema/type validation and deterministic output. Test both valid examples and malformed/unsupported input.
-- Keep Python dependencies in the standard library unless a task demonstrably requires more; follow the existing typed/helper-based style.
+- Prefer minimal, pinned dependencies; use strict TypeScript types and a real namespace-aware XML parser. Keep the compiler independent of Godot.
 - For syntax changes, update `docs/GOGO_LANGUAGE.md`, any example `.gogo`, and checked-in generated IR. Mark proposed syntax as non-executable until it actually compiles.
-- Do not implement expressions with Python `eval`, ad-hoc string substitution, or regex rewriting of GDScript. Parser/source-location and type semantics matter.
+- Do not implement expressions with JavaScript `eval`, `new Function`, ad-hoc string substitution, or regex rewriting of GDScript. Parser/source-location and type semantics matter.
 
 ### Runtime, components, and rendering
 
@@ -127,23 +127,24 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ## Verification commands (repository root)
 
-Python 3.10+ is required; CI uses Python 3.11. The present automated checks do **not** require Godot:
+Bun 1.4.4 runs the TypeScript compiler and tests. The present automated checks do **not** require Godot:
 
 ```sh
-python3 -m unittest discover -s tests -v
-python3 tools/gogo.py examples/hello/Main.gogo --output /tmp/Main.gogo.json
-diff -u examples/hello/generated/Main.gogo.json /tmp/Main.gogo.json
+bun install --frozen-lockfile
+bun run typecheck
+bun run test
+bun run verify:ir
 ```
 
 When intentionally changing the example, regenerate the committed IR from its source, then rerun the checks:
 
 ```sh
-python3 tools/gogo.py examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
+bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
 ```
 
 For Godot-facing changes, also perform or explicitly request a **manual Godot 4.x visual smoke check**: open the root `project.godot`, run `examples/hello/Hello.tscn`, confirm the dark background, purple block, and teal stripe, and inspect the remote scene tree for one Estragon host rather than per-element widgets. If you cannot run Godot, say **not tested** rather than claiming success.
 
-GitHub Actions (`.github/workflows/ci.yml`) runs the Python unit suite and verifies the example IR is up to date; it does **not** run Godot or certify visuals.
+GitHub Actions (`.github/workflows/ci.yml`) typechecks TypeScript, runs Bun tests, and verifies the example IR is up to date; it does **not** run Godot or certify visuals.
 
 ## Definition of done / PR hygiene
 
