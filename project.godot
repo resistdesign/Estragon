@@ -1,0 +1,16 @@
+; Estragon development and proof-of-concept project.
+; Godot hosts one renderer Node. Gogo components are NOT Godot UI nodes.
+config_version=5
+
+[application]
+config/name="Estragon (prototype)"
+run/main_scene="res://examples/hello/Hello.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+
+[display]
+window/size/viewport_width=960
+window/size/viewport_height=540
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
