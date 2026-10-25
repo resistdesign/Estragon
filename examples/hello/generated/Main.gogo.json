@@ -1,0 +1,47 @@
+{
+  "format": "estragon.gogo.ir",
+  "root": {
+    "children": [
+      {
+        "id": "background",
+        "props": {
+          "fill": "#131725ff",
+          "height": 540,
+          "width": 960,
+          "x": 0,
+          "y": 0
+        },
+        "type": "Rect"
+      },
+      {
+        "id": "accent",
+        "props": {
+          "fill": "#8566e0ff",
+          "height": 128,
+          "width": 480,
+          "x": 48,
+          "y": 48
+        },
+        "type": "Rect"
+      },
+      {
+        "id": "highlight",
+        "props": {
+          "fill": "#65dccbff",
+          "height": 14,
+          "width": 660,
+          "x": 48,
+          "y": 198
+        },
+        "type": "Rect"
+      }
+    ],
+    "id": "main",
+    "props": {
+      "height": 540,
+      "width": 960
+    },
+    "type": "View"
+  },
+  "version": 1
+}

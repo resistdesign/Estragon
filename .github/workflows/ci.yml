@@ -1,0 +1,20 @@
+name: Compiler checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  gogo-compiler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Check committed example IR matches source
+        run: |
+          python3 tools/gogo.py examples/hello/Main.gogo --output /tmp/Main.gogo.json
+          diff -u examples/hello/generated/Main.gogo.json /tmp/Main.gogo.json
