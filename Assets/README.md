@@ -14,8 +14,10 @@ These are the uploaded originals, including the editable VectorCraft project, it
 
 ## Font
 
-The original design uses **LondonTwo**. A font file was supplied separately, but it is **not** included here: the file's embedded copyright notice says **“Copyright © 2000, francois Bruel. All rights reserved.”** The SVG logos contain vector outlines and do not require a font file to display. To edit text objects in the native project, editors may need to obtain the font through an authorized source.
+The original design uses **LondonTwo**, one of François Bruel's three London typefaces. It is available from the [author's London font listing on DaFont](https://www.dafont.com/london-between.font) and is listed there as **100% Free**. The author's original notes explicitly permit using and distributing the font at no charge; see [the published README excerpt](https://fontspy.com/fonts/london.font) and [the author's commercial-use clarification](https://www.dafont.com/font-comment.php?file=london_between&fpp=200). The embedded “All rights reserved” copyright notice identifies the author and is not, by itself, a prohibition on use.
+
+The font binary is **not bundled in this repository**. The SVG exports contain outlined letterforms, so they display correctly without an installed font. To edit text objects in the original VectorCraft project, obtain LondonTwo from its distribution page.
 
 ## Licensing
 
-Estragon is [MIT licensed](../LICENSE). The font software is **not** part of the repository or its MIT grant. If adding other third-party assets later, verify their licenses separately.
+Estragon is [MIT licensed](../LICENSE). **LondonTwo is a separate François Bruel work**, offered under the author's free-use/free-redistribution terms (provided it is not sold separately), not the Estragon MIT license. Preserve attribution if distributing a copy. Verify the rights of other third-party assets independently.
