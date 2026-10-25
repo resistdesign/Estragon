@@ -16,7 +16,7 @@ These are the uploaded originals, including the editable VectorCraft project, it
 
 The original logo uses **LondonTwo** by François Bruel. The exact, unmodified TrueType font supplied by the project owner is included as [`Fonts/LondonTwo.ttf`](Fonts/LondonTwo.ttf), so the original VectorCraft design can be edited without a separate font download.
 
-François Bruel permits free use and redistribution of the London family, provided the font itself is not sold. The font retains his copyright and **is not relicensed under Estragon's MIT License**..
+François Bruel permits free use and redistribution of the London family, provided the font itself is not sold. The font retains his copyright and **is not relicensed under Estragon's MIT License**.
 
 The SVG logo exports contain outlined letters and do not require the font to display.
 
