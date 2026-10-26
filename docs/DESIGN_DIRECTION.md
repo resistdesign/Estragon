@@ -2,7 +2,7 @@
 
 **Status:** Product direction captured 2026-10-26. **Not implemented.** The existing JSON-based demo is a disposable stage-0 prototype, not the intended production architecture.
 
-This document records the next design direction. It is **not** a declaration that the listed language features, Godot integrations, or runtime classes already exist. It preserves genuine implementation questions, especially native-looking annotations and mixed-language authoring.
+This document records the target developer experience: **Gogo should feel like TSX, using GDScript as its programming language.** This is **not** a claim that its language features or Godot integrations already work. Exact grammar, editor integration, and new annotations in ordinary `.gd` files need prototypes.
 
 ## The central correction: compile Gogo to GDScript
 
@@ -121,7 +121,7 @@ Gogo should generate construction, typed references, property assignments and ev
 The addon should make `.gogo` a real authoring language, not merely an extension displayed as plain text.
 
 - Reliable file discovery, opening, and syntax coloring in Godot **4.7**.
-- Highlight XML tags/namespaces, Estragon component/property names, bindings, events, and embedded code where applicable.
+- Highlight XML-like component tags, GDScript code, typed expression props, bindings, events and mixed language regions.
 - Context-aware component/property/event completion, navigate-to-definition, and diagnostics that point back to original `.gogo` lines and columns.
 - Save/build/run integration that regenerates GDScript and blocks runs on meaningful compile errors; never silently execute stale output after a failed build.
 - Preview uses the **real Estragon renderer**, not Godot's `Control` UI system.
@@ -182,29 +182,44 @@ These are **Estragon** classes, not Godot's `Control`/`Container` widgets. Godot
 
 Layout must work with nested components and changing viewport sizes; it cannot be a series of hard-coded absolute positions. Source code generation and component-runtime development should progress together so the compiler has real target APIs.
 
-## Mixing Gogo and GDScript: keep both possibilities open
+## Mixing Gogo and GDScript: one language experience
 
-Rejecting mixed markup/code out of hand would discard an important part of the Flex authoring experience. **Treat mixed-language authoring as a design question to prototype, not an impossibility or an already-decided grammar.**
+**Preferred primary model: a single authored `.gogo` file with TSX-like GDScript-and-markup composition.** This is more ambitious than MXML's `<Script>` blocks and closer to how developers expect UI and code to interact.
 
-**Option A — inline script blocks:** an MXML-style Gogo element containing GDScript, with CDATA for XML escaping. Example (illustrative only):
+~~~text
+# View.gogo — PROPOSED; not valid stock GDScript or current Gogo.
+extends VBox
 
-~~~xml
-<g:VBox xmlns:g="urn:estragon:gogo:1">
-    <g:Script><![CDATA[
-        var clicks: int = 0
+var title: String = "Hello"
 
-        func on_press() -> void:
-            clicks += 1
-    ]]></g:Script>
-    <g:Button label="Press" click="on_press" />
-</g:VBox>
+func make_heading() -> DisplayObject:
+    return <Text value={title} />
+
+func render() -> DisplayObject:
+    return <VBox gap={8}>{make_heading()}</VBox>
 ~~~
 
-This lets a Gogo document define its own behavior, but requires GDScript-aware parsing/validation, indentation handling, scope/hygiene rules, generated member collision checks, syntax highlighting within CDATA, and source maps for compiler/debugger errors.
+Implications:
 
-**Option B — code-behind:** a `.gogo` view paired with a user-maintained `.gd` class/script. The Gogo compiler generates only what it owns and wires the view to explicit methods and model properties. Determine how the pairing maps to Godot's single-inheritance/script-loading model and how generated code remains separate from authored code.
+- **Code-first composition:** variables, methods, conditionals, model references and callbacks are ordinary-looking GDScript. Markup is a component expression usable from a function.
+- **Coordinated parsing:** the compiler must parse GDScript-shaped code, XML-like nested markup, and braces for expression values. The existing XML-only parser is not sufficient; Godot cannot directly parse the untranspiled hybrid.
+- **Type information across languages:** validate component identifiers, props, children, signal signatures and references. Generate valid GDScript without stringly typed event dispatch.
+- **Editor support:** mixed syntax highlighting, completion, diagnostics, code navigation and source maps that understand both languages.
+- **Generated code is implementation detail:** source remains `.gogo` and generated `.gd` is never edited by hand. Keep generated artifacts deterministic, debuggable and distinct from authored sources.
 
-Both could be supported; prototype the smallest useful example of each and compare editability, hot reload, class design, debugging, and source mapping. A mixed editor must not ask users to edit generated output.
+**Optional secondary models:** markup-root shorthand for simple screens, separately authored `.gd` code-behind when useful, or an MXML-style `<Script>` block. None should be a mandatory workaround for basic event callbacks. The user-visible preference is **TSX-like interleaving**; evaluate optional alternatives after proving that experience.
+
+**Critical distinction:** `@Bindable` inside compiler-owned `.gogo` might be straightforward to transform, but `@Bindable` directly in an ordinary `.gd` file is a separate, potentially much harder integration with Godot's own parser. Do not promise either without verified compile-and-editor behavior.
+
+### Required parser/editor prototype
+
+Prototype and test three authoring cases:
+
+1. **Markup-only shorthand:** `<VBox><Text value="Hi" /></VBox>` (if supported).
+2. **GDScript plus nested markup:** a function returning `<VBox>` with a typed numeric prop, dynamic text, and a direct signal callback.
+3. **Code plus expression child:** a helper function returns `<Text>` used in braces, plus a conditional child or a repeat construct.
+
+Probe ambiguous `<` comparisons versus tags, nested braces, quotes containing angle brackets, indentation, source locations, unknown components/props, handler arity and safe generated names. A minimal runnable slice should drive the final grammar, not assumptions from HTML or MXML.
 
 ## Dependency-aware implementation sequence
 
@@ -214,7 +229,7 @@ Both could be supported; prototype the smallest useful example of each and compa
 4. **Prototype `@Bindable` feasibility:** test actual stock Godot 4.7 editor/parser behavior; decide the least intrusive sustainable authoring strategy with explicit tradeoffs.
 5. **Generate signal handlers and connections;** add typed properties, IDs, and runtime lifetime tests.
 6. **Implement binding expressions and observable state** with a dependency graph and cleanup semantics.
-7. **Prototype mixed Gogo/GDScript** (inline and code-behind) before choosing a permanent grammar; then broaden the Flex 4-style component library and authoring ergonomics.
+7. **Prototype TSX-style GDScript and markup in one `.gogo` file**, then evaluate optional markup-only shorthand and separate code-behind. Finalize the grammar from compiler and editor evidence.
 
 These tracks may overlap. A vertical slice through parser → generated GDScript → independent component → Godot renderer should guide every architectural decision.
 
@@ -227,13 +242,14 @@ The direction is realized only when a fresh project can:
 - Connect and invoke a declared event handler without manual signal wiring.
 - Demonstrate observable updates and correct disposal without per-frame polling.
 - Provide a credible solution (or clearly stated limitation) for `@Bindable` authoring in a `.gd` source file.
-- Demonstrate whether inline and/or code-behind GDScript can coexist with Gogo.
+- Demonstrate a TSX-like single-file `.gogo` source combining GDScript methods and nested markup expressions, with typed props, generated handlers and useful diagnostics; evaluate optional code-behind separately.
 - Run deterministically through the editor and through automated tests, with no runtime XML/JSON interpretation and no generated Godot UI node hierarchy.
 
 Until then, keep product aspirations and current capabilities **explicitly distinguished**.
 
 ## References for implementation research
 
+- TypeScript: [JSX expressions, component resolution and type checking](https://www.typescriptlang.org/docs/handbook/jsx.html) — syntax inspiration, not a requirement to run TypeScript in Godot.
 - Apache Flex: [MXML relationship to generated ActionScript classes, script blocks, and generated event handlers](https://flex.apache.org/doc/flex/using/flx_usingas_ua.html).
 - Apache Flex: [MXML syntax and event-property conventions](https://flex.apache.org/doc/flex/using/flx_mxmlSyntax_sy.html).
 - Godot 4.7: [EditorSyntaxHighlighter](https://docs.godotengine.org/en/4.7/classes/class_editorsyntaxhighlighter.html).
