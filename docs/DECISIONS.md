@@ -47,6 +47,29 @@ Gogo (`.gogo`) should support **XML-like component expressions directly mixed wi
 The *experience* is accepted; precise grammar, imports, binding semantics, parser architecture, editor integration, GDScript class organization, and handling `@Bindable` in ordinary `.gd` files are still open engineering decisions. See [design direction](DESIGN_DIRECTION.md).
 
 
+## ADR-0008 — Framework-owned automatic component lifecycle
+
+**Status: accepted user requirement, 2026-10-26; T03 implementation reviewed in its PR.**
+
+Application developers must not call `dispose()` during normal Estragon usage.
+A surface owns its root and renderer; unmounting/replacing a root or leaving the
+scene tree automatically cleans components, subscriptions and rendering resources.
+Container removal/replacement likewise unmounts and cleans; direct adoption into
+a new parent transfers ownership without disposal. Live surface roots cannot
+have another owner. Internal cleanup remains idempotent and terminal.
+
+This explicitly supersedes T02's manual-dispose/remove-to-detach convention.
+The user requested this correction for T03; it is not a compiler or binding change.
+Keep root/child transfer checks separate from cleanup so moving a subtree does
+not destroy it. Deterministic cleanup executes in live owners, not RefCounted
+final-deletion callbacks (calling instance cleanup there failed in Godot 4.7).
+Raw unmounted values remain reference-counted data; normal application UI is
+mounted in a surface. No Node or graphics resource per component is introduced.
+
+T03 uses deliberately narrow fixed/auto/fill sizing and stack gaps, documented
+in ARCHITECTURE. These are the first tested rules, not automatic Flex/CSS semantics;
+broader sizing/alignment remains an open future design.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.

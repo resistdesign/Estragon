@@ -49,7 +49,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T01 — Godot 4.7 validation and CI foundation
 
-**Tracking:** [issue #13](https://github.com/resistdesign/Estragon/issues/13). **Prerequisites:** none. **Next to pick up.**
+**Tracking:** [issue #13](https://github.com/resistdesign/Estragon/issues/13). **Prerequisites:** none. **Merged:** PR #15.
 
 - Add a repeatable headless Godot 4.7 project import, GDScript parse and runtime smoke-test route in CI and local documentation.
 - Prove malformed GDScript and a failing test genuinely fail the job (not just write errors to logs).
@@ -67,11 +67,12 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T03 — Responsive VBox/HBox and basic drawing
 
-**Related:** [issue #3](https://github.com/resistdesign/Estragon/issues/3). **Prerequisite:** T02.
+**Tracking:** [issue #18](https://github.com/resistdesign/Estragon/issues/18). **Related umbrella:** [issue #3](https://github.com/resistdesign/Estragon/issues/3). **Prerequisite:** T02 (merged in PR #17).
 
 - Implement minimal measured/layout behavior for nested `VBox`/`HBox`, dimensions, gaps and a rectangle primitive using Estragon component objects.
 - Adapt the existing Godot `RenderingServer` approach behind an Estragon paint/render boundary; resize the viewport and verify children relayout without Godot `Control` nodes.
 - Add deterministic layout tests and a repeatable Godot manual rendering check. Advanced text, focus, accessibility and graphics backend research are not part of this PR.
+- **User-directed T03 correction (2026-10-26, ADR-0008):** framework owners automatically clean components/resources on unmount, replacement and surface destruction; normal application code never calls disposal. Transfers between owners preserve components. Include lifecycle cleanup tests and update the T02 removal contract deliberately. This necessary integration stays within T03, without changing task dependencies.
 
 ### T04 — Minimal Gogo → GDScript transpiler
 
