@@ -6,7 +6,7 @@
 
 **Estragon is an independent, self-rendered UI engine hosted by Godot.** Its declarative language is **Gogo** (`.gogo`), inspired by the authoring ergonomics of Adobe Flex 3/4. Gogo builds *Estragon* components—not Godot widgets or scene nodes.
 
-The long-term direction is a compiler, independent retained component tree, reactive dependency graph, layout/input/paint systems, and pluggable renderer. **The present code is a stage-0 proof of concept**, not that completed stack.
+The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Its retained tree, reactivity, layout/input/paint and renderer are still planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
 
 ```text
 .gogo source → strict Gogo compiler → versioned Estragon JSON IR
@@ -14,14 +14,22 @@ The long-term direction is a compiler, independent retained component tree, reac
                          Godot host Node → RenderingServer canvas
 ```
 
-The current host reads precompiled IR and renders fixed rectangles directly. The retained runtime and display-list abstraction in the architecture documents are **planned**, not implemented.
+The current host reads **temporary JSON IR** and renders fixed rectangles directly. The independent component runtime and Gogo-to-GDScript transpilation are **planned**, not implemented.
+
+## Target authoring and implementation direction (NOT implemented yet)
+
+- **No mandatory XML namespaces or prefixed element names.** Target Gogo uses `<VBox>`, `<Button>` and `<MyWidget>`, not `<fx:VBox>` or `xmlns` declarations. The **current stage-0 XML parser still needs its legacy namespace**, but that requirement must not be carried into the new grammar.
+- **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. This will need a real hybrid parser and editor tooling; it does not work today.
+- **Generated GDScript:** emit deterministic, valid `.gd` constructing Estragon's component hierarchy and automatically connecting typed signal handlers and, later, observable bindings. Generated files are not hand-edited, and no Godot UI widget tree is produced.
+- **`@Bindable` in ordinary authored `.gd` is a distinct requested goal.** Stock Godot cannot register arbitrary GDScript annotations via an addon. Do not claim this works without proving a pre-parse/source integration. A separate `.bgd` extension is only a possible fallback, not an accepted replacement.
+- **Real runtime components:** implement independent `DisplayObject`/`Container`-style bases, responsive `VBox`/`HBox` and later common UI components. Resolve naming collisions with Godot's classes. Keep existing JSON prototype functional until a GDScript-generating vertical slice is proven.
 
 ## Non-negotiable architecture
 
 1. **Own the UI.** Never implement Gogo by generating Godot `Control`, `Container`, `Label`, `Button`, or `.tscn` widget trees. Do not delegate Estragon's application layout, styling, hit testing, focus, or visual semantics to Godot's GUI system.
 2. **No node per component.** Estragon components must not require a corresponding Godot `Node` or `CanvasItem`. A small Godot host, multiple surfaces, and optional integration adapters are acceptable; they must not define the UI model.
 3. **Separate the layers.** Keep parsing, validation, typed/serialized IR, component identity, bindings, layout, input, paint/display lists, and renderer backends independently testable. Do not bake Godot APIs into the Gogo compiler or its IR.
-4. **Compile and validate source.** Gogo is compiled ahead of rendering. No per-frame XML parsing, implicit Godot widget fallback, silently ignored attributes, or runtime interpretation of unsupported syntax.
+4. **Compile and validate source.** The target is **Gogo → GDScript**, not JSON UI interpretation at runtime. No per-frame XML parsing, implicit Godot widget fallback, silently ignored attributes, or runtime interpretation of unsupported syntax.
 5. **Choose graphics backends with evidence.** `RenderingServer` is the existing prototype backend, **not** an irreversible architecture decision. `RenderingDevice`, shaders, batching, and native extensions remain research topics. Keep backend-specific code behind clear boundaries.
 6. **Reactivity must be real.** If implementing bindings, use dependency tracking and scoped subscriptions, not frame-by-frame expression polling or manual signal glue imposed on each consumer.
 7. **Keep the editor exception clear.** Godot `Control` nodes are fine for *editor tooling UI*; they are not a substitute for Estragon's runtime renderer or application preview.
@@ -31,7 +39,7 @@ The current host reads precompiled IR and renders fixed rectangles directly. The
 
 **Implemented:**
 
-- `tools/gogo.ts`: strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun.
+- `tools/gogo.ts`: **stage-0** strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun. Its syntax is temporary.
 - A `View` document root containing zero or more `Rect` leaves at explicit canvas coordinates; no nested containers or component registry.
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
 - A checked-in Gogo example plus generated IR, Bun test coverage, strict TypeScript typechecking, and GitHub Actions compiler checks.
@@ -40,7 +48,7 @@ The current host reads precompiled IR and renders fixed rectangles directly. The
 **Not implemented:**
 
 - A retained component runtime, reconciliation, generalized layout, styling, text widgets, events, focus, accessibility, or interactive controls.
-- `@bindable` compilation, one-/two-way Gogo bindings, observable collections, or a dependency graph.
+- `@Bindable` compilation in ordinary GDScript `.gd`, one-/two-way Gogo bindings, observable collections, or a dependency graph.
 - A `.bgd` frontend, Gogo language server, syntax highlighting, live preview, automatic compile-on-save, or a `RenderingDevice` backend.
 
 Do not write new examples, PR descriptions, or documentation that imply these proposed capabilities already work. `docs/ROADMAP.md` and tracking issues describe **desired outcomes**, not shipped behavior.
@@ -60,6 +68,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 | `docs/ARCHITECTURE.md`, `docs/VISION.md` | System boundaries and direction |
 | `docs/BINDING.md`, `docs/EDITOR.md` | Planned reactivity and editor work |
 | `docs/DECISIONS.md`, `docs/ROADMAP.md` | Accepted/provisional decisions and milestones |
+| `docs/DESIGN_DIRECTION.md` | Target language/renderer architecture, mixed GDScript, signal generation and unresolved Godot constraints |
 | `docs/TESTING.md`, `CONTRIBUTING.md` | Verification and contribution standards |
 | `Assets/` | Project-owned visual/source assets; preserve originals |
 
@@ -73,9 +82,9 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 
 Use ordinary engineering judgment for routine implementation details. Surface genuinely undecided architectural choices rather than assuming approval for a new language, backend, engine fork, or incompatible IR format.
 
-## Stage-0 Gogo contract (do not break accidentally)
+## Stage-0 Gogo contract (temporary legacy compatibility; do not break accidentally)
 
-- All component tags must resolve to XML namespace `urn:estragon:gogo:1` (the prefix itself is arbitrary).
+- **Stage-0 only:** current XML components require URI `urn:estragon:gogo:1`. **The planned Gogo language uses no XML namespace prefixes/declarations.**
 - Exactly one root `View`; required `width` and `height` are finite positive numbers; optional `id`.
 - Only `Rect` leaves below `View`; required positive finite `width` and `height`, required `fill`; optional finite `x` and `y` default to `0`; optional `id`.
 - IDs are unique and nonblank. Text content, unknown elements/attributes, nested `View`, and children of `Rect` are rejected.
@@ -106,14 +115,14 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Reactive state (future work)
 
-- `@bindable` in ordinary stock `.gd` is **not supported**. `.bgd` is only a proposed source-transformation approach; a Godot fork is not the default.
+- The desired `@Bindable` experience in ordinary authored `.gd` **is not supported in stock Godot**. Research/verify a pre-parse integration path and consider `.bgd` only as an explicit fallback, not an approved substitution.
 - Before implementation, establish observable-property semantics, typed setters, initialization/equality behavior, and inheritance/custom-accessor behavior.
 - Account for nested path replacement, subscriptions and disposal, collection mutation, cycles, two-way feedback protection, and batched invalidation.
 - Keep observable models usable without inheriting from a Godot `Node`. Test state changes independently from drawing.
 
 ### Editor integration (future work)
 
-- The existing plugin only adds `gogo` to `docks/filesystem/textfile_extensions`. It does not compile, highlight syntax, provide diagnostics, or preview anything.
+- The existing plugin only adds `gogo` to `docks/filesystem/textfile_extensions`. It does not transpile Gogo to GDScript, understand mixed source, highlight syntax, provide diagnostics, or preview anything.
 - That editor setting is **global and persists after disabling the plugin**. Never erase existing values, force-enable the plugin, or silently change someone's editor configuration in a test.
 - Keep editable `.gogo` source accessible; do not replace it with imported `.tscn` widget trees.
 - Source diagnostics and previews must ultimately come from the Gogo compiler and Estragon renderer, respectively.
@@ -164,7 +173,7 @@ Prefer a focused, reviewable PR over a sweeping rewrite. Do not merge it yoursel
 ## Source of truth
 
 - **Implemented behavior:** the relevant source code and passing tests.
-- **Accepted architecture:** `docs/VISION.md`, `docs/ARCHITECTURE.md`, and accepted entries in `docs/DECISIONS.md`.
+- **Accepted architecture:** `docs/VISION.md`, `docs/ARCHITECTURE.md`, `docs/DESIGN_DIRECTION.md` and accepted entries in `docs/DECISIONS.md`.
 - **Language specification:** `docs/GOGO_LANGUAGE.md` (read its supported/proposed labels).
 - **Planned work:** `docs/ROADMAP.md`, `docs/BINDING.md`, `docs/EDITOR.md`, and open issues.
 - **Contributing and verification:** `CONTRIBUTING.md` and `docs/TESTING.md`.

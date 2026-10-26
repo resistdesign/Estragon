@@ -4,7 +4,7 @@
 
 **Estragon is a new, self-rendered, reactive UI engine that runs inside Godot, not a wrapper around Godot's GUI system.**
 
-Its source language is Gogo (`.gogo`). Its authoring experience draws inspiration from the best parts of Adobe Flex 3.x/4.x: declarative components, automatically tracked state and compile-time wiring.
+Its source language is Gogo (`.gogo`): **XML-like component expressions woven directly into GDScript, inspired by TSX, and transpiled into runnable GDScript**. Flex 4 informs its component system, automatic event wiring and bindable state. No XML namespace prefixes are required in the target language. See the [design direction](DESIGN_DIRECTION.md); this is not yet implemented.
 
 ## Why build it?
 
@@ -17,14 +17,14 @@ Writing markup should be a convenient way to construct **Estragon components**. 
 1. **Render ourselves.** No conversion of Gogo components into Godot `Control` widgets. Estragon owns paint, composition and visual behavior.
 2. **Own a logical UI tree.** Component identity, lifecycle, layout, hit testing and accessibility must not depend on a Godot node per visual element.
 3. **Reactive by default, explicit when necessary.** Observed properties and dependency expressions should work without manual signal glue or per-frame binding polling.
-4. **Declarative authoring, compiled execution.** Parse and validate Gogo before runtime; do not parse XML on every frame.
-5. **A real editor experience.** Language-aware editing, errors tied to source, completion, navigation and preview are product features, not afterthoughts.
+4. **Declarative authoring, generated GDScript execution.** Compile typed Gogo markup and GDScript expressions into ordinary GDScript before runtime; never interpret XML or a serialized JSON UI tree on each frame.
+5. **A real editor experience.** Mixed GDScript/markup highlighting, errors tied to authored source, completion, navigation, automatic compilation and previews are product features. Native-looking `@Bindable` in authored `.gd` files remains a separate technical challenge.
 6. **Separate concerns.** Parser, semantic model, runtime components, layout, binding graph, input routing and renderer must have clean interfaces.
 7. **Make backend choices by evidence.** Design a renderer abstraction; benchmark available graphics paths instead of prematurely claiming one is best.
 
 ## What Flex contributes
 
-We want MXML-like *declarative construction*, `[Bindable]`-like *observable properties*, generated observers, one-/two-way binding and strong editing ergonomics. We are **not** promising a drop-in implementation of MXML, ActionScript, Spark, Halo, Flex states/effects or Flex's exact compilation/runtime semantics.
+We want **TSX-like GDScript/markup composition** with unprefixed component names, typed expressions and callbacks, combined with Flex 4-inspired component classes, generated signal connections, `[Bindable]`-style observables and one-/two-way binding. We are **not** promising direct MXML, ActionScript, TSX, React or Spark compatibility, or React's runtime rerender model.
 
 ## Explicit non-goals
 

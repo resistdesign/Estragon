@@ -1,69 +1,52 @@
 # Bindable properties and reactivity
 
-**Status: planned. None of these annotations or bindings compile yet.**
+**Status: planned.** No custom annotation or expression binding compiles today. Read the [design direction](DESIGN_DIRECTION.md) for the TSX-like Gogo/GDScript authoring goal.
 
-Estragon aims to bring the key ergonomics of Adobe Flex 3.x/4.x's `[Bindable]` and MXML binding expressions to GDScript and Gogo. Unlike a shallow signal wrapper, this needs a compiler-assisted, **object-independent** observable property system.
+## Developer experience
 
-## Proposed authoring experience
+The desired experience is **`@Bindable` on normal GDScript properties in the Godot editor**, generating typed getters/setters, change notifications and binding plumbing automatically. Flex 4's `[Bindable]` is a conceptual precedent, not a drop-in implementation.
 
-```gdscript
-# Model.bgd (proposed extended GDScript, not executable stock .gd)
+~~~gdscript
+# Desired authoring experience — NOT valid stock Godot 4.7 syntax today.
 extends RefCounted
 
-@bindable var name: String = "World"
-@bindable var count: int = 0
+@Bindable var player_name: String = "World"
+@Bindable var score: int = 0
 
-func increment() -> void:
-    count += 1
-```
+func add_point() -> void:
+    score += 1
+~~~
 
-```xml
-<!-- Proposed Gogo, NOT supported by stage-0 compiler -->
-<gogo:Text value="{model.name}" />
-<gogo:TextInput value="@{model.name}" />
-```
+Gogo should recognize observable state as typed GDScript expressions inside markup:
 
-`.bgd` is a **working proposal** for a distinct, preprocessed source file extension, not a finalized language choice. In stock GDScript, arbitrary custom annotations like `@bindable` cannot simply be registered by an `EditorPlugin`; using that spelling inside ordinary `.gd` would require a Godot/GDScript parser change or an external source transformation step.
+~~~text
+# UI.gogo — proposed mixed-language source, NOT executable today
+extends VBox
 
-## Proposed generated behavior
+func render() -> DisplayObject:
+    return <VBox gap={8}>
+        <Text value={"Score: %d" % score} />
+        <Button label="+" pressed={add_point} />
+    </VBox>
+~~~
 
-A setter with a typed change signal is one possible generated target:
+The sample intentionally leaves model scope/imports and exact binding syntax unspecified. A value expression is **not automatically reactive** just because it uses braces; the compiler must establish dependency tracking and update semantics, including safe handling of nested paths, collections and disposal.
 
-```gdscript
-signal count_changed(value: int)
+## Godot parser integration: a hard prerequisite
 
-var count: int = 0:
-    set(value):
-        if count == value:
-            return
-        count = value
-        count_changed.emit(value)
-```
+An `EditorPlugin` cannot register arbitrary new annotations in ordinary `.gd` source. The GDScript parser will reject an unknown annotation unless source is transformed **before** it parses, or the engine/parser is extended. Therefore the specific requested experience—`@Bindable` directly in regular authored `.gd` files—**has not been proven possible with stock addon extension points**.
 
-The compiler must preserve types, custom setters, inheritance and assignment semantics instead of blindly replacing text with regex. It must document whether notification happens for equal values, when initialized, and when state is changed through collections or nested references.
+Investigate the supported editor/parser source lifecycle and interception points. A custom compiler can recognize `@Bindable` in its **own** mixed `.gogo` source, but that does not automatically solve ordinary `.gd` files. If a reliable stock-editor interception path does not exist, document the trade-offs of a custom source extension, controlled generated script interface, and engine/parser change **before** changing the promised UX. The old `.bgd` suggestion is only a fallback candidate, not an accepted replacement.
 
-## Dependency graph requirements
+Never rewrite user-authored `.gd` files in place, hide persistent parser errors, or claim custom annotations work because syntax highlighting accepts them.
 
-Given `{model.user.display_name}`, Estragon must subscribe to the appropriate property changes, rewire when `user` or `model` is replaced, and unsubscribe when the consuming component is destroyed. Nothing here should depend on a `Node`; observable plain objects and resources must be supported.
+## Required compiler and runtime semantics
 
-Additional required capabilities:
+- Typed property get/set behavior, equality/change suppression, initialization, inherited and custom accessors.
+- A consistent generated change-notification contract for `RefCounted`, `Resource` and other relevant object bases without forcing Godot `Node` objects.
+- Nested dependency paths, replacement of intermediate objects, collection mutation and unsubscribe/dispose behavior.
+- One-way expressions; assignable two-way bindings, event adapters and feedback/cycle protection.
+- Batched/coalesced invalidation tied to Estragon component layout/paint, not frame polling.
+- Source-location-aware errors, generated-to-authored source maps and tests for edge cases.
 
-- One-way expressions and safe initialization.
-- Two-way assignable expressions, event adapters and loop prevention.
-- Observable collection mutations; `items.append(...)` bypasses an ordinary property setter.
-- Batched/coalesced invalidation and explicit scheduling semantics.
-- Circular dependency detection and bounded recomputation.
-- Error messages pointing to original `.gogo` / reactive source locations.
-- Memory-safe subscription lifetimes and explicit cleanup.
-- No per-frame polling as the primary binding mechanism.
-
-## Implementation sequence
-
-1. Define property-change behavior, source language and test matrix.
-2. Prototype a source-aware GDScript preprocessor (not regex rewriting).
-3. Generate typed setters/signals and test runtime semantics.
-4. Add binding-expression parsing and compile dependency descriptors.
-5. Add observable paths, collections, two-way adapters and batching.
-6. Integrate binding invalidation into the independent component/layout/paint pipeline.
-
-A custom Godot engine build remains an alternative only if it yields materially better integration than source transformation.
+First prove actual parse/compile behavior in the target Godot version, then define the observable semantics and add a source-aware transformer, binding graph and reproducible tests.

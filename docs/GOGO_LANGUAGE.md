@@ -1,52 +1,64 @@
 # Gogo language: `*.gogo`
 
-**Status:** stage-0 implemented subset plus clearly labeled proposals.
+**Status:** the prototype accepts a tiny strict XML subset; the **accepted target** is TSX-like GDScript-plus-markup transpiled to GDScript. Neither the new syntax nor runtime is implemented.
 
-Gogo is Estragon's markup language. It is XML-shaped for familiar Flex-style authoring, but it describes **Estragon's own UI components**, never Godot `Control` node types.
+## Target: markup expressions mixed with GDScript
 
-## Stage-0 supported syntax
+Gogo should look and feel like **TSX with GDScript as its programming language**, while keeping XML-like component syntax. Elements are **unprefixed**, and user components participate in the same type-resolved language as built-in components.
 
-```xml
+~~~text
+# Counter.gogo — proposed; NOT executable today
+extends VBox
+
+@Bindable var count: int = 0
+
+func increment() -> void:
+    count += 1
+
+func render() -> DisplayObject:
+    return (
+        <VBox gap={12}>
+            <Text value={"Count: %d" % count} />
+            <Button label="+" pressed={increment} />
+        </VBox>
+    )
+~~~
+
+No `<gogo:View>`, `<fx:Button>` or `xmlns` declarations in the target syntax. `<VBox>` and `<MyWidget>` resolve through an Estragon component registry/import system; exact import rules remain open. Curly-brace props and child expressions are GDScript expressions, **not TypeScript**, and must be type-checked. The signal/event name, IDs/refs, one-way/two-way binding syntax, conditional/repeated children, lifetime semantics, and the exact structure of a generated class still require language design and a parser prototype.
+
+**Important:** Gogo's source may be XML-*like* but cease to be a valid standalone XML *document* once GDScript and markup interleave. The language needs a coordinated lexer/parser, not regex hacks or the existing XML-only parser applied to the complete mixed file.
+
+Output is **ordinary generated GDScript**, with component construction, signal wiring, binding hooks, deterministic identifiers and source maps. The generated code creates Estragon's independent component objects, never a Godot `Control` tree. Read [the design direction](DESIGN_DIRECTION.md).
+
+## Stage-0 compiler syntax (IMPLEMENTED TODAY; temporary)
+
+The current `tools/gogo.ts` remains a deliberate rendering spike. Its old XML namespace syntax below is **not** the intended final authoring experience:
+
+~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
 <gogo:View xmlns:gogo="urn:estragon:gogo:1"
            id="main" width="960" height="540">
     <gogo:Rect id="accent" x="48" y="48"
                width="480" height="128" fill="#8566e0" />
 </gogo:View>
-```
+~~~
 
-Rules:
+- The root is `View` with required finite positive `width`/`height`, optional `id`.
+- Only direct leaf `Rect` children are valid. `width`, `height` and `fill` are required; finite `x`/`y` default to zero.
+- `fill` accepts `#RRGGBB` or `#RRGGBBAA` and normalizes to lowercase eight-digit RGBA.
+- IDs must be nonblank and unique. Unknown attributes/components, mixed text, invalid namespaces and unsupported nesting are errors.
+- The **old compiler requires** namespace URI `urn:estragon:gogo:1`, although the XML prefix is arbitrary. This requirement will be removed for the new language.
+- The output is deterministic, versioned JSON IR for the current demo, **not** GDScript and **not** a serialized Godot scene.
 
-- `View` is the **document root**. `width` and `height` are mandatory positive finite numbers; `id` is optional.
-- `Rect` is a **leaf** under `View`. `width`, `height` and `fill` are required. `x` and `y` are optional finite numbers, defaulting to zero; `id` is optional.
-- `fill` is a hexadecimal `#RRGGBB` or `#RRGGBBAA` color. The compiler canonicalizes it to lowercase `#rrggbbaa`.
-- IDs must be unique and nonblank. Unknown attributes, components, mixed text content, missing values and malformed XML are errors.
-- There is no implicit layout or text rendering. Units are stage-0 viewport canvas coordinates.
-- Components must use namespace `urn:estragon:gogo:1`. A different XML prefix is valid if it resolves to the same namespace.
+Run the existing tool from the repository root:
 
-Compile:
-
-```sh
+~~~sh
 bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
-```
+bun run check
+~~~
 
-The output is versioned, deterministic JSON UI IR, **not a Godot scene**.
+This stage-0 compiler and sample stay working until the real transpiler and runtime vertical slice are verified. Do not extend the old JSON format as though it were the target architecture.
 
-## Proposed later syntax (DOES NOT COMPILE YET)
+## Grammar and evolution
 
-```xml
-<gogo:View xmlns:gogo="urn:estragon:gogo:1"
-           xmlns:on="urn:estragon:events:1">
-    <gogo:Column gap="12" padding="24">
-        <gogo:Text value="Hello, {model.name}!" />
-        <gogo:TextInput value="@{model.name}" />
-        <gogo:Button label="Increment" on:click="increment" />
-    </gogo:Column>
-</gogo:View>
-```
-
-This example is a **design sketch**, not a promise that the exact component names, event syntax, interpolation or property names are final. Candidate capabilities are reusable custom components, declared namespaces, nested layouts, one-way expressions (`{...}`), two-way bindings (`@{...}`), events, styling and diagnostics tied to source locations.
-
-## Versioning and future evolution
-
-Version the compiled IR separately from the source language. The compiler must reject unknown required features rather than silently interpreting them as Godot nodes. Validate property types and component schemas at build time; generate source maps and stable IDs when the semantic compiler exists.
+Design and test component imports/resolution, property types, attribute expressions, children and fragments (if any), signal callback conventions, binding expressions, typed component references, error recovery, GDScript-language islands and source maps. Favor Flex 4's class/component model and modern TSX's composition ergonomics without copying HTML, React's runtime semantics, or XML namespace ceremony. Produce compile errors for unknown features instead of silent fallback.

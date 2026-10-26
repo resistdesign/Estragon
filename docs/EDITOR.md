@@ -2,7 +2,7 @@
 
 **Status: file-extension integration only.**
 
-We want Gogo to feel native in the Godot editor without turning Gogo components into Godot `Control` nodes.
+We want **first-class Gogo editing in Godot 4.7**, including TSX-like GDScript/markup composition and automatic Gogo-to-GDScript transpilation, without turning authored UI components into Godot `Control` nodes. See [design direction](DESIGN_DIRECTION.md).
 
 ## What the scaffold plugin does
 
@@ -14,19 +14,19 @@ To enable it: open `project.godot`, go to **Project > Project Settings > Plugins
 
 ## What the plugin does NOT do yet
 
-It does not highlight Gogo syntax, call the Bun/TypeScript compiler, show inline errors, regenerate IR automatically, watch files, provide completion or display a UI preview. Those are next-stage features.
+It does not highlight mixed Gogo/GDScript syntax, call the Bun/TypeScript compiler, generate GDScript, provide diagnostics/completion, watch files, or display a UI preview. Those are future features. Its current JSON compiler path is temporary scaffolding.
 
 ## Intended editor architecture
 
-- Register `.gogo` as a text format; use the existing script/text editing surface initially.
-- Register an `EditorSyntaxHighlighter` for Gogo markup, attribute values and binding expressions; make selection/association reliable for `.gogo` files.
-- Use the Gogo compiler as a language service (parser, type/component registry, diagnostics, symbol index and source maps).
+- Treat `.gogo` as a first-class **mixed GDScript plus XML-like component language**. Prototype reliable file opening, code/markup highlighting and language switching in Godot 4.7; the existing text extension registration alone is insufficient.
+- Investigate `EditorSyntaxHighlighter`, `ScriptEditor` hooks, a custom text editor or language-server-style integration for nested markup, GDScript expressions, diagnostics and references; verify that highlighting is actually applied to `.gogo` files.
+- Reuse the Gogo hybrid compiler's type/component registry and source maps for diagnostics, completion, navigation and reliable generated GDScript debugging.
 - Provide completions for Estragon components, **not** raw Godot `Control` classes; include props/events and data-binding paths.
-- Add build-on-save and a pre-run compilation check, with error location mapping.
-- Preview the **Estragon renderer output** in an editor viewport; never use Godot's stock GUI scene builder as the preview renderer.
+- Add build-on-save and pre-run transpilation to generated `.gd` files. On compile failure, report original source locations and refuse to run stale generated output.
+- Preview the **Estragon renderer output** in an editor viewport; never substitute Godot's stock GUI scene builder for the application preview.
 - Consider a dedicated editor workspace for source, component outline, diagnostics, property inspector and live preview. Godot `Control` nodes may of course implement the editor *tooling UI*; the restriction concerns Estragon-rendered application components.
 
-We are intentionally not beginning with `EditorImportPlugin`; treating the editable source file as an imported resource can interfere with ordinary text-file opening. The best editor/LSP integration path should be verified with a working prototype before promising automatic syntax selection or rich navigation.
+We are intentionally not beginning with `EditorImportPlugin`; treating the editable source file as an imported resource can interfere with ordinary text-file opening. Verify the hybrid-source editor experience with a real Godot 4.7 prototype before promising automatic syntax selection, diagnostics or navigation. `@Bindable` in ordinary `.gd` has a **separate pre-parse integration obstacle**, not solved by Gogo file recognition.
 
 Godot APIs to investigate:
 - [EditorPlugin](https://docs.godotengine.org/en/stable/classes/class_editorplugin.html)
