@@ -4,7 +4,7 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
-## Intended processing pipeline (not implemented)
+## Intended mixed-source pipeline (T05 and later)
 
 The [design direction](DESIGN_DIRECTION.md) is **Gogo's XML-like markup and GDScript mixed in one authored `.gogo` source**, transpiled to GDScript—not JSON UI data interpreted by Godot.
 
@@ -81,16 +81,44 @@ A Godot `Node` can host an Estragon root, expose state to a Godot scene or bridg
 - Tiny, versioned JSON IR: `View` root + absolute-positioned `Rect` leaves.
 - A checked-in sample IR and a Godot host `Node` that submits rectangles through `RenderingServer.canvas_item_add_rect()`.
 - Compiler unit tests and pinned Godot 4.7 headless import/parse/runtime checks.
-- Independent component ownership/disposal/invalidation foundations, described below.
+- Independent component ownership, stack layout, rectangle rendering and automatic lifecycle.
+- T04 namespace-free markup-to-GDScript compiler and runnable generated surface.
 
 The host renders **temporary JSON IR** positions directly. It does **not** compile Gogo into GDScript and is **not yet** the retained component tree, layout engine or event/binding system described above. There is no text, interaction, reactive compilation, hot reload, preview or other rendering backend yet.
+
+## Markup-to-GDScript vertical slice (T04)
+
+The implemented path is namespace-free `.gogo` markup → component-expression
+syntax → typed component/literal IR → ordinary generated GDScript extending
+`EstragonSurface`. No serialized UI IR is used on this path. The legacy stage-0
+compiler/JSON host remain independent and unchanged.
+
+`tools/gogo/parser.ts` is a recursive-descent markup-island parser with source
+spans, not an XML document wrapper. `parseMarkupExpressionAt()` can consume one
+expression inside a future hybrid parser's source; it does not parse GDScript.
+`validate.ts` resolves exactly three runtime component names and validates
+literal property types/child rules. `emit-gdscript.ts` emits stable typed
+construction, property assignments, add-child calls and surface mounting.
+`model.ts` separates syntax from typed literal/component expressions without
+inventing unimplemented GDScript constructs. No Godot API is used by the compiler.
+
+`tools/transpile-gogo.ts` is the explicit Bun CLI; `tools/check-gdscript.ts` checks
+the committed example bytes. The Godot runner recompiles into its temporary
+project before import, so its runtime suite tests actual new compiler output.
+The generated surface uses T03's lifecycle; application code never disposes UI
+components. `examples/compiled/Compiled.tscn` is the runnable example.
+
+This implements **only** T04: no mixed GDScript, callbacks, binding generation,
+editor build hooks or full source maps. The markup-only parser/IR does not define
+the whole language. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for exact grammar,
+properties, commands and limitations; T05 remains the mixed-source work item.
 
 ## Independent runtime (T02/T03)
 
 `EstragonDisplayObject` and `EstragonContainer` are typed `RefCounted` objects.
 `EstragonVBox`, `EstragonHBox` and `EstragonRect` build on them. Components have
 no Godot Node, Control, CanvasItem or RID. These runtime classes can be authored
-in GDScript today; Gogo-to-GDScript compilation remains planned. The legacy JSON
+in GDScript today; T04 also compiles a minimal markup subset to these classes. The legacy JSON
 host is unchanged and remains the main scene. `examples/layout/Layout.tscn` is a
 separate runnable demonstration.
 

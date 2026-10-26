@@ -9,11 +9,43 @@ bun install --frozen-lockfile
 bun run typecheck
 bun run test
 bun run verify:ir
+bun run verify:gdscript
 ```
 
 The TypeScript suite covers successful compilation, deterministic IR, alternate/default XML namespace prefixes, invalid source, schema errors, duplicate IDs, dimensions/colors, CLI failure handling, and the checked-in example. Typechecking is **mandatory**: Bun's TypeScript execution alone does not validate types.
 
 The convenience command `bun run check` runs the typecheck, tests, and IR fixture verification together.
+
+## T04 compiler and generated GDScript
+
+The Bun suite also tests the namespace-free markup-expression parser, typed
+literal validation, exact source spans/CRLF diagnostics, malformed/unsupported
+source, nesting bounds, deterministic emission, injection rejection and CLI
+failure/output preservation. `bun run verify:gdscript` independently compares
+`examples/compiled/Layout.gogo` compilation against its checked-in `.gd` fixture
+without rewriting it. The compiler job runs this alongside the legacy IR check.
+`bun run check` includes both fixture checks.
+
+Regenerate intentionally changed output with:
+
+```sh
+bun run transpile examples/compiled/Layout.gogo --output examples/compiled/generated/Layout.gd
+```
+
+`check:godot` recompiles that source in its temporary copy **before import** and
+also emits fresh empty-container and large-number/RGBA variants. Every resulting
+script is parsed by Godot. `tests/godot/generated_gogo.gd` then runs 21 assertions
+against the actual generated code: runtime class/property resolution, mounting,
+nested/absolute paint geometry, colors, automatic resizing, root/component
+unmount and renderer cleanup, zero-size/large-number literals and an empty root.
+It requires `ESTRAGON_GENERATED_GOGO_OK` under the same exit/error/timeout rules.
+No generated probe files or UID/cache changes are written into the working tree.
+
+For graphics verification, compile first and run `examples/compiled/Compiled.tscn`
+in Godot 4.7. Expect the same responsive header/sidebar/content as the T03 layout
+example. The graphics capture procedure below also applies with that scene path.
+The .gogo source is never interpreted at runtime. Compiler generation is explicit;
+automatic editor compilation/stale-run blocking remain T08 work.
 
 ## Generated IR
 

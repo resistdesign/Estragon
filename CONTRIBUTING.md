@@ -18,6 +18,8 @@ bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gog
 bun run check
 ```
 
+For the T04 generated surface example, use `bun run transpile examples/compiled/Layout.gogo --output examples/compiled/generated/Layout.gd`; `bun run check` also verifies this fixture. Godot checks regenerate output in an isolated project before importing/running it. See GOGO_LANGUAGE for the supported markup-only subset.
+
 **Future direction:** Gogo uses TSX-like GDScript-plus-XML-like expressions, unprefixed component tags and generated GDScript. The current namespaced XML-to-JSON compiler is a temporary demo. See [the design direction](docs/DESIGN_DIRECTION.md), including the unresolved native `@Bindable` parsing problem.
 
 When changing the **stage-0** compiler, update the supported language specification, examples, golden JSON IR and tests. New Gogo-to-GDScript work should generate tests and a runnable Godot proof. When changing graphics behavior, document the backend assumptions and add reproducible smoke-test steps. CI typechecks the TypeScript tooling, runs Bun compiler tests, checks generated IR, and runs Godot 4.7 headless import, script parsing, runtime smoke and harness failure probes. Run `bun run check:godot` and `bun run test:godot-harness` for Godot-facing changes; see [TESTING.md](docs/TESTING.md) for the pinned binary and separate manual visual check.

@@ -6,17 +6,19 @@
 
 **Estragon is an independent, self-rendered UI engine hosted by Godot.** Its declarative language is **Gogo** (`.gogo`), inspired by the authoring ergonomics of Adobe Flex 3/4. Gogo builds *Estragon* components—not Godot widgets or scene nodes.
 
-The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout and rectangle paint/rendering are implemented; Gogo integration, reactivity, input and broader UI capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
+The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout and rectangle paint/rendering are implemented; Minimal markup-to-GDScript compilation is implemented; mixed Gogo/GDScript, reactivity, input and broader UI capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
 
 ```text
-.gogo source → strict Gogo compiler → versioned Estragon JSON IR
-                                            ↓
-                         Godot host Node → RenderingServer canvas
+T04: namespace-free .gogo markup → typed compiler IR → generated GDScript
+                                                          ↓
+                                  EstragonSurface → components → renderer
+
+Legacy: namespaced .gogo XML → JSON IR → prototype host → RenderingServer
 ```
 
-The legacy host still reads **temporary JSON IR** and renders fixed rectangles directly. A separate GDScript component/layout surface exists; Gogo-to-GDScript transpilation remains **planned**, not implemented.
+The legacy host still reads **temporary JSON IR** and renders fixed rectangles directly. A separate GDScript component/layout surface exists; Minimal namespace-free markup-to-GDScript transpilation also works; mixed GDScript/markup remains **planned**.
 
-## Target authoring and implementation direction (NOT implemented yet)
+## Target authoring and implementation direction (full target NOT implemented yet)
 
 - **No mandatory XML namespaces or prefixed element names.** Target Gogo uses `<VBox>`, `<Button>` and `<MyWidget>`, not `<fx:VBox>` or `xmlns` declarations. The **current stage-0 XML parser still needs its legacy namespace**, but that requirement must not be carried into the new grammar.
 - **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. This will need a real hybrid parser and editor tooling; it does not work today.
@@ -39,6 +41,7 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 
 **Implemented:**
 
+- `tools/transpile-gogo.ts` + `tools/gogo/`: T04 namespace-free VBox/HBox/Rect markup-expression parser, typed literal validation and deterministic GDScript surface generation. Mixed GDScript, callbacks and bindings remain future work.
 - `tools/gogo.ts`: **stage-0** strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun. Its syntax is temporary.
 - A `View` document root containing zero or more `Rect` leaves at explicit canvas coordinates; no nested containers or component registry.
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
@@ -58,7 +61,9 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 
 | Path | Responsibility |
 | --- | --- |
-| `tools/gogo.ts` | Source parsing, strict validation, canonical IR generation, CLI |
+| `tools/gogo.ts` | Legacy stage-0 parsing, strict validation, canonical JSON IR, CLI |
+| `tools/transpile-gogo.ts`, `tools/gogo/` | T04 markup syntax, typed IR, validation and GDScript emission |
+| `examples/compiled/`, `tests/godot/generated_gogo.gd` | Generated Gogo surface example and actual Godot runtime verification |
 | `tests/gogo.test.ts` | Compiler behavior, negative cases, and checked-in example consistency |
 | `examples/hello/Main.gogo` | Authoritative source for the stage-0 demo |
 | `examples/hello/generated/Main.gogo.json` | Generated, versioned example IR; checked into Git |
@@ -156,7 +161,7 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Gogo compiler and language
 
-- Work in `tools/gogo.ts` and `tests/gogo.test.ts`; keep the compiler independent of the running Godot editor.
+- Legacy work uses `tools/gogo.ts` / `tests/gogo.test.ts`; T04 uses `tools/gogo/`, `tools/transpile-gogo.ts` and `tests/transpile-gogo.test.ts`. Keep both compilers independent of the running Godot editor.
 - Preserve strict schema/type validation and deterministic output. Test both valid examples and malformed/unsupported input.
 - Prefer minimal, pinned dependencies; use strict TypeScript types and a real namespace-aware XML parser. Keep the compiler independent of Godot.
 - For syntax changes, update `docs/GOGO_LANGUAGE.md`, any example `.gogo`, and checked-in generated IR. Mark proposed syntax as non-executable until it actually compiles.
@@ -203,13 +208,20 @@ bun run test
 bun run verify:ir
 ```
 
-When intentionally changing the example, regenerate the committed IR from its source, then rerun the checks:
+When intentionally changing the legacy example, regenerate the committed IR from its source, then rerun the checks:
 
 ```sh
 bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
 ```
 
 For Godot-facing changes, also perform or explicitly request a **manual Godot 4.x visual smoke check**: open the root `project.godot`, run `examples/hello/Hello.tscn`, confirm the dark background, purple block, and teal stripe, and inspect the remote scene tree for one Estragon host rather than per-element widgets. If you cannot run Godot, say **not tested** rather than claiming success.
+
+For the T04 example, regenerate and verify GDScript instead:
+
+```sh
+bun run transpile examples/compiled/Layout.gogo --output examples/compiled/generated/Layout.gd
+bun run verify:gdscript
+```
 
 For Godot-facing changes, also run the pinned Godot 4.7 headless checks:
 

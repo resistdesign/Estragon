@@ -20,6 +20,8 @@ jobs:
         run: bun run test
       - name: Check committed example IR matches source
         run: bun run verify:ir
+      - name: Check committed GDScript matches Gogo source
+        run: bun run verify:gdscript
 
   godot-validation:
     runs-on: ubuntu-latest
