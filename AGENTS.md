@@ -190,7 +190,7 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ## Verification commands (repository root)
 
-Bun 1.4.4 runs the TypeScript compiler and tests. The present automated checks do **not** require Godot:
+Bun 1.4.4 runs the TypeScript compiler and tests. The compiler checks do **not** require Godot:
 
 ```sh
 bun install --frozen-lockfile
@@ -207,7 +207,17 @@ bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gog
 
 For Godot-facing changes, also perform or explicitly request a **manual Godot 4.x visual smoke check**: open the root `project.godot`, run `examples/hello/Hello.tscn`, confirm the dark background, purple block, and teal stripe, and inspect the remote scene tree for one Estragon host rather than per-element widgets. If you cannot run Godot, say **not tested** rather than claiming success.
 
-GitHub Actions (`.github/workflows/ci.yml`) typechecks TypeScript, runs Bun tests, and verifies the example IR is up to date; it does **not** run Godot or certify visuals.
+For Godot-facing changes, also run the pinned Godot 4.7 headless checks:
+
+```sh
+bun run check:godot
+bun run test:godot-harness
+```
+
+See `docs/TESTING.md` for `GODOT_BIN`, version pinning, isolation and failure detection.
+GitHub Actions (`.github/workflows/ci.yml`) typechecks TypeScript, runs Bun tests,
+verifies example IR, and runs Godot import, every-script parsing, runtime smoke
+and harness failure probes. Headless checks do **not** certify visuals.
 
 ## Definition of done / PR hygiene
 

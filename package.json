@@ -8,7 +8,9 @@
     "test": "bun test",
     "typecheck": "tsc --noEmit",
     "verify:ir": "bun run tools/check-ir.ts",
-    "check": "bun run typecheck && bun run test && bun run verify:ir"
+    "check": "bun run typecheck && bun run test && bun run verify:ir",
+    "check:godot": "bun run tools/check-godot.ts",
+    "test:godot-harness": "bun run tools/check-godot.ts --self-test"
   },
   "dependencies": {
     "saxes": "6.0.0"
