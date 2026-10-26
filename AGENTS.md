@@ -69,16 +69,70 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 | `docs/BINDING.md`, `docs/EDITOR.md` | Planned reactivity and editor work |
 | `docs/DECISIONS.md`, `docs/ROADMAP.md` | Accepted/provisional decisions and milestones |
 | `docs/DESIGN_DIRECTION.md` | Target language/renderer architecture, mixed GDScript, signal generation and unresolved Godot constraints |
+| `docs/EXECUTION_PLAN.md` | Stable scoped Codex tasks, dependencies, acceptance criteria and gates |
+| `docs/WORK_STATUS.md` | Reviewed task status snapshot and cross-session handoff/resume template |
 | `docs/TESTING.md`, `CONTRIBUTING.md` | Verification and contribution standards |
 | `Assets/` | Project-owned visual/source assets; preserve originals |
 
+## Required execution planning, tracking, and cross-session continuation
+
+**This protocol is mandatory for Codex and other contributors working on planned features.** Session/chat context is temporary; **GitHub issues/PRs and committed repository files are the durable team memory**.
+
+### Four different sources of truth
+
+1. **Product direction:** `docs/DESIGN_DIRECTION.md` and accepted `docs/DECISIONS.md` entries. These define what Estragon should be; an execution shortcut must not override them.
+2. **Delivery scope/dependencies:** `docs/EXECUTION_PLAN.md`. It defines stable work IDs (`T01`–`T10`, `R01`/`R02`), acceptance criteria, ordering, boundaries and the milestone definition.
+3. **Live work state:** the **task's GitHub issue, PR, branch and CI**. The issue/PR contains the current short plan, owner/branch, checked steps, links, blockers, evidence and **latest session handoff**. Actual merged source/tests are the authority for what is implemented.
+4. **Reviewed status snapshot:** `docs/WORK_STATUS.md`. It indexes ready/queued/completed work and explains how to resume. It is a *snapshot*, not a substitute for checking the live issue/PR. Update it in task-completion or plan-change PRs; avoid conflicting mid-session edits to a centralized status file.
+
+**Never infer progress from an old chat or from the existence of a branch.** A task is `Done` only after its acceptance criteria are verified **and its PR is approved and merged**. `Ready`, `Queued`, `Active`, `Blocked`, `In review`, `Done` and `Deferred` have the meanings specified in `WORK_STATUS.md`. Do not turn `Blocked` into a changed product requirement without a recorded decision.
+
+### Session startup / resuming work (before editing)
+
+1. Read this file, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md`, relevant language/architecture docs and the task's issue/PR. Check the **current** `main` and open PRs; do not assume the snapshot is current.
+2. Inspect the branch and working tree (`git status --short --branch`, recent commits, uncommitted changes and tracking branch) before pulling, switching branches or changing files. Never erase another session's uncommitted work or force-push over it.
+3. **Resume an existing issue/branch/PR** if that work ID is already active; read its **latest handoff comment**, failing checks and remaining acceptance items. Do not start a competing implementation.
+4. If unclaimed, choose exactly **one Ready work ID** whose prerequisites are satisfied. Reuse a properly scoped existing issue or create a narrow issue with that ID; distinguish older umbrella issues from a task-specific assignment. Record issue link, branch and dependency state before coding.
+5. If an architectural/interface choice is genuinely unresolved, capture options and a proposed decision in the issue. Do not treat a tentative syntax or Godot extension mechanism as implemented.
+
+### Plan before implementation; maintain it as work changes
+
+- In the task issue or linked draft PR, write an **actionable mini-plan**: objective, files/layers touched, steps/checklist, measurable acceptance criteria, validation commands, risks/unknowns, dependencies, and explicit out-of-scope work. Include the work ID and issue link in the PR.
+- Keep the plan **small enough for one PR**. Split unexpected scope into a linked follow-up task instead of broadening the current PR. Work in testable checkpoints; post meaningful progress to the issue/PR as steps actually land, with commit/test links where available.
+- If dependencies, task scope or the work sequence must change, propose a **reviewed plan update** to `docs/EXECUTION_PLAN.md` and the related issue, with rationale. Changes to accepted architecture also require an ADR update or explicit review. Don't silently re-plan the project in a chat reply.
+- Check current issue/PR before making a new branch, especially when running multiple Codex sessions. Parallel sessions need **separate issues, branches/worktrees and declared integration contracts**; no shared dirty worktree or competing changes to the same files without coordination.
+- Research tasks can end with an **evidence-backed limitation**, but must not quietly substitute a different developer experience (especially `@Bindable` in ordinary `.gd`).
+
+### Progress checkpoints and honest verification
+
+- Record at least **task start**, **meaningful completed checkpoints**, **any blocker/decision**, and **end-of-session handoff** on the task issue or PR. Update checkboxes only for steps actually completed; link branch/commit/CI and describe what failed or was not tested.
+- Use `bun install --frozen-lockfile` and `bun run check` for existing tooling. After `T01` lands, use the documented Godot headless checks for Godot-facing changes. Also state whether a **manual Godot 4.7 visual smoke test** ran; headless parsing is not visual proof.
+- Do not report “tests passed” without specifying which tests and evidence. Don't advance a dependent task just because code was drafted: check prerequisite merge/review/CI and end-to-end acceptance.
+- A PR should include **work ID, linked issue, scope vs non-goals, implementation summary, test evidence, limitations, and remaining follow-ups**. Open a focused PR; **do not auto-merge without the user's explicit request**.
+- Update `docs/WORK_STATUS.md` in the PR completing a work item (the `Done` entry becomes part of `main` only upon merge). The **live issue/PR** records `Active`/`Blocked`/`In review` while work is not yet merged. Reconcile stale status snapshots instead of trusting them blindly.
+
+### Mandatory handoff at session end or interruption
+
+Before ending **any session with work started**, including one that is blocked or has an open PR, post a durable handoff comment to the **task issue or PR** using the template in `docs/WORK_STATUS.md`. It must include:
+
+- Work ID, issue/PR, state, active branch and **latest commit SHA/base**, plus whether the working tree has uncommitted or unpushed work.
+- What changed (specific files/steps), **exact verification commands/results/CI links**, and explicit untested items.
+- Remaining acceptance checklist, any blocking question/decision with supporting evidence, and the **next exact action** another session should take.
+- Whether the PR is awaiting review/merge or still needs implementation; never claim “done” for an unmerged PR.
+
+If the GitHub issue/PR cannot be updated, commit a handoff note on the task branch if possible and **report that the handoff was not published**. Do not claim seamless continuation if the only record is ephemeral model/chat context.
+
+### Reviewer / continuation checklist
+
+A fresh session should be able to answer, **from GitHub + repository files alone**: Which work ID is claimed? What merged or failed? What is next? Where is the branch/PR? What does the user need to decide? If any answer is missing, **repair the record before doing new feature work**.
+
 ## How to approach a task
 
-1. **Inspect first.** Read the affected source, tests, corresponding docs, and any relevant open issue. Read `docs/VISION.md`, `docs/ARCHITECTURE.md`, and `docs/DECISIONS.md` before making structural changes.
+1. **Inspect and resume first.** Follow the required execution protocol above; read the selected work ID, existing branch/PR, last issue handoff, affected source/tests, `docs/VISION.md`, `docs/ARCHITECTURE.md` and `docs/DECISIONS.md` before structural changes.
 2. **Classify the work.** Is this a change to the implemented stage-0 contract, an experiment, or a proposed future capability? Say which; do not collapse those categories.
-3. **Make the smallest coherent change.** Follow the user's actual request. Avoid unrelated refactors, speculative scaffolding, extra documentation, dependency churn, or changes to supplied assets.
+3. **Make the smallest coherent change.** Follow the selected task's acceptance criteria, mini-plan and dependencies. Avoid unrelated refactors, speculative scaffolding, extra documentation, dependency churn, or changes to supplied assets.
 4. **Preserve a working vertical slice.** Source, compiled IR, Godot consumer, tests, and docs must agree whenever their shared contract changes.
-5. **Verify and report accurately.** Run the relevant checks; name checks you could not run. Never say a Godot runtime behavior was tested when only compiler tests ran.
+5. **Verify and leave a durable handoff.** Run the relevant checks, name unrun checks, update the issue/PR progress and end with an actionable handoff. Never say Godot behavior was tested when only compiler tests ran.
 
 Use ordinary engineering judgment for routine implementation details. Surface genuinely undecided architectural choices rather than assuming approval for a new language, backend, engine fork, or incompatible IR format.
 
@@ -159,6 +213,10 @@ GitHub Actions (`.github/workflows/ci.yml`) typechecks TypeScript, runs Bun test
 
 Before calling work complete, check:
 
+- [ ] The PR identifies **one work ID** from `docs/EXECUTION_PLAN.md` and links the scoped issue and latest handoff.
+- [ ] The issue/PR plan, checkpoints, blockers and next action are current for the next Codex session.
+- [ ] `docs/WORK_STATUS.md` is updated when completion or plan change is being merged (or status changes are explained in the linked live issue).
+
 - [ ] The change matches the user's request and does not introduce unrelated churn.
 - [ ] The independent-component / self-rendered architecture remains intact.
 - [ ] Existing implemented behavior is preserved, or a deliberate compatibility change is described.
@@ -175,7 +233,8 @@ Prefer a focused, reviewable PR over a sweeping rewrite. Do not merge it yoursel
 - **Implemented behavior:** the relevant source code and passing tests.
 - **Accepted architecture:** `docs/VISION.md`, `docs/ARCHITECTURE.md`, `docs/DESIGN_DIRECTION.md` and accepted entries in `docs/DECISIONS.md`.
 - **Language specification:** `docs/GOGO_LANGUAGE.md` (read its supported/proposed labels).
-- **Planned work:** `docs/ROADMAP.md`, `docs/BINDING.md`, `docs/EDITOR.md`, and open issues.
+- **Delivery plan and status:** `docs/EXECUTION_PLAN.md` defines work IDs/dependencies; issues/PRs hold live state; `docs/WORK_STATUS.md` is the reviewed snapshot and handoff protocol.
+- **Broader planned work:** `docs/ROADMAP.md`, `docs/BINDING.md`, `docs/EDITOR.md`, and related research issues.
 - **Contributing and verification:** `CONTRIBUTING.md` and `docs/TESTING.md`.
 
 If sources disagree, do not paper over the discrepancy. Identify whether it is a code bug, documentation drift, or an unresolved design decision, and resolve only what the task authorizes.

@@ -1,6 +1,6 @@
 # Roadmap and milestones
 
-All milestone statuses below describe *project work*, not a claim of features available today.
+All milestone statuses below describe *project work*, not a claim of features available today. **For the actionable Codex work breakdown, dependencies, completion gates, issue links and cross-session handoff workflow, use [EXECUTION_PLAN.md](EXECUTION_PLAN.md), [WORK_STATUS.md](WORK_STATUS.md) and [AGENTS.md](../AGENTS.md).** This file is the wider product roadmap, not a live task tracker.
 
 ## Immediate direction: Gogo-to-GDScript and real runtime components
 
