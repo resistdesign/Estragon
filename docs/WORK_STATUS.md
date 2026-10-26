@@ -29,7 +29,7 @@
 
 ## Issue/PR ownership rule
 
-- **One work ID per focused PR.** The task issue is the durable conversation: scope, current owner/session or branch, plan/checklist, evidence, blockers, handoffs and linked PR.
+- **One work ID per focused implementation PR.** A planning/ADR/process-only PR may be unassigned if it is explicitly labeled as such and includes no implementation work. The task issue is the durable conversation: scope, current owner/session or branch, plan/checklist, evidence, blockers, handoffs and linked PR.
 - Existing issues #1–#6 were created for **broader architectural tracks** and may not describe the new per-PR scope. Treat rows labeled *umbrella* as related context, **not** as proof that a task-specific issue exists. On pickup, either explicitly adopt/update an issue for that one scoped task or create a narrow issue and link the umbrella; avoid duplicate work.
 - Check existing issues, open PRs and branch names before claiming a task. If a task is already in progress, **resume the existing branch/PR and read its latest handoff**, rather than creating a second implementation.
 - Parallel work uses separate issues and isolated branches/worktrees and documents shared interface decisions. No two agents edit the same worktree or silently change the same contract.

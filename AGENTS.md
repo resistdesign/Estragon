@@ -108,7 +108,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 - Record at least **task start**, **meaningful completed checkpoints**, **any blocker/decision**, and **end-of-session handoff** on the task issue or PR. Update checkboxes only for steps actually completed; link branch/commit/CI and describe what failed or was not tested.
 - Use `bun install --frozen-lockfile` and `bun run check` for existing tooling. After `T01` lands, use the documented Godot headless checks for Godot-facing changes. Also state whether a **manual Godot 4.7 visual smoke test** ran; headless parsing is not visual proof.
 - Do not report “tests passed” without specifying which tests and evidence. Don't advance a dependent task just because code was drafted: check prerequisite merge/review/CI and end-to-end acceptance.
-- A PR should include **work ID, linked issue, scope vs non-goals, implementation summary, test evidence, limitations, and remaining follow-ups**. Open a focused PR; **do not auto-merge without the user's explicit request**.
+- An **implementation PR** must include **one work ID**, linked issue, scope vs non-goals, test evidence, limitations and remaining follow-ups. A **planning/docs-only or ADR PR** may have no implementation ID, but must clearly identify itself as such and contain no disguised feature work. **Do not auto-merge without the user's explicit request**.
 - Update `docs/WORK_STATUS.md` in the PR completing a work item (the `Done` entry becomes part of `main` only upon merge). The **live issue/PR** records `Active`/`Blocked`/`In review` while work is not yet merged. Reconcile stale status snapshots instead of trusting them blindly.
 
 ### Mandatory handoff at session end or interruption
@@ -213,7 +213,7 @@ GitHub Actions (`.github/workflows/ci.yml`) typechecks TypeScript, runs Bun test
 
 Before calling work complete, check:
 
-- [ ] The PR identifies **one work ID** from `docs/EXECUTION_PLAN.md` and links the scoped issue and latest handoff.
+- [ ] An implementation PR identifies **one work ID** from `docs/EXECUTION_PLAN.md`, linked issue and latest handoff; a planning/ADR-only PR explicitly states its non-implementation scope.
 - [ ] The issue/PR plan, checkpoints, blockers and next action are current for the next Codex session.
 - [ ] `docs/WORK_STATUS.md` is updated when completion or plan change is being merged (or status changes are explained in the linked live issue).
 
