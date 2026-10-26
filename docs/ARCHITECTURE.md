@@ -47,7 +47,7 @@ A typed *compiler-internal* AST or intermediate model is useful; that is **not**
 | --- | --- | --- |
 | Gogo frontend/codegen (planned) | Hybrid GDScript/markup parsing, component/type resolution, diagnostics, generated GDScript and source maps | Rendering, Godot nodes |
 | Binding compiler (planned) | Observable properties, dependency descriptors and source transformation | Per-frame polling |
-| Component runtime (planned) | Independent `DisplayObject`/`Container`-style objects, lifecycle, identity, reconciliation | Godot scene tree |
+| Component runtime (foundations implemented; reconciliation planned) | Independent objects, identity, ownership, disposal and dirty flags | Godot scene tree |
 | Layout engine (planned) | Measurement, constraints, flex/stack/grid decisions | `Container` nodes |
 | Input system (planned) | Hit testing, event propagation, focus, pointer/keyboard/IME | `Control` event routing |
 | Paint system (planned) | Display list, dirty regions, clipping and stacking | Specific graphics API |
@@ -80,9 +80,62 @@ A Godot `Node` can host an Estragon root, expose state to a Godot scene or bridg
 - Strict TypeScript Gogo XML parser executed at build time by Bun.
 - Tiny, versioned JSON IR: `View` root + absolute-positioned `Rect` leaves.
 - A checked-in sample IR and a Godot host `Node` that submits rectangles through `RenderingServer.canvas_item_add_rect()`.
-- Compiler unit tests and GitHub Actions test runner.
+- Compiler unit tests and pinned Godot 4.7 headless import/parse/runtime checks.
+- Independent component ownership/disposal/invalidation foundations, described below.
 
 The host renders **temporary JSON IR** positions directly. It does **not** compile Gogo into GDScript and is **not yet** the retained component tree, layout engine or event/binding system described above. There is no text, interaction, reactive compilation, hot reload, preview or other rendering backend yet.
+
+## Component foundations (T02)
+
+`addons/estragon/runtime/display_object.gd` defines `EstragonDisplayObject`;
+`container.gd` defines `EstragonContainer`. Both are ordinary `RefCounted` objects.
+They allocate no `Node`, `Control`, `CanvasItem` or RID. The prefixes avoid Godot's
+built-in `Container` name; this does not settle future Gogo component resolution.
+These foundations are tested independently and are **not integrated into the
+stage-0 JSON renderer**. Geometry, layout, rendering, input, reconciliation and
+reactive subscriptions remain future work.
+
+The minimal runtime contract is:
+
+- `get_instance_id()` supplies identity for an instance's lifetime. Reparenting
+  does not recreate it. There is no authored-ID registry or persisted identity.
+- A container strongly owns ordered children. `get_children()` returns a shallow
+  snapshot and `get_child_count()` reports membership. Mutating the snapshot
+  cannot mutate the tree.
+- `get_parent()` resolves a weak reference, preventing ownership cycles. A new
+  object is detached. `add_child(child)` appends, automatically moving a child
+  from its previous owner only after validation. `remove_child(child)` detaches
+  without disposal. Callers retain any detached object they want to keep.
+- Operations return `Error`: `OK` on success, `ERR_INVALID_PARAMETER` for null
+  children, cycles or disposed additions, `ERR_ALREADY_EXISTS` for a same-parent
+  add, `ERR_DOES_NOT_EXIST` for removing a non-child, and `ERR_UNAVAILABLE` for a
+  disposed destination/owner. Rejected operations do not mutate or invalidate the
+  tree. Adding an already-owned child does not reorder it.
+- `dispose()` is explicit, terminal and idempotent. It detaches from its owner,
+  recursively disposes owned descendants, releases child references and clears
+  dirty flags. External references may still refer to disposed objects, but
+  cannot reattach them. Removing/reparenting first transfers cleanup ownership.
+  A cleanup hook cannot move a pending sibling out of a disposing owner.
+- Subclasses release additional resources in `_dispose_owned_resources()`;
+  container subclasses must call `super._dispose_owned_resources()` to preserve
+  recursive cleanup. `_set_parent()` and underscore fields are internal; only
+  container operations may change membership. There are no mutation signals.
+- Reference counting reclaims unreferenced objects without explicit disposal;
+  the cleanup hook runs only through `dispose()`. A child retained externally
+  after its parent is reclaimed becomes detached and remains usable. Owners
+  requiring deterministic cleanup must call `dispose()` before releasing a root.
+
+Dirty state uses independent bit flags `DIRTY_TREE`, `DIRTY_LAYOUT`, `DIRTY_PAINT`
+and their union `DIRTY_ALL`. New objects start fully dirty. `invalidate(flags)`
+accumulates flags locally and on every ancestor; unknown bits are ignored.
+`clear_invalidations(flags)` acknowledges local work only. Repeated invalidation
+still propagates through an already-dirty child to an ancestor that was cleared.
+Membership changes dirty the child and affected old/new ancestor chains for all
+three phases. Disposed objects ignore invalidation. These are invalidation
+foundations, **not a layout algorithm, renderer, scheduler or binding system**.
+
+`tests/godot/components.gd` tests this contract without adding component nodes to
+its test process's scene tree; see [TESTING.md](TESTING.md).
 
 ## Performance model to implement later
 

@@ -60,6 +60,7 @@ async function validate(project: string): Promise<void> {
     requireSuccess(`parse ${resource}`, await run(project, ["--script", resource, "--check-only"]));
   }
   requireSuccess("runtime smoke", await run(project, ["--script", SMOKE, "--quit-after", "120"]), COMPLETE);
+  requireSuccess("component foundations", await run(project, ["--script", "res://tests/godot/components.gd", "--quit-after", "120"]), "ESTRAGON_COMPONENTS_OK");
 }
 
 async function selfTest(): Promise<void> {

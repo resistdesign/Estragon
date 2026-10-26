@@ -1,17 +1,17 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-26, T01 validation completion PR based on `main` at `9abf743` (merged [PR #14](https://github.com/resistdesign/Estragon/pull/14)). T01 is **In review until approval and merge**; the validation foundation does not implement the new Gogo-to-GDScript architecture. The former JSON demo is still in place.
+**Snapshot:** 2026-10-26, T02 completion PR based on `main` at `0720948` after merged [PR #15](https://github.com/resistdesign/Estragon/pull/15). T01 is merged. T02 remains **In review until approval and merge**. Independent component foundations do not yet replace the former JSON demo or implement Gogo-to-GDScript.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** inspect the latest [T01 / issue #13 handoff and linked PR](https://github.com/resistdesign/Estragon/issues/13). After T01 is approved and merged, T02 is next; do not start it from an unmerged T01 branch. Alternatively, research [R01 / issue #4](https://github.com/resistdesign/Estragon/issues/4) in a separate branch. Nothing here is an instruction to merge or implement all tasks at once.
+**Start here:** inspect the latest [T02 / issue #16 handoff and linked PR](https://github.com/resistdesign/Estragon/issues/16). T03 follows only after T02 approval and merge. Alternatively, research [R01 / issue #4](https://github.com/resistdesign/Estragon/issues/4) on a separate branch.
 
 ## Current plan register
 
 | ID | Status in this snapshot | Work | Live issue / relevant umbrella | Accepted completion evidence |
 | --- | --- | --- | --- | --- |
-| **T01** | **In review; Done only upon approval + merge** | Godot 4.7 headless validation/CI | [#13](https://github.com/resistdesign/Estragon/issues/13) (PR/handoff) | Local Bun check (27 tests + typecheck + IR), Godot import/3 scripts/runtime smoke, seven failure probes pass; see issue/PR for CI. Manual visual check not run. |
-| T02 | Queued (T01) | Display object/container primitives | [#1](https://github.com/resistdesign/Estragon/issues/1) (umbrella) | Pending |
+| **T01** | **Done** | Godot 4.7 headless validation/CI | [#13](https://github.com/resistdesign/Estragon/issues/13), merged [PR #15](https://github.com/resistdesign/Estragon/pull/15) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40275222957); merge `0720948`. Manual visual check not run. |
+| **T02** | **In review; Done only upon approval + merge** | Independent display object/container foundations | [#16](https://github.com/resistdesign/Estragon/issues/16), umbrella [#1](https://github.com/resistdesign/Estragon/issues/1) | Ownership, tree operations, disposal and invalidation tests; see issue/PR handoff for exact local/CI evidence. |
 | T03 | Queued (T02) | Responsive layout/paint | [#3](https://github.com/resistdesign/Estragon/issues/3) (umbrella) | Pending |
 | T04 | Queued (T03) | Markup-only Gogo → GDScript | Create task issue on pickup | Pending |
 | T05 | Queued (T04) | Mixed GDScript + markup parser | Create task issue on pickup | Pending |
