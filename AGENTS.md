@@ -44,10 +44,11 @@ The current host reads **temporary JSON IR** and renders fixed rectangles direct
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
 - A checked-in Gogo example plus generated IR, Bun test coverage, strict TypeScript typechecking, and GitHub Actions compiler checks.
 - An optional editor plugin that registers `.gogo` as an editable text extension.
+- `EstragonDisplayObject` / `EstragonContainer` RefCounted foundations: ordered ownership, weak parent links, disposal and dirty flags; independent of the unchanged JSON host.
 
 **Not implemented:**
 
-- A retained component runtime, reconciliation, generalized layout, styling, text widgets, events, focus, accessibility, or interactive controls.
+- Integration of component foundations with rendering, reconciliation, generalized layout, styling, text widgets, events, focus, accessibility, or interactive controls.
 - `@Bindable` compilation in ordinary GDScript `.gd`, one-/two-way Gogo bindings, observable collections, or a dependency graph.
 - A `.bgd` frontend, Gogo language server, syntax highlighting, live preview, automatic compile-on-save, or a `RenderingDevice` backend.
 
@@ -62,6 +63,8 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 | `examples/hello/Main.gogo` | Authoritative source for the stage-0 demo |
 | `examples/hello/generated/Main.gogo.json` | Generated, versioned example IR; checked into Git |
 | `addons/estragon/runtime/gogo_view.gd` | Experimental Godot host and low-level drawing |
+| `addons/estragon/runtime/display_object.gd`, `container.gd` | Independent component ownership, disposal and invalidation foundations |
+| `tests/godot/components.gd` | Standalone component contract tests through T01 validation |
 | `examples/hello/Hello.tscn`, `project.godot` | Minimal Godot application host |
 | `addons/estragon/editor/` | Optional text-extension registration only |
 | `docs/GOGO_LANGUAGE.md` | Implemented Gogo subset vs speculative syntax |

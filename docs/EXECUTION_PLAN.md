@@ -59,7 +59,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T02 — Estragon-owned display-object and container foundations
 
-**Related:** [issue #1](https://github.com/resistdesign/Estragon/issues/1). **Prerequisite:** T01.
+**Tracking:** [issue #16](https://github.com/resistdesign/Estragon/issues/16). **Related umbrella:** [issue #1](https://github.com/resistdesign/Estragon/issues/1). **Prerequisite:** T01 (merged in PR #15).
 
 - Add independent display-object and container-like GDScript classes (e.g., named with `Estragon` prefixes to avoid Godot's `Container` collisions), child ownership, parent links, identity, cleanup and invalidation foundations.
 - Exercise add/remove/reparent, nested children, disposal and no-per-component-node guarantees with Godot tests.

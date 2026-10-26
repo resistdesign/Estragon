@@ -77,8 +77,15 @@ allocation, calls redraw, and frees the host through its normal exit lifecycle.
 The wrapper rejects engine errors even if the test reaches its success marker.
 This exercises the headless RenderingServer API path; it does not inspect pixels
 or prove GPU rendering, and the RID check does not independently prove deallocation.
-Future component assertions can extend this script, failing with an explicit
-nonzero `quit(1)` and emitting the completion marker only after all checks finish.
+A second runtime process runs `tests/godot/components.gd` with the same timeout,
+error and exit checks and requires `ESTRAGON_COMPONENTS_OK`. It checks standalone
+RefCounted component identity, ordered/nested membership, snapshot isolation,
+add/remove/reparent, null/duplicate/cycle/disposed rejection, dirty propagation
+and clearing, recursive/idempotent cleanup, cleanup-hook adoption rejection and
+strong/weak reference reclamation. Component tests create no component scene
+nodes or RIDs. Failures produce diagnostics and exit 1; the completion marker is
+emitted only if every assertion succeeds. The original prototype smoke remains
+a separate process and still must pass.
 New `.gd` files anywhere in the project copy are automatically parsed.
 
 `test:godot-harness` uses isolated temporary projects to prove rejection of:
