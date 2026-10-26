@@ -86,6 +86,19 @@ strong/weak reference reclamation. Component tests create no component scene
 nodes or RIDs. Failures produce diagnostics and exit 1; the completion marker is
 emitted only if every assertion succeeds. The original prototype smoke remains
 a separate process and still must pass.
+`tests/godot/layout.gd` runs in a third bounded runtime process requiring
+`ESTRAGON_LAYOUT_OK`. Its 64 assertions cover nested natural/fixed/fill geometry,
+fractional gaps, zero/overflow sizing, ordered absolute paint commands, actual
+SubViewport resizing, automatic property invalidation/repaint, surface canvas
+ownership, re-entry, subscription teardown and cleanup on removal/replacement/
+surface destruction (including cross-surface moves and pending deferred work).
+Application-style lifecycle tests never call component disposal. The T02 suite
+retains internal mechanism tests with deliberately updated unmount expectations.
+
+Five separate `invalid_sizing.gd` probes attempt infinite width, NaN height,
+illegal negative width, negative gap and invalid arranged geometry. Each must
+emit exactly its expected error, retain the previous values and finish with an
+explicit marker; other engine errors, timeout or unexpected exits fail validation.
 New `.gd` files anywhere in the project copy are automatically parsed.
 
 `test:godot-harness` uses isolated temporary projects to prove rejection of:
@@ -113,6 +126,37 @@ The existing `bun run check` remains the compiler-only convenience command.
 6. If editor extension support is desired, enable the optional plugin and confirm `.gogo` appears in the file browser (see [EDITOR.md](EDITOR.md)). This optional step changes persistent global editor settings; automated checks never enable the plugin.
 
 Record whether this manual check actually ran in every Godot-facing PR/handoff.
+
+## Independent layout/rendering visual check (T03)
+
+The original JSON scene above remains the configured main scene. For the new
+component runtime, open and run `examples/layout/Layout.tscn` in Godot 4.7:
+
+1. Confirm a purple header, a teal fixed-width sidebar beneath it, and a muted
+   purple content area filling the remaining space. Header height is 64 logical
+   units, sidebar width 160; vertical gap 16 and horizontal gap 12.
+2. Resize the window wider/narrower and taller/shorter. The header follows width;
+   the sidebar follows remaining height; content follows both remaining axes.
+   Very small viewports may overflow fixed sizes (no clipping or shrink yet).
+3. Inspect the remote scene tree: one `EstragonLayoutSurface` Node, no component
+   Nodes or Godot Controls. Stop/restart and check the debugger for errors.
+4. Root replacement/removal and cleanup without disposal calls are covered by
+   the automated lifecycle tests; no application-level cleanup is required.
+
+For a repeatable graphics capture on a machine with a display/OpenGL driver,
+use an isolated project copy, import it with the wrapper's documented import
+command, then run:
+
+```sh
+godot --path "$PROJECT_COPY" --scene res://examples/layout/Layout.tscn \
+  --write-movie /tmp/estragon-layout.png --quit-after 3 --resolution 640x360
+```
+
+Inspect the numbered PNG frames. `--write-movie` uses the configured movie output
+size (960x540 here), which can differ from the window's logical viewport size.
+This is a real graphics check, **not part of headless CI**. It does not replace
+interactive editor resizing/remote-tree inspection. Record exactly which checks
+actually ran in the PR/handoff; do not label headless geometry tests visual proof.
 
 ## Known gaps
 

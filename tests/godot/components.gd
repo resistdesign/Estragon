@@ -66,11 +66,11 @@ func _test_membership() -> void:
 	_check(branch.get_parent() == second and leaf.get_parent() == branch, "nested parent consistency")
 	_check(leaf.get_instance_id() == identity, "reparent preserves identity")
 	_check(branch.remove_child(leaf) == OK, "remove leaf")
-	_check(leaf.get_parent() == null and not leaf.is_disposed(), "remove preserves detached object")
-	_check(first.add_child(leaf) == OK, "reattach removed leaf")
-	_check(leaf.get_instance_id() == identity, "reattach preserves identity")
-	first.dispose()
-	second.dispose()
+	_check(leaf.get_parent() == null and leaf.is_disposed(), "removal unmounts automatically")
+	_check(first.add_child(leaf) == ERR_INVALID_PARAMETER, "unmounted leaf cannot reattach")
+	_check(leaf.get_instance_id() == identity, "unmount preserves identity of external reference")
+	first._dispose()
+	second._dispose()
 
 
 func _test_invalid_operations() -> void:
@@ -91,12 +91,12 @@ func _test_invalid_operations() -> void:
 	_check(nested.get_parent() == root and leaf.get_parent() == nested, "failed operations preserve links")
 	_check(root.get_dirty_flags() == 0 and nested.get_dirty_flags() == 0, "failed operations do not invalidate")
 	var dead := ComponentContainer.new()
-	dead.dispose()
+	dead._dispose()
 	_check(dead.add_child(leaf) == ERR_UNAVAILABLE, "disposed destination rejected")
 	_check(leaf.get_parent() == nested, "failed reparent keeps old owner")
 	_check(root.add_child(dead) == ERR_INVALID_PARAMETER, "disposed child rejected")
 	_check(dead.remove_child(leaf) == ERR_UNAVAILABLE, "disposed removal rejected")
-	root.dispose()
+	root._dispose()
 
 
 func _test_invalidation() -> void:
@@ -124,7 +124,7 @@ func _test_invalidation() -> void:
 	_check(root.get_dirty_flags() == 0, "empty/unknown flags ignored")
 	branch.remove_child(leaf)
 	_check(root.get_dirty_flags() == DisplayObject.DIRTY_ALL, "removal dirties old ancestors")
-	_check(leaf.get_dirty_flags() == DisplayObject.DIRTY_ALL, "detachment invalidates child")
+	_check(leaf.is_disposed() and leaf.get_dirty_flags() == 0, "unmount cleans removed child")
 	var destination := ComponentContainer.new()
 	destination.clear_invalidations()
 	root.clear_invalidations()
@@ -136,9 +136,9 @@ func _test_invalidation() -> void:
 	leaf.clear_invalidations()
 	leaf.invalidate(DisplayObject.DIRTY_PAINT)
 	_check(root.get_dirty_flags() == 0 and branch.get_dirty_flags() == 0, "detached invalidation stays local")
-	root.dispose()
-	destination.dispose()
-	leaf.dispose()
+	root._dispose()
+	destination._dispose()
+	leaf._dispose()
 
 
 func _test_disposal() -> void:
@@ -148,16 +148,16 @@ func _test_disposal() -> void:
 	root.add_child(branch)
 	branch.add_child(leaf)
 	root.clear_invalidations()
-	leaf.dispose()
-	leaf.dispose()
+	leaf._dispose()
+	leaf._dispose()
 	_check(leaf.cleanup_count == 1, "cleanup hook called once")
 	_check(leaf.is_disposed() and leaf.get_parent() == null, "disposed leaf is detached")
 	_check(branch.get_child_count() == 0, "direct disposal removes membership")
 	_check(root.get_dirty_flags() == DisplayObject.DIRTY_ALL, "direct disposal invalidates ancestors")
 	var owned := DisposalProbe.new()
 	branch.add_child(owned)
-	root.dispose()
-	root.dispose()
+	root._dispose()
+	root._dispose()
 	_check(root.is_disposed() and branch.is_disposed() and owned.is_disposed(), "recursive disposal")
 	_check(root.get_child_count() == 0 and branch.get_child_count() == 0, "disposed containers release children")
 	_check(branch.get_parent() == null and owned.get_parent() == null, "recursive links cleared")
@@ -170,11 +170,11 @@ func _test_disposal() -> void:
 	probe.destination = destination
 	disposing.add_child(probe)
 	disposing.add_child(pending)
-	disposing.dispose()
+	disposing._dispose()
 	_check(probe.adoption_result == ERR_UNAVAILABLE, "cleanup cannot adopt pending sibling")
 	_check(pending.is_disposed() and pending.get_parent() == null, "pending sibling still disposed")
 	_check(destination.get_child_count() == 0, "failed cleanup adoption leaves no stale membership")
-	destination.dispose()
+	destination._dispose()
 	owned.invalidate()
 	_check(root.get_dirty_flags() == 0 and owned.get_dirty_flags() == 0, "disposed objects stay clean")
 
@@ -193,8 +193,8 @@ func _test_reference_ownership() -> void:
 	child = DisplayObject.new()
 	parent.add_child(child)
 	parent = null
-	_check(child.get_parent() == null and not child.is_disposed(), "retained child survives parent reclamation detached")
-	child.dispose()
+	_check(child.get_parent() == null and not child.is_disposed(), "unmounted raw objects remain independent of surface lifetime")
+	child._dispose()
 	parent = ComponentContainer.new()
 	child = DisplayObject.new()
 	child_weak = weakref(child)
@@ -202,4 +202,4 @@ func _test_reference_ownership() -> void:
 	parent.remove_child(child)
 	child = null
 	_check(child_weak.get_ref() == null, "removal releases strong ownership")
-	parent.dispose()
+	parent._dispose()

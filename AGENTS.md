@@ -6,7 +6,7 @@
 
 **Estragon is an independent, self-rendered UI engine hosted by Godot.** Its declarative language is **Gogo** (`.gogo`), inspired by the authoring ergonomics of Adobe Flex 3/4. Gogo builds *Estragon* components—not Godot widgets or scene nodes.
 
-The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Its retained tree, reactivity, layout/input/paint and renderer are still planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
+The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout and rectangle paint/rendering are implemented; Gogo integration, reactivity, input and broader UI capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
 
 ```text
 .gogo source → strict Gogo compiler → versioned Estragon JSON IR
@@ -14,7 +14,7 @@ The **accepted target** is **TSX-like GDScript and XML-like component expression
                          Godot host Node → RenderingServer canvas
 ```
 
-The current host reads **temporary JSON IR** and renders fixed rectangles directly. The independent component runtime and Gogo-to-GDScript transpilation are **planned**, not implemented.
+The legacy host still reads **temporary JSON IR** and renders fixed rectangles directly. A separate GDScript component/layout surface exists; Gogo-to-GDScript transpilation remains **planned**, not implemented.
 
 ## Target authoring and implementation direction (NOT implemented yet)
 
@@ -44,11 +44,11 @@ The current host reads **temporary JSON IR** and renders fixed rectangles direct
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
 - A checked-in Gogo example plus generated IR, Bun test coverage, strict TypeScript typechecking, and GitHub Actions compiler checks.
 - An optional editor plugin that registers `.gogo` as an editable text extension.
-- `EstragonDisplayObject` / `EstragonContainer` RefCounted foundations: ordered ownership, weak parent links, disposal and dirty flags; independent of the unchanged JSON host.
+- `EstragonDisplayObject` / `EstragonContainer` RefCounted foundations: ordered ownership, weak parent links, disposal and dirty flags; plus minimal fixed/auto/fill VBox/HBox layout, rectangle paint commands and a RenderingServer surface, alongside the unchanged JSON host.
 
 **Not implemented:**
 
-- Integration of component foundations with rendering, reconciliation, generalized layout, styling, text widgets, events, focus, accessibility, or interactive controls.
+- Reconciliation, generalized layout beyond the minimal stack rules, styling, text widgets, input events, focus, accessibility, or interactive controls.
 - `@Bindable` compilation in ordinary GDScript `.gd`, one-/two-way Gogo bindings, observable collections, or a dependency graph.
 - A `.bgd` frontend, Gogo language server, syntax highlighting, live preview, automatic compile-on-save, or a `RenderingDevice` backend.
 
@@ -164,6 +164,7 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Runtime, components, and rendering
 
+- Application code must never need manual disposal in normal usage. Surface/container owners automatically clean unmounted/replaced components and renderer resources; reparent directly to transfer ownership without cleanup (ADR-0008).
 - Keep logical UI state independent of the host `Node` and graphics API. New component/display-list systems should be testable without creating a Godot scene tree.
 - The current host allocates one `RenderingServer` canvas RID, clears it before redraw, and frees it in `_exit_tree()`. Preserve resource ownership and cleanup.
 - Treat `RenderingServer` as a backend adapter. Do not spread direct canvas calls through future layout/binding/component layers.

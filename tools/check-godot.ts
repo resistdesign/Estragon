@@ -61,6 +61,22 @@ async function validate(project: string): Promise<void> {
   }
   requireSuccess("runtime smoke", await run(project, ["--script", SMOKE, "--quit-after", "120"]), COMPLETE);
   requireSuccess("component foundations", await run(project, ["--script", "res://tests/godot/components.gd", "--quit-after", "120"]), "ESTRAGON_COMPONENTS_OK");
+  requireSuccess("layout, rendering and lifecycle", await run(project, ["--script", "res://tests/godot/layout.gd", "--quit-after", "120"]), "ESTRAGON_LAYOUT_OK");
+  for (const probe of ["width", "height", "negative", "gap", "geometry"]) {
+    const result = await run(project, ["--script", "res://tests/godot/invalid_sizing.gd", "--", probe]);
+    const expected = probe === "geometry" ? "arranged geometry must be finite with nonnegative size"
+      : probe === "gap" ? "gap must be finite and nonnegative"
+      : `${probe === "height" ? "height" : "width"} must be -1 (auto) or finite and nonnegative`;
+    // Require the expected diagnostic AND successful post-error value checks.
+    // Any additional engine error, assertion or timeout remains a failure.
+    const errors = result.output.split(/\r?\n/).filter((line) => ENGINE_ERROR.test(line));
+    if (result.timedOut || result.code !== 0 || errors.length !== 1
+        || !errors[0]?.includes(`Estragon: ${expected}`)
+        || !result.output.split(/\r?\n/).includes("ESTRAGON_INVALID_SIZE_REJECTED")) {
+      throw new Error(`Invalid sizing probe ${probe} failed\n${result.output}`);
+    }
+    console.log(`PASS rejected invalid ${probe} without mutating sizing`);
+  }
 }
 
 async function selfTest(): Promise<void> {

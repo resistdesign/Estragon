@@ -180,6 +180,12 @@ This framework also requires a **real component library**, separate from its tra
 
 These are **Estragon** classes, not Godot's `Control`/`Container` widgets. Godot already has a `Container` class; choose runtime script identifiers/namespacing that avoid conflicts while keeping clean Gogo markup. A limited host `Node` is fine, but **no Godot node per Estragon component**. Clarify whether the base classes extend `RefCounted`, another Godot `Object` type, or a different representation after profiling and lifecycle experiments.
 
+**Lifecycle requirement (user correction, T03):** application code must not manually
+call disposal in normal usage. Surface and container owners automatically clean
+unmounted/replaced trees and surface resources. Reparenting transfers ownership
+without cleanup. Internal disposal is an implementation detail; see ADR-0008 and
+the current runtime contract in ARCHITECTURE.
+
 Layout must work with nested components and changing viewport sizes; it cannot be a series of hard-coded absolute positions. Source code generation and component-runtime development should progress together so the compiler has real target APIs.
 
 ## Mixing Gogo and GDScript: one language experience
