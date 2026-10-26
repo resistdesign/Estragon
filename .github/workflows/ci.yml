@@ -1,4 +1,4 @@
-name: Compiler checks
+name: Compiler and Godot checks
 
 on:
   push:
@@ -20,3 +20,28 @@ jobs:
         run: bun run test
       - name: Check committed example IR matches source
         run: bun run verify:ir
+
+  godot-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.4"
+      - name: Install locked dependencies
+        run: bun install --frozen-lockfile
+      - name: Install official Godot 4.7 stable editor
+        env:
+          GODOT_URL: https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
+        run: |
+          curl --fail --location --retry 3 "$GODOT_URL" --output "$RUNNER_TEMP/godot.zip"
+          echo "0b1a6c54c2c619c12e169fe9241edda4b81080b519451cec2984bf0d2c6cb73c  $RUNNER_TEMP/godot.zip" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/godot-bin"
+          unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot-bin"
+          chmod +x "$RUNNER_TEMP/godot-bin/Godot_v4.7-stable_linux.x86_64"
+          echo "GODOT_BIN=$RUNNER_TEMP/godot-bin/Godot_v4.7-stable_linux.x86_64" >> "$GITHUB_ENV"
+      - name: Import, parse every GDScript, and run runtime smoke
+        run: bun run check:godot
+      - name: Prove import, parse, and runtime failures are rejected
+        run: bun run test:godot-harness

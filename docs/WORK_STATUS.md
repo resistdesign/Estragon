@@ -1,16 +1,16 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-26, based on `main` after merged [PR #12](https://github.com/resistdesign/Estragon/pull/12); **no implementation of the new Gogo-to-GDScript architecture is complete**. The former JSON demo is still in place.
+**Snapshot:** 2026-10-26, T01 validation completion PR based on `main` at `9abf743` (merged [PR #14](https://github.com/resistdesign/Estragon/pull/14)). T01 is **In review until approval and merge**; the validation foundation does not implement the new Gogo-to-GDScript architecture. The former JSON demo is still in place.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** [T01 / issue #13](https://github.com/resistdesign/Estragon/issues/13), or research [R01 / issue #4](https://github.com/resistdesign/Estragon/issues/4) in a separate branch. Nothing here is an instruction to merge or implement all tasks at once.
+**Start here:** inspect the latest [T01 / issue #13 handoff and linked PR](https://github.com/resistdesign/Estragon/issues/13). After T01 is approved and merged, T02 is next; do not start it from an unmerged T01 branch. Alternatively, research [R01 / issue #4](https://github.com/resistdesign/Estragon/issues/4) in a separate branch. Nothing here is an instruction to merge or implement all tasks at once.
 
 ## Current plan register
 
 | ID | Status in this snapshot | Work | Live issue / relevant umbrella | Accepted completion evidence |
 | --- | --- | --- | --- | --- |
-| **T01** | **Ready** | Godot 4.7 headless validation/CI | [#13](https://github.com/resistdesign/Estragon/issues/13) | Pending |
+| **T01** | **In review; Done only upon approval + merge** | Godot 4.7 headless validation/CI | [#13](https://github.com/resistdesign/Estragon/issues/13) (PR/handoff) | Local Bun check (27 tests + typecheck + IR), Godot import/3 scripts/runtime smoke, seven failure probes pass; see issue/PR for CI. Manual visual check not run. |
 | T02 | Queued (T01) | Display object/container primitives | [#1](https://github.com/resistdesign/Estragon/issues/1) (umbrella) | Pending |
 | T03 | Queued (T02) | Responsive layout/paint | [#3](https://github.com/resistdesign/Estragon/issues/3) (umbrella) | Pending |
 | T04 | Queued (T03) | Markup-only Gogo → GDScript | Create task issue on pickup | Pending |
