@@ -1,12 +1,14 @@
 # Estragon design direction: Gogo, GDScript, and the component runtime
 
-**Status:** Product direction captured 2026-10-26. **Not implemented.** The existing JSON-based demo is a disposable stage-0 prototype, not the intended production architecture.
+**Status:** Product direction captured 2026-10-26. **Full mixed-source target not implemented; T04 markup slice works.** The existing JSON-based demo is a disposable stage-0 prototype, not the intended production architecture.
+
+T04 now implements a namespace-free **markup-only** Gogo → GDScript slice. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for executable syntax. T05 mixed-source composition, signal generation and binding/editor integration remain future work.
 
 This document records the target developer experience: **Gogo should feel like TSX, using GDScript as its programming language.** This is **not** a claim that its language features or Godot integrations already work. Exact grammar, editor integration, and new annotations in ordinary `.gd` files need prototypes.
 
 ## The central correction: compile Gogo to GDScript
 
-**Gogo is an XML-based declarative language that transpiles to real GDScript.** It is not intended to produce a persistent JSON UI description for a runtime XML/JSON interpreter.
+**Gogo combines GDScript with XML-like component expressions and transpiles to real GDScript.** It is not intended to produce a persistent JSON UI description for a runtime XML/JSON interpreter.
 
 Target pipeline:
 

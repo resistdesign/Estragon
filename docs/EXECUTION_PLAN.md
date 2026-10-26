@@ -76,7 +76,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T04 — Minimal Gogo → GDScript transpiler
 
-**Prerequisite:** T03.
+**Tracking:** [issue #20](https://github.com/resistdesign/Estragon/issues/20). **Prerequisite:** T03 (merged in PR #19).
 
 - Add an unprefixed, markup-only **transpilation slice** (e.g., `<VBox>` / `<HBox>` / `<Rect>`) that emits valid, deterministic GDScript constructing real T02/T03 classes.
 - Validate component names, property types, children and malformed source with useful locations. Feed generated output to the Godot validation added in T01.

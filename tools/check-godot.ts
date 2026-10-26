@@ -1,6 +1,8 @@
-import { cp, mkdtemp, readdir, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join, relative, resolve } from "node:path";
+import { compileExample, EXAMPLE_OUTPUT } from "./check-gdscript.ts";
+import { transpileGogo } from "./transpile-gogo.ts";
 
 // The official standard editor build; export templates cannot import projects.
 const VERSION = "4.7.stable.official.5b4e0cb0f";
@@ -53,6 +55,16 @@ async function scriptsIn(directory: string): Promise<string[]> {
 }
 
 async function validate(project: string): Promise<void> {
+  // Prove freshly compiled source, not just the checked-in .gd fixture, executes.
+  await writeFile(join(project, EXAMPLE_OUTPUT), await compileExample(project));
+  const generated = join(project, "tests/godot/generated");
+  await mkdir(generated, { recursive: true });
+  for (const [name, source] of [
+    ["Numbers", '<Rect width="1e20" height="0" fill="#12345678"/>'],
+    ["Empty", '<HBox width="auto" height="auto" gap="0" fill_width="false"/>'],
+  ] as const) {
+    await writeFile(join(generated, `${name}.gd`), transpileGogo(source, `<Godot ${name} probe>`));
+  }
   // Recovery mode prevents enabled editor plugins from changing global settings.
   requireSuccess("project import", await run(project, ["--editor", "--recovery-mode", "--import"]));
   for (const path of await scriptsIn(project)) {
@@ -62,6 +74,7 @@ async function validate(project: string): Promise<void> {
   requireSuccess("runtime smoke", await run(project, ["--script", SMOKE, "--quit-after", "120"]), COMPLETE);
   requireSuccess("component foundations", await run(project, ["--script", "res://tests/godot/components.gd", "--quit-after", "120"]), "ESTRAGON_COMPONENTS_OK");
   requireSuccess("layout, rendering and lifecycle", await run(project, ["--script", "res://tests/godot/layout.gd", "--quit-after", "120"]), "ESTRAGON_LAYOUT_OK");
+  requireSuccess("fresh Gogo-generated GDScript", await run(project, ["--script", "res://tests/godot/generated_gogo.gd", "--quit-after", "120"]), "ESTRAGON_GENERATED_GOGO_OK");
   for (const probe of ["width", "height", "negative", "gap", "geometry"]) {
     const result = await run(project, ["--script", "res://tests/godot/invalid_sizing.gd", "--", probe]);
     const expected = probe === "geometry" ? "arranged geometry must be finite with nonnegative size"

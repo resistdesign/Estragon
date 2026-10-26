@@ -1,0 +1,8 @@
+<!-- T04 markup-only example; mixed GDScript arrives in T05. -->
+<VBox gap="16">
+    <Rect height="64" fill_width="true" fill="#8566e0" />
+    <HBox gap="12" fill_width="true" fill_height="true">
+        <Rect width="160" fill_height="true" fill="#30c9b0" />
+        <Rect fill_width="true" fill_height="true" fill="#50466f" />
+    </HBox>
+</VBox>

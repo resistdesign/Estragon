@@ -10,15 +10,38 @@ The design is a **standalone UI stack hosted by Godot**: Estragon owns its logic
 
 ## Where we're going
 
-**Gogo is XML-like markup with TSX-style GDScript composition.** Developers should be able to write unprefixed components such as `<VBox>` and `<Button>`, combine them directly with GDScript expressions and methods in `.gogo`, and have the compiler generate ordinary GDScript that instantiates Estragon's independent runtime objects and wires signals/bindings. **No `xmlns` or `<fx:...` prefixes** in the intended language. A runtime component family (`DisplayObject`, `Container`, `VBox`, `HBox`, etc.) and Gogo-aware Godot editor support are planned. The desired `@Bindable` experience in ordinary `.gd` files requires a separate feasibility investigation.
+**Gogo is XML-like markup with TSX-style GDScript composition.** Developers should be able to write unprefixed components such as `<VBox>` and `<Button>`, combine them directly with GDScript expressions and methods in `.gogo`, and have the compiler generate ordinary GDScript that instantiates Estragon's independent runtime objects and wires signals/bindings. **No `xmlns` or `<fx:...` prefixes** in the intended language. Minimal independent runtime/stack classes exist; a fuller component suite and Gogo-aware editor support remain planned. The desired `@Bindable` experience in ordinary `.gd` files requires a separate feasibility investigation.
 
 This is the **target direction, not a feature that currently works**. Read the [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md) for the examples, open decisions, and technical constraints.
 
-## Status: experimental scaffold
+## Status: experimental vertical slices
 
-This repository contains a tiny, **working-in-principle** compiler slice: a strict TypeScript Gogo parser (executed by Bun) generates a versioned UI intermediate representation (IR), which a minimal Godot `Node` host draws through **`RenderingServer`** using its 2D canvas primitives. That draws pixels without creating any Godot `Control` nodes. **The JSON intermediate output and namespace-prefixed XML syntax belong only to this temporary prototype.** It is a rendering spike, *not* the intended Gogo-to-GDScript compiler or finished component/layout engine. This starter has only `View` and fixed-position `Rect` elements; no binding, text, layout, events or authoring-time preview yet.
+T04 compiles a minimal namespace-free `VBox`/`HBox`/`Rect` markup subset to ordinary
+GDScript constructing Estragon's independent components. The runtime supports
+nested auto/fixed/fill stack layout, rectangle drawing and automatic lifecycle
+through a single surface host. Mixed GDScript/markup, bindings, text and input
+remain future work. See the [supported subset](docs/GOGO_LANGUAGE.md).
+
+The earlier namespaced XML → JSON rectangle demo is preserved separately and
+remains the configured main scene. It is temporary compatibility scaffolding,
+not the new compiler's runtime format.
 
 `RenderingServer` is the initial low-level graphics adapter. The intended render backend is pluggable; a more direct `RenderingDevice`/shader-driven backend is a future investigation, not a completed feature or final decision.
+
+## Try the Gogo-to-GDScript slice
+
+Requires Bun 1.4.4 and the pinned Godot 4.7 editor (see TESTING):
+
+```sh
+bun install --frozen-lockfile
+bun run transpile examples/compiled/Layout.gogo --output examples/compiled/generated/Layout.gd
+bun run check
+bun run check:godot
+```
+
+Open `examples/compiled/Compiled.tscn` in Godot and run that scene. Edit `.gogo`
+and recompile; do not edit generated `.gd`. There is no compile-on-save hook yet.
+Generated code mounts components on an EstragonSurface; cleanup is automatic.
 
 ## Try the initial slice
 
@@ -50,7 +73,7 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 
 ## Picking up development with Codex
 
-**One task per PR.** Start with [T01: Godot 4.7 CI validation](https://github.com/resistdesign/Estragon/issues/13) (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
+**One task per PR.** Check the live [work register](docs/WORK_STATUS.md) and the latest [T04 handoff](https://github.com/resistdesign/Estragon/issues/20) before choosing work (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
 
 ## Naming
 
