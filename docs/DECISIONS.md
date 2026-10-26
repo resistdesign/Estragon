@@ -24,7 +24,7 @@ The initial proof uses `RenderingServer` canvas primitives to render pixels with
 
 **Status: provisional. 2026-10-25.**
 
-Prefer a compiler-assisted extended GDScript source format (working extension `.bgd`) over a Godot fork for the first experiment. Source-aware parsing and generated setters/signals are required. A true `@bindable` in stock `.gd` is not provided by this scaffold.
+The desired experience is `@Bindable` in ordinary user-authored `.gd`, transformed into typed getters/setters and notifications. **Stock GDScript does not accept arbitrary addon-defined annotations**, and a simple `EditorPlugin` cannot register them. Explore real pre-parse source transformation/editor integration before considering a separate source extension (`.bgd`) or engine/parser modification. None of these mechanisms is confirmed; do not silently replace the requested `.gd` experience with `.bgd`.
 
 ## ADR-0005 — Edit the original Gogo source
 
@@ -38,14 +38,24 @@ Favor Godot's editable text-file workflow plus editor plugin first; do not conve
 
 Estragon is distributed under the [MIT License](../LICENSE).
 
+## ADR-0007 — Gogo generates GDScript with TSX-like authoring
+
+**Status: accepted direction. 2026-10-26.**
+
+Gogo (`.gogo`) should support **XML-like component expressions directly mixed with GDScript**, borrowing TSX's compositional authoring model and Flex 4's runtime/component principles. Component tags are **unprefixed** (`<VBox>`, `<Button>`); mandatory XML namespace prefixes and `xmlns` declarations are rejected as the product direction. The transpiler generates valid GDScript for typed Estragon components, automatic event/signal wiring, and later bindings. The first prototype's JSON output and namespaced XML are **temporary scaffolding**, not the final language contract.
+
+The *experience* is accepted; precise grammar, imports, binding semantics, parser architecture, editor integration, GDScript class organization, and handling `@Bindable` in ordinary `.gd` files are still open engineering decisions. See [design direction](DESIGN_DIRECTION.md).
+
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.
-- **Source language for reactive scripts:** `.bgd` proposal vs alternative compiler frontend.
-- **Gogo language:** XML shape, component tags, style/event syntax, expression grammar and interoperability.
+- **Bindable source integration:** preserve the desired `@Bindable` annotation in ordinary authored `.gd`; prove a workable pre-parse/tooling mechanism or evaluate explicit fallbacks.
+- **Gogo language:** TSX-like GDScript/markup grammar, component import/resolution, typed expression/event/binding semantics and optional markup-only shorthand.
 - **Node integration:** which components, if any, deserve optional Godot node wrappers.
 - **Layout/style semantics:** borrow selected Flex ideas, establish a new model, or align with modern UI layouts.
 - **Text and accessibility:** text shaper/platform integration, IME, screen readers and testable semantics.
 - **Editor architecture:** ScriptEditor plugin vs standalone Gogo authoring surface vs language server.
+- **Mixed-authoring implementation:** reliable source mapping, parsing GDScript expressions alongside markup, and optional code-behind.
 
 When any of these is decided, record the rationale and tradeoffs here before implementation.

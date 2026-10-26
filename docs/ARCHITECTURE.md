@@ -4,44 +4,50 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
-## Intended processing pipeline
+## Intended processing pipeline (not implemented)
 
-```text
-             *.gogo                  *.bgd / bindings (planned)
-                |                             |
-          Gogo parser                 reactive source frontend
-                |                             |
-       type + schema validation       dependency analysis
-                |                             |
-                +----- compiler / typed UI IR-+
-                              |
-                     component creation
-                              |
-                 Estragon-owned retained tree
-                   |       |       |        |
-               bindings  styling  layout  input/focus
-                   |       |       |        |
-                 invalidation + reconciliation
-                              |
-                       paint / display list
-                              |
-                      renderer interface
-                      /                \
-       RenderingServer adapter       GPU/RenderingDevice
-           (stage 0)                  (research)
-                      \                /
-                       Godot Viewport
-```
+The [design direction](DESIGN_DIRECTION.md) is **Gogo's XML-like markup and GDScript mixed in one authored `.gogo` source**, transpiled to GDScript—not JSON UI data interpreted by Godot.
 
-The IR is **not** a serialized `PackedScene`. It represents Estragon components and properties.
+~~~text
+  *.gogo: GDScript + <Component> elements    authored *.gd with @Bindable
+                  |                            (desired; parser hook TBD)
+          hybrid source frontend                          |
+                  |                          GDScript-aware preprocessing
+          typed components, props,                        |
+          expressions, signals, bindings -----------------+
+                  |
+         deterministic GDScript generator
+                  |
+        ordinary generated *.gd scripts
+                  |
+          Godot GDScript compilation
+                  |
+           Estragon component instances
+            /           |          \
+         layout      reactive       input
+                     state/events
+            \           |          /
+             paint / retained display list
+                        |
+              renderer backend interface
+                  /              \
+        RenderingServer      RenderingDevice
+            adapter           (research)
+                  \              /
+                  Godot Viewport
+~~~
+
+A typed *compiler-internal* AST or intermediate model is useful; that is **not** a mandate for serialized JSON as the runtime format. Component construction, typed references and signal connections should be produced as **GDScript code**. Estragon's component tree remains independent of Godot's `Control`/`Node` hierarchy.
+
+**Current state:** the first prototype uses `tools/gogo.ts` to emit `*.gogo.json` for a minimal `RenderingServer` host. Keep this stage-0 demo working until a new Gogo-to-GDScript vertical slice is proven, then migrate it deliberately. Its namespace-prefixed XML is **not** the intended new Gogo syntax.
 
 ## Layer responsibilities
 
 | Layer | Owns | Does not own |
 | --- | --- | --- |
-| Gogo frontend | Markup parsing, namespaces, validation, diagnostics | Rendering, Godot nodes |
-| Binding compiler (planned) | Observable properties and dependency descriptors | Per-frame polling |
-| Component runtime (planned) | Logical objects, lifecycle, identity, reconciliation | Godot scene tree |
+| Gogo frontend/codegen (planned) | Hybrid GDScript/markup parsing, component/type resolution, diagnostics, generated GDScript and source maps | Rendering, Godot nodes |
+| Binding compiler (planned) | Observable properties, dependency descriptors and source transformation | Per-frame polling |
+| Component runtime (planned) | Independent `DisplayObject`/`Container`-style objects, lifecycle, identity, reconciliation | Godot scene tree |
 | Layout engine (planned) | Measurement, constraints, flex/stack/grid decisions | `Container` nodes |
 | Input system (planned) | Hit testing, event propagation, focus, pointer/keyboard/IME | `Control` event routing |
 | Paint system (planned) | Display list, dirty regions, clipping and stacking | Specific graphics API |
@@ -76,7 +82,7 @@ A Godot `Node` can host an Estragon root, expose state to a Godot scene or bridg
 - A checked-in sample IR and a Godot host `Node` that submits rectangles through `RenderingServer.canvas_item_add_rect()`.
 - Compiler unit tests and GitHub Actions test runner.
 
-The host renders the IR's positions directly. This is **not yet** the retained component tree, style engine or layout engine described above. There is no text, interaction, reactive compilation, hot reload, preview or other rendering backend yet.
+The host renders **temporary JSON IR** positions directly. It does **not** compile Gogo into GDScript and is **not yet** the retained component tree, layout engine or event/binding system described above. There is no text, interaction, reactive compilation, hot reload, preview or other rendering backend yet.
 
 ## Performance model to implement later
 

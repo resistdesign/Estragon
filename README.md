@@ -8,9 +8,15 @@ Estragon is inspired by the declarative markup, data binding, and developer expe
 
 The design is a **standalone UI stack hosted by Godot**: Estragon owns its logical component tree, layout, styles, input/focus, accessibility semantics, reactive state and drawing. Godot provides application hosting and low-level graphics access. Optional bridges to Godot nodes may be considered, but are not the default representation of UI elements.
 
+## Where we're going
+
+**Gogo is XML-like markup with TSX-style GDScript composition.** Developers should be able to write unprefixed components such as `<VBox>` and `<Button>`, combine them directly with GDScript expressions and methods in `.gogo`, and have the compiler generate ordinary GDScript that instantiates Estragon's independent runtime objects and wires signals/bindings. **No `xmlns` or `<fx:...` prefixes** in the intended language. A runtime component family (`DisplayObject`, `Container`, `VBox`, `HBox`, etc.) and Gogo-aware Godot editor support are planned. The desired `@Bindable` experience in ordinary `.gd` files requires a separate feasibility investigation.
+
+This is the **target direction, not a feature that currently works**. Read the [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md) for the examples, open decisions, and technical constraints.
+
 ## Status: experimental scaffold
 
-This repository contains a tiny, **working-in-principle** compiler slice: a strict TypeScript Gogo parser (executed by Bun) generates a versioned UI intermediate representation (IR), which a minimal Godot `Node` host draws through **`RenderingServer`** using its 2D canvas primitives. That draws pixels without creating any Godot `Control` nodes. It is a rendering spike, *not* the finished component/layout engine. This starter has only `View` and fixed-position `Rect` elements; no binding, text, layout, events or authoring-time preview yet.
+This repository contains a tiny, **working-in-principle** compiler slice: a strict TypeScript Gogo parser (executed by Bun) generates a versioned UI intermediate representation (IR), which a minimal Godot `Node` host draws through **`RenderingServer`** using its 2D canvas primitives. That draws pixels without creating any Godot `Control` nodes. **The JSON intermediate output and namespace-prefixed XML syntax belong only to this temporary prototype.** It is a rendering spike, *not* the intended Gogo-to-GDScript compiler or finished component/layout engine. This starter has only `View` and fixed-position `Rect` elements; no binding, text, layout, events or authoring-time preview yet.
 
 `RenderingServer` is the initial low-level graphics adapter. The intended render backend is pluggable; a more direct `RenderingDevice`/shader-driven backend is a future investigation, not a completed feature or final decision.
 
@@ -30,6 +36,7 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 
 ## Read the design
 
+- [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md)
 - [Vision and non-goals](docs/VISION.md)
 - [System architecture and rendering backends](docs/ARCHITECTURE.md)
 - [Gogo markup language](docs/GOGO_LANGUAGE.md)
