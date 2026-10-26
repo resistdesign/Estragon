@@ -14,7 +14,7 @@ To enable it: open `project.godot`, go to **Project > Project Settings > Plugins
 
 ## What the plugin does NOT do yet
 
-It does not highlight Gogo syntax, call the Python compiler, show inline errors, regenerate IR automatically, watch files, provide completion or display a UI preview. Those are next-stage features.
+It does not highlight Gogo syntax, call the Bun/TypeScript compiler, show inline errors, regenerate IR automatically, watch files, provide completion or display a UI preview. Those are next-stage features.
 
 ## Intended editor architecture
 

@@ -27,7 +27,7 @@ Rules:
 Compile:
 
 ```sh
-python3 tools/gogo.py examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
+bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
 ```
 
 The output is versioned, deterministic JSON UI IR, **not a Godot scene**.

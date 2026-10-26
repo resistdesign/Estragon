@@ -10,20 +10,21 @@ The design is a **standalone UI stack hosted by Godot**: Estragon owns its logic
 
 ## Status: experimental scaffold
 
-This repository contains a tiny, **working-in-principle** compiler slice: a Python, standard-library-only Gogo parser generates a versioned UI intermediate representation (IR), which a minimal Godot `Node` host draws through **`RenderingServer`** using its 2D canvas primitives. That draws pixels without creating any Godot `Control` nodes. It is a rendering spike, *not* the finished component/layout engine. This starter has only `View` and fixed-position `Rect` elements; no binding, text, layout, events or authoring-time preview yet.
+This repository contains a tiny, **working-in-principle** compiler slice: a strict TypeScript Gogo parser (executed by Bun) generates a versioned UI intermediate representation (IR), which a minimal Godot `Node` host draws through **`RenderingServer`** using its 2D canvas primitives. That draws pixels without creating any Godot `Control` nodes. It is a rendering spike, *not* the finished component/layout engine. This starter has only `View` and fixed-position `Rect` elements; no binding, text, layout, events or authoring-time preview yet.
 
 `RenderingServer` is the initial low-level graphics adapter. The intended render backend is pluggable; a more direct `RenderingDevice`/shader-driven backend is a future investigation, not a completed feature or final decision.
 
 ## Try the initial slice
 
-Requires **Python 3.10+** and a compatible **Godot 4.x** editor/runtime.
+Requires **Bun 1.4.4** for compiling/testing and a compatible **Godot 4.x** editor/runtime to run the demo.
 
 ```sh
-python3 tools/gogo.py examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
-python3 -m unittest discover -s tests -v
+bun install --frozen-lockfile
+bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
+bun run check
 ```
 
-Open this directory as a Godot project (`project.godot`) and run the main scene. `examples/hello/Hello.tscn` contains **one host `Node`**, which reads the checked-in generated IR and draws rectangles directly using `RenderingServer.canvas_item_add_rect()`. The checked-in output lets the scene run without requiring Python from the Godot process.
+Open this directory as a Godot project (`project.godot`) and run the main scene. `examples/hello/Hello.tscn` contains **one host `Node`**, which reads the checked-in generated IR and draws rectangles directly using `RenderingServer.canvas_item_add_rect()`. The checked-in output lets the scene run without requiring Bun in the Godot process or at application runtime.
 
 The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recognizable as an editor text-file extension when enabled. Syntax highlighting, source diagnostics and preview integration are on the roadmap. The plugin changes the global Godot Editor Settings text-extension list; see [editor integration](docs/EDITOR.md) before enabling it.
 

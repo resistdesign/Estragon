@@ -1,33 +1,42 @@
 # Tests and verification
 
-## Compiler tests
+## Compiler typechecking and tests
 
-Run from repository root:
-
-```sh
-python3 -m unittest discover -s tests -v
-```
-
-The suite covers successful compilation, deterministic UI IR, namespace/schema errors, unknown component types, ID uniqueness, dimensions/colors and the checked-in example. The only toolchain needed is Python 3.10+.
-
-Check generated sample freshness:
+Requires **Bun 1.4.4**. From the repository root:
 
 ```sh
-python3 tools/gogo.py examples/hello/Main.gogo --output /tmp/Main.gogo.json
-diff -u examples/hello/generated/Main.gogo.json /tmp/Main.gogo.json
+bun install --frozen-lockfile
+bun run typecheck
+bun run test
+bun run verify:ir
 ```
 
-GitHub Actions repeats both checks on pushes and pull requests.
+The TypeScript suite covers successful compilation, deterministic IR, alternate/default XML namespace prefixes, invalid source, schema errors, duplicate IDs, dimensions/colors, CLI failure handling, and the checked-in example. Typechecking is **mandatory**: Bun's TypeScript execution alone does not validate types.
+
+The convenience command `bun run check` runs the typecheck, tests, and IR fixture verification together.
+
+## Generated IR
+
+The checked-in JSON is generated, not hand-maintained. `bun run verify:ir` compares compiler output against the committed fixture **byte-for-byte without rewriting it**.
+
+When intentionally changing the Gogo sample, regenerate it with:
+
+```sh
+bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gogo.json
+bun run check
+```
+
+GitHub Actions uses `bun install --frozen-lockfile` and these checks on pushes and pull requests. The Bun lockfile is committed for reproducibility.
 
 ## Godot smoke check (manual for now)
 
 1. Open the repository root as a Godot 4.x project.
 2. Run `examples/hello/Hello.tscn` or the configured main scene.
-3. Confirm a near-dark background, purple panel and teal stripe.
+3. Confirm a near-dark background, purple panel, and teal stripe.
 4. Confirm the remote scene tree has **one Estragon host `Node`**, and no `Control` instances generated for each Gogo element.
-5. Edit `examples/hello/Main.gogo`, regenerate the JSON via Python and run the scene again. Verify that rectangle changes appear.
+5. Edit `examples/hello/Main.gogo`, regenerate the JSON with Bun, and run the scene again. Verify that rectangle changes appear.
 6. If editor extension support is desired, enable the optional plugin and confirm `.gogo` appears in the file browser (see [EDITOR.md](EDITOR.md)).
 
 ## Known gaps
 
-This scaffold's Python tests do not validate the GDScript host against a running Godot binary. There is no automated visual snapshot test, multi-platform test or benchmark yet. Do not interpret a passing Python CI job as proof that the Godot UI runtime has been comprehensively tested.
+Compiler checks do not exercise GDScript against a running Godot binary. Automated visual snapshots, multi-platform testing, and benchmarks do not exist yet. **Passing CI does not establish that the Godot renderer was exercised.**
