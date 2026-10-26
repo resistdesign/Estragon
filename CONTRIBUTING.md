@@ -18,7 +18,9 @@ bun run gogo examples/hello/Main.gogo --output examples/hello/generated/Main.gog
 bun run check
 ```
 
-When changing Gogo, update the language specification, examples, golden IR and tests. When changing graphics behavior, document the backend assumptions and add reproducible smoke-test steps. CI typechecks the TypeScript tooling, runs Bun compiler tests, and checks generated IR. It does not run Godot.
+**Future direction:** Gogo uses TSX-like GDScript-plus-XML-like expressions, unprefixed component tags and generated GDScript. The current namespaced XML-to-JSON compiler is a temporary demo. See [the design direction](docs/DESIGN_DIRECTION.md), including the unresolved native `@Bindable` parsing problem.
+
+When changing the **stage-0** compiler, update the supported language specification, examples, golden JSON IR and tests. New Gogo-to-GDScript work should generate tests and a runnable Godot proof. When changing graphics behavior, document the backend assumptions and add reproducible smoke-test steps. CI typechecks the TypeScript tooling, runs Bun compiler tests, and checks generated IR. It does not run Godot.
 
 Pull requests should explain intent, changes, verification, compatibility and whether an architecture decision is affected. Keep speculative features in issues/docs until a functioning prototype demonstrates their viability.
 
