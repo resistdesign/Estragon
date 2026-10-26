@@ -36,6 +36,8 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 
 ## Read the design
 
+- [Codex execution plan (sequenced PRs and acceptance gates)](docs/EXECUTION_PLAN.md)
+- [Work status and cross-session handoffs](docs/WORK_STATUS.md)
 - [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md)
 - [Vision and non-goals](docs/VISION.md)
 - [System architecture and rendering backends](docs/ARCHITECTURE.md)
@@ -45,6 +47,10 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 - [Project roadmap](docs/ROADMAP.md)
 - [Architecture decisions and open questions](docs/DECISIONS.md)
 - [Contributing](CONTRIBUTING.md)
+
+## Picking up development with Codex
+
+**One task per PR.** Start with [T01: Godot 4.7 CI validation](https://github.com/resistdesign/Estragon/issues/13) (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
 
 ## Naming
 

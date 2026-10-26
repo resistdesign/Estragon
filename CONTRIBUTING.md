@@ -22,6 +22,8 @@ bun run check
 
 When changing the **stage-0** compiler, update the supported language specification, examples, golden JSON IR and tests. New Gogo-to-GDScript work should generate tests and a runnable Godot proof. When changing graphics behavior, document the backend assumptions and add reproducible smoke-test steps. CI typechecks the TypeScript tooling, runs Bun compiler tests, and checks generated IR. It does not run Godot.
 
+Planned Codex implementation should follow the work ID, dependency, issue/PR progress and session handoff rules in [AGENTS.md](AGENTS.md), [EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md) and [WORK_STATUS.md](docs/WORK_STATUS.md). The live GitHub issue and PR retain progress between sessions; an unmerged PR is not a completed task.
+
 Pull requests should explain intent, changes, verification, compatibility and whether an architecture decision is affected. Keep speculative features in issues/docs until a functioning prototype demonstrates their viability.
 
 ## License
