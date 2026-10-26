@@ -81,7 +81,7 @@ async function selfTest(): Promise<void> {
       await writeFile(join(project, test.file ?? "probe.gd"), test.source);
       const args = test.phase === "import" ? ["--editor", "--recovery-mode", "--import"]
         : test.phase === "parse" ? ["--script", "res://probe.gd", "--check-only"]
-        : ["--script", "res://probe.gd", "--quit-after", "120"];
+        : ["--script", "res://probe.gd", ...(test.timeout ? [] : ["--quit-after", "120"])];
       const result = await run(project, args, test.timeout);
       let failure: Error | undefined;
       try {
