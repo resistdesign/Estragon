@@ -262,3 +262,13 @@ Until then, keep product aspirations and current capabilities **explicitly disti
 - Apache Flex: [MXML syntax and event-property conventions](https://flex.apache.org/doc/flex/using/flx_mxmlSyntax_sy.html).
 - Godot 4.7: [EditorSyntaxHighlighter](https://docs.godotengine.org/en/4.7/classes/class_editorsyntaxhighlighter.html).
 - Godot: [GDScript syntax and annotations](https://docs.godotengine.org/en/4.7/tutorials/scripting/gdscript/gdscript_basics.html).
+
+### T06 runtime interaction boundary
+
+The independent runtime now includes basic Text/Button components, explicit-line
+font drawing and primary-mouse hit/capture dispatch. The runnable
+`examples/interactive/Interactive.tscn` uses ordinary GDScript signal handlers.
+The compiler remains VBox/HBox/Rect-only until T07 adds component resolution and
+generated signal connections. Bindings, keyboard focus, touch/gestures, advanced
+text/styling and editor services remain planned. See ARCHITECTURE for the exact
+pointer/lifecycle contract and TESTING for interactive verification.

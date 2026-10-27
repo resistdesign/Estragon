@@ -84,6 +84,7 @@ async function validate(project: string): Promise<void> {
   requireSuccess("layout, rendering and lifecycle", await run(project, ["--script", "res://tests/godot/layout.gd", "--quit-after", "120"]), "ESTRAGON_LAYOUT_OK");
   requireSuccess("fresh Gogo-generated GDScript", await run(project, ["--script", "res://tests/godot/generated_gogo.gd", "--quit-after", "120"]), "ESTRAGON_GENERATED_GOGO_OK");
   requireSuccess("hybrid Gogo runtime", await run(project, ["--script", "res://tests/godot/hybrid_gogo.gd", "--quit-after", "120"]), "ESTRAGON_HYBRID_GOGO_OK");
+  requireSuccess("text, buttons and pointer dispatch", await run(project, ["--script", "res://tests/godot/interaction.gd", "--quit-after", "120"]), "ESTRAGON_INTERACTION_OK");
   for (const probe of ["width", "height", "negative", "gap", "geometry"]) {
     const result = await run(project, ["--script", "res://tests/godot/invalid_sizing.gd", "--", probe]);
     const expected = probe === "geometry" ? "arranged geometry must be finite with nonnegative size"
@@ -98,6 +99,17 @@ async function validate(project: string): Promise<void> {
       throw new Error(`Invalid sizing probe ${probe} failed\n${result.output}`);
     }
     console.log(`PASS rejected invalid ${probe} without mutating sizing`);
+  }
+  for (const probe of ["font", "font_size"]) {
+    const result = await run(project, ["--script", "res://tests/godot/invalid_text.gd", "--", probe]);
+    const expected = probe === "font" ? "font must not be null" : "font_size must be positive";
+    const errors = result.output.split(/\r?\n/).filter((line) => ENGINE_ERROR.test(line));
+    if (result.timedOut || result.code !== 0 || errors.length !== 1
+        || !errors[0]?.includes(`Estragon: ${expected}`)
+        || !result.output.split(/\r?\n/).includes("ESTRAGON_INVALID_TEXT_REJECTED")) {
+      throw new Error(`Invalid text probe ${probe} failed\n${result.output}`);
+    }
+    console.log(`PASS rejected invalid ${probe} without mutating text properties`);
   }
   await hybridRejections(project);
 }

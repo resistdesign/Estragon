@@ -94,7 +94,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T06 — Minimal interactive primitives and input dispatch
 
-**Related:** [issue #3](https://github.com/resistdesign/Estragon/issues/3). **Prerequisite:** T05 (may be independently prototyped after T03 with explicit coordination).
+**Tracking:** [T06 / issue #24](https://github.com/resistdesign/Estragon/issues/24). **Related umbrella:** [#3](https://github.com/resistdesign/Estragon/issues/3). **Prerequisite:** T05 (merged in PR #23).
 
 - Add only the foundational text display, button hit-testing/pointer dispatch, click signal and necessary layout/paint invalidation to support a small counter.
 - Demonstrate basic text and pointer handling in Godot tests and a visual smoke test. Do not route application events through Godot's `Control` GUI.

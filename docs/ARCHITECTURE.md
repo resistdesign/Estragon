@@ -49,8 +49,8 @@ A typed *compiler-internal* AST or intermediate model is useful; that is **not**
 | Binding compiler (planned) | Observable properties, dependency descriptors and source transformation | Per-frame polling |
 | Component runtime (foundations implemented; reconciliation planned) | Independent objects, identity, ownership, disposal and dirty flags | Godot scene tree |
 | Layout engine (minimal stacks implemented) | Natural/fixed/fill sizes and nested VBox/HBox; broader layout planned | `Container` nodes |
-| Input system (planned) | Hit testing, event propagation, focus, pointer/keyboard/IME | `Control` event routing |
-| Paint system (rectangle list implemented) | Ordered rectangle commands; broader display lists/clipping planned | Specific graphics API |
+| Input system (primary mouse implemented) | Reverse-order hit testing/capture; propagation/focus/keyboard/IME planned | `Control` event routing |
+| Paint system (rectangles/text implemented) | Ordered rectangle/text commands; broader display lists/clipping planned | Specific graphics API |
 | Renderer backends | Translate display list to GPU drawing | Component semantics |
 | Godot host | Surface/viewport hookup, input source, lifecycle, platform integration | Widget behavior |
 
@@ -84,7 +84,7 @@ A Godot `Node` can host an Estragon root, expose state to a Godot scene or bridg
 - Independent component ownership, stack layout, rectangle rendering and automatic lifecycle.
 - T04 namespace-free markup-to-GDScript compiler and runnable generated surface.
 
-The host renders **temporary JSON IR** positions directly. It does **not** compile Gogo into GDScript and is **not yet** the retained component tree, layout engine or event/binding system described above. There is no text, interaction, reactive compilation, hot reload, preview or other rendering backend yet.
+The host renders **temporary JSON IR** positions directly. It does **not** compile Gogo into GDScript and is **not yet** the retained component tree, layout engine or event/binding system described above. Basic text and primary-pointer buttons are implemented in the independent runtime; reactive compilation, hot reload, preview and other rendering backends remain planned.
 
 ## Markup-to-GDScript vertical slice (T04)
 
@@ -217,8 +217,8 @@ There is **no per-frame polling**. Layout runs for tree/layout dirtiness, while
 color-only changes repaint without remeasurement. Local acknowledgement does
 not clear descendants implicitly; traversal clears completed work.
 
-`EstragonPaintList` contains typed ordered fill-rectangle commands in absolute
-surface coordinates. Containers accumulate local offsets; zero-area rectangles
+`EstragonPaintList` contains typed ordered fill-rectangle and text-run commands
+in absolute surface coordinates. Containers accumulate local offsets; zero-area rectangles
 produce no command. This is an in-memory paint boundary, not serialized Gogo IR
 or a general/versioned display-list format. `EstragonCanvasRenderer` alone uses
 RenderingServer, clearing/redrawing one canvas item per surface. Backend ownership
@@ -228,7 +228,84 @@ remains a provisional backend; other backends are still research topics.
 `tests/godot/components.gd` tests the foundations. `tests/godot/layout.gd` tests
 nested geometry, paint output, real SubViewport resizing, renderer allocation and
 automatic lifecycle paths. See [TESTING.md](TESTING.md) for error probes and visual
-verification limits. No input, text, binding graph or widget suite is implemented.
+verification limits. T06 adds text and buttons below; binding graphs and a broader
+widget suite remain planned.
+
+## Text, buttons and primary-pointer input (T06)
+
+`EstragonText` extends DisplayObject; `EstragonButton` extends Text. Both remain
+RefCounted logical components. `text`, `font_size` and `font` invalidate layout
+and paint; `color` invalidates paint only. Text measures complete shaped strings
+using Godot's low-level [Font resource](https://docs.godotengine.org/en/4.7/classes/class_font.html),
+not a Label or Control. Default font is `ThemeDB.fallback_font`, size 20. Explicit
+`\n` lines use maximum line width and summed font heights; empty text reserves
+one line height. There is no wrapping, ellipsis, rich text, clipping or advanced
+localization API. Font resources are shared, treated as immutable inputs; reassign
+`font` (even the same resource) after editing its data to invalidate measurements.
+Font must be nonnull and size positive; rejected assignments preserve prior values.
+
+Button adds fixed padding `(14, 8)` per side to intrinsic text size; normal sizing
+rules still apply. The label is centered in positive extra allocation. Normal,
+hover, down-inside and disabled states have minimal fixed colors, exposed through
+`get_visual_state()` / `get_background_color()`. `disabled` cancels any active
+interaction. This is a small component contract, not a theme/style system.
+
+The authoritative paint list is `commands`, interleaving FillRect and TextRun
+snapshots in traversal order; `rectangles` is retained as a compatibility inspection
+view. TextRun stores baseline, complete string, Font reference, size and color.
+Only the renderer issues `Font.draw_string()` / RenderingServer calls to the same
+surface canvas item. No component owns a Node, CanvasItem or graphics RID. Font
+resources manage shared glyph data; no Estragon per-component glyph atlas exists.
+
+### Targeting and gesture contract
+
+The surface adapts Godot `_input` to `dispatch_pointer(event)` and marks a handled
+event on its Viewport. Input is already in viewport coordinates; Estragon's
+current surface is at the viewport origin. It synchronously resolves pending
+layout before hit testing, so changes and resizes apply to the next input event.
+`get_surface_rect()` accumulates nested local offsets. Containers traverse
+children in reverse paint order. Only buttons are targets; noninteractive text/
+rectangles pass through, and disabled buttons occlude buttons below. Bounds are
+half-open (right/bottom excluded). Children can overflow/hit beyond parent bounds,
+matching existing unclipped painting, but positions outside the viewport cancel.
+
+`EstragonPointerDispatcher` has weak hover/capture references and no per-button
+registrations. Its intentionally narrow model handles mouse motion and the left
+button; other buttons, wheel, keyboard and touch are ignored. There is no bubbling,
+keyboard focus, gesture recognition or public event-object catalog yet.
+
+- A down captures the enabled button under the pointer. Repeated down events
+  during that press are ignored. A down outside cannot become an inside press.
+- Motion updates hover. While captured, down appearance is present only over the
+  captured target; leaving/reentering is permitted within the viewport.
+- Release emits the parameterless typed `pressed` signal exactly once **only**
+  if the original target is still enabled/live and is the current topmost target.
+  Release outside or over a different button activates neither. Unmatched and
+  duplicate releases do nothing. Capture clears before application handlers run.
+- Window focus loss/mouse exit cancels the gesture. The surface subscribes to
+  native Window signals, independently of Godot GUI event routing. Layout updates
+  refresh stationary hover without per-frame polling.
+
+### Automatic interaction cleanup
+
+Removal, replacement, root unmount, and surface destruction clear pointer state;
+terminal components disconnect outgoing signal connections (including closures)
+and Text releases its Font reference. Disposal hooks in subclasses must call
+`super` to preserve framework cleanup. Disposed objects cannot be hit or activated.
+Transfers cancel the old gesture before changing parent links, including between
+surfaces, but preserve component identity, signal connections and live resources.
+Move directly to the new parent; no application disposal call is needed.
+
+Window input subscriptions are removed on surface exit, alongside existing root/
+viewport subscriptions and canvas cleanup. Re-entry starts with a fresh root.
+Handlers may synchronously replace the root; use Godot's normal `queue_free()`
+when destroying a host from its input/signal callback. Queued hosts reject input.
+
+`examples/interactive/Interactive.tscn` uses ordinary GDScript `pressed.connect`
+handlers to update text with Add one and Reset buttons. Text changes schedule
+layout/redraw automatically; they are not reactive bindings. The Gogo compiler
+still accepts only VBox/HBox/Rect: Text/Button tags and generated signal wiring
+belong to T07. See TESTING for the interactive procedure and CI coverage.
 
 ## Performance model to implement later
 
