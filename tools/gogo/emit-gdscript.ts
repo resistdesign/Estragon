@@ -1,7 +1,7 @@
 import type { ComponentExpression, Literal } from "./model.ts";
 import { COMPONENT_CLASSES } from "./validate.ts";
 
-function emitLiteral(literal: Literal): string {
+export function emitLiteral(literal: Literal): string {
     switch (literal.kind) {
         case "boolean-literal": return literal.value ? "true" : "false";
         case "color-literal": return `Color("${literal.value}")`;

@@ -6,22 +6,22 @@
 
 **Estragon is an independent, self-rendered UI engine hosted by Godot.** Its declarative language is **Gogo** (`.gogo`), inspired by the authoring ergonomics of Adobe Flex 3/4. Gogo builds *Estragon* components—not Godot widgets or scene nodes.
 
-The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout and rectangle paint/rendering are implemented; Minimal markup-to-GDScript compilation is implemented; mixed Gogo/GDScript, reactivity, input and broader UI capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
+The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout, rectangle rendering and a GDScript-first hybrid authoring subset are implemented. Reactivity, widgets/input, signal generation and broader editor capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
 
 ```text
-T04: namespace-free .gogo markup → typed compiler IR → generated GDScript
+T04/T05: namespace-free markup + GDScript → typed compiler IR → generated GDScript
                                                           ↓
                                   EstragonSurface → components → renderer
 
 Legacy: namespaced .gogo XML → JSON IR → prototype host → RenderingServer
 ```
 
-The legacy host still reads **temporary JSON IR** and renders fixed rectangles directly. A separate GDScript component/layout surface exists; Minimal namespace-free markup-to-GDScript transpilation also works; mixed GDScript/markup remains **planned**.
+The legacy host still reads **temporary JSON IR** and renders fixed rectangles directly. A separate GDScript component/layout surface and minimal GDScript-first hybrid compiler also work; full binding/widget/editor features remain **planned**.
 
 ## Target authoring and implementation direction (full target NOT implemented yet)
 
 - **No mandatory XML namespaces or prefixed element names.** Target Gogo uses `<VBox>`, `<Button>` and `<MyWidget>`, not `<fx:VBox>` or `xmlns` declarations. The **current stage-0 XML parser still needs its legacy namespace**, but that requirement must not be carried into the new grammar.
-- **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. This will need a real hybrid parser and editor tooling; it does not work today.
+- **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. T05 supports a specified hybrid subset with braced construction-time expressions and source maps. Full callbacks/bindings and editor tooling remain future work.
 - **Generated GDScript:** emit deterministic, valid `.gd` constructing Estragon's component hierarchy and automatically connecting typed signal handlers and, later, observable bindings. Generated files are not hand-edited, and no Godot UI widget tree is produced.
 - **`@Bindable` in ordinary authored `.gd` is a distinct requested goal.** Stock Godot cannot register arbitrary GDScript annotations via an addon. Do not claim this works without proving a pre-parse/source integration. A separate `.bgd` extension is only a possible fallback, not an accepted replacement.
 - **Real runtime components:** implement independent `DisplayObject`/`Container`-style bases, responsive `VBox`/`HBox` and later common UI components. Resolve naming collisions with Godot's classes. Keep existing JSON prototype functional until a GDScript-generating vertical slice is proven.
@@ -41,7 +41,7 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 
 **Implemented:**
 
-- `tools/transpile-gogo.ts` + `tools/gogo/`: T04 namespace-free VBox/HBox/Rect markup-expression parser, typed literal validation and deterministic GDScript surface generation. Mixed GDScript, callbacks and bindings remain future work.
+- `tools/transpile-gogo.ts` + `tools/gogo/`: T04/T05 namespace-free component parser, GDScript lexical composition, typed factories and range source maps. Mixed methods/expressions work within GOGO_LANGUAGE; callbacks/bindings remain future work.
 - `tools/gogo.ts`: **stage-0** strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun. Its syntax is temporary.
 - A `View` document root containing zero or more `Rect` leaves at explicit canvas coordinates; no nested containers or component registry.
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
@@ -62,7 +62,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 | Path | Responsibility |
 | --- | --- |
 | `tools/gogo.ts` | Legacy stage-0 parsing, strict validation, canonical JSON IR, CLI |
-| `tools/transpile-gogo.ts`, `tools/gogo/` | T04 markup syntax, typed IR, validation and GDScript emission |
+| `tools/transpile-gogo.ts`, `tools/gogo/` | T04/T05 markup/hybrid syntax, typed IR, validation, GDScript emission and source maps |
 | `examples/compiled/`, `tests/godot/generated_gogo.gd` | Generated Gogo surface example and actual Godot runtime verification |
 | `tests/gogo.test.ts` | Compiler behavior, negative cases, and checked-in example consistency |
 | `examples/hello/Main.gogo` | Authoritative source for the stage-0 demo |
@@ -161,7 +161,7 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Gogo compiler and language
 
-- Legacy work uses `tools/gogo.ts` / `tests/gogo.test.ts`; T04 uses `tools/gogo/`, `tools/transpile-gogo.ts` and `tests/transpile-gogo.test.ts`. Keep both compilers independent of the running Godot editor.
+- Legacy work uses `tools/gogo.ts` / `tests/gogo.test.ts`; T04/T05 use `tools/gogo/`, `tools/transpile-gogo.ts`, `tests/transpile-gogo.test.ts` and `tests/hybrid-gogo.test.ts`. Keep both compilers independent of the running Godot editor.
 - Preserve strict schema/type validation and deterministic output. Test both valid examples and malformed/unsupported input.
 - Prefer minimal, pinned dependencies; use strict TypeScript types and a real namespace-aware XML parser. Keep the compiler independent of Godot.
 - For syntax changes, update `docs/GOGO_LANGUAGE.md`, any example `.gogo`, and checked-in generated IR. Mark proposed syntax as non-executable until it actually compiles.
@@ -222,6 +222,16 @@ For the T04 example, regenerate and verify GDScript instead:
 bun run transpile examples/compiled/Layout.gogo --output examples/compiled/generated/Layout.gd
 bun run verify:gdscript
 ```
+
+For the T05 hybrid example, generate code and its source-map sidecar:
+
+```sh
+bun run transpile examples/mixed/Mixed.gogo --output examples/mixed/generated/Mixed.gd
+bun run verify:gdscript
+```
+
+Godot is the GDScript semantic/type authority; do not claim the TypeScript
+composition frontend fully typechecks expressions. See GOGO_LANGUAGE/ADR-0009.
 
 For Godot-facing changes, also run the pinned Godot 4.7 headless checks:
 

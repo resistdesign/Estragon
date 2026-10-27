@@ -1,4 +1,4 @@
-import { GogoCompileError, type AttributeSyntax, type ComponentExpression, type ComponentName, type ComponentSyntax, type Literal, type PropertyName } from "./model.ts";
+import { GogoCompileError, type AttributeSyntax, type ComponentExpression, type ComponentName, type ComponentSyntax, type Literal, type PropertyName, type HybridComponentSyntax, type HybridComponentExpression, type GdscriptExpressionSyntax, type GdscriptExpression, type HybridModuleSyntax, type HybridModule, type Span } from "./model.ts";
 
 /** Explicit T04 target registry, not an extensible import/reflection system. */
 export const COMPONENT_CLASSES: Readonly<Record<ComponentName, string>> = {
@@ -30,27 +30,59 @@ function literal(attribute: AttributeSyntax, sourceName: string): Literal {
     return { kind: "number-literal", value: number === 0 ? 0 : number, span };
 }
 
+function componentName(name: string, nameSpan: Span, sourceName: string): ComponentName {
+    if (name.includes(":")) throw new GogoCompileError(sourceName, nameSpan, "Namespace-prefixed components are not supported");
+    if (!Object.hasOwn(COMPONENT_CLASSES, name)) {
+        throw new GogoCompileError(sourceName, nameSpan, `Unknown component ${JSON.stringify(name)}; expected VBox, HBox or Rect`);
+    }
+    return name as ComponentName;
+}
+
+function propertyName(component: ComponentName, name: string, span: Span, seen: Set<string>, sourceName: string): PropertyName {
+    if (name === "xmlns" || name.includes(":")) throw new GogoCompileError(sourceName, span, "Namespaces and prefixed properties are not supported");
+    if (seen.has(name)) throw new GogoCompileError(sourceName, span, `Duplicate property ${name}`);
+    seen.add(name);
+    if (!COMMON.has(name) && name !== (component === "Rect" ? "fill" : "gap")) {
+        throw new GogoCompileError(sourceName, span, `Unsupported property ${JSON.stringify(name)} on ${component}`);
+    }
+    return name as PropertyName;
+}
+
 export function validateComponent(node: ComponentSyntax, sourceName = "<source>"): ComponentExpression {
-    if (node.name.includes(":")) throw new GogoCompileError(sourceName, node.nameSpan, "Namespace-prefixed components are not supported");
-    if (!Object.hasOwn(COMPONENT_CLASSES, node.name)) {
-        throw new GogoCompileError(sourceName, node.nameSpan, `Unknown component ${JSON.stringify(node.name)}; expected VBox, HBox or Rect`);
-    }
-    const component = node.name as ComponentName;
+    const component = componentName(node.name, node.nameSpan, sourceName);
     const seen = new Set<string>();
-    const properties: ComponentExpression["properties"][number][] = [];
-    for (const attribute of node.attributes) {
-        if (attribute.name === "xmlns" || attribute.name.includes(":")) {
-            throw new GogoCompileError(sourceName, attribute.nameSpan, "Namespaces and prefixed properties are not supported");
-        }
-        if (seen.has(attribute.name)) throw new GogoCompileError(sourceName, attribute.nameSpan, `Duplicate property ${attribute.name}`);
-        seen.add(attribute.name);
-        if (!COMMON.has(attribute.name) && attribute.name !== (component === "Rect" ? "fill" : "gap")) {
-            throw new GogoCompileError(sourceName, attribute.nameSpan, `Unsupported property ${JSON.stringify(attribute.name)} on ${component}`);
-        }
-        properties.push({ name: attribute.name as PropertyName, value: literal(attribute, sourceName) });
-    }
+    const properties = node.attributes.map(attribute => ({
+        name: propertyName(component, attribute.name, attribute.nameSpan, seen, sourceName),
+        value: literal(attribute, sourceName),
+    }));
     if (component === "Rect" && node.children.length > 0) {
         throw new GogoCompileError(sourceName, node.children[0]!.nameSpan, "Rect is a leaf and cannot contain components");
     }
     return { kind: "component-expression", component, properties, children: node.children.map(child => validateComponent(child, sourceName)), span: node.span };
+}
+
+function validateExpression(node: GdscriptExpressionSyntax, sourceName: string): GdscriptExpression {
+    return { ...node, parts: node.parts.map(part => part.kind === "gdscript-source" ? part : validateHybridComponent(part, sourceName)) };
+}
+
+export function validateHybridComponent(node: HybridComponentSyntax, sourceName: string): HybridComponentExpression {
+    const component = componentName(node.name, node.nameSpan, sourceName);
+    const seen = new Set<string>();
+    const properties = node.attributes.map(attribute => {
+        const name = propertyName(component, attribute.name, attribute.nameSpan, seen, sourceName);
+        const value = typeof attribute.value === "string"
+            ? literal({ ...attribute, value: attribute.value }, sourceName)
+            : validateExpression(attribute.value, sourceName);
+        return { name, value };
+    });
+    if (component === "Rect" && node.children.length) {
+        const child = node.children[0]!;
+        throw new GogoCompileError(sourceName, child.kind === "component-expression" ? child.nameSpan : child.span, "Rect is a leaf and cannot contain components");
+    }
+    return { kind: "component-expression", component, properties, span: node.span,
+        children: node.children.map(child => child.kind === "component-expression" ? validateHybridComponent(child, sourceName) : validateExpression(child, sourceName)) };
+}
+
+export function validateHybrid(module: HybridModuleSyntax, sourceName: string): HybridModule {
+    return { ...module, parts: module.parts.map(part => part.kind === "gdscript-source" ? part : validateHybridComponent(part, sourceName)) };
 }

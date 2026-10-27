@@ -47,6 +47,48 @@ example. The graphics capture procedure below also applies with that scene path.
 The .gogo source is never interpreted at runtime. Compiler generation is explicit;
 automatic editor compilation/stale-run blocking remain T08 work.
 
+## T05 hybrid frontend, maps and Godot semantics
+
+`tests/hybrid-gogo.test.ts` adds lexical composition, expression-boundary,
+malformed-source, determinism, range mapping and CLI-sidecar tests. The complete
+Bun suite currently has 100 tests (all previous 81 preserved). Fixtures include
+`examples/mixed/generated/Mixed.gd` and its `.map.json`, verified byte-for-byte by
+`verify:gdscript` without rewriting old T04 output.
+
+```sh
+bun run transpile examples/mixed/Mixed.gogo --output examples/mixed/generated/Mixed.gd
+```
+
+The isolated Godot runner recompiles that source and the adversarial
+`tests/fixtures/hybrid-edges.gogo` before import. Every generated script is
+parsed. `tests/godot/hybrid_gogo.gd` runs 29 assertions, requiring
+`ESTRAGON_HYBRID_GOGO_OK`: member/local/parameter scope, helper/lambda/static
+methods, inferred and member-initializer component variables, nested markup,
+component-valued/conditional children, integer division, side-effect order,
+multiline comparisons, dictionaries, raw/triple strings, for-loops, explicit
+continuation, name collisions, actual viewport resize, explicit rebuild and
+framework-owned cleanup without component disposal calls.
+
+Six separate negative scripts are generated **after** positive import/parse:
+malformed GDScript expression, incompatible property type, incompatible child
+type, undefined identifier, null dynamic child and invalid dynamic width. Each
+must produce its expected real Godot error and a mapped authored `.gogo` line;
+runtime probes must also finish explicitly. Unexpected failures/timeouts do not
+satisfy these tests. Expected-error scripts never enter the working project.
+
+The validator prints `Gogo source: file:line:column` annotations for registered
+fresh hybrid scripts while retaining raw Godot diagnostics. This demonstrates
+available Godot syntax/type checking and source tracing, **not** a TypeScript
+GDScript semantic checker or editor/debugger integration. Dynamic Variant values
+and numeric constraints can fail only at runtime. No reactive binding guarantee
+is made.
+
+For a real graphics check, run `examples/mixed/Mixed.tscn` after compilation.
+Expect a computed purple header, helper-created teal sidebar and remaining
+content. The capture procedure below works with this scene path. Record whether
+a graphics capture was inspected and whether the separate interactive editor
+resize/remote-tree check actually ran.
+
 ## Generated IR
 
 The checked-in JSON is generated, not hand-maintained. `bun run verify:ir` compares compiler output against the committed fixture **byte-for-byte without rewriting it**.

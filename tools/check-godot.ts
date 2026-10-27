@@ -1,8 +1,10 @@
-import { cp, mkdir, mkdtemp, readdir, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join, relative, resolve } from "node:path";
-import { compileExample, EXAMPLE_OUTPUT } from "./check-gdscript.ts";
-import { transpileGogo } from "./transpile-gogo.ts";
+import { compileExample, EXAMPLE_OUTPUT, compileHybridExample, HYBRID_OUTPUT } from "./check-gdscript.ts";
+import { compileGogo, transpileGogo } from "./transpile-gogo.ts";
+import { traceGodotDiagnostics, type Compilation } from "./gogo/source-map.ts";
+const compiledMaps = new Map<string, Compilation>();
 
 // The official standard editor build; export templates cannot import projects.
 const VERSION = "4.7.stable.official.5b4e0cb0f";
@@ -29,7 +31,7 @@ async function run(project: string, args: string[], timeoutMs = 60_000): Promise
     ]);
     // Godot may color diagnostics even when redirected.
     const output = `${stdout}\n${stderr}`.replace(/\x1b\[[0-9;]*m/g, "");
-    return { code, output, timedOut };
+    return { code, output: traceGodotDiagnostics(output, compiledMaps), timedOut };
   } finally {
     clearTimeout(timer);
   }
@@ -57,6 +59,9 @@ async function scriptsIn(directory: string): Promise<string[]> {
 async function validate(project: string): Promise<void> {
   // Prove freshly compiled source, not just the checked-in .gd fixture, executes.
   await writeFile(join(project, EXAMPLE_OUTPUT), await compileExample(project));
+  const hybrid = await compileHybridExample(project);
+  await writeFile(join(project, HYBRID_OUTPUT), hybrid.code);
+  compiledMaps.set(`res://${HYBRID_OUTPUT}`, hybrid);
   const generated = join(project, "tests/godot/generated");
   await mkdir(generated, { recursive: true });
   for (const [name, source] of [
@@ -65,6 +70,9 @@ async function validate(project: string): Promise<void> {
   ] as const) {
     await writeFile(join(generated, `${name}.gd`), transpileGogo(source, `<Godot ${name} probe>`));
   }
+  const edges = compileGogo(await readFile(join(project, "tests/fixtures/hybrid-edges.gogo"), "utf8"), "tests/fixtures/hybrid-edges.gogo");
+  await writeFile(join(generated, "HybridEdges.gd"), edges.code);
+  compiledMaps.set("res://tests/godot/generated/HybridEdges.gd", edges);
   // Recovery mode prevents enabled editor plugins from changing global settings.
   requireSuccess("project import", await run(project, ["--editor", "--recovery-mode", "--import"]));
   for (const path of await scriptsIn(project)) {
@@ -75,6 +83,7 @@ async function validate(project: string): Promise<void> {
   requireSuccess("component foundations", await run(project, ["--script", "res://tests/godot/components.gd", "--quit-after", "120"]), "ESTRAGON_COMPONENTS_OK");
   requireSuccess("layout, rendering and lifecycle", await run(project, ["--script", "res://tests/godot/layout.gd", "--quit-after", "120"]), "ESTRAGON_LAYOUT_OK");
   requireSuccess("fresh Gogo-generated GDScript", await run(project, ["--script", "res://tests/godot/generated_gogo.gd", "--quit-after", "120"]), "ESTRAGON_GENERATED_GOGO_OK");
+  requireSuccess("hybrid Gogo runtime", await run(project, ["--script", "res://tests/godot/hybrid_gogo.gd", "--quit-after", "120"]), "ESTRAGON_HYBRID_GOGO_OK");
   for (const probe of ["width", "height", "negative", "gap", "geometry"]) {
     const result = await run(project, ["--script", "res://tests/godot/invalid_sizing.gd", "--", probe]);
     const expected = probe === "geometry" ? "arranged geometry must be finite with nonnegative size"
@@ -89,6 +98,35 @@ async function validate(project: string): Promise<void> {
       throw new Error(`Invalid sizing probe ${probe} failed\n${result.output}`);
     }
     console.log(`PASS rejected invalid ${probe} without mutating sizing`);
+  }
+  await hybridRejections(project);
+}
+
+async function hybridRejections(project: string): Promise<void> {
+  const cases = [
+    { name: "Syntax", source: 'extends RefCounted\nfunc build():\n    return <Rect width={1 +}/>\n', evidence: /Parse Error/, line: 3 },
+    { name: "Type", source: 'extends RefCounted\nfunc build():\n    return <Rect width={"wide"}/>\n', evidence: /Invalid argument/, line: 3 },
+    { name: "ChildType", source: 'extends RefCounted\nfunc build():\n    return <VBox>{42}</VBox>\n', evidence: /Invalid argument/, line: 3 },
+    { name: "Unknown", source: 'extends RefCounted\nfunc build():\n    return <Rect width={missing_value}/>\n', evidence: /missing_value/, line: 3 },
+    { name: "NullChild", source: 'extends SceneTree\nfunc _initialize():\n    var value = <VBox>{null}</VBox>\n    print("EXPECTED_HYBRID_END")\n    quit(0)\n', evidence: /Gogo child must be a live/, line: 3, runtime: true },
+    { name: "Range", source: 'extends SceneTree\nfunc _initialize():\n    var invalid: float = -2.0\n    var value = <Rect width={invalid}/>\n    print("EXPECTED_HYBRID_END")\n    quit(0)\n', evidence: /width must be -1/, line: 4, runtime: true },
+  ];
+  // Invalid generated scripts appear only after positive project import/parsing.
+  for (const probe of cases) {
+    const sourceName = `tests/fixtures/negative-${probe.name}.gogo`;
+    const compiled = compileGogo(probe.source, sourceName);
+    const resource = `res://tests/godot/generated/Negative${probe.name}.gd`;
+    const path = join(project, resource.slice("res://".length));
+    await writeFile(path, compiled.code);
+    compiledMaps.set(resource, compiled);
+    const result = await run(project, ["--script", resource, ...(probe.runtime ? [] : ["--check-only"])]);
+    if (result.timedOut || !ENGINE_ERROR.test(result.output) || !probe.evidence.test(result.output)
+        || !result.output.includes(`Gogo source: ${sourceName}:${probe.line}:`)
+        || (probe.runtime && (result.code !== 0 || !result.output.includes("EXPECTED_HYBRID_END")))) {
+      throw new Error(`Hybrid rejection ${probe.name} failed to prove its expected mapped diagnostic\n${result.output}`);
+    }
+    console.log(`PASS Godot rejected/mapped hybrid ${probe.name} to ${sourceName}:${probe.line}`);
+    await rm(path);
   }
 }
 

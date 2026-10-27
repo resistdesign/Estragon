@@ -1,0 +1,63 @@
+extends RefCounted
+const MULTILINE: String = """<Rect/> } is literal
+    # <HBox> still a string
+"""
+const RAW: String = r"<Rect>\t\"}"
+var events: Array[int] = []
+var initial: EstragonRect = <Rect width="2" height="2"/>
+
+
+static func _gogo_build_0() -> int:
+    return 99
+
+
+func mark(value: int) -> float:
+    events.append(value)
+    return float(value)
+
+
+func make_child() -> EstragonRect:
+    events.append(3)
+    return <Rect width={7.0} height="5" />
+
+
+func build() -> EstragonVBox:
+    var left: int = 1
+    var threshold: int = 2
+    var comparison: bool = (left<threshold and left<=threshold and 8 >> 1 == 4)
+    var values: Dictionary = {"width": 5.0, "text": "} <Rect>"}
+    var callback: Callable = func() -> EstragonRect:
+        return <Rect width={1.0} height="2" />
+    var child: EstragonRect = callback.call()
+    if not comparison:
+        return <VBox/>
+    return <VBox gap={mark(1)}>
+        <Rect width={mark(2) + (5 / 2)} height={float(values["width"])}
+            fill_width={left
+                <threshold} fill={Color("abcdef")} />
+        {make_child()}
+        {child}
+        {<Rect width={4.0} height="5" />}
+    </VBox>
+
+
+func loop_children() -> EstragonHBox:
+    var row := <HBox gap="1"/>
+    for index in range(2):
+        row.add_child(<Rect width={float(index + 1)} height="2" />)
+    return row
+
+
+func continued_comparison() -> bool:
+    var left: int = 1
+    var right: int = 2
+    return left \
+        <right
+
+
+func conditional_child(flag: bool) -> EstragonVBox:
+    return <VBox>{<Rect width={mark(8)} height="2"/> if flag else <Rect width={mark(9)} height="2"/>}</VBox>
+
+
+static func static_panel() -> EstragonRect:
+    return <Rect width={3.0} height="1"/>

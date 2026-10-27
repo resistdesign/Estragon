@@ -85,7 +85,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T05 — TSX-like GDScript and Gogo in one source
 
-**Prerequisite:** T04.
+**Tracking:** [issue #22](https://github.com/resistdesign/Estragon/issues/22). **Prerequisite:** T04 (merged in PR #21).
 
 - Support a *minimal, specified* `.gogo` hybrid: authored GDScript members/functions plus nested component expressions and braces holding GDScript value expressions.
 - Test strings containing angle brackets, comparisons vs tags, nested braces, indentation, property types and malformed source. Preserve original source locations in diagnostics and generated-to-source mappings.
