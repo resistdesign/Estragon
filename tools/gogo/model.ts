@@ -69,8 +69,10 @@ export type HybridPart = GdscriptSource | HybridComponentExpression;
 export interface HybridModuleSyntax {
     readonly parts: readonly HybridSyntaxPart[];
     readonly identifiers: ReadonlySet<string>;
+    readonly indentation: string;
 }
 export interface HybridModule {
     readonly parts: readonly HybridPart[];
     readonly identifiers: ReadonlySet<string>;
+    readonly indentation: string;
 }

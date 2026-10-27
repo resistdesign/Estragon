@@ -70,6 +70,30 @@ T03 uses deliberately narrow fixed/auto/fill sizing and stack gaps, documented
 in ARCHITECTURE. These are the first tested rules, not automatic Flex/CSS semantics;
 broader sizing/alignment remains an open future design.
 
+## ADR-0009 — Minimal GDScript-first hybrid composition
+
+**Status: T05 implementation contract, reviewed with its implementation PR.**
+
+T05 composes lexically retained GDScript with parsed component expressions and
+balanced braced GDScript property/child expressions. No XML document wrapper,
+script block or mandatory code-behind is introduced. T04 standalone markup
+continues unchanged. The full future language is not fixed by this initial slice.
+
+Lower markup AST nodes to typed static factories within the authored module.
+Arguments are evaluated once in authored scope/source traversal order before
+construction; nested native conditionals remain lazy. This preserves local/member
+references without rewriting variable names or depending on Callable Variant
+return inference. Helper names avoid module identifiers and indentation follows
+authored GDScript. Application surfaces mount explicitly with set_root; existing
+automatic lifecycle remains intact. No reactive expression reevaluation is implied.
+
+Godot supplies GDScript syntax/type authority; the TypeScript frontend supplies
+markup/type compatibility, expression boundaries and range maps. Dynamic types
+and runtime constraints are not falsely advertised as statically proven.
+Range-map sidecars and mapped Godot checks provide traceability without claiming
+editor/debugger integration. Named inner-class markup, collection expansion,
+bindings, widget/signal features and full semantic analysis remain outside T05.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.

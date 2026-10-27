@@ -1,0 +1,37 @@
+extends EstragonSurface
+# Authored GDScript: literals containing markup are ordinary strings.
+const DESCRIPTION: String = "<Rect> is not markup inside a string"
+var spacing: float = 12.0
+var header_height: float = 48.0
+var sidebar_width: float = 120.0
+var accent: Color = Color("8566e0")
+var constructions: int = 0
+
+
+func _init() -> void:
+    set_root(build_view())
+
+
+func make_panel(panel_width: float, color: Color) -> EstragonRect:
+    constructions += 1
+    return <Rect width={panel_width} fill_height={true} fill={color} />
+
+
+func build_view() -> EstragonVBox:
+    var small: bool = sidebar_width < 80.0
+    var actual_gap: float = spacing / 2.0 if small else spacing
+    return (
+        <VBox gap={actual_gap}>
+            <Rect height={header_height + 8.0} fill_width="true" fill={accent} />
+            <HBox gap={spacing} fill_width={true} fill_height="true">
+                {make_panel(sidebar_width, Color("30c9b0"))}
+                <Rect fill_width="true" fill_height={true}
+                    fill={Color("50466f") if sidebar_width > 0 else Color.BLACK} />
+            </HBox>
+        </VBox>
+    )
+
+
+func rebuild() -> void:
+    # Explicit construction-time values, not reactive bindings.
+    set_root(build_view())

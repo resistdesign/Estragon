@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-26, T04 completion PR based on `main` at `9df0626` after merged [PR #19](https://github.com/resistdesign/Estragon/pull/19). T01–T03 are merged. T04 is **In review until approval and merge**. Markup-to-GDScript and the legacy XML/JSON demo coexist; mixed-source GDScript/markup is T05 and remains planned.
+**Snapshot:** 2026-10-27, T05 completion PR based on `main` at `240e8bd` after merged [PR #21](https://github.com/resistdesign/Estragon/pull/21). T01–T04 are merged. T05 is **In review until approval and merge**. The minimal hybrid authoring subset coexists with T04 standalone markup and the legacy XML/JSON demo; bindings/widgets/editor automation remain future work.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** inspect [T04 / issue #20](https://github.com/resistdesign/Estragon/issues/20) for its latest PR, CI and handoff. T05 follows only after T04 approval/merge. R01 remains independent research. The implemented markup-only subset is specified in GOGO_LANGUAGE; automatic lifecycle remains required (ADR-0008).
+**Start here:** inspect [T05 / issue #22](https://github.com/resistdesign/Estragon/issues/22) for its latest PR, CI and handoff. T06 follows only after T05 approval/merge. The hybrid subset/limits are in GOGO_LANGUAGE and ADR-0009; automatic lifecycle remains required (ADR-0008).
 
 ## Current plan register
 
@@ -13,8 +13,8 @@
 | **T01** | **Done** | Godot 4.7 headless validation/CI | [#13](https://github.com/resistdesign/Estragon/issues/13), merged [PR #15](https://github.com/resistdesign/Estragon/pull/15) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40275222957); merge `0720948`. Manual visual check not run. |
 | **T02** | **Done** | Independent display object/container foundations | [#16](https://github.com/resistdesign/Estragon/issues/16), merged [PR #17](https://github.com/resistdesign/Estragon/pull/17) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40276309421); merge `fb3aec6`. Lifecycle corrected by T03/ADR-0008. |
 | **T03** | **Done** | Responsive stack layout, rectangles, surface and automatic lifecycle | [#18](https://github.com/resistdesign/Estragon/issues/18), merged [PR #19](https://github.com/resistdesign/Estragon/pull/19) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40282237018); merge `9df0626`. OpenGL captures inspected; interactive editor check not run. |
-| **T04** | **In review; Done only upon approval + merge** | Namespace-free markup → GDScript | [#20](https://github.com/resistdesign/Estragon/issues/20) | See issue/PR for compiler tests, generated fixture, fresh Godot runtime evidence, CI and handoff. |
-| T05 | Queued (T04) | Mixed GDScript + markup parser | Create task issue on pickup | Pending |
+| **T04** | **Done** | Namespace-free markup → GDScript | [#20](https://github.com/resistdesign/Estragon/issues/20), merged [PR #21](https://github.com/resistdesign/Estragon/pull/21) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40284163867); merge `240e8bd`. OpenGL capture inspected. |
+| **T05** | **In review; Done only upon approval + merge** | GDScript-first hybrid Gogo, expressions and maps | [#22](https://github.com/resistdesign/Estragon/issues/22) | See issue/PR for lexical, generated runtime, mapped diagnostics, graphics and CI evidence. |
 | T06 | Queued (T05) | Basic Text/Button and input | [#3](https://github.com/resistdesign/Estragon/issues/3) (umbrella) | Pending |
 | T07 | Queued (T05, T06) | Generated event wiring and Counter | Create task issue on pickup | Pending |
 | T08 | Queued (T07) | Editor build/run integration | [#6](https://github.com/resistdesign/Estragon/issues/6) (umbrella) | Pending |

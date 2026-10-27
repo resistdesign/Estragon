@@ -67,7 +67,9 @@ class MarkupParser {
             return { name: name.text, nameSpan: name.span, value, valueSpan: value.span };
         }
         const quote = this.current();
-        if (quote !== '"' && quote !== "'") this.fail("Expected a quoted literal property value; expressions are not supported in T04");
+        if (quote !== '"' && quote !== "'") this.fail(this.expression
+            ? "Expected a quoted literal or {GDScript expression} property value"
+            : "Expected a quoted literal property value; expressions are not supported in T04");
         this.advance();
         const start = this.position();
         while (this.current() !== quote) {
@@ -110,7 +112,9 @@ class MarkupParser {
                 this.trivia();
                 continue;
             }
-            if (!this.at("<")) this.fail("Only component children are supported; text and GDScript belong to later slices");
+            if (!this.at("<")) this.fail(this.expression
+                ? "Only component children are supported; use {...} for a component-valued GDScript expression"
+                : "Only component children are supported; text and GDScript belong to later slices");
             children.push(this.component(depth + 1));
             this.trivia();
         }

@@ -37,7 +37,19 @@ export function originalPosition(result: Pick<Compilation, "code" | "sourceMap">
     if (!segment) return undefined;
     if (segment.kind === "generated") return segment.original.start;
     return new SourceFile(result.sourceMap.sourceContent, result.sourceMap.sourceName).position(
-        segment.original.start.offset + Math.max(0, offset - segment.generated.start.offset));
+        segment.original.start.offset + Math.min(segment.original.end.offset - segment.original.start.offset, Math.max(0, offset - segment.generated.start.offset)));
 }
 
 export function serializeSourceMap(map: GogoSourceMap): string { return JSON.stringify(map) + "\n"; }
+
+/** Diagnostic adapter only; does not parse or rewrite GDScript source. */
+export function traceGodotDiagnostics(output: string, compiled: ReadonlyMap<string, Compilation>): string {
+    const traces = new Set<string>();
+    for (const match of output.matchAll(/(res:\/\/[^\n]+?\.gd):(\d+)(?::(\d+))?/g)) {
+        const result = compiled.get(match[1]!);
+        if (!result) continue;
+        const point = originalPosition(result, Number(match[2]), Number(match[3] ?? 1));
+        if (point) traces.add(`Gogo source: ${result.sourceMap.sourceName}:${point.line}:${point.column} (generated ${match[1]}:${match[2]})`);
+    }
+    return output + (traces.size ? "\n" + [...traces].join("\n") : "");
+}

@@ -19,8 +19,9 @@ This is the **target direction, not a feature that currently works**. Read the [
 T04 compiles a minimal namespace-free `VBox`/`HBox`/`Rect` markup subset to ordinary
 GDScript constructing Estragon's independent components. The runtime supports
 nested auto/fixed/fill stack layout, rectangle drawing and automatic lifecycle
-through a single surface host. Mixed GDScript/markup, bindings, text and input
-remain future work. See the [supported subset](docs/GOGO_LANGUAGE.md).
+through a single surface host. T05 adds GDScript-first hybrid modules with helper methods, nested markup,
+braced construction-time expressions and range source maps. Bindings, text,
+input and signal/editor automation remain future work. See the [supported subset](docs/GOGO_LANGUAGE.md).
 
 The earlier namespaced XML → JSON rectangle demo is preserved separately and
 remains the configured main scene. It is temporary compatibility scaffolding,
@@ -42,6 +43,20 @@ bun run check:godot
 Open `examples/compiled/Compiled.tscn` in Godot and run that scene. Edit `.gogo`
 and recompile; do not edit generated `.gd`. There is no compile-on-save hook yet.
 Generated code mounts components on an EstragonSurface; cleanup is automatic.
+
+## Try hybrid GDScript/Gogo
+
+```sh
+bun run transpile examples/mixed/Mixed.gogo --output examples/mixed/generated/Mixed.gd
+bun run check
+bun run check:godot
+```
+
+Run `examples/mixed/Mixed.tscn`. The authored source contains typed GDScript
+members, ordinary helper/build methods, nested markup and computed properties.
+It mounts explicitly with `set_root(build_view())`; rebuild is explicit and
+cleanup automatic. Generated `.gd.map.json` supports source tracing. This is
+construction-time composition, not reactive binding; Godot checks GDScript types.
 
 ## Try the initial slice
 
@@ -73,7 +88,7 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 
 ## Picking up development with Codex
 
-**One task per PR.** Check the live [work register](docs/WORK_STATUS.md) and the latest [T04 handoff](https://github.com/resistdesign/Estragon/issues/20) before choosing work (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
+**One task per PR.** Check the live [work register](docs/WORK_STATUS.md) and the latest [T05 handoff](https://github.com/resistdesign/Estragon/issues/22) before choosing work (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
 
 ## Naming
 

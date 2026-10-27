@@ -4,7 +4,7 @@
 
 **Estragon is a new, self-rendered, reactive UI engine that runs inside Godot, not a wrapper around Godot's GUI system.**
 
-Its source language is Gogo (`.gogo`): **XML-like component expressions woven directly into GDScript, inspired by TSX, and transpiled into runnable GDScript**. Flex 4 informs its component system, automatic event wiring and bindable state. No XML namespace prefixes are required in the target language. See the [design direction](DESIGN_DIRECTION.md); this is not yet implemented.
+Its source language is Gogo (`.gogo`): **XML-like component expressions woven directly into GDScript, inspired by TSX, and transpiled into runnable GDScript**. Flex 4 informs its component system, automatic event wiring and bindable state. No XML namespace prefixes are required in the target language. See the [design direction](DESIGN_DIRECTION.md). T05 implements a minimal hybrid authoring subset; the full reactive UI/editor vision remains future work.
 
 ## Why build it?
 

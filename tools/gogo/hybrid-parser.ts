@@ -12,6 +12,8 @@ const identifierPart = (char: string) => char !== "" && /[\p{L}\p{N}\p{M}_]/u.te
 export class HybridParser {
     readonly identifiers = new Set<string>();
     private depth = 0;
+    private indentation: string | undefined;
+    private readonly namedClasses: { indentation: number; line: number }[] = [];
     constructor(readonly file: SourceFile) {}
 
     private component(offset: number): HybridComponentSyntax {
@@ -70,9 +72,21 @@ export class HybridParser {
                 continue;
             }
             if (braced && stack.length === 0 && char === "}") { flush(); return { parts, end: offset, hasToken }; }
+            const line = this.file.position(offset).line;
+            const prefix = text.slice(this.file.offset(line), offset);
+            const firstOnLine = [...prefix].every(c => c === " " || c === "\t");
+            if (!braced && stack.length === 0 && firstOnLine) {
+                while (this.namedClasses.length && line > this.namedClasses.at(-1)!.line
+                    && prefix.length <= this.namedClasses.at(-1)!.indentation) this.namedClasses.pop();
+                if (prefix.length && this.indentation === undefined) this.indentation = prefix;
+            }
             hasToken = true;
             if (char === '"' || char === "'") { offset = this.stringEnd(offset); operand = false; continue; }
             if (char === "<" && operand && identifierStart(point(offset + 1))) {
+                if (!braced && stack.length === 0 && this.file.position(offset).column === 1) {
+                    this.file.fail("Expected a GDScript expression context before component markup", offset);
+                }
+                if (this.namedClasses.length) this.file.fail("Component expressions inside named inner classes are outside T05; use an outer-class helper", offset);
                 flush();
                 const component = this.component(offset);
                 parts.push(component);
@@ -87,6 +101,9 @@ export class HybridParser {
                 while (identifierPart(point(offset))) offset += point(offset).length;
                 const word = text.slice(from, offset);
                 this.identifiers.add(word);
+                if (!braced && stack.length === 0 && firstOnLine && word === "class") {
+                    this.namedClasses.push({ indentation: prefix.length, line });
+                }
                 operand = OPERAND_KEYWORDS.has(word);
                 continue;
             }
@@ -114,7 +131,7 @@ export class HybridParser {
 
     module(): HybridModuleSyntax {
         const scanned = this.scan(0, false);
-        return { parts: scanned.parts, identifiers: this.identifiers };
+        return { parts: scanned.parts, identifiers: this.identifiers, indentation: this.indentation ?? "\t" };
     }
 }
 

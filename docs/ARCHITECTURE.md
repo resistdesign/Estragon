@@ -4,7 +4,7 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
-## Intended mixed-source pipeline (T05 and later)
+## Mixed-source direction (T05 subset implemented; later services planned)
 
 The [design direction](DESIGN_DIRECTION.md) is **Gogo's XML-like markup and GDScript mixed in one authored `.gogo` source**, transpiled to GDScript—not JSON UI data interpreted by Godot.
 
@@ -45,7 +45,7 @@ A typed *compiler-internal* AST or intermediate model is useful; that is **not**
 
 | Layer | Owns | Does not own |
 | --- | --- | --- |
-| Gogo frontend/codegen (planned) | Hybrid GDScript/markup parsing, component/type resolution, diagnostics, generated GDScript and source maps | Rendering, Godot nodes |
+| Gogo frontend/codegen (T04/T05 subset implemented) | Hybrid GDScript/markup parsing, component/type resolution, diagnostics, generated GDScript and source maps | Rendering, Godot nodes |
 | Binding compiler (planned) | Observable properties, dependency descriptors and source transformation | Per-frame polling |
 | Component runtime (foundations implemented; reconciliation planned) | Independent objects, identity, ownership, disposal and dirty flags | Godot scene tree |
 | Layout engine (minimal stacks implemented) | Natural/fixed/fill sizes and nested VBox/HBox; broader layout planned | `Container` nodes |
@@ -108,10 +108,40 @@ project before import, so its runtime suite tests actual new compiler output.
 The generated surface uses T03's lifecycle; application code never disposes UI
 components. `examples/compiled/Compiled.tscn` is the runnable example.
 
-This implements **only** T04: no mixed GDScript, callbacks, binding generation,
-editor build hooks or full source maps. The markup-only parser/IR does not define
+This section describes T04 only; T05 hybrid composition is described below.
+Callbacks, binding generation and editor build hooks remain future work. The markup-only parser/IR does not define
 the whole language. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for exact grammar,
-properties, commands and limitations; T05 remains the mixed-source work item.
+properties, commands and limitations.
+
+## Hybrid GDScript/markup composition (T05)
+
+`hybrid-parser.ts` lexes GDScript strings/comments/identifiers/operators and
+balanced delimiters, dispatching only expression-position markup to the extended
+T04 parser. GDScript source ranges and component AST nodes coexist in one module.
+Braced props/children recursively contain GDScript ranges and markup. This is a
+lexical composition frontend; Godot still parses and typechecks the resulting
+GDScript. It does not replace the GDScript language implementation.
+
+`validate.ts` reuses component/property rules and distinguishes literals from
+GDScript expressions. `emit-hybrid.ts` copies authored ranges and emits typed
+static factory calls/methods for component construction. Dynamic arguments are
+evaluated at the authored call site, preserving local/member scope and native
+operators/control flow. Values are eager once per construction in source traversal
+order; conditionals inside expressions remain native/lazy. No binding polling,
+closure capture transformation or runtime markup interpretation is introduced.
+
+`source.ts` provides UTF-16 indexing; `source-map.ts` emits a versioned range map
+with source content and copied/generated spans. The CLI writes hybrid `.gd` and
+`.gd.map.json`; validation annotates generated Godot diagnostics with original
+Gogo coordinates. This is sufficient for source tracing, not a complete editor
+source-map/breakpoint service. Literal-only T04 fixture bytes remain unchanged.
+
+`examples/mixed/Mixed.gogo` extends EstragonSurface, mounts `build_view()` in its
+ordinary `_init`, and exposes explicit rebuild. Surface ownership automatically
+cleans old trees. Helper modules can remain RefCounted and return components.
+No new runtime classes, widget Nodes, signal wiring or subscriptions are needed.
+See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) and ADR-0009 for the exact minimal grammar,
+type/evaluation limits and unsupported nested named-class markup.
 
 ## Independent runtime (T02/T03)
 

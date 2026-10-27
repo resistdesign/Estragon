@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://examples/mixed/generated/Mixed.gd" id="1_mixed"]
+
+[node name="MixedEstragonSurface" type="Node"]
+script = ExtResource("1_mixed")
