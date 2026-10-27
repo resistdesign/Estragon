@@ -1,0 +1,78 @@
+import type { GdscriptExpression, HybridComponentExpression, HybridModule, HybridPart, PropertyName, Span } from "./model.ts";
+import { COMPONENT_CLASSES } from "./validate.ts";
+import { emitLiteral } from "./emit-gdscript.ts";
+import { MappedWriter } from "./source-map.ts";
+import { SourceFile } from "./source.ts";
+
+type Argument = { expression: GdscriptExpression; type: string; name: string };
+type Factory = { name: string; root: HybridComponentExpression; arguments: Argument[] };
+const propertyType = (name: PropertyName) => name === "fill" ? "Color" : name === "fill_width" || name === "fill_height" ? "bool" : "float";
+
+export function emitHybrid(module: HybridModule, file: SourceFile) {
+    const writer = new MappedWriter(file);
+    const factories: Factory[] = [];
+    let sequence = 0;
+    const argumentByExpression = new Map<GdscriptExpression, Argument>();
+    const collect = (node: HybridComponentExpression, factory: Factory) => {
+        const argument = (expression: GdscriptExpression, type: string) => {
+            const item = { expression, type, name: `_gogo_value_${factory.arguments.length}` };
+            factory.arguments.push(item);
+            argumentByExpression.set(expression, item);
+        };
+        for (const property of node.properties) if (property.value.kind === "gdscript-expression") argument(property.value, propertyType(property.name));
+        for (const child of node.children) {
+            if (child.kind === "gdscript-expression") argument(child, "EstragonDisplayObject");
+            else collect(child, factory);
+        }
+    };
+    const parts = (items: readonly HybridPart[]) => {
+        for (const item of items) {
+            if (item.kind === "gdscript-source") writer.append(file.text.slice(item.span.start.offset, item.span.end.offset), item.span, true);
+            else call(item);
+        }
+    };
+    const call = (node: HybridComponentExpression) => {
+        let name: string;
+        do { name = `_gogo_build_${sequence++}`; } while (module.identifiers.has(name));
+        const factory: Factory = { name, root: node, arguments: [] };
+        factories.push(factory);
+        collect(node, factory);
+        writer.append(`${name}(`, node.span);
+        factory.arguments.forEach((argument, index) => {
+            if (index) writer.append(", ", node.span);
+            writer.append("(", argument.expression.span);
+            parts(argument.expression.parts);
+            writer.append(")", argument.expression.span);
+        });
+        writer.append(")", node.span);
+    };
+    parts(module.parts);
+    writer.append("\n");
+    // Nested markup inside arguments can add factories while calls are emitted.
+    for (const factory of factories) {
+        writer.append(`\n\nstatic func ${factory.name}(`, factory.root.span);
+        factory.arguments.forEach((argument, index) => {
+            writer.append(`${index ? ", " : ""}${argument.name}: ${argument.type}`, argument.expression.span);
+        });
+        writer.append(`) -> ${COMPONENT_CLASSES[factory.root.component]}:\n`, factory.root.span);
+        let next = 0;
+        const line = (text: string, span: Span) => writer.append(`\t${text}\n`, span);
+        const emit = (node: HybridComponentExpression): string => {
+            const variable = `component_${next++}`, type = COMPONENT_CLASSES[node.component];
+            line(`var ${variable}: ${type} = ${type}.new()`, node.span);
+            for (const property of node.properties) {
+                const value = property.value;
+                line(`${variable}.${property.name} = ${value.kind === "gdscript-expression" ? argumentByExpression.get(value)!.name : emitLiteral(value)}`, value.span);
+            }
+            for (const child of node.children) {
+                const value = child.kind === "gdscript-expression" ? argumentByExpression.get(child)!.name : emit(child);
+                line(`if ${variable}.add_child(${value}) != OK:`, child.span);
+                line(`\tpush_error(${JSON.stringify(`${file.name}:${child.span.start.line}:${child.span.start.column}: Gogo child must be a live, uniquely owned component`)})`, child.span);
+            }
+            return variable;
+        };
+        const root = emit(factory.root);
+        line(`return ${root}`, factory.root.span);
+    }
+    return writer.finish();
+}

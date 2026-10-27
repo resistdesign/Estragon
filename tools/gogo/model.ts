@@ -40,3 +40,37 @@ export interface ComponentExpression {
     readonly children: readonly ComponentExpression[];
     readonly span: Span;
 }
+
+/** T05 composes untouched GDScript ranges with markup expression nodes. */
+export interface GdscriptSource { readonly kind: "gdscript-source"; readonly span: Span }
+export interface GdscriptExpressionSyntax {
+    readonly kind: "gdscript-expression";
+    readonly parts: readonly HybridSyntaxPart[];
+    readonly span: Span;
+}
+export interface HybridAttributeSyntax extends Omit<AttributeSyntax, "value"> {
+    readonly value: string | GdscriptExpressionSyntax;
+}
+export interface HybridComponentSyntax extends Omit<ComponentSyntax, "attributes" | "children"> {
+    readonly attributes: readonly HybridAttributeSyntax[];
+    readonly children: readonly (HybridComponentSyntax | GdscriptExpressionSyntax)[];
+}
+export type HybridSyntaxPart = GdscriptSource | HybridComponentSyntax;
+export interface GdscriptExpression {
+    readonly kind: "gdscript-expression";
+    readonly parts: readonly HybridPart[];
+    readonly span: Span;
+}
+export interface HybridComponentExpression extends Omit<ComponentExpression, "properties" | "children"> {
+    readonly properties: readonly { readonly name: PropertyName; readonly value: Literal | GdscriptExpression }[];
+    readonly children: readonly (HybridComponentExpression | GdscriptExpression)[];
+}
+export type HybridPart = GdscriptSource | HybridComponentExpression;
+export interface HybridModuleSyntax {
+    readonly parts: readonly HybridSyntaxPart[];
+    readonly identifiers: ReadonlySet<string>;
+}
+export interface HybridModule {
+    readonly parts: readonly HybridPart[];
+    readonly identifiers: ReadonlySet<string>;
+}

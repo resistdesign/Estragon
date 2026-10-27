@@ -1,4 +1,4 @@
-import { GogoCompileError, type AttributeSyntax, type ComponentSyntax, type Position, type Span } from "./model.ts";
+import { GogoCompileError, type ComponentSyntax, type Position, type Span, type HybridAttributeSyntax, type HybridComponentSyntax, type GdscriptExpressionSyntax } from "./model.ts";
 
 /** Recursive-descent parser for the T04 markup island only. No GDScript rewriting. */
 class MarkupParser {
@@ -6,7 +6,7 @@ class MarkupParser {
     private line = 1;
     private column = 1;
 
-    constructor(private readonly source: string, private readonly sourceName: string, start: number) {
+    constructor(private readonly source: string, private readonly sourceName: string, start: number, private readonly expression?: (offset: number) => GdscriptExpressionSyntax) {
         if (!Number.isInteger(start) || start < 0 || start > source.length) {
             throw new RangeError("Markup start offset is outside the source");
         }
@@ -56,11 +56,16 @@ class MarkupParser {
         while (this.current() !== "" && /[A-Za-z0-9_.:-]/.test(this.current())) this.advance();
         return { text: this.source.slice(start.offset, this.offset), span: this.span(start) };
     }
-    private attribute(): AttributeSyntax {
+    private attribute(): HybridAttributeSyntax {
         const name = this.name();
         this.whitespace();
         this.expect("=");
         this.whitespace();
+        if (this.current() === "{" && this.expression) {
+            const value = this.expression(this.offset);
+            while (this.offset < value.span.end.offset) this.advance();
+            return { name: name.text, nameSpan: name.span, value, valueSpan: value.span };
+        }
         const quote = this.current();
         if (quote !== '"' && quote !== "'") this.fail("Expected a quoted literal property value; expressions are not supported in T04");
         this.advance();
@@ -77,14 +82,14 @@ class MarkupParser {
         this.advance();
         return { name: name.text, nameSpan: name.span, value, valueSpan };
     }
-    component(depth = 0): ComponentSyntax {
+    component(depth = 0): HybridComponentSyntax {
         this.trivia();
         const start = this.position();
         if (depth >= 256) this.fail("Component nesting exceeds the T04 limit of 256");
         this.expect("<");
         const name = this.name();
-        const attributes: AttributeSyntax[] = [];
-        const children: ComponentSyntax[] = [];
+        const attributes: HybridAttributeSyntax[] = [];
+        const children: (HybridComponentSyntax | GdscriptExpressionSyntax)[] = [];
         while (true) {
             const separated = this.whitespace();
             if (this.at("/>")) {
@@ -98,6 +103,13 @@ class MarkupParser {
         this.trivia();
         while (!this.at("</")) {
             if (this.offset >= this.source.length) this.fail(`Missing closing tag </${name.text}>`);
+            if (this.at("{") && this.expression) {
+                const value = this.expression(this.offset);
+                while (this.offset < value.span.end.offset) this.advance();
+                children.push(value);
+                this.trivia();
+                continue;
+            }
             if (!this.at("<")) this.fail("Only component children are supported; text and GDScript belong to later slices");
             children.push(this.component(depth + 1));
             this.trivia();
@@ -116,13 +128,17 @@ class MarkupParser {
 }
 
 /** Future hybrid parsers can consume a markup expression at an existing offset. */
-export function parseMarkupExpressionAt(source: string, start: number, sourceName = "<source>"): ComponentSyntax {
-    return new MarkupParser(source, sourceName, start).component();
+export function parseMarkupExpressionAt(source: string, start: number, sourceName?: string): ComponentSyntax;
+export function parseMarkupExpressionAt(source: string, start: number, sourceName: string,
+    expression: (offset: number) => GdscriptExpressionSyntax): HybridComponentSyntax;
+export function parseMarkupExpressionAt(source: string, start: number, sourceName = "<source>",
+    expression?: (offset: number) => GdscriptExpressionSyntax): HybridComponentSyntax {
+    return new MarkupParser(source, sourceName, start, expression).component();
 }
 
 export function parseMarkup(source: string, sourceName = "<source>"): ComponentSyntax {
     const parser = new MarkupParser(source, sourceName, 0);
     const expression = parser.component();
     parser.requireEnd();
-    return expression;
+    return expression as ComponentSyntax;
 }
