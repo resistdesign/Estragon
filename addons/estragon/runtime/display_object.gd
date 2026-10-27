@@ -124,6 +124,7 @@ func clear_invalidations(flags: int = DIRTY_ALL) -> void:
 func _dispose() -> void:
 	if _disposed:
 		return
+	_cancel_pointer()
 	_disposed = true
 	var parent := get_parent()
 	if parent != null:
@@ -133,8 +134,43 @@ func _dispose() -> void:
 
 
 func _dispose_owned_resources() -> void:
-	pass
+	# External references may retain terminal components. Release connected
+	# Callables now, including closures capturing application objects.
+	for entry in get_signal_list():
+		for connection in get_signal_connection_list(entry.name):
+			disconnect(entry.name, connection.callable)
 
 
 func _set_parent(parent: EstragonContainer) -> void:
+	_cancel_pointer()
 	_parent_ref = weakref(parent) if parent != null else null
+
+
+func get_surface() -> EstragonSurface:
+	var ancestor: EstragonDisplayObject = self
+	while ancestor != null:
+		if ancestor._surface_ref != null:
+			return ancestor._surface_ref.get_ref() as EstragonSurface
+		ancestor = ancestor.get_parent()
+	return null
+
+
+func get_surface_rect() -> Rect2:
+	var position := _layout_rect.position
+	var ancestor := get_parent()
+	while ancestor != null:
+		position += ancestor.get_layout_rect().position
+		ancestor = ancestor.get_parent()
+	return Rect2(position, _layout_rect.size)
+
+
+## Input coordinates are relative to the parent, just like arranged geometry.
+## Noninteractive decoration passes through. No clipping is implied by parents.
+func hit_test(_position: Vector2) -> EstragonDisplayObject:
+	return null
+
+
+func _cancel_pointer() -> void:
+	var surface := get_surface()
+	if surface != null:
+		surface._pointer.cancel_subtree(self)

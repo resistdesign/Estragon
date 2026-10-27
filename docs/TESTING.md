@@ -89,6 +89,63 @@ content. The capture procedure below works with this scene path. Record whether
 a graphics capture was inspected and whether the separate interactive editor
 resize/remote-tree check actually ran.
 
+## T06 text/button/input verification
+
+`tests/godot/interaction.gd` runs 78 assertions in the isolated Godot validator with the same
+error/timeout rules and requires `ESTRAGON_INTERACTION_OK`. It uses real fonts,
+canvas drawing and the Godot Viewport input bridge, plus the public surface
+input adapter for deterministic interaction sequences. Assertions cover:
+
+- Shaped-string metrics, explicit multiline baselines, font/size/color/text
+  invalidation, fixed/intrinsic sizing, empty/zero-area text and label padding.
+- Interleaved rectangle/text paint order and normal/hover/down/disabled visuals.
+- Nested local/absolute coordinates, half-open bounds, spacing gaps, topmost
+  overlays, disabled occlusion and unclipped overflow.
+- Resizing/current layout before the next event, distinct button handlers,
+  duplicate/unmatched down/up, press-outside, release-outside/over-another,
+  leave/reenter, secondary/keyboard exclusion and window focus/exit cancellation.
+- Reparenting across containers/surfaces, remove/replace/unmount, terminal signal
+  disconnection/Font release, weak reference reclamation, exit/re-entry and window
+  subscription teardown. No application component disposal calls.
+- Reentrant root replacement, queued host teardown, and the actual runnable
+  example's Add one/Reset GDScript handlers updating visible text.
+
+`invalid_text.gd` separately proves null Font and nonpositive font-size errors
+preserve previous values. Each must emit exactly the expected diagnostic and
+`ESTRAGON_INVALID_TEXT_REJECTED`; unrelated errors/timeouts fail the check.
+All previous runtime suites and the 100 Bun tests/fixtures remain required.
+
+## Interactive components visual check (T06)
+
+Run `examples/interactive/Interactive.tscn` in Godot 4.7 (the legacy main scene
+remains unchanged). No compilation is needed: this example is authored ordinary
+GDScript and deliberately uses direct `button.pressed.connect(handler)`.
+
+1. Confirm heading, count/status text, Add one/Reset labels, a dimmed Disabled
+   button and two instruction lines. Hover brightens a button; holding darkens it.
+2. Click Add one several times: status increments and reports its handler.
+   Click Reset: status returns to zero and reports the distinct Reset handler.
+   Check the output log for the corresponding handler messages.
+3. Press a button, move outside it, release: no activation. Press and leave then
+   reenter before release: one activation. Release over the other button: neither
+   activates. The Disabled button never activates. Rapid/repeated input must not
+   produce an extra activation per completed press/release.
+4. Resize: equal-width buttons share the row's remaining width. Text uses intrinsic
+   size/explicit newlines; it does not wrap and can overflow tiny viewports. Click
+   at the new button positions to verify targeting follows layout.
+5. Alt-tab or leave the window during a press: it cancels. Stop/restart without
+   debugger errors. Inspect the remote tree: one surface Node, no component Nodes
+   or Controls. Component cleanup is owned by the framework.
+
+For real graphics evidence use the existing isolated-capture procedure with this
+scene. A fixed-resolution movie can show states, but dynamically resizing during
+movie recording may crop/scale its fixed output. For resize evidence instead save
+`get_viewport().get_texture().get_image().save_png(...)` after
+`RenderingServer.frame_post_draw` in an isolated native graphics run. Viewport
+`push_input(event, true)` can exercise the same `_input` bridge in that run;
+record whether physical/editor interaction actually ran. Headless tests measure
+geometry and check engine errors; they do not inspect text pixels or GPU output.
+
 ## Generated IR
 
 The checked-in JSON is generated, not hand-maintained. `bun run verify:ir` compares compiler output against the committed fixture **byte-for-byte without rewriting it**.

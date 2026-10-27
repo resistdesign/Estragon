@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-27, T05 completion PR based on `main` at `240e8bd` after merged [PR #21](https://github.com/resistdesign/Estragon/pull/21). T01–T04 are merged. T05 is **In review until approval and merge**. The minimal hybrid authoring subset coexists with T04 standalone markup and the legacy XML/JSON demo; bindings/widgets/editor automation remain future work.
+**Snapshot:** 2026-10-27, T06 completion PR based on `main` at `4f65a06` after merged [PR #23](https://github.com/resistdesign/Estragon/pull/23). T01–T05 are merged. T06 is **In review until approval and merge**. Independent text/buttons and primary-pointer input use ordinary GDScript; Gogo-generated wiring remains T07. Legacy and T04/T05 examples remain preserved.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** inspect [T05 / issue #22](https://github.com/resistdesign/Estragon/issues/22) for its latest PR, CI and handoff. T06 follows only after T05 approval/merge. The hybrid subset/limits are in GOGO_LANGUAGE and ADR-0009; automatic lifecycle remains required (ADR-0008).
+**Start here:** inspect [T06 / issue #24](https://github.com/resistdesign/Estragon/issues/24) for its latest PR, CI and handoff. T07 follows only after T06 approval/merge. ARCHITECTURE documents text measurement, pointer/capture and lifecycle; TESTING contains the interactive example procedure. Automatic lifecycle remains required (ADR-0008).
 
 ## Current plan register
 
@@ -14,8 +14,8 @@
 | **T02** | **Done** | Independent display object/container foundations | [#16](https://github.com/resistdesign/Estragon/issues/16), merged [PR #17](https://github.com/resistdesign/Estragon/pull/17) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40276309421); merge `fb3aec6`. Lifecycle corrected by T03/ADR-0008. |
 | **T03** | **Done** | Responsive stack layout, rectangles, surface and automatic lifecycle | [#18](https://github.com/resistdesign/Estragon/issues/18), merged [PR #19](https://github.com/resistdesign/Estragon/pull/19) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40282237018); merge `9df0626`. OpenGL captures inspected; interactive editor check not run. |
 | **T04** | **Done** | Namespace-free markup → GDScript | [#20](https://github.com/resistdesign/Estragon/issues/20), merged [PR #21](https://github.com/resistdesign/Estragon/pull/21) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40284163867); merge `240e8bd`. OpenGL capture inspected. |
-| **T05** | **In review; Done only upon approval + merge** | GDScript-first hybrid Gogo, expressions and maps | [#22](https://github.com/resistdesign/Estragon/issues/22) | See issue/PR for lexical, generated runtime, mapped diagnostics, graphics and CI evidence. |
-| T06 | Queued (T05) | Basic Text/Button and input | [#3](https://github.com/resistdesign/Estragon/issues/3) (umbrella) | Pending |
+| **T05** | **Done** | GDScript-first hybrid Gogo, expressions and maps | [#22](https://github.com/resistdesign/Estragon/issues/22), merged [PR #23](https://github.com/resistdesign/Estragon/pull/23) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40448084799); merge `4f65a06`. Native graphics capture inspected; interactive editor check not run. |
+| **T06** | **In review; Done only upon approval + merge** | Text/Button and primary-mouse input | [#24](https://github.com/resistdesign/Estragon/issues/24); umbrella [#3](https://github.com/resistdesign/Estragon/issues/3) | See live issue/PR for runtime/cleanup tests, native resized graphics capture and CI evidence. |
 | T07 | Queued (T05, T06) | Generated event wiring and Counter | Create task issue on pickup | Pending |
 | T08 | Queued (T07) | Editor build/run integration | [#6](https://github.com/resistdesign/Estragon/issues/6) (umbrella) | Pending |
 | T09 | Queued (T07, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |

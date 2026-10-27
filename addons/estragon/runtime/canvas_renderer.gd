@@ -15,8 +15,12 @@ func render(list: EstragonPaintList) -> void:
 	if not _canvas_item.is_valid():
 		return
 	RenderingServer.canvas_item_clear(_canvas_item)
-	for command in list.rectangles:
-		RenderingServer.canvas_item_add_rect(_canvas_item, command.rect, command.color)
+	for command in list.commands:
+		if command is EstragonPaintList.FillRect:
+			RenderingServer.canvas_item_add_rect(_canvas_item, command.rect, command.color)
+		elif command is EstragonPaintList.TextRun:
+			command.font.draw_string(_canvas_item, command.position, command.text,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, command.font_size, command.color)
 
 
 func close() -> void:

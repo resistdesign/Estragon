@@ -103,9 +103,21 @@ func append_paint(list: EstragonPaintList, origin: Vector2 = Vector2.ZERO) -> vo
 	super.append_paint(list, origin)
 
 
+func hit_test(position: Vector2) -> EstragonDisplayObject:
+	if is_disposed():
+		return null
+	var local := position - _layout_rect.position
+	for index in range(_children.size() - 1, -1, -1):
+		var target := _children[index].hit_test(local)
+		if target != null:
+			return target
+	return null
+
+
 func _dispose_owned_resources() -> void:
 	var owned := _children
 	_children = []
 	for child in owned:
 		child._set_parent(null)
 		child._dispose()
+	super._dispose_owned_resources()
