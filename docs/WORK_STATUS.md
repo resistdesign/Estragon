@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-28. T01–T08 and native planning PR #31 are merged. N01's native lexer/parser/typed frontend is implemented in its focused PR and remains **In review until approval and merge**. Native emission (N02) and editor cutover (N03) remain queued. T08 still uses Bun for normal editor compilation.
+**Snapshot:** 2026-10-28. T01–T08 and native planning PR #31 are merged. N01 is merged in PR #32 (`efaad96`). N02 native generation/maps and Counter parity are implemented in its focused PR and remain **In review until approval and merge**. N03 editor cutover is queued. T08 still uses Bun for normal editor compilation.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** Check [N01 / issue #30](https://github.com/resistdesign/Estragon/issues/30) and its latest PR/handoff. After N01 merges, establish a scoped N02 issue and consume the native frontend model for emission/maps. Do not start T09/T10 before N03. GitHub holds live progress; AGENTS.md's cleanup authorization remains in effect.
+**Start here:** Check [N02 / issue #33](https://github.com/resistdesign/Estragon/issues/33) and its latest PR/handoff. After N02 merges, establish a scoped N03 issue to switch the editor to the native compile/validation APIs. Do not start T09/T10 before N03. GitHub holds live progress; AGENTS.md's cleanup authorization remains in effect.
 
 ## Current plan register
 
@@ -18,8 +18,8 @@
 | **T06** | **Done** | Text/Button and primary-mouse input | [#24](https://github.com/resistdesign/Estragon/issues/24), merged [PR #25](https://github.com/resistdesign/Estragon/pull/25); umbrella [#3](https://github.com/resistdesign/Estragon/issues/3) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40451329471); merge `1a7cc2e`. Native resized graphics inspected; physical/editor smoke not run. |
 | **T07** | **Done** | Generated Button.pressed wiring and Counter.gogo | [#26](https://github.com/resistdesign/Estragon/issues/26), merged [PR #27](https://github.com/resistdesign/Estragon/pull/27) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40618408960); merge `0a1cfc1`. Native Counter graphics inspected. |
 | **T08** | **Done** | Native highlighting, saved-source builds and F5/F6 gate | [#28](https://github.com/resistdesign/Estragon/issues/28); umbrella [#6](https://github.com/resistdesign/Estragon/issues/6) | Merged [PR #29](https://github.com/resistdesign/Estragon/pull/29), `53809cf`; isolated editor/Play evidence in #28/#29; owner manually verified font-size edit and Play. |
-| **N01** | **In review; Done only upon approval + merge** | Native Gogo lexer/parser/typed frontend | [#30](https://github.com/resistdesign/Estragon/issues/30) | Godot-only no-Bun proof: 103 reference cases, 558 assertions; full Bun/runtime/editor suites pass. Exact CI and handoff in issue/PR. |
-| N02 | Queued (N01) | Native codegen, source maps and T04–T07 parity | New scoped issue on pickup | Pending |
+| **N01** | **Done (merged PR #32)** | Native Gogo lexer/parser/typed frontend | [#30](https://github.com/resistdesign/Estragon/issues/30) | Godot-only no-Bun proof: 103 reference cases, 558 assertions; full Bun/runtime/editor suites pass. Exact CI and handoff in issue/PR. |
+| **N02** | **In review; Done only upon approval + merge** | Native codegen, source maps and T04–T07 parity | [#33](https://github.com/resistdesign/Estragon/issues/33) | Godot-only generation, direct Counter and shared runtime/negative tests; exact CI/evidence/handoff in issue/PR. |
 | N03 | Queued (N02) | Godot editor native cutover, no Bun required | New scoped issue on pickup | Pending |
 | T09 | Queued (N03, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |
 | T10 | Queued (N03, parity) | Retire legacy JSON safely | Create task issue on pickup | Pending |

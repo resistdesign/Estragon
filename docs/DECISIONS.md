@@ -147,7 +147,7 @@ See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
 
 ## ADR-0012 — Gogo compilation must run natively inside Godot
 
-**Status: accepted owner decision, 2026-10-28; not yet implemented.**
+**Status: accepted owner decision, 2026-10-28; N01/N02 native compiler implemented, N03 editor cutover pending.**
 
 **Decision:** Users installing and working with Estragon in Godot require **only Godot and the addon**. The Gogo compiler must be bundled and authored in **GDScript**, supporting native lexical/semantic markup processing, GDScript generation, source maps and editor build/Play diagnostics **without Bun/Node/TypeScript installed, configured or spawned**. No new external compiler process, runtime markup/JSON interpreter, engine fork, GDExtension binary or per-component Godot Node/Control is an acceptable substitute without another explicit decision.
 
@@ -155,7 +155,7 @@ See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
 
 **Execution:** N01 native GDScript lexer/parser/typed frontend → N02 native emitter/maps, T04–T07 parity and interactive Counter → N03 no-Bun native editor cutover with real F5/F6 failure/recovery tests in a fresh Godot-only project. These tasks move **ahead of T09/T10**. Preserve existing working T08 behavior until N03 passes; do not silently fall back to Bun once cut over. TypeScript/Bun may remain **optional developer/CI reference tests**, never user-facing editor dependencies.
 
-**N01 implementation:** The addon now includes a scene-independent native lexer, hybrid parser, typed built-in validation and source-located diagnostics. Godot-only tests consume checked reference transcripts with Bun unavailable. General emission/maps and editor cutover remain N02/N03; the current editor still requires the transitional Bun compiler. See GOGO_LANGUAGE for API and parity boundaries.
+**N01/N02 implementation:** The addon now includes a scene-independent native lexer, hybrid parser, typed built-in validation and source-located diagnostics. Godot-only tests consume checked reference transcripts with Bun unavailable. N02 adds deterministic native GDScript emission, version-1 range maps and explicit native semantic validation. Godot-only Counter/fixture tests prove input, evaluation and lifecycle parity with external tools unavailable. Validation uses a scoped Logger/reload window and Resource.set_path_cache() with the actual output path (including class_name identity), never taking over cached application scripts; Godot reports lines rather than exact columns. Editor cutover remains N03; the current editor still requires the transitional Bun compiler. See GOGO_LANGUAGE for API and parity boundaries.
 
 **Cost/constraints:** Temporary compiler duplication is acceptable to establish semantic parity. Keep codegen independent of EditorInterface, renderer and application scene tree. Preserve accepted Gogo syntax, deterministic output, authored source maps, event/callback semantics, lifecycle and fail-closed builds. GDScript type semantics remain Godot's responsibility. This does not solve arbitrary `@Bindable` annotations in ordinary authored `.gd`; R01/T09 remain separate.
 

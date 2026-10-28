@@ -433,10 +433,60 @@ tests. CI checks the optional TypeScript transcript separately with
 
 The native test checks reference acceptance, typed trees/source spans and first
 error starts, lossless tokens, truncations, recursion limits, independent calls,
-and a tiny test-only literal-to-executable-GDScript proof. General code generation
-and Counter execution through the native compiler belong to N02. There is no
+and a tiny test-only literal-to-executable-GDScript proof. N02 adds general generation and Counter execution through the independent harness below. There is no
 editor or visual behavior change in N01; manual editor/visual smoke testing is
 not evidence of native emission or native Play integration yet.
+
+## Native generation and runtime without Bun/Node (N02)
+
+```sh
+GODOT_BIN=/absolute/path/to/godot sh tools/check-native-generation.sh
+```
+
+The shell copies only the native compiler/runtime, authored examples, checked
+reference transcripts and tests into a temporary project. All Godot invocations
+for import, compilation and execution use an **empty tool directory as PATH**:
+Bun, Node and external compiler executables are unavailable. No TypeScript is
+run, even to generate fixtures. Checked-in generated application scripts are
+excluded from the temporary project before native generation. The native emitter builds all example outputs
+before the existing standalone/hybrid/signal runtime tests execute them.
+`native_counter.gd` additionally reads the real Counter.gogo, compiles/validates
+it and instantiates it in a single Godot process.
+
+Positive stages reject engine error text/nonzero exit/missing markers. The
+semantic-negative stage intentionally logs errors: its logger counts expected
+errors across the whole test, verifies mapped diagnostics and unavailable
+executables, and requires its own marker. Unexpected errors fail that stage.
+The native suite covers the N01 corpus, code/maps determinism, exact reference
+hybrid output/map digests, copied ranges/UTF-16 coordinates, numeric precision,
+Unicode/control literals, relative preloads, registered class_name/cache isolation, semantic failures,
+callback runtime guards, +/Reset pointer input, refreshed text/paint, resizing
+and automatic ownership/signal cleanup. Optional transcript freshness:
+
+```sh
+bun tools/native-generation-cases.ts        # no native execution dependency
+bun tools/native-generation-cases.ts --write # intentional reference refresh
+```
+
+For native graphics captures, retain the temporary project, then run its direct
+Counter test without `--headless`:
+
+```sh
+export GODOT_BIN=/absolute/path/to/godot
+ESTRAGON_KEEP_NATIVE_TEST=1 sh tools/check-native-generation.sh
+# Copy the reported temporary path into this variable:
+task_native_project=/reported/temporary/project
+env PATH="$task_native_project/no-tools" "$GODOT_BIN" --path "$task_native_project" \
+  --script res://tests/godot/native_counter.gd -- --visual
+```
+
+This saves `native-counter-zero.png`, `native-counter-one.png`, and
+`native-counter-reset-resized.png` in that isolated project. N02's local Godot
+4.7 Vulkan run produced and inspected all three: Count 0/disabled Reset, Count 1/
+enabled Reset, then Count 0 and a wider row at 800×400 (initially 640×360).
+These are native graphics captures with synthesized pointer events, not a manual
+physical-mouse/editor F5/F6 test. The existing isolated editor regression suite
+continues to test the unchanged Bun bridge; N03 must prove native editor Play.
 
 ## Known gaps
 

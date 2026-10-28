@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 2, 2026-10-28. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 implements the native frontend; native emission and editor cutover remain pending. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
+**Plan version:** 2, 2026-10-28. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 is merged (#32); N02 implements native generation/maps and runtime parity; N03 editor cutover remains pending. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -50,7 +50,7 @@ T01 → T02 → T03 → T04 → T05 → T06 → T07 (merged)
                                       │
                        T08 editor integration (merged PR #29)
                                       │
-                       N01 native lexer/parser (frontend implementation)
+                       N01 native lexer/parser (merged PR #32)
                                       │
                        N02 native codegen + source maps + parity
                                       │
@@ -146,7 +146,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### N02 — Native emitter and current Gogo behavior parity
 
-**Prerequisite:** N01 merged. **Tracking:** create a scoped issue on pickup.
+**Prerequisite:** N01 merged PR #32. **Tracking:** [N02 / issue #33](https://github.com/resistdesign/Estragon/issues/33).
 
 - Generate deterministic ordinary GDScript and original-source maps for both markup-only and hybrid files, including typed factories, native expression scope, property/child evaluation order, collision-safe names and generated Button.pressed connections.
 - Match T04–T07 supported behavior through tests against existing fixtures, positive and negative sources, mapped diagnostics, callbacks, expression edge cases and resource cleanup. Document deliberate formatting differences rather than pretending byte-for-byte equivalence where it is not required.
@@ -195,7 +195,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 The implementation agent should be given a **work ID**, not a whole milestone. Example:
 
-> Continue **N01** from the latest handoff on [issue #30](https://github.com/resistdesign/Estragon/issues/30). Read `AGENTS.md`, this plan and `docs/WORK_STATUS.md`; keep the T08 bridge working, use Godot-only tests, open one focused PR and leave a handoff. Do **not** merge.
+> Continue **N02** from the latest handoff on [issue #33](https://github.com/resistdesign/Estragon/issues/33). Read `AGENTS.md`, this plan and `docs/WORK_STATUS.md`; keep the T08 bridge working, use Godot-only tests, open one focused PR and leave a handoff. Do **not** merge.
 
 A task begins by checking the *latest* main branch, its tracking issue, open PRs and the latest handoff. It ends with verified evidence and a durable handoff or an explicitly reviewed merge. See `AGENTS.md` for the required protocol.
 

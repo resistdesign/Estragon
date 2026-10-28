@@ -42,7 +42,7 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 - **`@Bindable` in ordinary authored `.gd` is a distinct requested goal.** Stock Godot cannot register arbitrary GDScript annotations via an addon. Do not claim this works without proving a pre-parse/source integration. A separate `.bgd` extension is only a possible fallback, not an accepted replacement.
 - **Real runtime components:** implement independent `DisplayObject`/`Container`-style bases, responsive `VBox`/`HBox` and later common UI components. Resolve naming collisions with Godot's classes. Keep existing JSON prototype functional until a GDScript-generating vertical slice is proven.
 
-## Highest priority: native Godot Gogo compiler (accepted; not yet implemented)
+## Highest priority: native Godot Gogo compiler (N01/N02 implemented; N03 pending)
 
 **Owner decision, 2026-10-28, ADR-0012:** Estragon users must compile and run Gogo with **Godot and the bundled addon alone**. No Bun, Node, TypeScript, external compiler processes, shell setup, separate language server or GDExtension binary may be required for normal editing or Play. The T08 Bun-backed editor build is a **temporary bridge**, manually verified in Godot by the user.
 
@@ -71,7 +71,7 @@ Do not modify the accepted architecture or silently reduce Gogo's language featu
 
 **Implemented:**
 
-- `addons/estragon/compiler/`: N01 native GDScript lexer, hybrid parser, typed built-in validation and source diagnostics, independent of editor/runtime/Bun. Native emission/maps (N02) and editor cutover (N03) remain pending; the working editor still uses the TypeScript compiler. See GOGO_LANGUAGE and the Godot-only `sh tools/check-native-frontend.sh` harness.
+- `addons/estragon/compiler/`: N01 native GDScript lexer, hybrid parser, typed built-in validation and source diagnostics, independent of editor/runtime/Bun. N02 adds native emission/maps and explicit Godot semantic validation; editor cutover (N03) remains pending; the working editor still uses the TypeScript compiler. See GOGO_LANGUAGE and the Godot-only `sh tools/check-native-frontend.sh` and `sh tools/check-native-generation.sh` harnesses. Native compile API: `compiler.gd`; semantic validation: `script_validation.gd`; no external process or file publication is involved.
 
 - `tools/transpile-gogo.ts` + `tools/gogo/`: T04/T05 namespace-free component parser, GDScript lexical composition, typed factories and range source maps. Mixed methods/expressions and generated Button.pressed callbacks work within GOGO_LANGUAGE; bindings remain future work.
 - `tools/gogo.ts`: **stage-0** strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun. Its syntax is temporary.
@@ -273,6 +273,8 @@ For Godot-facing changes, also run the pinned Godot 4.7 headless checks:
 bun run check:godot
 bun run test:godot-harness
 bun run test:editor
+# Independent native compile/runtime proof, with Bun/Node unavailable:
+sh tools/check-native-generation.sh
 ```
 
 See `docs/TESTING.md` for `GODOT_BIN`, version pinning, isolation and failure detection. Editor integration tests must use the self-contained isolated harness; never force-enable the plugin or alter user editor settings in tests.

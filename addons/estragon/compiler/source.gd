@@ -49,3 +49,16 @@ func fail(message: String, start: int, end: int = -1) -> void:
 
 func slice(bounds: Model.Span) -> String:
 	return text.substr(bounds.start.index, bounds.end.index - bounds.start.index)
+
+## Convert compatible UTF-16 offsets/coordinates to Godot slicing indexes.
+func index_at_offset(offset_value: int) -> int:
+	var low: int = 0
+	var high := _utf16.size()
+	while low + 1 < high:
+		var middle := (low + high) >> 1
+		if _utf16[middle] <= offset_value: low = middle
+		else: high = middle
+	return low
+
+func offset(line: int, column: int = 1) -> int:
+	return mini(_utf16[-1], _utf16[line_start(line)] + maxi(0, column - 1))
