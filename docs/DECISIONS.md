@@ -145,6 +145,18 @@ and live preview remain future work. Tests use a copied self-contained editor
 with isolated project/settings, never the user's persistent editor configuration.
 See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
 
+## ADR-0012 — Gogo compilation must run natively inside Godot
+
+**Status: accepted owner decision, 2026-10-28; not yet implemented.**
+
+**Decision:** Users installing and working with Estragon in Godot require **only Godot and the addon**. The Gogo compiler must be bundled and authored in **GDScript**, supporting native lexical/semantic markup processing, GDScript generation, source maps and editor build/Play diagnostics **without Bun/Node/TypeScript installed, configured or spawned**. No new external compiler process, runtime markup/JSON interpreter, engine fork, GDExtension binary or per-component Godot Node/Control is an acceptable substitute without another explicit decision.
+
+**Why:** T04–T07 prove Gogo with a Bun/TypeScript compiler. T08 PR #29 proves the Godot editor can automatically build on save and before F5/F6 through a bounded Bun subprocess; the user personally verified a font-size Gogo edit and Play on 2026-10-28. They explicitly reject Bun as a required developer tool. Therefore **T08/ADR-0011's Bun subprocess and executable configuration are transitional**, not the chosen final architecture.
+
+**Execution:** N01 native GDScript lexer/parser/typed frontend → N02 native emitter/maps, T04–T07 parity and interactive Counter → N03 no-Bun native editor cutover with real F5/F6 failure/recovery tests in a fresh Godot-only project. These tasks move **ahead of T09/T10**. Preserve existing working T08 behavior until N03 passes; do not silently fall back to Bun once cut over. TypeScript/Bun may remain **optional developer/CI reference tests**, never user-facing editor dependencies.
+
+**Cost/constraints:** Temporary compiler duplication is acceptable to establish semantic parity. Keep codegen independent of EditorInterface, renderer and application scene tree. Preserve accepted Gogo syntax, deterministic output, authored source maps, event/callback semantics, lifecycle and fail-closed builds. GDScript type semantics remain Godot's responsibility. This does not solve arbitrary `@Bindable` annotations in ordinary authored `.gd`; R01/T09 remain separate.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.

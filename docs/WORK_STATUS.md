@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-28, T08 completion PR based on `main` at `0a1cfc1` after merged [PR #27](https://github.com/resistdesign/Estragon/pull/27). T01–T07 are merged. T08 is **In review until approval and merge**. The optional plugin adds native Gogo highlighting and saved-source/compile-before-Play integration. Bindings and advanced editor services remain future work; runtime and old examples remain preserved.
+**Snapshot:** 2026-10-28, stacked on T08 [PR #29](https://github.com/resistdesign/Estragon/pull/29), still **In review/not merged**. T01–T07 are merged. User manually verified changing Counter.gogo font size and rerunning in Godot. **New P0 priority:** N01 → N02 → N03, a Godot-native Gogo compiler that removes Bun from normal editor/Play use. This plan change is not implementation; T08 currently still uses Bun.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** inspect [T08 / issue #28](https://github.com/resistdesign/Estragon/issues/28) for its latest PR, CI and handoff. EDITOR/ADR-0011 document setup, source/output policy, synchronous build gate and existing-tab limitations; TESTING contains isolated editor and manual F5/F6 procedures. T09 remains dependent on R01 findings; T10 also requires deliberate legacy parity review. AGENTS.md's local cleanup authorization remains in effect.
+**Start here:** Review/merge T08 PR #29, then the separate stacked native-compiler plan PR; only afterward pick up [N01 / issue #30](https://github.com/resistdesign/Estragon/issues/30). Do not start T09 or T10 before N03. R01 research can run independently. GitHub issues/PRs remain live task/handoff records; AGENTS.md's local-cleanup authorization remains in effect.
 
 ## Current plan register
 
@@ -18,8 +18,11 @@
 | **T06** | **Done** | Text/Button and primary-mouse input | [#24](https://github.com/resistdesign/Estragon/issues/24), merged [PR #25](https://github.com/resistdesign/Estragon/pull/25); umbrella [#3](https://github.com/resistdesign/Estragon/issues/3) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40451329471); merge `1a7cc2e`. Native resized graphics inspected; physical/editor smoke not run. |
 | **T07** | **Done** | Generated Button.pressed wiring and Counter.gogo | [#26](https://github.com/resistdesign/Estragon/issues/26), merged [PR #27](https://github.com/resistdesign/Estragon/pull/27) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40618408960); merge `0a1cfc1`. Native Counter graphics inspected. |
 | **T08** | **In review; Done only upon approval + merge** | Native highlighting, saved-source builds and F5/F6 gate | [#28](https://github.com/resistdesign/Estragon/issues/28); umbrella [#6](https://github.com/resistdesign/Estragon/issues/6) | See live issue/PR for isolated real-editor Play/block/recovery, native screenshots and CI evidence. |
-| T09 | Queued (T07, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |
-| T10 | Queued (T07, T08, parity) | Retire legacy JSON safely | Create task issue on pickup | Pending |
+| **N01** | **Queued (T08 + plan merge); next** | Native Gogo lexer/parser/typed frontend | [#30](https://github.com/resistdesign/Estragon/issues/30) | Pending |
+| N02 | Queued (N01) | Native codegen, source maps and T04–T07 parity | New scoped issue on pickup | Pending |
+| N03 | Queued (N02) | Godot editor native cutover, no Bun required | New scoped issue on pickup | Pending |
+| T09 | Queued (N03, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |
+| T10 | Queued (N03, parity) | Retire legacy JSON safely | Create task issue on pickup | Pending |
 | **R01** | **Ready, parallel** | Ordinary `.gd` `@Bindable` feasibility | [#4](https://github.com/resistdesign/Estragon/issues/4) | Pending |
 | R02 | Deferred | Renderer-backend research | [#2](https://github.com/resistdesign/Estragon/issues/2) | Pending |
 
