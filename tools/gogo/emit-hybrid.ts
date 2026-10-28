@@ -1,12 +1,11 @@
-import type { GdscriptExpression, HybridComponentExpression, HybridModule, HybridPart, PropertyName, Span } from "./model.ts";
-import { COMPONENT_CLASSES } from "./validate.ts";
+import type { GdscriptExpression, HybridComponentExpression, HybridModule, HybridPart, Span } from "./model.ts";
+import { COMPONENT_CLASSES, PROPERTY_TYPES } from "./validate.ts";
 import { emitLiteral } from "./emit-gdscript.ts";
 import { MappedWriter } from "./source-map.ts";
 import { SourceFile } from "./source.ts";
 
 type Argument = { expression: GdscriptExpression; type: string; name: string };
 type Factory = { name: string; root: HybridComponentExpression; arguments: Argument[] };
-const propertyType = (name: PropertyName) => name === "fill" ? "Color" : name === "fill_width" || name === "fill_height" ? "bool" : "float";
 
 export function emitHybrid(module: HybridModule, file: SourceFile) {
     const writer = new MappedWriter(file);
@@ -19,7 +18,7 @@ export function emitHybrid(module: HybridModule, file: SourceFile) {
             factory.arguments.push(item);
             argumentByExpression.set(expression, item);
         };
-        for (const property of node.properties) if (property.value.kind === "gdscript-expression") argument(property.value, propertyType(property.name));
+        for (const attribute of node.attributes) if (attribute.value.kind === "gdscript-expression") argument(attribute.value, attribute.kind === "signal" ? "Callable" : PROPERTY_TYPES[attribute.name]);
         for (const child of node.children) {
             if (child.kind === "gdscript-expression") argument(child, "EstragonDisplayObject");
             else collect(child, factory);
@@ -68,9 +67,19 @@ export function emitHybrid(module: HybridModule, file: SourceFile) {
         const emit = (node: HybridComponentExpression): string => {
             const variable = `component_${next++}`, type = COMPONENT_CLASSES[node.component];
             line(`var ${variable}: ${type} = ${type}.new()`, node.span);
-            for (const property of node.properties) {
-                const value = property.value;
-                line(`${variable}.${property.name} = ${value.kind === "gdscript-expression" ? argumentByExpression.get(value)!.name : emitLiteral(value)}`, value.span);
+            for (const attribute of node.attributes) {
+                const value = attribute.value;
+                const argument = value.kind === "gdscript-expression" ? argumentByExpression.get(value)!.name : emitLiteral(value);
+                if (attribute.kind === "property") line(`${variable}.${attribute.name} = ${argument}`, value.span);
+                else {
+                    const error = JSON.stringify(`${file.name}:${value.span.start.line}:${value.span.start.column}: Button.pressed requires a valid zero-argument Callable with a live target`);
+                    line(`if not ${argument}.is_valid() or ${argument}.get_argument_count() != 0:`, value.span);
+                    line(`${module.indentation}push_error(${error})`, value.span);
+                    line(`elif ${argument}.get_object() is EstragonDisplayObject and (${argument}.get_object() as EstragonDisplayObject).is_disposed():`, value.span);
+                    line(`${module.indentation}push_error(${error})`, value.span);
+                    line(`elif ${variable}.pressed.connect(${argument}) != OK:`, value.span);
+                    line(`${module.indentation}push_error(${error})`, value.span);
+                }
             }
             for (const child of node.children) {
                 const value = child.kind === "gdscript-expression" ? argumentByExpression.get(child)!.name : emit(child);

@@ -146,6 +146,58 @@ movie recording may crop/scale its fixed output. For resize evidence instead sav
 record whether physical/editor interaction actually ran. Headless tests measure
 geometry and check engine errors; they do not inspect text pixels or GPU output.
 
+## T07 generated signals and Counter
+
+`tests/signal-gogo.test.ts` adds 37 Bun tests for Text/Button literals and typed
+expression properties, leaf/event compatibility, duplicate/unknown attributes,
+safe string/integer emission, ordered property/callback evaluation, native
+callable/lambda syntax, name collisions, deterministic Counter code/map fixtures
+and event source mapping. The full Bun suite has 137 tests. One old unknown-Button
+case now uses unknown Label because Button is intentionally supported.
+
+```sh
+bun run transpile examples/counter/Counter.gogo --output examples/counter/generated/Counter.gd
+bun run verify:gdscript
+```
+
+The isolated Godot runner freshly compiles Counter, a signal edge module and
+standalone Text/Button literals before import. `tests/godot/generated_signals.gd`
+runs 44 assertions with `ESTRAGON_SIGNALS_OK`: actual Viewport input -> generated
+handler -> count/text update, distinct Reset handler, repeated explicit rebuilds
+without duplicate/stale connections, resizing/paint output, Callable-producing
+attribute order, local/bound/lambda/static scope, direct target reparent/disposal,
+captured-resource release, unmount/host destruction and standalone primitive props.
+Application components are cleaned by owners, never manual disposal calls.
+
+Ten new source-mapped Godot negatives join the previous six hybrid probes:
+missing handler, non-Callable value, invocation returning the wrong type, wrong
+text/disabled types, required/optional nonzero arity, empty Callable, nonexistent
+Callable method and retained disposed direct target. Guards must reject without
+connecting, emit exactly one expected engine error, reach the completion marker
+and map to the authored event line. Other static errors come from Godot's actual
+compiler. This does not claim full TypeScript GDScript checking, bound-argument
+type proofs or arbitrary closure-effect/lifetime analysis.
+
+### Counter visual check
+
+1. Compile Counter with the command above; run `examples/counter/Counter.tscn`
+   in Godot 4.7. Expect a purple heading, Count: 0, `+` and dimmed Reset buttons.
+2. Click `+` repeatedly: each complete click increments once. Reset becomes
+   enabled; click it and confirm Count: 0 and disabled Reset again. Authored
+   Counter.gogo must have no `.pressed.connect(...)`; inspect generated `.gd`
+   for the two guarded native connections.
+3. Hold/leave/reenter/release and release outside as in the T06 procedure. Resize:
+   both buttons share the row width and remain correctly targeted. Text does not
+   wrap; narrow windows may overflow. Stop/restart without debugger errors.
+4. Inspect remote scene tree: one surface Node, no component widgets. Rebuilds
+   and signal teardown are covered by automated runtime tests, not manual cleanup.
+
+Native graphics evidence can use an isolated imported copy, injected
+`Viewport.push_input(event, true)` through the actual input bridge and viewport
+PNG capture after `RenderingServer.frame_post_draw` (see T06). Capture count 0,
+count 1/2, pressed state and Reset after resizing. Record physical/editor smoke
+separately; headless checks do not certify pixels.
+
 ## Generated IR
 
 The checked-in JSON is generated, not hand-maintained. `bun run verify:ir` compares compiler output against the committed fixture **byte-for-byte without rewriting it**.

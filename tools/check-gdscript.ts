@@ -5,6 +5,11 @@ import { compileGogo, transpileGogo } from "./transpile-gogo.ts";
 
 export const EXAMPLE_SOURCE = "examples/compiled/Layout.gogo";
 export const EXAMPLE_OUTPUT = "examples/compiled/generated/Layout.gd";
+export const COUNTER_SOURCE = "examples/counter/Counter.gogo";
+export const COUNTER_OUTPUT = "examples/counter/generated/Counter.gd";
+export async function compileCounterExample(project: string) {
+    return compileGogo(await readFile(resolve(project, COUNTER_SOURCE), "utf8"), COUNTER_SOURCE);
+}
 export const HYBRID_SOURCE = "examples/mixed/Mixed.gogo";
 export const HYBRID_OUTPUT = "examples/mixed/generated/Mixed.gd";
 export async function compileHybridExample(project: string) {
@@ -29,4 +34,10 @@ if (import.meta.main) {
         console.error(`Hybrid GDScript/map is stale. Run: bun run transpile ${HYBRID_SOURCE} --output ${HYBRID_OUTPUT}`);
         process.exitCode = 1;
     } else console.log("Committed hybrid Gogo GDScript/source map match compiler output.");
+    const counter = await compileCounterExample(root);
+    if (counter.code !== await readFile(resolve(root, COUNTER_OUTPUT), "utf8")
+        || serializeSourceMap(counter.sourceMap) !== await readFile(resolve(root, COUNTER_OUTPUT + ".map.json"), "utf8")) {
+        console.error(`Counter GDScript/map is stale. Run: bun run transpile ${COUNTER_SOURCE} --output ${COUNTER_OUTPUT}`);
+        process.exitCode = 1;
+    } else console.log("Committed interactive Counter GDScript/source map match compiler output.");
 }

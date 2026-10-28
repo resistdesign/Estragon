@@ -2,11 +2,27 @@
 
 > Repository-wide instructions for AI coding agents and automated contributors. Read this before editing code or opening a PR. These instructions describe the **current repository**, not an imaginary finished framework.
 
+## Standing authorization: local repository cleanup
+
+The repository owner explicitly authorizes resetting the local Estragon checkout
+and clearing its Git stash whenever necessary. Changes caused by opening or
+testing the project in Godot are disposable, including generated indentation
+edits. Agents may use `git reset --hard`, `git clean -fd`, `git stash clear` and
+synchronize with `origin/main` without requesting permission or preserving those
+Godot-only changes in a stash. The previously preserved indentation stash may
+be discarded.
+
+Inspect status and history first to distinguish editor artifacts from unfinished
+implementation work. This authorization applies only to the local Estragon
+checkout: **do not destroy unfinished Codex implementation work, committed work
+on remote branches, or anything in unrelated repositories.** It does not authorize
+force-pushing, remote branch deletion or merging PRs.
+
 ## Mission
 
 **Estragon is an independent, self-rendered UI engine hosted by Godot.** Its declarative language is **Gogo** (`.gogo`), inspired by the authoring ergonomics of Adobe Flex 3/4. Gogo builds *Estragon* components—not Godot widgets or scene nodes.
 
-The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout, rectangle rendering and a GDScript-first hybrid authoring subset are implemented. Basic text/buttons and primary-mouse input are implemented in ordinary GDScript. Reactivity, broader widgets, signal generation and broader editor capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
+The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout, rectangle rendering and a GDScript-first hybrid authoring subset are implemented. Basic text/buttons and primary-mouse input are implemented in ordinary GDScript. T07 adds Gogo Text/Button and generated pressed connections; reactivity, broader widgets and editor capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
 
 ```text
 T04/T05: namespace-free markup + GDScript → typed compiler IR → generated GDScript
@@ -21,7 +37,7 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 ## Target authoring and implementation direction (full target NOT implemented yet)
 
 - **No mandatory XML namespaces or prefixed element names.** Target Gogo uses `<VBox>`, `<Button>` and `<MyWidget>`, not `<fx:VBox>` or `xmlns` declarations. The **current stage-0 XML parser still needs its legacy namespace**, but that requirement must not be carried into the new grammar.
-- **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. T05 supports a specified hybrid subset with braced construction-time expressions and source maps. Full callbacks/bindings and editor tooling remain future work.
+- **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. T05 supports a specified hybrid subset with braced construction-time expressions and source maps. T07 adds zero-argument Button callbacks; bindings and editor tooling remain future work.
 - **Generated GDScript:** emit deterministic, valid `.gd` constructing Estragon's component hierarchy and automatically connecting typed signal handlers and, later, observable bindings. Generated files are not hand-edited, and no Godot UI widget tree is produced.
 - **`@Bindable` in ordinary authored `.gd` is a distinct requested goal.** Stock Godot cannot register arbitrary GDScript annotations via an addon. Do not claim this works without proving a pre-parse/source integration. A separate `.bgd` extension is only a possible fallback, not an accepted replacement.
 - **Real runtime components:** implement independent `DisplayObject`/`Container`-style bases, responsive `VBox`/`HBox` and later common UI components. Resolve naming collisions with Godot's classes. Keep existing JSON prototype functional until a GDScript-generating vertical slice is proven.
@@ -41,13 +57,13 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 
 **Implemented:**
 
-- `tools/transpile-gogo.ts` + `tools/gogo/`: T04/T05 namespace-free component parser, GDScript lexical composition, typed factories and range source maps. Mixed methods/expressions work within GOGO_LANGUAGE; callbacks/bindings remain future work.
+- `tools/transpile-gogo.ts` + `tools/gogo/`: T04/T05 namespace-free component parser, GDScript lexical composition, typed factories and range source maps. Mixed methods/expressions and generated Button.pressed callbacks work within GOGO_LANGUAGE; bindings remain future work.
 - `tools/gogo.ts`: **stage-0** strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun. Its syntax is temporary.
 - A `View` document root containing zero or more `Rect` leaves at explicit canvas coordinates; no nested containers or component registry.
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
 - A checked-in Gogo example plus generated IR, Bun test coverage, strict TypeScript typechecking, and GitHub Actions compiler checks.
 - An optional editor plugin that registers `.gogo` as an editable text extension.
-- `EstragonDisplayObject` / `EstragonContainer` RefCounted foundations: ordered ownership, weak parent links, disposal and dirty flags; plus minimal fixed/auto/fill VBox/HBox layout, rectangle paint commands and a RenderingServer surface, alongside the unchanged JSON host. T06 adds independent Text/Button, ordered text/rectangle paint and surface-owned primary-mouse capture; Gogo wiring remains T07.
+- `EstragonDisplayObject` / `EstragonContainer` RefCounted foundations: ordered ownership, weak parent links, disposal and dirty flags; plus minimal fixed/auto/fill VBox/HBox layout, rectangle paint commands and a RenderingServer surface, alongside the unchanged JSON host. T06 adds independent Text/Button, ordered text/rectangle paint and surface-owned primary-mouse capture; T07 adds generated Gogo Button.pressed wiring with native Callable guards and automatic connection cleanup.
 
 **Not implemented:**
 
@@ -98,7 +114,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 ### Session startup / resuming work (before editing)
 
 1. Read this file, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md`, relevant language/architecture docs and the task's issue/PR. Check the **current** `main` and open PRs; do not assume the snapshot is current.
-2. Inspect the branch and working tree (`git status --short --branch`, recent commits, uncommitted changes and tracking branch) before pulling, switching branches or changing files. Never erase another session's uncommitted work or force-push over it.
+2. Inspect the branch and working tree (`git status --short --branch`, recent commits, uncommitted changes and tracking branch) before pulling, switching branches or changing files. Apply the standing local cleanup authorization above to disposable Godot changes; preserve unfinished implementation work and never force-push over it.
 3. **Resume an existing issue/branch/PR** if that work ID is already active; read its **latest handoff comment**, failing checks and remaining acceptance items. Do not start a competing implementation.
 4. If unclaimed, choose exactly **one Ready work ID** whose prerequisites are satisfied. Reuse a properly scoped existing issue or create a narrow issue with that ID; distinguish older umbrella issues from a task-specific assignment. Record issue link, branch and dependency state before coding.
 5. If an architectural/interface choice is genuinely unresolved, capture options and a proposed decision in the issue. Do not treat a tentative syntax or Godot extension mechanism as implemented.
@@ -161,7 +177,7 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Gogo compiler and language
 
-- Legacy work uses `tools/gogo.ts` / `tests/gogo.test.ts`; T04/T05 use `tools/gogo/`, `tools/transpile-gogo.ts`, `tests/transpile-gogo.test.ts` and `tests/hybrid-gogo.test.ts`. Keep both compilers independent of the running Godot editor.
+- Legacy work uses `tools/gogo.ts` / `tests/gogo.test.ts`; T04–T07 use `tools/gogo/`, `tools/transpile-gogo.ts`, `tests/transpile-gogo.test.ts`, `tests/hybrid-gogo.test.ts` and `tests/signal-gogo.test.ts`. Keep both compilers independent of the running Godot editor.
 - Preserve strict schema/type validation and deterministic output. Test both valid examples and malformed/unsupported input.
 - Prefer minimal, pinned dependencies; use strict TypeScript types and a real namespace-aware XML parser. Keep the compiler independent of Godot.
 - For syntax changes, update `docs/GOGO_LANGUAGE.md`, any example `.gogo`, and checked-in generated IR. Mark proposed syntax as non-executable until it actually compiles.

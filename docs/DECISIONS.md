@@ -94,6 +94,27 @@ Range-map sidecars and mapped Godot checks provide traceability without claiming
 editor/debugger integration. Named inner-class markup, collection expansion,
 bindings, widget/signal features and full semantic analysis remain outside T05.
 
+## ADR-0010 — Minimal generated Button signal connections
+
+**Status: T07 implementation contract, reviewed with its implementation PR.**
+
+Gogo resolves Text/Button to the existing independent runtime classes. In hybrid
+modules only, `Button pressed={expression}` accepts a native GDScript Callable.
+Ordered typed signal/property attributes retain construction-time evaluation
+order. A typed Callable factory argument preserves authored scope; ordinary
+synchronous signal connection code is generated exactly once per new component.
+No string-handler dispatch, runtime markup interpretation or new event framework
+is introduced. Godot owns GDScript syntax/types; generated validity/arity guards
+require zero remaining arguments (including optional parameters in metadata).
+Bound argument types and arbitrary closure effects remain native runtime concerns.
+
+T06's automatic teardown disconnects outgoing connections. T07 also disconnects
+incoming direct method connections on terminal components so live sources cannot
+invoke retained disposed targets. Transfers preserve connections/identity. Counter
+uses explicit root rebuilding with framework-owned cleanup; reactive bindings and
+editor integration remain T09/T08. See GOGO_LANGUAGE for supported props, callback
+limits, mapped diagnostics and the runnable no-handwritten-connection example.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.

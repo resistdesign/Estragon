@@ -1,0 +1,37 @@
+extends RefCounted
+
+class Receiver extends EstragonRect:
+    var calls: int = 0
+    func receive() -> void:
+        calls += 1
+
+var events: Array[String] = []
+var receiver: Receiver = Receiver.new()
+
+func record(value: String) -> void:
+    events.append(value)
+
+func label(value: String) -> String:
+    events.append(value)
+    return value
+
+func callback(value: String) -> Callable:
+    events.append(value)
+    return record.bind(value)
+
+func build() -> EstragonVBox:
+    var local: Callable = record.bind("local")
+    return <VBox>
+        <Button pressed={callback("first")} text={label("label")} />
+        <Button text="Local" pressed={local} color={Color.CORAL} font_size={22} disabled={false} />
+        <Button text="Lambda" pressed={func() -> void: record("lambda")} />
+    </VBox>
+
+func build_receiver_button() -> EstragonButton:
+    return <Button text="Receiver" pressed={receiver.receive}/>
+
+static func build_static(callback_value: Callable) -> EstragonButton:
+    return <Button text="Static" pressed={callback_value}/>
+
+func build_capture(payload: RefCounted) -> EstragonButton:
+    return <Button text="Capture" pressed={func() -> void: payload.set_meta("called", true)}/>

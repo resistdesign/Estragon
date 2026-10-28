@@ -27,12 +27,14 @@ export interface ComponentSyntax {
 }
 
 export type Literal =
+    | { readonly kind: "string-literal"; readonly value: string; readonly span: Span }
+    | { readonly kind: "integer-literal"; readonly value: number; readonly span: Span }
     | { readonly kind: "number-literal"; readonly value: number; readonly span: Span }
     | { readonly kind: "boolean-literal"; readonly value: boolean; readonly span: Span }
     | { readonly kind: "color-literal"; readonly value: string; readonly span: Span };
 
-export type ComponentName = "VBox" | "HBox" | "Rect";
-export type PropertyName = "width" | "height" | "fill_width" | "fill_height" | "gap" | "fill";
+export type ComponentName = "VBox" | "HBox" | "Rect" | "Text" | "Button";
+export type PropertyName = "width" | "height" | "fill_width" | "fill_height" | "gap" | "fill" | "text" | "font_size" | "color" | "disabled";
 export interface ComponentExpression {
     readonly kind: "component-expression";
     readonly component: ComponentName;
@@ -61,8 +63,12 @@ export interface GdscriptExpression {
     readonly parts: readonly HybridPart[];
     readonly span: Span;
 }
+/** Source-ordered properties and connections keep eager evaluation deterministic. */
+export type HybridAttribute =
+    | { readonly kind: "property"; readonly name: PropertyName; readonly value: Literal | GdscriptExpression }
+    | { readonly kind: "signal"; readonly name: "pressed"; readonly value: GdscriptExpression };
 export interface HybridComponentExpression extends Omit<ComponentExpression, "properties" | "children"> {
-    readonly properties: readonly { readonly name: PropertyName; readonly value: Literal | GdscriptExpression }[];
+    readonly attributes: readonly HybridAttribute[];
     readonly children: readonly (HybridComponentExpression | GdscriptExpression)[];
 }
 export type HybridPart = GdscriptSource | HybridComponentExpression;

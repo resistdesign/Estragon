@@ -1,0 +1,31 @@
+extends EstragonSurface
+
+var count: int = 0
+
+
+func _init() -> void:
+    set_root(build_view())
+
+
+func increment() -> void:
+    count += 1
+    set_root(build_view())
+
+
+func reset_count() -> void:
+    count = 0
+    set_root(build_view())
+
+
+func build_view() -> EstragonVBox:
+    return (
+        <VBox gap={12}>
+            <Text text="Estragon Gogo Counter" font_size="26" color="#bba2ef" />
+            <Text text={"Count: %d" % count} font_size={24} />
+            <HBox gap="12" fill_width="true">
+                <Button text="+" fill_width="true" pressed={increment} />
+                <Button text="Reset" fill_width="true" disabled={count == 0} pressed={reset_count} />
+            </HBox>
+            <Text text="Gogo generates the signal connections. Explicit rebuild; automatic cleanup." font_size="16" />
+        </VBox>
+    )

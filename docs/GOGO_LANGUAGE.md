@@ -1,8 +1,8 @@
 # Gogo language: `*.gogo`
 
-**Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. Full binding/widget/editor features remain future work.
+**Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. T07 adds Text/Button properties and generated pressed connections; bindings and editor features remain future work.
 
-## T04 markup-to-GDScript subset (implemented)
+## Standalone markup-to-GDScript subset (T04, extended in T07)
 
 ```gogo
 <VBox gap="16">
@@ -15,9 +15,9 @@
 ```
 
 Exactly one component expression is required, optionally surrounded by whitespace
-or `<!-- comments -->`. Tags are case-sensitive: `VBox`, `HBox`, `Rect` resolve
-to `EstragonVBox`, `EstragonHBox`, `EstragonRect`. VBox/HBox accept nested
-components; Rect is a leaf. Empty stacks and a Rect root are allowed. Tags may
+or `<!-- comments -->`. Tags are case-sensitive: `VBox`, `HBox`, `Rect`, `Text`, `Button` resolve
+to their `Estragon`-prefixed runtime classes. VBox/HBox accept nested components;
+Rect/Text/Button are leaves. Empty stacks and a Rect root are allowed. Tags may
 self-close or use matching close tags. **No namespace declarations/prefixes**
 are accepted, including `xmlns`. There is no `View` wrapper in this subset.
 
@@ -30,6 +30,10 @@ quotes). Whitespace is required between properties. Supported properties are:
 | All | `fill_width`, `fill_height` | `true` or `false` | `false` |
 | VBox/HBox | `gap` | finite nonnegative decimal number | `0` |
 | Rect | `fill` | `#RRGGBB` or `#RRGGBBAA` | opaque white |
+| Text/Button | `text` | quoted string (literal escaping limits below) | empty |
+| Text/Button | `font_size` | positive integral decimal, at most 2147483647 | `20` |
+| Text/Button | `color` | `#RRGGBB` or `#RRGGBBAA` (label color) | opaque white |
+| Button | `disabled` | `true` or `false` | `false` |
 
 Numbers support fractions, leading `+`, decimal exponents and zero. Negative
 values are rejected (negative zero normalizes to zero); use `auto`, not `-1`, for
@@ -109,8 +113,9 @@ func build_view() -> EstragonVBox:
 The first non-whitespace character selects the entrypoint: `<` uses the preserved
 T04 standalone grammar; otherwise GDScript-first mode is used. Use GDScript `#`
 comments at module level. T04 standalone markup remains quoted-literal-only;
-braced expressions belong to GDScript-first modules. Exactly the same three
-component names and property compatibility rules apply in both modes.
+braced expressions belong to GDScript-first modules. The same five component
+names and property compatibility rules apply in both modes. Signals require
+GDScript-first mode.
 
 ### Expressions and authoring contexts
 
@@ -131,7 +136,8 @@ comments do not introduce markup or close expression braces. Delimiter/quote
 errors are source-located; other GDScript grammar is checked by Godot.
 
 - Property expressions are passed to generated typed parameters: `float` for
-  width/height/gap, `bool` for fill flags, `Color` for fill. Use
+  width/height/gap, `bool` for fill flags, `Color` for fill/color, `String` for text, `int` for font_size and `bool`
+  for disabled. Use
   `fill={Color("8566e0")}` for computed color values; quoted hex remains available.
   Runtime auto dimensions can be expressed as `{-1.0}`. Unknown properties are
   still compiler errors regardless of their value expression.
@@ -188,17 +194,100 @@ to their originating Gogo span. When Godot supplies only a line, the mapped poin
 may be the enclosing expression rather than a precise offending subexpression.
 Maps support tracing; they are not editor/debugger breakpoint integration.
 
-`verify:gdscript` checks both examples and the hybrid map bytes. The Godot runner
+`verify:gdscript` checks all three examples and their hybrid map bytes. The Godot runner
 recompiles fresh source, then checks positive runtime cases and mapped negative
 syntax/type/runtime cases. Compilation failure preserves existing code/map;
 recompiling a standalone T04 file removes a stale hybrid map. Automatic editor
 compilation and stale-run blocking remain T08 work.
 
-**Still unsupported:** `@Bindable`, reactive bindings, event/signal wiring,
-Text/Button widgets, arbitrary component imports, structural reconciliation,
+**Still unsupported:** `@Bindable`, reactive bindings, signals beyond Button.pressed,
+other widgets, arbitrary component imports, structural reconciliation,
 inline named-class markup, spread/array children, full source-language type
 inference, highlighting/editor builds or automatic subscriptions. The accepted
 larger design below remains a target, not a claim of these features.
+
+## T07 generated signals and interactive Gogo (implemented)
+
+```gogo
+extends EstragonSurface
+var count: int = 0
+
+func _init() -> void:
+    set_root(build_view())
+
+func increment() -> void:
+    count += 1
+    set_root(build_view())
+
+func build_view() -> EstragonVBox:
+    return <VBox gap={12}>
+        <Text text={"Count: %d" % count} font_size="24" />
+        <Button text="+" pressed={increment} />
+    </VBox>
+```
+
+Only `Button` exposes a compiled event: `pressed={GDScript Callable expression}`.
+There are no `on_` prefixes, quoted method names, implicit method calls or signal
+attributes on other components. Unknown/duplicate properties or signals and
+children of leaf components are compiler errors with source coordinates. Text
+and label color use `color`; Rect's `fill` is not a button background style.
+Font resources remain a GDScript runtime API, not a markup property in this slice.
+
+Event attributes are distinct typed IR nodes interleaved with property attributes.
+All dynamic attribute/child arguments evaluate once in authored traversal order,
+including callback-producing expressions. The callback itself runs on activation,
+not construction. An uncalled method reference such as `increment` becomes a
+native Callable; `increment()` calls it immediately and is not signal shorthand.
+Local Callable variables, computed references, bound methods, static functions
+and zero-argument lambdas work with ordinary GDScript scope. The compiler passes
+these values as **typed Callable arguments** into its static factories; it does
+not try to reference an instance method from static scope or use string dispatch.
+Factories emit ordinary inspectable `.pressed.connect(callback)` code, once per
+new button, and preserve existing generated-name collision handling and maps.
+
+### Validation boundaries
+
+Godot parses/typechecks generated GDScript. Missing method names and statically
+incompatible argument/property types are rejected by Godot with mapped Gogo
+positions in the validation runner. The Bun frontend validates the component/
+attribute contract and expression boundaries; it does not implement GDScript's
+semantic checker. Native conversions and Variant-dependent errors remain native
+Godot behavior. Literal font sizes must be positive 32-bit integers; expression
+font sizes use a typed `int` argument and the runtime's positive-size check.
+
+Generated guards require `Callable.is_valid()` and **exactly zero remaining
+arguments** according to `get_argument_count()`. Godot counts optional arguments
+and subtracts bound arguments. Thus a method with optional parameters must be
+wrapped in a zero-argument lambda or have those parameters bound explicitly.
+Empty/invalid callables, incompatible arity and direct disposed component targets
+produce source-located engine errors before connecting; no silent fallback occurs.
+Return values are ignored. Godot checks bound argument types when invoked, not
+through the arity guard. Arbitrary closure effects/captured object lifetimes are
+not statically proven. See the [Godot Callable API](https://docs.godotengine.org/en/4.7/classes/class_callable.html).
+
+### Lifecycle and updates
+
+Connections use native synchronous signals. Rebuilding constructs fresh buttons;
+`set_root(build_view())` automatically disposes the old tree and disconnects its
+outgoing handlers/closures. Removing a direct component-method target also
+removes its incoming connections, even if that disposed object is retained by
+application code. Transfers preserve live connections while canceling unfinished
+pointer gestures. No application disposal, per-frame polling or reactive binding
+is introduced. Ordinary native Object/Node callback targets follow Godot's own
+lifetime rules; hidden references inside arbitrary lambdas are application code.
+
+```sh
+bun run transpile examples/counter/Counter.gogo --output examples/counter/generated/Counter.gd
+bun run check
+bun run check:godot
+```
+
+Run `examples/counter/Counter.tscn` in Godot 4.7: `+` increments the displayed
+count, Reset resets it and is disabled at zero. Both handlers and all layout are
+authored in Counter.gogo with **no handwritten connections**. Rebuild is explicit;
+T09 owns bindings. The old examples and JSON host remain unchanged. Source/maps
+are checked byte-for-byte; the Godot runner generates fresh code before import.
+Editor build/run integration remains T08 work.
 
 ## Target: markup expressions mixed with GDScript
 

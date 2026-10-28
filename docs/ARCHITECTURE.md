@@ -109,7 +109,7 @@ The generated surface uses T03's lifecycle; application code never disposes UI
 components. `examples/compiled/Compiled.tscn` is the runnable example.
 
 This section describes T04 only; T05 hybrid composition is described below.
-Callbacks, binding generation and editor build hooks remain future work. The markup-only parser/IR does not define
+T07 adds Button callbacks below; binding generation and editor build hooks remain future work. The markup-only parser/IR does not define
 the whole language. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for exact grammar,
 properties, commands and limitations.
 
@@ -289,7 +289,7 @@ keyboard focus, gesture recognition or public event-object catalog yet.
 ### Automatic interaction cleanup
 
 Removal, replacement, root unmount, and surface destruction clear pointer state;
-terminal components disconnect outgoing signal connections (including closures)
+terminal components disconnect incoming direct method and outgoing signal connections (including closures)
 and Text releases its Font reference. Disposal hooks in subclasses must call
 `super` to preserve framework cleanup. Disposed objects cannot be hit or activated.
 Transfers cancel the old gesture before changing parent links, including between
@@ -303,9 +303,29 @@ when destroying a host from its input/signal callback. Queued hosts reject input
 
 `examples/interactive/Interactive.tscn` uses ordinary GDScript `pressed.connect`
 handlers to update text with Add one and Reset buttons. Text changes schedule
-layout/redraw automatically; they are not reactive bindings. The Gogo compiler
-still accepts only VBox/HBox/Rect: Text/Button tags and generated signal wiring
-belong to T07. See TESTING for the interactive procedure and CI coverage.
+layout/redraw automatically; they are not reactive bindings. The Gogo compiler now accepts Text/Button and generates Button.pressed connections
+in T07; the earlier ordinary GDScript example remains preserved. See TESTING for the interactive procedure and CI coverage.
+
+## Generated interactive Gogo (T07)
+
+The explicit compiler registry now maps five built-ins: VBox/HBox/Rect/Text/Button.
+Text and Button share typed text/font_size/color and inherited sizing; Button adds
+disabled and one compiled event, pressed. The hybrid IR uses ordered discriminated
+property/signal attributes, preserving eager argument evaluation across both.
+Factories receive typed String/int/Color/bool properties and Callable callbacks;
+instance/local references evaluate at the original call site. Generated guards
+check native validity/zero-remaining arity and reject terminal direct component
+targets, then connect the native signal once. All emitted connection/guard ranges
+map back to their authored event expression. Older fixtures remain unchanged.
+
+`examples/counter/Counter.gogo` is the first complete interactive authored screen:
+its generated connections invoke increment/reset methods, explicit root rebuilds
+refresh text and disabled state, and automatic lifecycle disconnects old sources.
+Direct target disposal also disconnects incoming method connections; ordinary
+reparenting preserves them. Arbitrary lambdas can contain application effects not
+visible to metadata checks. Full GDScript semantics remain Godot's responsibility.
+No callback wrapper interpreter, per-component Node or new subscription service
+is used. See GOGO_LANGUAGE/ADR-0010 for validation limits and TESTING for the gate.
 
 ## Performance model to implement later
 

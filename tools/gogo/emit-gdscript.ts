@@ -3,6 +3,8 @@ import { COMPONENT_CLASSES } from "./validate.ts";
 
 export function emitLiteral(literal: Literal): string {
     switch (literal.kind) {
+        case "string-literal": return JSON.stringify(literal.value);
+        case "integer-literal": return String(literal.value);
         case "boolean-literal": return literal.value ? "true" : "false";
         case "color-literal": return `Color("${literal.value}")`;
         case "number-literal": {
