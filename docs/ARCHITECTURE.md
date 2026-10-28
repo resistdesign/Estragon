@@ -4,6 +4,12 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
+## Godot-native compiler target (ADR-0012; not yet implemented)
+
+The T08 editor's external Bun build is a **tested transitional bridge**. Estragon's target is a **bundled GDScript-native compiler**: Gogo source → native lexer/parser/typed model (N01) → native GDScript emission/source maps (N02) → direct EditorPlugin build/validation on F5/F6 (N03) → generated ordinary `.gd` → Estragon's independent runtime.
+
+No Bun/Node is required to **use** the final addon, and no runtime XML/JSON interpreter, engine fork, native extension dependency or per-component Godot Node/Control is introduced. Keep compiler logic separate from editor UI, scene tree and renderer; retain current supported syntax and generated signal semantics. Cutover only after an actual Godot-only editor run with Bun absent, source errors blocking Play, and recovery after fixing source. Existing TypeScript tests may remain optional CI/reference tooling.
+
 ## Mixed-source direction (T05 subset implemented; later services planned)
 
 The [design direction](DESIGN_DIRECTION.md) is **Gogo's XML-like markup and GDScript mixed in one authored `.gogo` source**, transpiled to GDScript—not JSON UI data interpreted by Godot.

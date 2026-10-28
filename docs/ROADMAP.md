@@ -2,22 +2,16 @@
 
 All milestone statuses below describe *project work*, not a claim of features available today. **For the actionable Codex work breakdown, dependencies, completion gates, issue links and cross-session handoff workflow, use [EXECUTION_PLAN.md](EXECUTION_PLAN.md), [WORK_STATUS.md](WORK_STATUS.md) and [AGENTS.md](../AGENTS.md).** This file is the wider product roadmap, not a live task tracker.
 
-## Immediate direction: Gogo-to-GDScript and real runtime components
+## Immediate priority: Gogo compiled natively inside Godot
 
-**Accepted product direction (2026-10-26):** Gogo should mix GDScript and unprefixed XML-like component expressions **like TSX**; it transpiles to GDScript that constructs Estragon components and connects signals. The JSON demo is temporary scaffolding. See [the design direction](DESIGN_DIRECTION.md).
+**Accepted owner decision (2026-10-28):** T01–T07 built a working interactive Gogo application. T08 [PR #29](https://github.com/resistdesign/Estragon/pull/29) implements working editor integration **using a temporary Bun subprocess**, and the owner manually verified a Gogo font-size change and Play. **Remove that runtime tooling dependency before expanding features.**
 
-- [ ] Prototype a GDScript-aware Gogo parser handling nested components, typed expression props and code/markup interleaving, with useful source locations.
-- [ ] Emit deterministic **runnable GDScript** from a minimal `.gogo` hybrid source (not runtime JSON interpretation).
-- [ ] Implement independent `DisplayObject`-like and `Container`-like runtime bases, avoiding naming collisions with Godot's built-in `Container` class.
-- [ ] Implement responsive `VBox` and `HBox` layout using Estragon-owned objects rather than Godot `Control`/`Container` nodes.
-- [ ] Compile typed component properties/refs and automatic signal handler connections.
-- [ ] Give Godot 4.7 an editor surface that understands the mixed grammar, compilation errors, and source maps; integrate transpilation before Run.
-- [ ] Investigate `@Bindable` inside **ordinary authored `.gd`** at the actual Godot parser boundary; record proof or explicitly evaluated fallbacks.
-- [ ] Prototype code-first mixed markup/GDScript first; evaluate optional markup-only shorthand and separate code-behind second.
-- [ ] Replace stage-0 JSON runtime only after the Gogo → generated `.gd` → Estragon runtime → Godot rendering vertical slice passes tests.
+- [ ] **N01:** Native GDScript Gogo lexer/parser/typed frontend and native-only tests.
+- [ ] **N02:** Native GDScript emitter/source maps and current T04–T07 language/runtime parity, including Counter.
+- [ ] **N03:** Direct editor compilation, no Bun configuration/process, fail-closed F5/F6, fresh Godot-only install/play tests.
+- [ ] **After N03:** T09 observable bindings (subject to R01), T10 legacy JSON retirement and expanded UI/editor work.
 
-**Exit condition:** author a mixed `.gogo` component, compile it to valid GDScript, render a nested/resizing layout, and invoke a generated signal connection without manually wiring Godot GUI nodes or editing generated source.
-
+**Exit condition:** In a clean Godot 4.7 project, edit Gogo and run both Play modes with no Bun/Node installed; errors block stale output and fixing errors recovers. Bun remains only optional repository/CI reference tooling. See [execution plan](EXECUTION_PLAN.md) and [ADR-0012](DECISIONS.md).
 
 ## P0 — Foundation (this scaffold)
 

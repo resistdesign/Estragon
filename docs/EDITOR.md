@@ -5,6 +5,12 @@ highlighting, build on saved/source changes, authored diagnostics and compilatio
 before both Run Project and Run Current Scene. Completion, language-server
 navigation, debugger source maps, live preview and bindings remain future work.
 
+## Native compiler migration (accepted; not yet implemented)
+
+**ADR-0012:** T08 uses Bun only as a **temporary editor build bridge**. The owner manually verified changing Counter.gogo font size and pressing Play on 2026-10-28. The next work is N01 native parser, N02 native GDScript emission and maps, and N03 a fully Godot-native editor build with **no Bun executable or external process**. This comes before bindings and legacy retirement.
+
+Until N03 merges, the Bun setup instructions below remain accurate for **the current T08 plugin**. After N03, users must be able to install Estragon and compile Gogo with Godot alone. Preserve source mapping, highlighter, F5/F6 fail-closed behavior, saved and unsaved edits, and diagnostics, without silently falling back to Bun. See [execution plan](EXECUTION_PLAN.md).
+
 ## One-time setup
 
 1. Install Bun 1.4.4. Open the root `project.godot` in the pinned Godot 4.7 editor.

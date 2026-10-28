@@ -1,10 +1,10 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 1, 2026-10-26. **Status:** planned, not implemented. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
+**Plan version:** 2, 2026-10-28. **Status:** active. T01–T07 are merged; T08 is in PR #29 review. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. The native migration has not yet been implemented. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
 
 ## Outcome: an actual Gogo UI in Godot
 
-The first integrated milestone is a small interactive `Counter.gogo` running in Godot 4.7:
+The first integrated milestone (T01–T08, **transitionally Bun-powered**) is an interactive `Counter.gogo` running in Godot 4.7:
 
 1. A developer authors one `.gogo` file combining GDScript methods/state and **unprefixed** component markup (e.g., `<VBox>`, `<Text>`, `<Button>`), with typed GDScript expressions and a callback.
 2. The Bun/strict TypeScript toolchain transpiles it deterministically into valid, inspectable `.gd`. It resolves components, checks properties/events and generates signal connections. No runtime JSON UI parsing.
@@ -14,6 +14,23 @@ The first integrated milestone is a small interactive `Counter.gogo` running in 
 6. CI covers strict TypeScript tests and actual Godot script/runtime checks; a documented visual check covers what headless CI cannot prove.
 
 **Not required to claim this first milestone:** completed `@Bindable` support in ordinary authored `.gd`; full JSX grammar, full Flex compatibility, a complete component suite, sophisticated graphics backends, or polished visual editor. Those follow independent evidence and reviews.
+
+
+## Immediate priority: native Gogo compilation inside Godot (ADR-0012)
+
+**Accepted owner decision, 2026-10-28:** A developer using Estragon in Godot must need **only Godot and the bundled Estragon addon**. **No Bun/Node/TypeScript installation or compiler executable configuration for editing, building, or running Gogo.** T08 currently uses Bun for compile-before-Play; that working integration is a **temporary bridge**, not the final architecture. The owner has manually verified T08 by changing Counter.gogo's font size and rerunning the scene in Godot. That successful test triggers this priority shift.
+
+Write the production compiler **in GDScript, bundled in the addon**. It should work without editor UI state, external processes, runtime JSON interpreters, one Godot Node/Control per component, GDExtension binaries, or Godot forks. Keep parsing, typed validation, code emission and source mapping separate from rendering and editor presentation. Preserve the accepted TSX-like GDScript + unprefixed markup language, evaluation order and generated signal behavior.
+
+**Next three reviewable PRs:**
+
+1. **N01:** native GDScript lexer/parser, typed model, validation and source-located diagnostics; parity cases for the existing hybrid grammar and callback/prop contract.
+2. **N02:** native GDScript emitter and source maps; preserve T04–T07 language semantics and prove a generated interactive Counter executes in Godot. Differential parity against the TypeScript reference where useful.
+3. **N03:** switch editor save/build and both Play modes from Bun to **direct native compilation**. Eliminate user-facing Bun executable settings and subprocesses, preserve source discovery, diagnostics, pre-Play checks and recovery, and demonstrate a **fresh Godot-only installation with Bun absent**.
+
+**Acceptance gate for N03:** Fresh Godot 4.7 project + Estragon addon + Gogo sources; with Bun/Node unavailable (no PATH or configured executable), edit Gogo, press F5 and F6, and run the latest generated code. Deliberately break Gogo and prove both Play modes refuse stale output; repair it and confirm recovery. Run actual Godot-native tests without Bun. Bundled addon must work independently of the repository's optional development dependencies.
+
+**Preserve the working T08 bridge until N03 is demonstrably ready.** Do not delete the current compiler, tests or generated fixtures prematurely. Bun/TypeScript may remain as **optional CI/reference/differential tooling** after cutover; there must be no silent Bun fallback in the editor. T09 reactive bindings and T10 legacy retirement are postponed until N03 passes. R01 may be researched independently and does not block this migration. One focused PR, tests, linked issue and durable handoff per task.
 
 ## Architectural constraints and review gates
 
@@ -29,18 +46,19 @@ The first integrated milestone is a small interactive `Counter.gogo` running in 
 ## Dependency map
 
 ~~~text
-T01 Godot CI/test harness
-  └─ T02 Independent component bases
-      └─ T03 VBox/HBox + rectangle layout/paint
-          └─ T04 Unprefixed markup → runnable GDScript
-              └─ T05 TSX-like GDScript/markup parser
-                  └─ T06 Minimal Text/Button + input events
-                      └─ T07 Generated signal wiring + Counter.gogo
-                          ├─ T08 Editor build/run integration
-                          │    └─ T10 Retire legacy JSON (also requires feature parity)
-                          └─ T09 Observable binding integration
-R01 @Bindable-in-.gd feasibility ─────────────┘ (informs T09, not T01–T08)
-R02 GPU backend investigation (deferred; not a blocker for first milestone)
+T01 → T02 → T03 → T04 → T05 → T06 → T07 (merged)
+                                      │
+                       T08 editor integration (PR #29, in review)
+                                      │
+                       N01 native lexer/parser (next)
+                                      │
+                       N02 native codegen + source maps + parity
+                                      │
+                       N03 native editor cutover (no Bun)
+                              ├───────┴────────┐
+                       T09 bindings (+R01)   T10 legacy JSON retirement
+R01 @Bindable-in-.gd research: independent, informs T09
+R02 graphics research: deferred
 ~~~
 
 This is the preferred *merge order*, not a request to implement everything in one PR. With explicit coordination, compiler/runtime spikes may run on isolated branches in parallel after interface agreement; record that agreement in issues and do not silently stack dependent PRs.
@@ -116,9 +134,37 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Automate generation of `.gd` before running a project and clearly fail rather than executing stale compiled code; preserve authored source and existing editor settings.
 - Test editor/build hooks and document the exact integration limitations. Completion, visual designers and polished live preview may be follow-up tasks, not false acceptance claims.
 
+
+### N01 — Godot-native Gogo frontend (NEXT)
+
+**Tracking:** [issue #30](https://github.com/resistdesign/Estragon/issues/30). **Prerequisites:** T08 PR #29 **and this planning PR** merged.
+
+- Implement a GDScript-only scanner/parser for the currently accepted standalone and mixed GDScript/Gogo syntax: nested unprefixed elements, balanced braced expressions/children, strings/raw/multiline strings, comments, comparisons and other lexical ambiguities.
+- Build typed component/property/signal AST validation and original source spans. Reproduce supported VBox/HBox/Rect/Text/Button and Button.pressed contracts, reject unknown/duplicate/invalid markup, and retain Godot as the authority for GDScript semantics.
+- Add native Godot positive/negative/adversarial tests and a documented compatibility matrix. A minimal generated-code proof is useful; **complete code generation belongs to N02**.
+- Keep T08 functioning. No direct editor cutover, external executable, GDExtension, bindings or other widgets. Create one focused implementation PR, verify and hand off.
+
+### N02 — Native emitter and current Gogo behavior parity
+
+**Prerequisite:** N01 merged. **Tracking:** create a scoped issue on pickup.
+
+- Generate deterministic ordinary GDScript and original-source maps for both markup-only and hybrid files, including typed factories, native expression scope, property/child evaluation order, collision-safe names and generated Button.pressed connections.
+- Match T04–T07 supported behavior through tests against existing fixtures, positive and negative sources, mapped diagnostics, callbacks, expression edge cases and resource cleanup. Document deliberate formatting differences rather than pretending byte-for-byte equivalence where it is not required.
+- **Compile Counter.gogo with the native compiler**, run it in Godot, click +/Reset, resize, and verify correct state, no duplicate handlers, and automatic lifecycle. All these checks must work without Bun; optional TypeScript reference checks may run in CI.
+- Do not switch the editor yet; preserve the current Bun-backed T08 code until N03.
+
+### N03 — Godot-native editor cutover, Bun removed from user workflow
+
+**Prerequisite:** N02 merged. **Tracking:** create a scoped issue on pickup.
+
+- Replace the editor's external Bun/build-gogo process with **direct native compiler calls**. Keep the same configured source-root policy, generated script/maps, unchanged output handling, native GDScript validation, source-located diagnostics, error panel and F5/F6 fail-closed gate.
+- Maintain save/unsaved buffer handling, filesystem changes, resource refresh, plugin enable/disable, recovery and lifecycle. Remove the Bun executable setting/discovery and all compiler subprocess usage; do not use a hidden Bun fallback.
+- Require a **clean Godot-only project without Bun/Node installed/configured** to complete the accepted N03 gate above. Test malformed markup/semantic errors and recovery through both Play paths, including in isolated real Godot editor integration tests.
+- Keep Bun/TypeScript only as optional repository/CI reference tooling, never as an addon requirement. Update user docs and AGENTS after successful migration. Do not retire the legacy JSON demo in this PR.
+
 ### T09 — Observable properties and Gogo bindings
 
-**Related:** [issue #5](https://github.com/resistdesign/Estragon/issues/5). **Prerequisites:** T07 and findings of R01.
+**Related:** [issue #5](https://github.com/resistdesign/Estragon/issues/5). **Prerequisites:** **N03 merged** and findings of R01. Postponed behind the native migration.
 
 - Implement a minimal correctly scoped observable-property contract and generated Gogo dependency updates, including cleanup and no per-frame polling.
 - Prove that a change to a model property updates a visible Estragon component; test nested dependency replacement, disposal, and feedback/cycle failure behavior before expanding to two-way/collection support.
@@ -126,7 +172,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T10 — Retire the legacy JSON prototype safely
 
-**Prerequisites:** T07, T08, and tested feature parity for the old example. T09 is not a prerequisite to replacing the *legacy rectangle* example.
+**Prerequisites:** **N03 merged** and verified parity for the old example. T09 is not a prerequisite to replacing the legacy rectangle example.
 
 - Convert/replace the old sample with the new generated-GDScript pipeline and prove matching or improved rendering, CI and local editor behavior.
 - Remove obsolete JSON runtime parsing/fixtures/commands only when no active consumer depends on them; update docs/tests/AGENTS together.
@@ -139,7 +185,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Test stock Godot 4.7 parsing and available addon/editor pre-parse hooks with a minimal reproducible experiment.
 - Write down *verified* results, source/code links, trade-offs and a recommendation for retaining the normal `.gd` editing experience.
 - If true native-looking annotation handling is impossible through current public hooks, clearly state that limitation and **seek a user decision** before choosing an alternate extension or Godot fork. No speculative production preprocessor.
-- May be researched in parallel with T01–T07; findings inform the T09 contract and editor roadmap.
+- May be researched in parallel with N01–N03; findings inform T09 but do not block the native compiler migration.
 
 ### R02 — Rendering backend research (deferred)
 
@@ -149,7 +195,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 The implementation agent should be given a **work ID**, not a whole milestone. Example:
 
-> Work on **T01**, using [issue #13](https://github.com/resistdesign/Estragon/issues/13). Read `AGENTS.md`, `docs/EXECUTION_PLAN.md` and `docs/WORK_STATUS.md`, follow the issue/PR progress and handoff process, open one focused PR, and do **not** merge.
+> After T08 and this planning PR merge, pick up **N01** using [issue #30](https://github.com/resistdesign/Estragon/issues/30). Read `AGENTS.md`, this plan and `docs/WORK_STATUS.md`; keep the T08 bridge working, use Godot-only tests, open one focused PR and leave a handoff. Do **not** merge.
 
 A task begins by checking the *latest* main branch, its tracking issue, open PRs and the latest handoff. It ends with verified evidence and a durable handoff or an explicitly reviewed merge. See `AGENTS.md` for the required protocol.
 
