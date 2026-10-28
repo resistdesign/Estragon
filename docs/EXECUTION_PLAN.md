@@ -110,7 +110,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T08 — Godot editor language and compile-before-run integration
 
-**Related:** [issue #6](https://github.com/resistdesign/Estragon/issues/6). **Prerequisite:** T07.
+**Tracking:** [T08 / issue #28](https://github.com/resistdesign/Estragon/issues/28). **Related umbrella:** [#6](https://github.com/resistdesign/Estragon/issues/6). **Prerequisite:** T07 (merged PR #27).
 
 - Prove in Godot 4.7 that `.gogo` opens with useful mixed-language syntax highlighting and source-mapped diagnostics. Establish a source editor path that can grow to completion/navigation.
 - Automate generation of `.gd` before running a project and clearly fail rather than executing stale compiled code; preserve authored source and existing editor settings.

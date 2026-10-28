@@ -2,7 +2,7 @@
 
 **Status:** Product direction captured 2026-10-26. **Minimal T04/T05 markup/hybrid slices work; the full binding/widget/editor target remains future work.** The existing JSON-based demo is a disposable stage-0 prototype, not the intended production architecture.
 
-T04 implements namespace-free standalone markup and T05 implements a minimal **GDScript-first hybrid** Gogo → GDScript subset. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) and ADR-0009 for executable syntax, construction-time semantics and source mapping. T07 adds Text/Button and generated Button.pressed wiring; binding/editor integration remains future work.
+T04 implements namespace-free standalone markup and T05 implements a minimal **GDScript-first hybrid** Gogo → GDScript subset. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) and ADR-0009 for executable syntax, construction-time semantics and source mapping. T07 adds Text/Button and generated Button.pressed wiring; bindings remain future work; T08 adds native editor highlighting and automatic compilation before Play.
 
 This document records the target developer experience: **Gogo should feel like TSX, using GDScript as its programming language.** This is **not** a claim that its language features or Godot integrations already work. Exact grammar, editor integration, and new annotations in ordinary `.gd` files need prototypes.
 
@@ -272,3 +272,13 @@ T07 extends the compiler to Text/Button and generates native pressed connections
 `examples/counter/Counter.gogo` now demonstrates interactive mixed-source authoring. Bindings, keyboard focus, touch/gestures, advanced
 text/styling and editor services remain planned. See ARCHITECTURE for the exact
 pointer/lifecycle contract and TESTING for interactive verification.
+
+### T08 editor authoring boundary
+
+The optional editor plugin now adds mixed Gogo coloring to the native text editor,
+compiles configured source roots on saved/filesystem changes and gates both main
+and current-scene Play on fresh compilation/native validation. Source-located
+errors appear in the Gogo bottom panel; no manual compiler command is needed
+after one-time plugin/Bun setup. Completion, clickable navigation, debugger
+remapping and polished preview remain future work. See EDITOR/ADR-0011 for exact
+source/output policy, existing-tab limitations and verified Godot 4.7 APIs.

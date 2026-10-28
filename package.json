@@ -12,7 +12,8 @@
     "check:godot": "bun run tools/check-godot.ts",
     "test:godot-harness": "bun run tools/check-godot.ts --self-test",
     "transpile": "bun run tools/transpile-gogo.ts",
-    "verify:gdscript": "bun run tools/check-gdscript.ts"
+    "verify:gdscript": "bun run tools/check-gdscript.ts",
+    "test:editor": "bun run tools/check-editor.ts"
   },
   "dependencies": {
     "saxes": "6.0.0"

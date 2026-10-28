@@ -341,6 +341,77 @@ This is a real graphics check, **not part of headless CI**. It does not replace
 interactive editor resizing/remote-tree inspection. Record exactly which checks
 actually ran in the PR/handoff; do not label headless geometry tests visual proof.
 
+## T08 automatic editor compilation and highlighting
+
+```sh
+bun run test:editor
+```
+
+The harness copies the project and official editor executable into a temporary
+self-contained directory (`_sc_`). It enables Estragon plus a test-only driver in
+that copy, configures the absolute Bun executable and isolates EditorSettings.
+On macOS it ad-hoc signs only the copied executable. The user's project plugin
+state/global settings are untouched. `GODOT_BIN` selects the same pinned editor as
+other checks. CI runs this in the Godot job with headless game subprocesses.
+
+The real editor driver exercises native file-dock opening and automatic extension
+highlighter selection, 16 lexical color/cache checks, saved-file and external
+source builds, both `play_main_scene()` and `play_current_scene()` (the native
+F5/F6 run paths), changed unsaved buffers, current game state/text, invalid Gogo
+blocking both modes, recovery, mapped GDScript semantic errors, missing Bun,
+compiler crash/malformed report, timeout, plugin disable/re-enable, preserved extension settings,
+restored highlighting and no endless rebuild loop. Test-only Counter `_ready`
+records actual launched game state/text; checking only `_build()` is insufficient.
+Failures exit nonzero or omit the required `ESTRAGON_EDITOR_OK` marker. Unexpected
+script errors also fail; deliberately injected semantic/build failures are
+expected diagnostics. The complete run has 32 integration assertions plus the
+16 lexical checks. Authored examples and generated fixtures in the checkout are
+never modified by these tests.
+
+`tests/editor-build.test.ts` adds 13 Bun tests for explicit sorted/deduplicated
+source discovery, excluded paths, strict config errors, source/output symlinks,
+compile-all-before-write, recovery, stable code/maps/mtime, source preservation,
+missing native compiler and CLI reports. Full Bun suite: 150 tests. Every new
+GDScript is also parsed by check:godot; editor-only objects are tested in the real
+editor, not instantiated in an ordinary game process.
+
+### Manual Godot 4.7 procedure
+
+1. Follow EDITOR's one-time setup. Enable the plugin, configure absolute Bun if
+   needed, open Counter.gogo from FileSystem and confirm normal Script Editor
+   with Gogo coloring (declarations/tags/props/braces/strings/comments).
+   A tab already open before initial enable may need reopening.
+2. Open Counter.tscn. Change `var count: int = 0` to 7 in Counter.gogo, leave it
+   unsaved, and use Run Current Scene (F6/Command-R). Confirm Count: 7 and working
+   buttons; stop. Set Counter.tscn as main scene locally, change to 9, press F5,
+   and confirm Count: 9. No manual compiler command should be required.
+3. Break a component/property, press each Play action and confirm no game starts;
+   inspect the Gogo bottom panel for authored file/line/column. Fix it and confirm
+   execution resumes with current values. Repeat using an undefined handler to
+   verify native GDScript errors map back to Counter.gogo.
+4. Save a valid source while stopped and inspect generated output updating.
+   Change it externally and refocus/scan sources; confirm regeneration. Generated
+   code/maps should not churn for unchanged source; never edit them by hand.
+5. Configure an invalid Bun path: Play must fail with an actionable setup message.
+   Restore the correct executable and recover. Disable/re-enable twice: no
+   duplicate panel/hooks, editor errors or lost extension settings. Known open
+   Gogo tabs should regain highlighting. Stop/restart the editor and repeat.
+6. Restore count/main scene/Bun settings after the smoke test if desired. Inspect
+   the remote tree while running: one host, no component Controls or Node tree.
+
+For repeatable native graphics evidence, the same isolated harness supports:
+
+```sh
+ESTRAGON_KEEP_EDITOR_TEST=1 ESTRAGON_EDITOR_NATIVE=1 bun run test:editor
+```
+
+It saves a native editor screenshot and launched Count 7/9/0 PNGs under the
+reported temporary project's `.godot/estragon`. Inspect them with the log/results;
+these are local temporary artifacts, not committed golden images. This exercises
+real editor/graphics APIs but does not certify physical keyboard shortcuts,
+platform dialogs or every OS/window-manager behavior. Record whether manual
+keyboard/remote-tree checks ran separately.
+
 ## Known gaps
 
 Headless CI does not validate pixels, colors, GPU behavior, or the remote editor

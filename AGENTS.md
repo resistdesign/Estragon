@@ -22,7 +22,7 @@ force-pushing, remote branch deletion or merging PRs.
 
 **Estragon is an independent, self-rendered UI engine hosted by Godot.** Its declarative language is **Gogo** (`.gogo`), inspired by the authoring ergonomics of Adobe Flex 3/4. Gogo builds *Estragon* components—not Godot widgets or scene nodes.
 
-The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout, rectangle rendering and a GDScript-first hybrid authoring subset are implemented. Basic text/buttons and primary-mouse input are implemented in ordinary GDScript. T07 adds Gogo Text/Button and generated pressed connections; reactivity, broader widgets and editor capabilities remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
+The **accepted target** is **TSX-like GDScript and XML-like component expressions interleaved in `.gogo`**, transpiled into valid GDScript that creates independent Estragon runtime components and wires signals/bindings. Independent ownership, minimal stack layout, rectangle rendering and a GDScript-first hybrid authoring subset are implemented. Basic text/buttons and primary-mouse input are implemented in ordinary GDScript. T07 adds Gogo Text/Button and generated pressed connections; T08 adds optional native editor highlighting and automatic compile-before-Play; reactivity, broader widgets and advanced editor services remain planned. **The existing JSON compiler is a stage-0 proof of concept**, not the final language architecture. Read [the design direction](docs/DESIGN_DIRECTION.md) and ADR-0007.
 
 ```text
 T04/T05: namespace-free markup + GDScript → typed compiler IR → generated GDScript
@@ -37,7 +37,7 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 ## Target authoring and implementation direction (full target NOT implemented yet)
 
 - **No mandatory XML namespaces or prefixed element names.** Target Gogo uses `<VBox>`, `<Button>` and `<MyWidget>`, not `<fx:VBox>` or `xmlns` declarations. The **current stage-0 XML parser still needs its legacy namespace**, but that requirement must not be carried into the new grammar.
-- **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. T05 supports a specified hybrid subset with braced construction-time expressions and source maps. T07 adds zero-argument Button callbacks; bindings and editor tooling remain future work.
+- **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. T05 supports a specified hybrid subset with braced construction-time expressions and source maps. T07 adds zero-argument Button callbacks; bindings and broader editor tooling remain future work.
 - **Generated GDScript:** emit deterministic, valid `.gd` constructing Estragon's component hierarchy and automatically connecting typed signal handlers and, later, observable bindings. Generated files are not hand-edited, and no Godot UI widget tree is produced.
 - **`@Bindable` in ordinary authored `.gd` is a distinct requested goal.** Stock Godot cannot register arbitrary GDScript annotations via an addon. Do not claim this works without proving a pre-parse/source integration. A separate `.bgd` extension is only a possible fallback, not an accepted replacement.
 - **Real runtime components:** implement independent `DisplayObject`/`Container`-style bases, responsive `VBox`/`HBox` and later common UI components. Resolve naming collisions with Godot's classes. Keep existing JSON prototype functional until a GDScript-generating vertical slice is proven.
@@ -62,14 +62,14 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 - A `View` document root containing zero or more `Rect` leaves at explicit canvas coordinates; no nested containers or component registry.
 - `addons/estragon/runtime/gogo_view.gd`: a single Godot host `Node` drawing rectangles via `RenderingServer.canvas_item_add_rect()`.
 - A checked-in Gogo example plus generated IR, Bun test coverage, strict TypeScript typechecking, and GitHub Actions compiler checks.
-- An optional editor plugin that registers `.gogo` as an editable text extension.
+- An optional editor plugin with native `.gogo` highlighting, saved-source builds, diagnostics and failure-blocking compile-before-Play. See docs/EDITOR.md and gogo.config.json.
 - `EstragonDisplayObject` / `EstragonContainer` RefCounted foundations: ordered ownership, weak parent links, disposal and dirty flags; plus minimal fixed/auto/fill VBox/HBox layout, rectangle paint commands and a RenderingServer surface, alongside the unchanged JSON host. T06 adds independent Text/Button, ordered text/rectangle paint and surface-owned primary-mouse capture; T07 adds generated Gogo Button.pressed wiring with native Callable guards and automatic connection cleanup.
 
 **Not implemented:**
 
 - Reconciliation, generalized layout beyond the minimal stack rules, general styling, keyboard/touch input, focus, accessibility, or a broader widget catalog.
 - `@Bindable` compilation in ordinary GDScript `.gd`, one-/two-way Gogo bindings, observable collections, or a dependency graph.
-- A `.bgd` frontend, Gogo language server, syntax highlighting, live preview, automatic compile-on-save, or a `RenderingDevice` backend.
+- A `.bgd` frontend, Gogo language server, completion/navigation, live preview, debugger remapping, or a `RenderingDevice` backend.
 
 Do not write new examples, PR descriptions, or documentation that imply these proposed capabilities already work. `docs/ROADMAP.md` and tracking issues describe **desired outcomes**, not shipped behavior.
 
@@ -87,7 +87,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 | `addons/estragon/runtime/display_object.gd`, `container.gd` | Independent component ownership, disposal and invalidation foundations |
 | `tests/godot/components.gd` | Standalone component contract tests through T01 validation |
 | `examples/hello/Hello.tscn`, `project.godot` | Minimal Godot application host |
-| `addons/estragon/editor/` | Optional text-extension registration only |
+| `addons/estragon/editor/`, `tools/build-gogo.ts` | Optional native editor highlighting, build gate and project source discovery |
 | `docs/GOGO_LANGUAGE.md` | Implemented Gogo subset vs speculative syntax |
 | `docs/ARCHITECTURE.md`, `docs/VISION.md` | System boundaries and direction |
 | `docs/BINDING.md`, `docs/EDITOR.md` | Planned reactivity and editor work |
@@ -199,9 +199,9 @@ If an IR change is incompatible, deliberately define/version the new contract an
 - Account for nested path replacement, subscriptions and disposal, collection mutation, cycles, two-way feedback protection, and batched invalidation.
 - Keep observable models usable without inheriting from a Godot `Node`. Test state changes independently from drawing.
 
-### Editor integration (future work)
+### Editor integration (T08 foundations; broader tooling planned)
 
-- The existing plugin only adds `gogo` to `docks/filesystem/textfile_extensions`. It does not transpile Gogo to GDScript, understand mixed source, highlight syntax, provide diagnostics, or preview anything.
+- The optional plugin integrates native TextFile highlighting, saved-source builds and the common F5/F6 build gate. Source discovery/output policy lives in `gogo.config.json` and docs/EDITOR.md. No completion, debugger remapping or visual preview is implemented.
 - That editor setting is **global and persists after disabling the plugin**. Never erase existing values, force-enable the plugin, or silently change someone's editor configuration in a test.
 - Keep editable `.gogo` source accessible; do not replace it with imported `.tscn` widget trees.
 - Source diagnostics and previews must ultimately come from the Gogo compiler and Estragon renderer, respectively.
@@ -254,9 +254,10 @@ For Godot-facing changes, also run the pinned Godot 4.7 headless checks:
 ```sh
 bun run check:godot
 bun run test:godot-harness
+bun run test:editor
 ```
 
-See `docs/TESTING.md` for `GODOT_BIN`, version pinning, isolation and failure detection.
+See `docs/TESTING.md` for `GODOT_BIN`, version pinning, isolation and failure detection. Editor integration tests must use the self-contained isolated harness; never force-enable the plugin or alter user editor settings in tests.
 GitHub Actions (`.github/workflows/ci.yml`) typechecks TypeScript, runs Bun tests,
 verifies example IR, and runs Godot import, every-script parsing, runtime smoke
 and harness failure probes. Headless checks do **not** certify visuals.

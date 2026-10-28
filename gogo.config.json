@@ -1,0 +1,4 @@
+{
+  "version": 1,
+  "source_roots": ["examples/compiled", "examples/mixed", "examples/counter"]
+}
