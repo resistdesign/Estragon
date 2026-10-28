@@ -12,7 +12,15 @@ The design is a **standalone UI stack hosted by Godot**: Estragon owns its logic
 
 **Gogo is XML-like markup with TSX-style GDScript composition.** Developers should be able to write unprefixed components such as `<VBox>` and `<Button>`, combine them directly with GDScript expressions and methods in `.gogo`, and have the compiler generate ordinary GDScript that instantiates Estragon's independent runtime objects and wires signals/bindings. **No `xmlns` or `<fx:...` prefixes** in the intended language. Minimal independent runtime/stack classes exist; a fuller component suite and Gogo-aware editor support remain planned. The desired `@Bindable` experience in ordinary `.gd` files requires a separate feasibility investigation.
 
-This is the **target direction, not a feature that currently works**. Read the [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md) for the examples, open decisions, and technical constraints.
+Core Gogo-to-GDScript compilation, independent layout and interactive generated signal wiring work; **Bun-free Godot-native compilation** is the next unimplemented goal. Read the [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md) for the remaining decisions and technical constraints.
+
+## Immediate priority: Godot-only Gogo compilation
+
+**Accepted direction, 2026-10-28:** Estragon will compile Gogo **entirely inside Godot** with its bundled GDScript compiler. Normal users must never need Bun/Node, TypeScript, a configured executable, or a separately installed compiler.
+
+**Not implemented yet.** The currently working T08 editor plugin still launches Bun. The owner manually verified editing Gogo font size and rerunning in Godot. That is a proven **temporary bridge**. The next tasks are **N01 native parser → N02 native emitter and source maps → N03 native editor cutover without Bun**. The TypeScript/Bun compiler may remain as optional contributor/CI reference tooling after cutover.
+
+See [ADR-0012](docs/DECISIONS.md), [execution plan](docs/EXECUTION_PLAN.md) and [work status](docs/WORK_STATUS.md). T09 bindings and T10 legacy retirement wait until N03.
 
 ## Status: experimental vertical slices
 
