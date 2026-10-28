@@ -1,7 +1,7 @@
 import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join, relative, resolve } from "node:path";
-import { compileExample, EXAMPLE_OUTPUT, compileHybridExample, HYBRID_OUTPUT } from "./check-gdscript.ts";
+import { compileExample, EXAMPLE_OUTPUT, compileHybridExample, HYBRID_OUTPUT, compileCounterExample, COUNTER_OUTPUT } from "./check-gdscript.ts";
 import { compileGogo, transpileGogo } from "./transpile-gogo.ts";
 import { traceGodotDiagnostics, type Compilation } from "./gogo/source-map.ts";
 const compiledMaps = new Map<string, Compilation>();
@@ -62,10 +62,14 @@ async function validate(project: string): Promise<void> {
   const hybrid = await compileHybridExample(project);
   await writeFile(join(project, HYBRID_OUTPUT), hybrid.code);
   compiledMaps.set(`res://${HYBRID_OUTPUT}`, hybrid);
+  const counter = await compileCounterExample(project);
+  await writeFile(join(project, COUNTER_OUTPUT), counter.code);
+  compiledMaps.set(`res://${COUNTER_OUTPUT}`, counter);
   const generated = join(project, "tests/godot/generated");
   await mkdir(generated, { recursive: true });
   for (const [name, source] of [
     ["Numbers", '<Rect width="1e20" height="0" fill="#12345678"/>'],
+    ["Primitives", '<VBox><Text text="Literal text" font_size="21" color="#ff990080"/><Button text="Literal button" disabled="true"/></VBox>'],
     ["Empty", '<HBox width="auto" height="auto" gap="0" fill_width="false"/>'],
   ] as const) {
     await writeFile(join(generated, `${name}.gd`), transpileGogo(source, `<Godot ${name} probe>`));
@@ -73,6 +77,9 @@ async function validate(project: string): Promise<void> {
   const edges = compileGogo(await readFile(join(project, "tests/fixtures/hybrid-edges.gogo"), "utf8"), "tests/fixtures/hybrid-edges.gogo");
   await writeFile(join(generated, "HybridEdges.gd"), edges.code);
   compiledMaps.set("res://tests/godot/generated/HybridEdges.gd", edges);
+  const signals = compileGogo(await readFile(join(project, "tests/fixtures/signal-edges.gogo"), "utf8"), "tests/fixtures/signal-edges.gogo");
+  await writeFile(join(generated, "SignalEdges.gd"), signals.code);
+  compiledMaps.set("res://tests/godot/generated/SignalEdges.gd", signals);
   // Recovery mode prevents enabled editor plugins from changing global settings.
   requireSuccess("project import", await run(project, ["--editor", "--recovery-mode", "--import"]));
   for (const path of await scriptsIn(project)) {
@@ -85,6 +92,7 @@ async function validate(project: string): Promise<void> {
   requireSuccess("fresh Gogo-generated GDScript", await run(project, ["--script", "res://tests/godot/generated_gogo.gd", "--quit-after", "120"]), "ESTRAGON_GENERATED_GOGO_OK");
   requireSuccess("hybrid Gogo runtime", await run(project, ["--script", "res://tests/godot/hybrid_gogo.gd", "--quit-after", "120"]), "ESTRAGON_HYBRID_GOGO_OK");
   requireSuccess("text, buttons and pointer dispatch", await run(project, ["--script", "res://tests/godot/interaction.gd", "--quit-after", "120"]), "ESTRAGON_INTERACTION_OK");
+  requireSuccess("generated signals and Counter", await run(project, ["--script", "res://tests/godot/generated_signals.gd", "--quit-after", "120"]), "ESTRAGON_SIGNALS_OK");
   for (const probe of ["width", "height", "negative", "gap", "geometry"]) {
     const result = await run(project, ["--script", "res://tests/godot/invalid_sizing.gd", "--", probe]);
     const expected = probe === "geometry" ? "arranged geometry must be finite with nonnegative size"
@@ -123,6 +131,42 @@ async function hybridRejections(project: string): Promise<void> {
     { name: "NullChild", source: 'extends SceneTree\nfunc _initialize():\n    var value = <VBox>{null}</VBox>\n    print("EXPECTED_HYBRID_END")\n    quit(0)\n', evidence: /Gogo child must be a live/, line: 3, runtime: true },
     { name: "Range", source: 'extends SceneTree\nfunc _initialize():\n    var invalid: float = -2.0\n    var value = <Rect width={invalid}/>\n    print("EXPECTED_HYBRID_END")\n    quit(0)\n', evidence: /width must be -1/, line: 4, runtime: true },
   ];
+  // Callable signatures are native Godot metadata, checked before connection.
+  const callbackProbe = (callback: string, declarations = "", setup = "") => `extends SceneTree
+${declarations}
+func _initialize():
+${setup}    var button = <Button pressed={${callback}}/>
+    if not button.pressed.get_connections().is_empty():
+        quit(1)
+        return
+    print("EXPECTED_HYBRID_END")
+    quit(0)
+`;
+  for (const [name, source] of [
+    ["CallbackMissing", 'extends RefCounted\nfunc build():\n    return <Button pressed={missing_handler}/>\n'],
+    ["CallbackType", 'extends RefCounted\nfunc build():\n    return <Button pressed={42}/>\n'],
+    ["CallbackCall", 'extends RefCounted\nfunc handler() -> int: return 1\nfunc build():\n    return <Button pressed={handler()}/>\n'],
+    ["TextType", 'extends RefCounted\nfunc build():\n    return <Text text={42}/>\n'],
+    ["DisabledType", 'extends RefCounted\nfunc build():\n    return <Button disabled={"yes"}/>\n'],
+  ]) {
+    cases.push({ name: name!, source: source!, evidence: name === "CallbackMissing" ? /missing_handler/ : /Invalid argument/,
+      line: source!.split("\n").findIndex(line => line.includes("return <")) + 1 });
+  }
+  for (const [name, source] of [
+    ["CallbackArity", callbackProbe("handler", "func handler(value: int) -> void: pass")],
+    ["CallbackOptional", callbackProbe("handler", "func handler(value: int = 1) -> void: pass")],
+    ["CallbackEmpty", callbackProbe("Callable()")],
+    ["CallbackInvalid", callbackProbe('Callable(self, "not_a_method")')],
+    ["CallbackDisposed", callbackProbe("receiver.receive", `class Receiver extends EstragonRect:
+    func receive() -> void: pass
+var receiver := Receiver.new()`, `    var owner := EstragonContainer.new()
+    owner.add_child(receiver)
+    owner.remove_child(receiver)
+`)],
+  ]) {
+    cases.push({ name: name!, source: source!, evidence: /Button.pressed requires a valid zero-argument Callable/,
+      line: source!.split("\n").findIndex(line => line.includes("var button =")) + 1, runtime: true });
+  }
   // Invalid generated scripts appear only after positive project import/parsing.
   for (const probe of cases) {
     const sourceName = `tests/fixtures/negative-${probe.name}.gogo`;
@@ -134,7 +178,8 @@ async function hybridRejections(project: string): Promise<void> {
     const result = await run(project, ["--script", resource, ...(probe.runtime ? [] : ["--check-only"])]);
     if (result.timedOut || !ENGINE_ERROR.test(result.output) || !probe.evidence.test(result.output)
         || !result.output.includes(`Gogo source: ${sourceName}:${probe.line}:`)
-        || (probe.runtime && (result.code !== 0 || !result.output.includes("EXPECTED_HYBRID_END")))) {
+        || (probe.runtime && (result.code !== 0 || !result.output.includes("EXPECTED_HYBRID_END")))
+        || (probe.runtime && probe.name.startsWith("Callback") && result.output.split(/\r?\n/).filter(line => ENGINE_ERROR.test(line)).length !== 1)) {
       throw new Error(`Hybrid rejection ${probe.name} failed to prove its expected mapped diagnostic\n${result.output}`);
     }
     console.log(`PASS Godot rejected/mapped hybrid ${probe.name} to ${sourceName}:${probe.line}`);

@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-27, T06 completion PR based on `main` at `4f65a06` after merged [PR #23](https://github.com/resistdesign/Estragon/pull/23). T01–T05 are merged. T06 is **In review until approval and merge**. Independent text/buttons and primary-pointer input use ordinary GDScript; Gogo-generated wiring remains T07. Legacy and T04/T05 examples remain preserved.
+**Snapshot:** 2026-10-28, T07 completion PR based on `main` at `1a7cc2e` after merged [PR #25](https://github.com/resistdesign/Estragon/pull/25). T01–T06 are merged. T07 is **In review until approval and merge**. The first interactive Counter.gogo uses generated native signal connections and explicit rebuild with automatic cleanup. Bindings/editor automation remain future work; old examples remain preserved.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** inspect [T06 / issue #24](https://github.com/resistdesign/Estragon/issues/24) for its latest PR, CI and handoff. T07 follows only after T06 approval/merge. ARCHITECTURE documents text measurement, pointer/capture and lifecycle; TESTING contains the interactive example procedure. Automatic lifecycle remains required (ADR-0008).
+**Start here:** inspect [T07 / issue #26](https://github.com/resistdesign/Estragon/issues/26) for its latest PR, CI and handoff. T08 follows only after T07 approval/merge. GOGO_LANGUAGE/ADR-0010 document callback/property limits; TESTING contains Counter's interactive procedure. AGENTS.md records standing authorization to reset/clean disposable local Godot changes and clear stashes while protecting unfinished implementation work/remotes.
 
 ## Current plan register
 
@@ -15,8 +15,8 @@
 | **T03** | **Done** | Responsive stack layout, rectangles, surface and automatic lifecycle | [#18](https://github.com/resistdesign/Estragon/issues/18), merged [PR #19](https://github.com/resistdesign/Estragon/pull/19) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40282237018); merge `9df0626`. OpenGL captures inspected; interactive editor check not run. |
 | **T04** | **Done** | Namespace-free markup → GDScript | [#20](https://github.com/resistdesign/Estragon/issues/20), merged [PR #21](https://github.com/resistdesign/Estragon/pull/21) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40284163867); merge `240e8bd`. OpenGL capture inspected. |
 | **T05** | **Done** | GDScript-first hybrid Gogo, expressions and maps | [#22](https://github.com/resistdesign/Estragon/issues/22), merged [PR #23](https://github.com/resistdesign/Estragon/pull/23) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40448084799); merge `4f65a06`. Native graphics capture inspected; interactive editor check not run. |
-| **T06** | **In review; Done only upon approval + merge** | Text/Button and primary-mouse input | [#24](https://github.com/resistdesign/Estragon/issues/24); umbrella [#3](https://github.com/resistdesign/Estragon/issues/3) | See live issue/PR for runtime/cleanup tests, native resized graphics capture and CI evidence. |
-| T07 | Queued (T05, T06) | Generated event wiring and Counter | Create task issue on pickup | Pending |
+| **T06** | **Done** | Text/Button and primary-mouse input | [#24](https://github.com/resistdesign/Estragon/issues/24), merged [PR #25](https://github.com/resistdesign/Estragon/pull/25); umbrella [#3](https://github.com/resistdesign/Estragon/issues/3) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40451329471); merge `1a7cc2e`. Native resized graphics inspected; physical/editor smoke not run. |
+| **T07** | **In review; Done only upon approval + merge** | Generated Button.pressed wiring and Counter.gogo | [#26](https://github.com/resistdesign/Estragon/issues/26) | See live issue/PR for compiler/runtime/cleanup, mapped native diagnostics, graphics and CI evidence. |
 | T08 | Queued (T07) | Editor build/run integration | [#6](https://github.com/resistdesign/Estragon/issues/6) (umbrella) | Pending |
 | T09 | Queued (T07, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |
 | T10 | Queued (T07, T08, parity) | Retire legacy JSON safely | Create task issue on pickup | Pending |
@@ -57,7 +57,7 @@ Also keep the **issue's checklist and PR description** accurate at meaningful mi
 ## Resume checklist
 
 1. Read `AGENTS.md`, this file, [EXECUTION_PLAN.md](EXECUTION_PLAN.md), design decisions and the task's exact acceptance criteria.
-2. Fetch current `main`, inspect `git status --short --branch`, latest commits, open issues/PRs and the last task handoff. **Do not discard or overwrite uncommitted work.**
+2. Fetch current `main`, inspect `git status --short --branch`, latest commits, open issues/PRs and the last task handoff. **Apply AGENTS.md’s standing cleanup authorization to disposable Godot artifacts; preserve unfinished implementation work.**
 3. Reconcile the status snapshot against live issue/PR and code, confirm the next unfinished check, the assigned branch and its dependency state.
 4. Resume that task on its existing branch if appropriate. If no active task exists, pick **one Ready task**, confirm/establish its issue, and record a short actionable plan there before editing code.
 5. Work in small verified increments, post substantive progress, and leave the next handoff before ending the session.

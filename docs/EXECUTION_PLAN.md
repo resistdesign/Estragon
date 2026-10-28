@@ -102,7 +102,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T07 — Compiler-generated signal wiring and first interactive demo
 
-**Prerequisites:** T05 and T06.
+**Tracking:** [T07 / issue #26](https://github.com/resistdesign/Estragon/issues/26). **Prerequisites:** T05 and T06 (merged in PRs #23/#25).
 
 - Support typed event/callback attributes, generate handler references/adapters and signal connections automatically in the resulting `.gd`, and verify handler signatures and lifecycle/disposal.
 - Ship a **real mixed-source `Counter.gogo` demo**: click button → GDScript handler runs → visible counter changes. Explicit refresh is acceptable before T09 and must be documented.

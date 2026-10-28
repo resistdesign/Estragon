@@ -66,7 +66,7 @@ describe("T04 markup syntax and typed expressions", () => {
         ["<!-- missing", "Unterminated comment"], ["<VBox>", "Missing closing tag"],
         ["<VBox></HBox>", "Expected </VBox>"], ["<Rect/><Rect/>", "one component"],
         ["<VBox>text</VBox>", "Only component children"], ["<Rect><Rect/></Rect>", "Rect is a leaf"],
-        ["<Button/>", "Unknown component"], ["<constructor/>", "Unknown component"],
+        ["<Label/>", "Unknown component"], ["<constructor/>", "Unknown component"],
         ["<fx:VBox/>", "Namespace-prefixed"], ['<VBox xmlns="urn:old"/>', "Namespaces"],
         ['<Rect fx:width="2"/>', "prefixed properties"], ['<Rect gap="1"/>', "Unsupported property"],
         ['<VBox fill="#abcdef"/>', "Unsupported property"], ['<Rect id="x"/>', "Unsupported property"],

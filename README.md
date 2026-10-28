@@ -21,7 +21,8 @@ GDScript constructing Estragon's independent components. The runtime supports
 nested auto/fixed/fill stack layout, rectangle drawing and automatic lifecycle
 through a single surface host. T05 adds GDScript-first hybrid modules with helper methods, nested markup,
 braced construction-time expressions and range source maps. T06 adds text drawing, buttons and primary-mouse input through ordinary GDScript.
-Bindings and Gogo signal/editor automation remain future work. See the [supported subset](docs/GOGO_LANGUAGE.md).
+T07 adds Text/Button markup, generated pressed connections and an interactive Counter.gogo.
+Bindings and editor automation remain future work. See the [supported subset](docs/GOGO_LANGUAGE.md).
 
 The earlier namespaced XML → JSON rectangle demo is preserved separately and
 remains the configured main scene. It is temporary compatibility scaffolding,
@@ -64,8 +65,23 @@ Run `examples/interactive/Interactive.tscn` in Godot 4.7. Add one and Reset upda
 visible text through ordinary GDScript handlers. Hover/hold for visual states,
 release outside to cancel, and resize to see the button row follow the viewport.
 No component Nodes, Godot Controls or manual component disposal are required.
-Gogo Text/Button syntax and generated connections are T07 work. See the
+For compiler-generated connections, run the Gogo Counter below. See the
 [interactive test procedure](docs/TESTING.md#interactive-components-visual-check-t06).
+
+## Try interactive Gogo
+
+```sh
+bun run transpile examples/counter/Counter.gogo --output examples/counter/generated/Counter.gd
+bun run check
+bun run check:godot
+```
+
+Run `examples/counter/Counter.tscn`. Click `+` to increment and Reset to return
+to zero. The authored `.gogo` contains GDScript state/handlers and Text/Button
+markup with `pressed={increment}`; Gogo generates all signal connections. Explicit
+root rebuilding refreshes text/disabled state and automatically disconnects old
+handlers. No bindings or editor build automation are implied. See the
+[signal contract](docs/GOGO_LANGUAGE.md#t07-generated-signals-and-interactive-gogo-implemented).
 
 ## Try the initial slice
 
@@ -97,7 +113,7 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 
 ## Picking up development with Codex
 
-**One task per PR.** Check the live [work register](docs/WORK_STATUS.md) and the latest [T06 handoff](https://github.com/resistdesign/Estragon/issues/24) before choosing work (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
+**One task per PR.** Check the live [work register](docs/WORK_STATUS.md) and the latest [T07 handoff](https://github.com/resistdesign/Estragon/issues/26) before choosing work (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
 
 ## Naming
 
