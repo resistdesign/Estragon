@@ -4,7 +4,7 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
-## Godot-native compiler migration (ADR-0012; frontend implemented)
+## Godot-native compiler migration (ADR-0012; compiler implemented, editor cutover pending)
 
 The T08 editor's external Bun build is a **tested transitional bridge**. Estragon's target is a **bundled GDScript-native compiler**: Gogo source → native lexer/parser/typed model (N01) → native GDScript emission/source maps (N02) → direct EditorPlugin build/validation on F5/F6 (N03) → generated ordinary `.gd` → Estragon's independent runtime.
 
@@ -18,9 +18,14 @@ these layers and returns structured diagnostics without engine error logging.
 They use RefCounted data only and have no EditorInterface, scene-tree, renderer,
 resource-import or process dependency. GDScript strings/comments are scanned,
 not rewritten; Unicode regular expressions classify identifier characters only.
-N02 will consume this model for emission and native semantic validation; N03
-will integrate the editor. A small test-only literal lowering is not a general
-emitter. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for the API and measured parity.
+N02 consumes this model in `emitter.gd` through `compiler.gd`; `source_map.gd`
+tracks copied/generated ranges. `script_validation.gd` uses synchronous native
+GDScript.reload() with a scoped, thread-safe Logger to capture generated-line
+errors, then maps them back to Gogo. Failed validation exposes no executable
+script. Validation uses Resource.set_path_cache() with the real output path to
+preserve relative resources and registered class_name identity without taking
+over cached application scripts. No file publication/discovery or editor changes are included; N03 owns
+that integration. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for the API and measured parity.
 
 ## Mixed-source direction (T05 subset implemented; later services planned)
 

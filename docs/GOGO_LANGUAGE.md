@@ -2,7 +2,7 @@
 
 **Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. T07 adds Text/Button properties and generated pressed connections; T08 adds optional automatic editor compilation/highlighting; bindings and broader editor services remain future work.
 
-**Compiler migration:** N01 implements the bundled GDScript-native frontend. Native emission/maps (N02) and editor cutover (N03) remain pending under ADR-0012; the working editor still uses Bun. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
+**Compiler migration:** N01/N02 implement bundled GDScript-native parsing, typed validation, generation and source maps. Editor cutover (N03) remains pending under ADR-0012; the working editor still uses Bun. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
 
 ## Native frontend (N01)
 
@@ -18,7 +18,7 @@ else:
 ```
 
 No imports, editor services, runtime components, external executables or packages
-are needed to analyze source. This API does **not** emit or execute applications.
+are needed to analyze source. This frontend API does **not** emit or execute applications; the native compilation API below consumes the same model.
 T08's compiler commands and editor behavior below remain unchanged until N03.
 
 `model.gd` defines typed RefCounted data: `Module` retains source-ordered `Code`
@@ -48,13 +48,83 @@ checked test transcript `tests/fixtures/native-frontend.json`:
 | Contracts | All five built-ins, inherited sizing, component-specific properties, Button.pressed Callable declarations, duplicates/unknowns/type-invalid literals rejected |
 | Locations | Typed-tree ranges and first-error starts compared to reference; Unicode/astral and CRLF/lone CR/LF tested |
 | Limits | Same 256 direct-component and 256 hybrid-island nesting guards; named inner-class markup remains unsupported |
-| GDScript semantics | Retained lexically, **not fully parsed/typechecked**; unknown names, invalid expressions, callable signatures and child runtime types require Godot validation after emission in N02 |
+| GDScript semantics | Retained lexically, **not fully parsed/typechecked**; unknown names, invalid expressions, callable signatures and child runtime types require the explicit Godot validation step after native emission |
 
 This is a tested compatibility corpus, not a claim that every possible GDScript
 program is supported. No new grammar or callback semantics are introduced.
 The transcript is test data, never runtime UI JSON. The native-only test reads it
 without running TypeScript; optional `bun tools/native-frontend-cases.ts` verifies
 it against the reference, and `--write` refreshes it intentionally.
+
+## Native compilation and validation (N02)
+
+```gdscript
+const Compiler = preload("res://addons/estragon/compiler/compiler.gd")
+const Validation = preload("res://addons/estragon/compiler/script_validation.gd")
+
+var compiled = Compiler.compile(source, "examples/counter/Counter.gogo")
+if compiled.ok:
+    var checked = Validation.validate(compiled, "res://examples/counter/generated/Counter.gd")
+    if checked.ok:
+        var counter = checked.generated_script.new()
+        add_child(counter) # one EstragonSurface; components are independent objects
+    else:
+        for diagnostic in checked.diagnostics:
+            print(diagnostic.format())
+else:
+    for diagnostic in compiled.diagnostics:
+        print(diagnostic.format())
+```
+
+`compile()` is synchronous and deterministic: `Compilation` contains `mode`,
+`code`, `source_map` and frontend `diagnostics`. Invalid frontend input exposes
+no code/map. Successful emission **does not assert GDScript semantic validity**;
+use `Validation.validate()` before execution. Validation returns an executable
+`generated_script` only on success. It does not construct application instances.
+The caller owns mounting/Node lifetime as in ordinary Godot; component cleanup
+remains automatic through EstragonSurface.
+
+The compiler and validation require Godot alone, with no subprocesses, packages,
+Bun/Node, editor services or application scene tree. Runtime classes must be
+available through Godot's normal project import/class registration. Emission
+constructs the existing Estragon classes; it does not introduce an interpreter.
+File discovery, safe output publication, resource reload and compile-before-Play
+remain the existing T08 behavior until N03; this API does not write files.
+
+Hybrid output preserves authored ranges and uses collision-safe `_gogo_build_N`
+static factories with typed arguments. Dynamic property/child/Callable expressions
+are evaluated once at the original call site in source traversal order; native
+conditionals remain lazy. Callback expressions are passed as Callables, checked
+before connecting, and disconnected by the existing runtime on unmount/target
+cleanup. Invalid runtime callback values report an authored error and never
+connect; null/invalid children report an authored error and never mount, matching
+the established reference behavior. Construction-time expressions are not reactive.
+
+`source_map.to_dictionary()` / `serialize()` export version-1
+`estragon.gogo.source-map` data with source content and copied/generated ranges;
+`original_position(generated_line, generated_column = 1)` maps back to a native
+Position, or null for an unmapped line. Copied ranges retain exact UTF-16 positions;
+generated ranges map to their owning authored span. Hybrid code/maps match the
+checked reference examples. Standalone code uses source-ordered literal assignments
+and per-statement mappings instead of sorted assignments and one whole-document
+range; resulting component behavior is equivalent. Float literals use full-precision
+native formatting and explicit float tokens, so spelling can differ from TypeScript.
+
+Semantic validation uses Godot 4.7's [Logger](https://docs.godotengine.org/en/4.7/classes/class_logger.html)
+only around synchronous `GDScript.reload()`, removes it afterward, and maps
+reported generated lines to authored locations. Godot supplies no error column
+through this API; diagnostics identify the mapped line/span, not a fabricated
+exact token column. Validation uses Godot 4.7's [Resource.set_path_cache()](https://docs.godotengine.org/en/4.7/classes/class_resource.html#class-resource-method-set-path-cache)
+with the real output path so relative preloads/extends and registered `class_name`
+identity resolve correctly without replacing cached application scripts. Dependency failures without a direct generated-line diagnostic report a
+source-level failure and direct the caller to engine diagnostics. Engine errors
+remain visible in Godot's log; the frontend/emitter themselves do not log errors.
+
+The Godot-only harness compiles and runs Layout, Mixed, Counter and both edge
+fixtures, exercises native semantic/callback failures, and compares checked reference
+output/map digests. See TESTING for exact commands and a direct Counter visual test.
+No known compatibility gap remains within the tested T04–T07 subset; this is not
+a full GDScript frontend, incremental compiler, editor cutover or new grammar.
 
 ## Standalone markup-to-GDScript subset (T04, extended in T07)
 

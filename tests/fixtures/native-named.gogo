@@ -1,0 +1,7 @@
+class_name EstragonNativeNamedProbe
+extends RefCounted
+
+var value: int = 3
+
+func build() -> EstragonRect:
+    return <Rect width="2"/>
