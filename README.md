@@ -22,7 +22,8 @@ nested auto/fixed/fill stack layout, rectangle drawing and automatic lifecycle
 through a single surface host. T05 adds GDScript-first hybrid modules with helper methods, nested markup,
 braced construction-time expressions and range source maps. T06 adds text drawing, buttons and primary-mouse input through ordinary GDScript.
 T07 adds Text/Button markup, generated pressed connections and an interactive Counter.gogo.
-Bindings and editor automation remain future work. See the [supported subset](docs/GOGO_LANGUAGE.md).
+T08 adds optional native Gogo highlighting and automatic compilation before Play.
+Bindings and broader editor services remain future work. See the [supported subset](docs/GOGO_LANGUAGE.md).
 
 The earlier namespaced XML → JSON rectangle demo is preserved separately and
 remains the configured main scene. It is temporary compatibility scaffolding,
@@ -42,7 +43,7 @@ bun run check:godot
 ```
 
 Open `examples/compiled/Compiled.tscn` in Godot and run that scene. Edit `.gogo`
-and recompile; do not edit generated `.gd`. There is no compile-on-save hook yet.
+and recompile; do not edit generated `.gd`. The optional editor plugin compiles on save and before Play; see EDITOR for setup.
 Generated code mounts components on an EstragonSurface; cleanup is automatic.
 
 ## Try hybrid GDScript/Gogo
@@ -80,7 +81,7 @@ Run `examples/counter/Counter.tscn`. Click `+` to increment and Reset to return
 to zero. The authored `.gogo` contains GDScript state/handlers and Text/Button
 markup with `pressed={increment}`; Gogo generates all signal connections. Explicit
 root rebuilding refreshes text/disabled state and automatically disconnects old
-handlers. No bindings or editor build automation are implied. See the
+handlers. The optional T08 plugin automates editor builds after one-time setup; no bindings are implied. See the
 [signal contract](docs/GOGO_LANGUAGE.md#t07-generated-signals-and-interactive-gogo-implemented).
 
 ## Try the initial slice
@@ -95,7 +96,11 @@ bun run check
 
 Open this directory as a Godot project (`project.godot`) and run the main scene. `examples/hello/Hello.tscn` contains **one host `Node`**, which reads the checked-in generated IR and draws rectangles directly using `RenderingServer.canvas_item_add_rect()`. The checked-in output lets the scene run without requiring Bun in the Godot process or at application runtime.
 
-The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recognizable as an editor text-file extension when enabled. Syntax highlighting, source diagnostics and preview integration are on the roadmap. The plugin changes the global Godot Editor Settings text-extension list; see [editor integration](docs/EDITOR.md) before enabling it.
+Enable **Estragon (experimental)** in Godot's Plugins settings for normal Gogo
+authoring: mixed syntax highlighting, automatic saved-source builds and checked
+compilation before F5/F6. Configure Bun once if needed; no compiler commands are
+required during normal development. The plugin preserves existing editor
+extension settings. See [editor setup and verified limits](docs/EDITOR.md).
 
 ## Read the design
 
@@ -113,7 +118,7 @@ The optional editor plugin in `addons/estragon/editor/` only makes `.gogo` recog
 
 ## Picking up development with Codex
 
-**One task per PR.** Check the live [work register](docs/WORK_STATUS.md) and the latest [T07 handoff](https://github.com/resistdesign/Estragon/issues/26) before choosing work (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
+**One task per PR.** Check the live [work register](docs/WORK_STATUS.md) and the latest [T08 handoff](https://github.com/resistdesign/Estragon/issues/28) before choosing work (or research [R01: `@Bindable` feasibility](https://github.com/resistdesign/Estragon/issues/4) in parallel). Point Codex to `AGENTS.md`, `docs/EXECUTION_PLAN.md`, `docs/WORK_STATUS.md` and the chosen issue ID. Those files define what to build, how to track progress, and how another session continues. **Do not ask Codex to implement the whole roadmap in one PR.**
 
 ## Naming
 

@@ -109,7 +109,7 @@ The generated surface uses T03's lifecycle; application code never disposes UI
 components. `examples/compiled/Compiled.tscn` is the runnable example.
 
 This section describes T04 only; T05 hybrid composition is described below.
-T07 adds Button callbacks below; binding generation and editor build hooks remain future work. The markup-only parser/IR does not define
+T07 adds Button callbacks below; T08 adds editor build hooks. Binding generation remains future work. The markup-only parser/IR does not define
 the whole language. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for exact grammar,
 properties, commands and limitations.
 
@@ -330,3 +330,21 @@ is used. See GOGO_LANGUAGE/ADR-0010 for validation limits and TESTING for the ga
 ## Performance model to implement later
 
 Track independently dirtied state, layout and paint; retain component identities; batch paint primitives; minimize allocations and GPU submissions; manage scissoring/clips and cache glyphs/resources. Measure CPU and GPU cost, startup time, frame pacing and memory on concrete workloads instead of assuming lower-level drawing automatically means faster rendering.
+
+## Godot editor compilation boundary (T08)
+
+The optional EditorPlugin integrates the native Script Editor, lexical Gogo
+highlighter and diagnostics bottom panel. Editor Controls are tooling only;
+application components/rendering remain unchanged. Saved-source/filesystem events
+coalesce a build; the common F5/F6 `_build` hook saves buffers and gates execution
+on direct Bun/TypeScript compilation plus separate native Godot semantic checks.
+An explicit gogo.config.json lists sorted project source roots; adjacent generated
+code/maps preserve existing resource paths. Reports in .godot carry diagnostics,
+outputs and changed paths; they are build metadata, never runtime UI data.
+
+The build service bounds subprocess lifetime, detects missing/crashed compilers,
+and fails closed. It does not rely on shell startup configuration. TypeScript
+still owns the language pipeline, Godot owns generated GDScript semantics, and
+the editor only presents/adapts them. Successful changed paths update the resource
+filesystem; a fresh game executes them. No live game hot-reload or replacement
+source editor is introduced. See EDITOR, TESTING and ADR-0011 for precise behavior.

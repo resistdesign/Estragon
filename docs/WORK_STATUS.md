@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-28, T07 completion PR based on `main` at `1a7cc2e` after merged [PR #25](https://github.com/resistdesign/Estragon/pull/25). T01–T06 are merged. T07 is **In review until approval and merge**. The first interactive Counter.gogo uses generated native signal connections and explicit rebuild with automatic cleanup. Bindings/editor automation remain future work; old examples remain preserved.
+**Snapshot:** 2026-10-28, T08 completion PR based on `main` at `0a1cfc1` after merged [PR #27](https://github.com/resistdesign/Estragon/pull/27). T01–T07 are merged. T08 is **In review until approval and merge**. The optional plugin adds native Gogo highlighting and saved-source/compile-before-Play integration. Bindings and advanced editor services remain future work; runtime and old examples remain preserved.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** inspect [T07 / issue #26](https://github.com/resistdesign/Estragon/issues/26) for its latest PR, CI and handoff. T08 follows only after T07 approval/merge. GOGO_LANGUAGE/ADR-0010 document callback/property limits; TESTING contains Counter's interactive procedure. AGENTS.md records standing authorization to reset/clean disposable local Godot changes and clear stashes while protecting unfinished implementation work/remotes.
+**Start here:** inspect [T08 / issue #28](https://github.com/resistdesign/Estragon/issues/28) for its latest PR, CI and handoff. EDITOR/ADR-0011 document setup, source/output policy, synchronous build gate and existing-tab limitations; TESTING contains isolated editor and manual F5/F6 procedures. T09 remains dependent on R01 findings; T10 also requires deliberate legacy parity review. AGENTS.md's local cleanup authorization remains in effect.
 
 ## Current plan register
 
@@ -16,8 +16,8 @@
 | **T04** | **Done** | Namespace-free markup → GDScript | [#20](https://github.com/resistdesign/Estragon/issues/20), merged [PR #21](https://github.com/resistdesign/Estragon/pull/21) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40284163867); merge `240e8bd`. OpenGL capture inspected. |
 | **T05** | **Done** | GDScript-first hybrid Gogo, expressions and maps | [#22](https://github.com/resistdesign/Estragon/issues/22), merged [PR #23](https://github.com/resistdesign/Estragon/pull/23) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40448084799); merge `4f65a06`. Native graphics capture inspected; interactive editor check not run. |
 | **T06** | **Done** | Text/Button and primary-mouse input | [#24](https://github.com/resistdesign/Estragon/issues/24), merged [PR #25](https://github.com/resistdesign/Estragon/pull/25); umbrella [#3](https://github.com/resistdesign/Estragon/issues/3) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40451329471); merge `1a7cc2e`. Native resized graphics inspected; physical/editor smoke not run. |
-| **T07** | **In review; Done only upon approval + merge** | Generated Button.pressed wiring and Counter.gogo | [#26](https://github.com/resistdesign/Estragon/issues/26) | See live issue/PR for compiler/runtime/cleanup, mapped native diagnostics, graphics and CI evidence. |
-| T08 | Queued (T07) | Editor build/run integration | [#6](https://github.com/resistdesign/Estragon/issues/6) (umbrella) | Pending |
+| **T07** | **Done** | Generated Button.pressed wiring and Counter.gogo | [#26](https://github.com/resistdesign/Estragon/issues/26), merged [PR #27](https://github.com/resistdesign/Estragon/pull/27) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40618408960); merge `0a1cfc1`. Native Counter graphics inspected. |
+| **T08** | **In review; Done only upon approval + merge** | Native highlighting, saved-source builds and F5/F6 gate | [#28](https://github.com/resistdesign/Estragon/issues/28); umbrella [#6](https://github.com/resistdesign/Estragon/issues/6) | See live issue/PR for isolated real-editor Play/block/recovery, native screenshots and CI evidence. |
 | T09 | Queued (T07, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |
 | T10 | Queued (T07, T08, parity) | Retire legacy JSON safely | Create task issue on pickup | Pending |
 | **R01** | **Ready, parallel** | Ordinary `.gd` `@Bindable` feasibility | [#4](https://github.com/resistdesign/Estragon/issues/4) | Pending |

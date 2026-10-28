@@ -1,6 +1,6 @@
 # Gogo language: `*.gogo`
 
-**Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. T07 adds Text/Button properties and generated pressed connections; bindings and editor features remain future work.
+**Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. T07 adds Text/Button properties and generated pressed connections; T08 adds optional automatic editor compilation/highlighting; bindings and broader editor services remain future work.
 
 ## Standalone markup-to-GDScript subset (T04, extended in T07)
 
@@ -65,7 +65,7 @@ literals and a final newline. Godot `.gd.uid` sidecars are stable editor metadat
 regeneration leaves them intact. `verify:gdscript` compares source compilation
 against the committed fixture without rewriting either file. Invalid compilation
 returns a nonzero CLI exit and leaves previous output untouched. **Compile before
-running**: automatic editor compilation and stale-output blocking belong to T08.
+running**: the optional T08 plugin automates compilation and blocks failed builds before Play.
 
 Diagnostics use `file:line:column` and identify invalid syntax, tags, properties,
 values or child nesting. Lines/columns are 1-based; columns/offsets count UTF-16
@@ -197,8 +197,7 @@ Maps support tracing; they are not editor/debugger breakpoint integration.
 `verify:gdscript` checks all three examples and their hybrid map bytes. The Godot runner
 recompiles fresh source, then checks positive runtime cases and mapped negative
 syntax/type/runtime cases. Compilation failure preserves existing code/map;
-recompiling a standalone T04 file removes a stale hybrid map. Automatic editor
-compilation and stale-run blocking remain T08 work.
+recompiling a standalone T04 file removes a stale hybrid map. The optional T08 plugin provides automatic editor compilation and stale-run blocking.
 
 **Still unsupported:** `@Bindable`, reactive bindings, signals beyond Button.pressed,
 other widgets, arbitrary component imports, structural reconciliation,
@@ -287,7 +286,7 @@ count, Reset resets it and is disabled at zero. Both handlers and all layout are
 authored in Counter.gogo with **no handwritten connections**. Rebuild is explicit;
 T09 owns bindings. The old examples and JSON host remain unchanged. Source/maps
 are checked byte-for-byte; the Godot runner generates fresh code before import.
-Editor build/run integration remains T08 work.
+The optional T08 plugin automates editor build/run; see EDITOR.md for setup.
 
 ## Target: markup expressions mixed with GDScript
 
@@ -349,3 +348,14 @@ This stage-0 compiler and sample stay working until the real transpiler and runt
 ## Grammar and evolution
 
 Design and test component imports/resolution, property types, attribute expressions, children and fragments (if any), signal callback conventions, binding expressions, typed component references, error recovery, GDScript-language islands and source maps. Favor Flex 4's class/component model and modern TSX's composition ergonomics without copying HTML, React's runtime semantics, or XML namespace ceremony. Produce compile errors for unknown features instead of silent fallback.
+
+## Automatic editor builds (T08)
+
+Enable Estragon in Godot 4.7 and configure Bun once if it is not discoverable.
+The native Script Editor opens `.gogo` with automatic mixed highlighting. Saving
+sources and pressing either Play command generates these same ordinary scripts
+and maps without manual compiler commands. gogo.config.json explicitly defines
+source roots; adjacent generated paths preserve scene references. Failed frontend,
+process or native GDScript validation blocks execution and reports authored
+locations. The language/evaluation/lifecycle contract is unchanged. See
+[EDITOR.md](EDITOR.md) for exact policy, setup and existing-tab/highlighting limits.

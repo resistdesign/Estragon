@@ -115,6 +115,36 @@ uses explicit root rebuilding with framework-owned cleanup; reactive bindings an
 editor integration remain T09/T08. See GOGO_LANGUAGE for supported props, callback
 limits, mapped diagnostics and the runnable no-handwritten-connection example.
 
+## ADR-0011 — Native editor authoring and synchronous compile-before-Play
+
+**Status: T08 implementation contract, reviewed with its implementation PR.**
+
+Use Godot 4.7's native TextFile/ScriptEditor and registered EditorSyntaxHighlighter
+with `gogo` extension association. Pinned engine source and isolated real-editor
+tests demonstrate automatic selection; no replacement IDE or source importer is
+needed. Existing tabs opened before initial registration may require reopening.
+Disable restores a native plain highlighter; known tabs recover on re-enable.
+
+The project declares strict source roots in gogo.config.json. Output is adjacent
+`generated/<name>.gd` plus hybrid maps, preserving existing scenes and UID files.
+Exclude tests/dependencies/legacy explicitly; never rewrite authored Gogo. Reuse
+the existing TypeScript pipeline, compiling every source before writing outputs.
+Unchanged files are not rewritten. No automatic source deletion migration occurs.
+
+Saved-resource/filesystem notifications coalesce a build. Both native Play modes
+share EditorPlugin._build; save buffers and synchronously gate execution on the
+bounded direct Bun subprocess and native Godot script validation. No shell is
+used; configure an absolute Bun executable when GUI PATH discovery is insufficient.
+Any frontend/process/semantic error aborts Play and appears with authored source
+locations. Successful output paths update the resource filesystem; fresh game
+processes execute current code. Running games are not hot-reloaded.
+
+This intentionally accepts a brief editor pause for the boolean build gate.
+Incremental/background compilation, completion/navigation, debugger integration
+and live preview remain future work. Tests use a copied self-contained editor
+with isolated project/settings, never the user's persistent editor configuration.
+See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.
