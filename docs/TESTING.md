@@ -359,12 +359,12 @@ highlighter selection, 16 lexical color/cache checks, saved-file and external
 source builds, both `play_main_scene()` and `play_current_scene()` (the native
 F5/F6 run paths), changed unsaved buffers, current game state/text, invalid Gogo
 blocking both modes, recovery, mapped GDScript semantic errors, missing Bun,
-compiler crash, timeout, plugin disable/re-enable, preserved extension settings,
+compiler crash/malformed report, timeout, plugin disable/re-enable, preserved extension settings,
 restored highlighting and no endless rebuild loop. Test-only Counter `_ready`
 records actual launched game state/text; checking only `_build()` is insufficient.
 Failures exit nonzero or omit the required `ESTRAGON_EDITOR_OK` marker. Unexpected
 script errors also fail; deliberately injected semantic/build failures are
-expected diagnostics. The complete run has 31 integration assertions plus the
+expected diagnostics. The complete run has 32 integration assertions plus the
 16 lexical checks. Authored examples and generated fixtures in the checkout are
 never modified by these tests.
 

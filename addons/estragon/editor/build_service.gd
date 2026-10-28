@@ -55,11 +55,15 @@ static func run_build(validate: bool = false) -> Dictionary:
 	if not FileAccess.file_exists(report_path):
 		return {"ok": false, "diagnostics": ["Estragon: compiler exited without a build report (exit %d). Check Bun/compiler installation.\n%s" % [status, output]]}
 	var report = JSON.parse_string(FileAccess.get_file_as_string(report_path))
-	if not report is Dictionary or not report.get("ok") is bool or not report.get("diagnostics") is Array:
+	if not report is Dictionary or not report.get("ok") is bool or not _strings(report.get("diagnostics")) or not _strings(report.get("outputs")) or not _strings(report.get("changed")):
 		return {"ok": false, "diagnostics": ["Estragon: invalid compiler report; Play blocked.\n" + output]}
 	if status != 0 and report.ok:
 		return {"ok": false, "diagnostics": ["Estragon: compiler crashed (exit %d); Play blocked.\n%s" % [status, output]]}
 	return report
+
+
+static func _strings(value: Variant) -> bool:
+	return value is Array and value.all(func(item: Variant) -> bool: return item is String)
 
 
 static func _drain(process: Dictionary) -> String:
