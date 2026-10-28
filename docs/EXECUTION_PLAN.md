@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 2, 2026-10-28. **Status:** active. T01–T07 are merged; T08 is in PR #29 review. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. The native migration has not yet been implemented. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
+**Plan version:** 2, 2026-10-28. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 implements the native frontend; native emission and editor cutover remain pending. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -48,9 +48,9 @@ Write the production compiler **in GDScript, bundled in the addon**. It should w
 ~~~text
 T01 → T02 → T03 → T04 → T05 → T06 → T07 (merged)
                                       │
-                       T08 editor integration (PR #29, in review)
+                       T08 editor integration (merged PR #29)
                                       │
-                       N01 native lexer/parser (next)
+                       N01 native lexer/parser (frontend implementation)
                                       │
                        N02 native codegen + source maps + parity
                                       │
@@ -135,9 +135,9 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Test editor/build hooks and document the exact integration limitations. Completion, visual designers and polished live preview may be follow-up tasks, not false acceptance claims.
 
 
-### N01 — Godot-native Gogo frontend (NEXT)
+### N01 — Godot-native Gogo frontend
 
-**Tracking:** [issue #30](https://github.com/resistdesign/Estragon/issues/30). **Prerequisites:** T08 PR #29 **and this planning PR** merged.
+**Tracking:** [issue #30](https://github.com/resistdesign/Estragon/issues/30). **Prerequisites:** T08 PR #29 and planning PR #31 (both merged).
 
 - Implement a GDScript-only scanner/parser for the currently accepted standalone and mixed GDScript/Gogo syntax: nested unprefixed elements, balanced braced expressions/children, strings/raw/multiline strings, comments, comparisons and other lexical ambiguities.
 - Build typed component/property/signal AST validation and original source spans. Reproduce supported VBox/HBox/Rect/Text/Button and Button.pressed contracts, reject unknown/duplicate/invalid markup, and retain Godot as the authority for GDScript semantics.
@@ -195,7 +195,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 The implementation agent should be given a **work ID**, not a whole milestone. Example:
 
-> After T08 and this planning PR merge, pick up **N01** using [issue #30](https://github.com/resistdesign/Estragon/issues/30). Read `AGENTS.md`, this plan and `docs/WORK_STATUS.md`; keep the T08 bridge working, use Godot-only tests, open one focused PR and leave a handoff. Do **not** merge.
+> Continue **N01** from the latest handoff on [issue #30](https://github.com/resistdesign/Estragon/issues/30). Read `AGENTS.md`, this plan and `docs/WORK_STATUS.md`; keep the T08 bridge working, use Godot-only tests, open one focused PR and leave a handoff. Do **not** merge.
 
 A task begins by checking the *latest* main branch, its tracking issue, open PRs and the latest handoff. It ends with verified evidence and a durable handoff or an explicitly reviewed merge. See `AGENTS.md` for the required protocol.
 

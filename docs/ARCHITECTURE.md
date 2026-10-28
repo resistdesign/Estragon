@@ -4,11 +4,23 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
-## Godot-native compiler target (ADR-0012; not yet implemented)
+## Godot-native compiler migration (ADR-0012; frontend implemented)
 
 The T08 editor's external Bun build is a **tested transitional bridge**. Estragon's target is a **bundled GDScript-native compiler**: Gogo source → native lexer/parser/typed model (N01) → native GDScript emission/source maps (N02) → direct EditorPlugin build/validation on F5/F6 (N03) → generated ordinary `.gd` → Estragon's independent runtime.
 
 No Bun/Node is required to **use** the final addon, and no runtime XML/JSON interpreter, engine fork, native extension dependency or per-component Godot Node/Control is introduced. Keep compiler logic separate from editor UI, scene tree and renderer; retain current supported syntax and generated signal semantics. Cutover only after an actual Godot-only editor run with Bun absent, source errors blocking Play, and recovery after fixing source. Existing TypeScript tests may remain optional CI/reference tooling.
+
+N01 lives entirely in `addons/estragon/compiler/`: `source.gd` indexes source,
+`lexer.gd` scans tokens at explicit offsets, `parser.gd` composes balanced GDScript
+ranges with recursive component islands, `validator.gd` resolves built-in
+contracts, and `model.gd` carries typed frontend data. `frontend.gd` coordinates
+these layers and returns structured diagnostics without engine error logging.
+They use RefCounted data only and have no EditorInterface, scene-tree, renderer,
+resource-import or process dependency. GDScript strings/comments are scanned,
+not rewritten; Unicode regular expressions classify identifier characters only.
+N02 will consume this model for emission and native semantic validation; N03
+will integrate the editor. A small test-only literal lowering is not a general
+emitter. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for the API and measured parity.
 
 ## Mixed-source direction (T05 subset implemented; later services planned)
 

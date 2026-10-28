@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-28, stacked on T08 [PR #29](https://github.com/resistdesign/Estragon/pull/29), still **In review/not merged**. T01–T07 are merged. User manually verified changing Counter.gogo font size and rerunning in Godot. **New P0 priority:** N01 → N02 → N03, a Godot-native Gogo compiler that removes Bun from normal editor/Play use. This plan change is not implementation; T08 currently still uses Bun.
+**Snapshot:** 2026-10-28. T01–T08 and native planning PR #31 are merged. N01's native lexer/parser/typed frontend is implemented in its focused PR and remains **In review until approval and merge**. Native emission (N02) and editor cutover (N03) remain queued. T08 still uses Bun for normal editor compilation.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** Review/merge T08 PR #29, then the separate stacked native-compiler plan PR; only afterward pick up [N01 / issue #30](https://github.com/resistdesign/Estragon/issues/30). Do not start T09 or T10 before N03. R01 research can run independently. GitHub issues/PRs remain live task/handoff records; AGENTS.md's local-cleanup authorization remains in effect.
+**Start here:** Check [N01 / issue #30](https://github.com/resistdesign/Estragon/issues/30) and its latest PR/handoff. After N01 merges, establish a scoped N02 issue and consume the native frontend model for emission/maps. Do not start T09/T10 before N03. GitHub holds live progress; AGENTS.md's cleanup authorization remains in effect.
 
 ## Current plan register
 
@@ -17,8 +17,8 @@
 | **T05** | **Done** | GDScript-first hybrid Gogo, expressions and maps | [#22](https://github.com/resistdesign/Estragon/issues/22), merged [PR #23](https://github.com/resistdesign/Estragon/pull/23) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40448084799); merge `4f65a06`. Native graphics capture inspected; interactive editor check not run. |
 | **T06** | **Done** | Text/Button and primary-mouse input | [#24](https://github.com/resistdesign/Estragon/issues/24), merged [PR #25](https://github.com/resistdesign/Estragon/pull/25); umbrella [#3](https://github.com/resistdesign/Estragon/issues/3) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40451329471); merge `1a7cc2e`. Native resized graphics inspected; physical/editor smoke not run. |
 | **T07** | **Done** | Generated Button.pressed wiring and Counter.gogo | [#26](https://github.com/resistdesign/Estragon/issues/26), merged [PR #27](https://github.com/resistdesign/Estragon/pull/27) | [Green CI](https://github.com/resistdesign/Estragon/actions/runs/40618408960); merge `0a1cfc1`. Native Counter graphics inspected. |
-| **T08** | **In review; Done only upon approval + merge** | Native highlighting, saved-source builds and F5/F6 gate | [#28](https://github.com/resistdesign/Estragon/issues/28); umbrella [#6](https://github.com/resistdesign/Estragon/issues/6) | See live issue/PR for isolated real-editor Play/block/recovery, native screenshots and CI evidence. |
-| **N01** | **Queued (T08 + plan merge); next** | Native Gogo lexer/parser/typed frontend | [#30](https://github.com/resistdesign/Estragon/issues/30) | Pending |
+| **T08** | **Done** | Native highlighting, saved-source builds and F5/F6 gate | [#28](https://github.com/resistdesign/Estragon/issues/28); umbrella [#6](https://github.com/resistdesign/Estragon/issues/6) | Merged [PR #29](https://github.com/resistdesign/Estragon/pull/29), `53809cf`; isolated editor/Play evidence in #28/#29; owner manually verified font-size edit and Play. |
+| **N01** | **In review; Done only upon approval + merge** | Native Gogo lexer/parser/typed frontend | [#30](https://github.com/resistdesign/Estragon/issues/30) | Godot-only no-Bun proof: 103 reference cases, 558 assertions; full Bun/runtime/editor suites pass. Exact CI and handoff in issue/PR. |
 | N02 | Queued (N01) | Native codegen, source maps and T04–T07 parity | New scoped issue on pickup | Pending |
 | N03 | Queued (N02) | Godot editor native cutover, no Bun required | New scoped issue on pickup | Pending |
 | T09 | Queued (N03, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |

@@ -2,7 +2,59 @@
 
 **Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. T07 adds Text/Button properties and generated pressed connections; T08 adds optional automatic editor compilation/highlighting; bindings and broader editor services remain future work.
 
-**Compiler migration, accepted but not implemented:** ADR-0012/N01–N03 replace the user-facing Bun compiler with bundled GDScript-native compilation. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
+**Compiler migration:** N01 implements the bundled GDScript-native frontend. Native emission/maps (N02) and editor cutover (N03) remain pending under ADR-0012; the working editor still uses Bun. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
+
+## Native frontend (N01)
+
+`addons/estragon/compiler/frontend.gd` exposes a synchronous, scene-independent API:
+
+```gdscript
+const Frontend = preload("res://addons/estragon/compiler/frontend.gd")
+var result = Frontend.analyze(source, "res://Counter.gogo")
+if result.ok:
+    var module = result.module
+else:
+    print(result.diagnostics[0].format()) # original filename:line:column
+```
+
+No imports, editor services, runtime components, external executables or packages
+are needed to analyze source. This API does **not** emit or execute applications.
+T08's compiler commands and editor behavior below remain unchanged until N03.
+
+`model.gd` defines typed RefCounted data: `Module` retains source-ordered `Code`
+and `Component` parts; `GdExpression` recursively retains code/component parts.
+Components carry resolved runtime class names, ordered property/signal attributes,
+typed literals/expressions, children and spans. Attribute `type_name` describes the
+expected runtime type; dynamic expressions are not proven to have that type.
+Literal colors are normalized hex strings for later emission, not renderer objects.
+`Result` contains lossless tokens and either a validated module or one diagnostic;
+failed results never expose a partially validated module. Tokens on failure may
+cover only the scanned prefix. Diagnostic wording is useful but not a stable API.
+
+Positions expose zero-based Godot Unicode scalar `index` for slicing, zero-based
+UTF-16 `offset`, and one-based UTF-16 `line`/`column` coordinates compatible with
+the reference compiler. Ends are exclusive; CRLF counts as one newline. Code
+text remains in the original source and is recovered through these spans.
+
+Measured compatibility against the TypeScript frontend is recorded in the
+checked test transcript `tests/fixtures/native-frontend.json`:
+
+| Area | Native coverage / boundary |
+| --- | --- |
+| Standalone markup | Nested VBox/HBox, Rect/Text/Button leaves, quoted typed literals, comments, matching tags; no namespaces/entities/escapes |
+| Hybrid GDScript | Authored declarations/control flow preserved as ranges; operand-position component islands, comparison/shift operators, explicit continuations |
+| Lexical boundaries | Single/double/raw/triple strings, escapes, comments, Unicode identifiers and balanced delimiters |
+| Braces | Construction-time property expressions and component-valued children, including nested markup; empty/unclosed expressions rejected |
+| Contracts | All five built-ins, inherited sizing, component-specific properties, Button.pressed Callable declarations, duplicates/unknowns/type-invalid literals rejected |
+| Locations | Typed-tree ranges and first-error starts compared to reference; Unicode/astral and CRLF/lone CR/LF tested |
+| Limits | Same 256 direct-component and 256 hybrid-island nesting guards; named inner-class markup remains unsupported |
+| GDScript semantics | Retained lexically, **not fully parsed/typechecked**; unknown names, invalid expressions, callable signatures and child runtime types require Godot validation after emission in N02 |
+
+This is a tested compatibility corpus, not a claim that every possible GDScript
+program is supported. No new grammar or callback semantics are introduced.
+The transcript is test data, never runtime UI JSON. The native-only test reads it
+without running TypeScript; optional `bun tools/native-frontend-cases.ts` verifies
+it against the reference, and `--write` refreshes it intentionally.
 
 ## Standalone markup-to-GDScript subset (T04, extended in T07)
 
