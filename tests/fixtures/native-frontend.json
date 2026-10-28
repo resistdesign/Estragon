@@ -1,0 +1,6049 @@
+[
+  {
+    "id": "empty-stack",
+    "source": "<HBox gap=\"0\"/>",
+    "ok": true,
+    "tree": {
+      "mode": "markup",
+      "parts": [
+        {
+          "kind": "component-expression",
+          "name": "HBox",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 15,
+              "line": 1,
+              "column": 16
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "gap",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 11,
+                    "line": 1,
+                    "column": 12
+                  },
+                  "end": {
+                    "offset": 12,
+                    "line": 1,
+                    "column": 13
+                  }
+                },
+                "value": 0
+              }
+            }
+          ],
+          "children": []
+        }
+      ],
+      "identifiers": [],
+      "indentation": "\t"
+    }
+  },
+  {
+    "id": "literals",
+    "source": "<VBox width=\"auto\" gap=\".5\"><Rect width=\"1e2\" fill=\"#AABBCC80\"/><Text text='🦎 \"Hello\"\nworld' font_size=\"2.4e1\"/><Button disabled=\"true\"/></VBox>",
+    "ok": true,
+    "tree": {
+      "mode": "markup",
+      "parts": [
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 145,
+              "line": 2,
+              "column": 59
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 13,
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "offset": 17,
+                    "line": 1,
+                    "column": 18
+                  }
+                },
+                "value": -1
+              }
+            },
+            {
+              "kind": "property",
+              "name": "gap",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 24,
+                    "line": 1,
+                    "column": 25
+                  },
+                  "end": {
+                    "offset": 26,
+                    "line": 1,
+                    "column": 27
+                  }
+                },
+                "value": 0.5
+              }
+            }
+          ],
+          "children": [
+            {
+              "kind": "component-expression",
+              "name": "Rect",
+              "span": {
+                "start": {
+                  "offset": 28,
+                  "line": 1,
+                  "column": 29
+                },
+                "end": {
+                  "offset": 64,
+                  "line": 1,
+                  "column": 65
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "width",
+                  "value": {
+                    "kind": "number-literal",
+                    "span": {
+                      "start": {
+                        "offset": 41,
+                        "line": 1,
+                        "column": 42
+                      },
+                      "end": {
+                        "offset": 44,
+                        "line": 1,
+                        "column": 45
+                      }
+                    },
+                    "value": 100
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill",
+                  "value": {
+                    "kind": "color-literal",
+                    "span": {
+                      "start": {
+                        "offset": 52,
+                        "line": 1,
+                        "column": 53
+                      },
+                      "end": {
+                        "offset": 61,
+                        "line": 1,
+                        "column": 62
+                      }
+                    },
+                    "value": "#aabbcc80"
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "Text",
+              "span": {
+                "start": {
+                  "offset": 64,
+                  "line": 1,
+                  "column": 65
+                },
+                "end": {
+                  "offset": 113,
+                  "line": 2,
+                  "column": 27
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "text",
+                  "value": {
+                    "kind": "string-literal",
+                    "span": {
+                      "start": {
+                        "offset": 76,
+                        "line": 1,
+                        "column": 77
+                      },
+                      "end": {
+                        "offset": 92,
+                        "line": 2,
+                        "column": 6
+                      }
+                    },
+                    "value": "🦎 \"Hello\"\nworld"
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "font_size",
+                  "value": {
+                    "kind": "integer-literal",
+                    "span": {
+                      "start": {
+                        "offset": 105,
+                        "line": 2,
+                        "column": 19
+                      },
+                      "end": {
+                        "offset": 110,
+                        "line": 2,
+                        "column": 24
+                      }
+                    },
+                    "value": 24
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "Button",
+              "span": {
+                "start": {
+                  "offset": 113,
+                  "line": 2,
+                  "column": 27
+                },
+                "end": {
+                  "offset": 138,
+                  "line": 2,
+                  "column": 52
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "disabled",
+                  "value": {
+                    "kind": "boolean-literal",
+                    "span": {
+                      "start": {
+                        "offset": 131,
+                        "line": 2,
+                        "column": 45
+                      },
+                      "end": {
+                        "offset": 135,
+                        "line": 2,
+                        "column": 49
+                      }
+                    },
+                    "value": true
+                  }
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ],
+      "identifiers": [],
+      "indentation": "\t"
+    }
+  },
+  {
+    "id": "code-only",
+    "source": "extends RefCounted\nfunc compare(𐐀, b):\n\treturn 𐐀<b and b <= 9 or b>>1\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 72,
+              "line": 4,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "compare",
+        "𐐀",
+        "b",
+        "return",
+        "and",
+        "or"
+      ],
+      "indentation": "\t"
+    }
+  },
+  {
+    "id": "contexts",
+    "source": "extends RefCounted\nfunc build(flag):\n\tvar value := <Rect/>\n\tvar items = [<Rect/>, {\"child\": <HBox/>}]\n\tconsume(<VBox/>)\n\treturn <Rect/> if flag else <Rect/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 51,
+              "line": 3,
+              "column": 15
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 51,
+              "line": 3,
+              "column": 15
+            },
+            "end": {
+              "offset": 58,
+              "line": 3,
+              "column": 22
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 58,
+              "line": 3,
+              "column": 22
+            },
+            "end": {
+              "offset": 73,
+              "line": 4,
+              "column": 15
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 73,
+              "line": 4,
+              "column": 15
+            },
+            "end": {
+              "offset": 80,
+              "line": 4,
+              "column": 22
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 80,
+              "line": 4,
+              "column": 22
+            },
+            "end": {
+              "offset": 92,
+              "line": 4,
+              "column": 34
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "HBox",
+          "span": {
+            "start": {
+              "offset": 92,
+              "line": 4,
+              "column": 34
+            },
+            "end": {
+              "offset": 99,
+              "line": 4,
+              "column": 41
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 99,
+              "line": 4,
+              "column": 41
+            },
+            "end": {
+              "offset": 111,
+              "line": 5,
+              "column": 10
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 111,
+              "line": 5,
+              "column": 10
+            },
+            "end": {
+              "offset": 118,
+              "line": 5,
+              "column": 17
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 118,
+              "line": 5,
+              "column": 17
+            },
+            "end": {
+              "offset": 128,
+              "line": 6,
+              "column": 9
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 128,
+              "line": 6,
+              "column": 9
+            },
+            "end": {
+              "offset": 135,
+              "line": 6,
+              "column": 16
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 135,
+              "line": 6,
+              "column": 16
+            },
+            "end": {
+              "offset": 149,
+              "line": 6,
+              "column": 30
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 149,
+              "line": 6,
+              "column": 30
+            },
+            "end": {
+              "offset": 156,
+              "line": 6,
+              "column": 37
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 156,
+              "line": 6,
+              "column": 37
+            },
+            "end": {
+              "offset": 157,
+              "line": 7,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "build",
+        "flag",
+        "var",
+        "value",
+        "items",
+        "consume",
+        "return",
+        "if",
+        "else"
+      ],
+      "indentation": "\t"
+    }
+  },
+  {
+    "id": "boundaries",
+    "source": "extends RefCounted\nfunc build():\n    return <Rect width={calculate(\"\\\"}\", r\"\\\"}\", \"\"\"}\n<Rect/>\"\"\") # } ignored\n}/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            },
+            "end": {
+              "offset": 114,
+              "line": 5,
+              "column": 4
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 56,
+                    "line": 3,
+                    "column": 24
+                  },
+                  "end": {
+                    "offset": 112,
+                    "line": 5,
+                    "column": 2
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 57,
+                        "line": 3,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 111,
+                        "line": 5,
+                        "column": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 114,
+              "line": 5,
+              "column": 4
+            },
+            "end": {
+              "offset": 115,
+              "line": 6,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "build",
+        "return",
+        "calculate",
+        "r"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "continuation",
+    "source": "extends RefCounted\nfunc build():\n    return <Rect fill_width={value\n <threshold} width={value \\\n + 1}/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            },
+            "end": {
+              "offset": 103,
+              "line": 5,
+              "column": 8
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "fill_width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 61,
+                    "line": 3,
+                    "column": 29
+                  },
+                  "end": {
+                    "offset": 80,
+                    "line": 4,
+                    "column": 13
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 62,
+                        "line": 3,
+                        "column": 30
+                      },
+                      "end": {
+                        "offset": 79,
+                        "line": 4,
+                        "column": 12
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 87,
+                    "line": 4,
+                    "column": 20
+                  },
+                  "end": {
+                    "offset": 101,
+                    "line": 5,
+                    "column": 6
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 88,
+                        "line": 4,
+                        "column": 21
+                      },
+                      "end": {
+                        "offset": 100,
+                        "line": 5,
+                        "column": 5
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 103,
+              "line": 5,
+              "column": 8
+            },
+            "end": {
+              "offset": 104,
+              "line": 6,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "build",
+        "return",
+        "value",
+        "threshold"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "nested-expression",
+    "source": "extends RefCounted\nfunc build():\n    return <VBox>{<HBox>{make_child()}</HBox> if condition else <Rect/>}</VBox>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            },
+            "end": {
+              "offset": 112,
+              "line": 3,
+              "column": 80
+            }
+          },
+          "attributes": [],
+          "children": [
+            {
+              "kind": "gdscript-expression",
+              "span": {
+                "start": {
+                  "offset": 50,
+                  "line": 3,
+                  "column": 18
+                },
+                "end": {
+                  "offset": 105,
+                  "line": 3,
+                  "column": 73
+                }
+              },
+              "parts": [
+                {
+                  "kind": "component-expression",
+                  "name": "HBox",
+                  "span": {
+                    "start": {
+                      "offset": 51,
+                      "line": 3,
+                      "column": 19
+                    },
+                    "end": {
+                      "offset": 78,
+                      "line": 3,
+                      "column": 46
+                    }
+                  },
+                  "attributes": [],
+                  "children": [
+                    {
+                      "kind": "gdscript-expression",
+                      "span": {
+                        "start": {
+                          "offset": 57,
+                          "line": 3,
+                          "column": 25
+                        },
+                        "end": {
+                          "offset": 71,
+                          "line": 3,
+                          "column": 39
+                        }
+                      },
+                      "parts": [
+                        {
+                          "kind": "gdscript-source",
+                          "span": {
+                            "start": {
+                              "offset": 58,
+                              "line": 3,
+                              "column": 26
+                            },
+                            "end": {
+                              "offset": 70,
+                              "line": 3,
+                              "column": 38
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "gdscript-source",
+                  "span": {
+                    "start": {
+                      "offset": 78,
+                      "line": 3,
+                      "column": 46
+                    },
+                    "end": {
+                      "offset": 97,
+                      "line": 3,
+                      "column": 65
+                    }
+                  }
+                },
+                {
+                  "kind": "component-expression",
+                  "name": "Rect",
+                  "span": {
+                    "start": {
+                      "offset": 97,
+                      "line": 3,
+                      "column": 65
+                    },
+                    "end": {
+                      "offset": 104,
+                      "line": 3,
+                      "column": 72
+                    }
+                  },
+                  "attributes": [],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 112,
+              "line": 3,
+              "column": 80
+            },
+            "end": {
+              "offset": 113,
+              "line": 4,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "build",
+        "return",
+        "make_child",
+        "if",
+        "condition",
+        "else"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "unicode-crlf",
+    "source": "extends RefCounted\r\n# 🦎\r\nfunc f(café, 阈值):\r\n    var é = café<阈值\r\n    return <Button text={\"🦎\"} pressed={callback}/>\r\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 78,
+              "line": 5,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Button",
+          "span": {
+            "start": {
+              "offset": 78,
+              "line": 5,
+              "column": 12
+            },
+            "end": {
+              "offset": 118,
+              "line": 5,
+              "column": 52
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "text",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 91,
+                    "line": 5,
+                    "column": 25
+                  },
+                  "end": {
+                    "offset": 97,
+                    "line": 5,
+                    "column": 31
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 92,
+                        "line": 5,
+                        "column": 26
+                      },
+                      "end": {
+                        "offset": 96,
+                        "line": 5,
+                        "column": 30
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "signal",
+              "name": "pressed",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 106,
+                    "line": 5,
+                    "column": 40
+                  },
+                  "end": {
+                    "offset": 116,
+                    "line": 5,
+                    "column": 50
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 107,
+                        "line": 5,
+                        "column": 41
+                      },
+                      "end": {
+                        "offset": 115,
+                        "line": 5,
+                        "column": 49
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 118,
+              "line": 5,
+              "column": 52
+            },
+            "end": {
+              "offset": 120,
+              "line": 6,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "f",
+        "café",
+        "阈值",
+        "var",
+        "é",
+        "return",
+        "callback"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "member-initializer",
+    "source": "extends RefCounted\nvar view = (\n    <Text text=\"Hi\"/>\n)\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 36,
+              "line": 3,
+              "column": 5
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Text",
+          "span": {
+            "start": {
+              "offset": 36,
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "offset": 53,
+              "line": 3,
+              "column": 22
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "text",
+              "value": {
+                "kind": "string-literal",
+                "span": {
+                  "start": {
+                    "offset": 48,
+                    "line": 3,
+                    "column": 17
+                  },
+                  "end": {
+                    "offset": 50,
+                    "line": 3,
+                    "column": 19
+                  }
+                },
+                "value": "Hi"
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 53,
+              "line": 3,
+              "column": 22
+            },
+            "end": {
+              "offset": 56,
+              "line": 5,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "var",
+        "view"
+      ],
+      "indentation": "\t"
+    }
+  },
+  {
+    "id": "inner-class-code",
+    "source": "extends RefCounted\nclass Data:\n    func value():\n        return 42\nfunc outer():\n    return <Rect/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 92,
+              "line": 6,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 92,
+              "line": 6,
+              "column": 12
+            },
+            "end": {
+              "offset": 99,
+              "line": 6,
+              "column": 19
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 99,
+              "line": 6,
+              "column": 19
+            },
+            "end": {
+              "offset": 100,
+              "line": 7,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "class",
+        "Data",
+        "func",
+        "value",
+        "return",
+        "outer"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "semantics-deferred",
+    "source": "extends RefCounted\nfunc build():\n    return <Rect width={unknown_name +}/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            },
+            "end": {
+              "offset": 74,
+              "line": 3,
+              "column": 42
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 56,
+                    "line": 3,
+                    "column": 24
+                  },
+                  "end": {
+                    "offset": 72,
+                    "line": 3,
+                    "column": 40
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 57,
+                        "line": 3,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 71,
+                        "line": 3,
+                        "column": 39
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 74,
+              "line": 3,
+              "column": 42
+            },
+            "end": {
+              "offset": 75,
+              "line": 4,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "build",
+        "return",
+        "unknown_name"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "unknown-handler-deferred",
+    "source": "extends RefCounted\nfunc build():\n    return <Button pressed={missing_handler}/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Button",
+          "span": {
+            "start": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            },
+            "end": {
+              "offset": 79,
+              "line": 3,
+              "column": 47
+            }
+          },
+          "attributes": [
+            {
+              "kind": "signal",
+              "name": "pressed",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 60,
+                    "line": 3,
+                    "column": 28
+                  },
+                  "end": {
+                    "offset": 77,
+                    "line": 3,
+                    "column": 45
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 61,
+                        "line": 3,
+                        "column": 29
+                      },
+                      "end": {
+                        "offset": 76,
+                        "line": 3,
+                        "column": 44
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 79,
+              "line": 3,
+              "column": 47
+            },
+            "end": {
+              "offset": 80,
+              "line": 4,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "build",
+        "return",
+        "missing_handler"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "child-type-deferred",
+    "source": "extends RefCounted\nfunc build():\n    return <VBox>{null}</VBox>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 44,
+              "line": 3,
+              "column": 12
+            },
+            "end": {
+              "offset": 63,
+              "line": 3,
+              "column": 31
+            }
+          },
+          "attributes": [],
+          "children": [
+            {
+              "kind": "gdscript-expression",
+              "span": {
+                "start": {
+                  "offset": 50,
+                  "line": 3,
+                  "column": 18
+                },
+                "end": {
+                  "offset": 56,
+                  "line": 3,
+                  "column": 24
+                }
+              },
+              "parts": [
+                {
+                  "kind": "gdscript-source",
+                  "span": {
+                    "start": {
+                      "offset": 51,
+                      "line": 3,
+                      "column": 19
+                    },
+                    "end": {
+                      "offset": 55,
+                      "line": 3,
+                      "column": 23
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 63,
+              "line": 3,
+              "column": 31
+            },
+            "end": {
+              "offset": 64,
+              "line": 4,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "func",
+        "build",
+        "return",
+        "null"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "string-indent",
+    "source": "extends RefCounted\nconst TEXT = \"\"\"\n    ignored indentation\n\"\"\"\nfunc build():\n\treturn <Rect/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 86,
+              "line": 6,
+              "column": 9
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 86,
+              "line": 6,
+              "column": 9
+            },
+            "end": {
+              "offset": 93,
+              "line": 6,
+              "column": 16
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 93,
+              "line": 6,
+              "column": 16
+            },
+            "end": {
+              "offset": 94,
+              "line": 7,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "const",
+        "TEXT",
+        "func",
+        "build",
+        "return"
+      ],
+      "indentation": "\t"
+    }
+  },
+  {
+    "id": "nested-256",
+    "source": "<VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><Rect/></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox></VBox>",
+    "ok": true
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3724",
+    "source": "",
+    "ok": false,
+    "position": {
+      "offset": 0,
+      "line": 1,
+      "column": 1
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3750",
+    "source": "<Rect",
+    "ok": false,
+    "position": {
+      "offset": 5,
+      "line": 1,
+      "column": 6
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3775",
+    "source": "<Rect width=\"2",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3821",
+    "source": "<!-- missing",
+    "ok": false,
+    "position": {
+      "offset": 0,
+      "line": 1,
+      "column": 1
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3871",
+    "source": "<VBox>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3906",
+    "source": "<VBox></HBox>",
+    "ok": false,
+    "position": {
+      "offset": 8,
+      "line": 1,
+      "column": 9
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3953",
+    "source": "<Rect/><Rect/>",
+    "ok": false,
+    "position": {
+      "offset": 7,
+      "line": 1,
+      "column": 8
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:3990",
+    "source": "<VBox>text</VBox>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4048",
+    "source": "<Rect><Rect/></Rect>",
+    "ok": false,
+    "position": {
+      "offset": 7,
+      "line": 1,
+      "column": 8
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4092",
+    "source": "<Label/>",
+    "ok": false,
+    "position": {
+      "offset": 1,
+      "line": 1,
+      "column": 2
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4135",
+    "source": "<constructor/>",
+    "ok": false,
+    "position": {
+      "offset": 1,
+      "line": 1,
+      "column": 2
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4176",
+    "source": "<fx:VBox/>",
+    "ok": false,
+    "position": {
+      "offset": 1,
+      "line": 1,
+      "column": 2
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4222",
+    "source": "<VBox xmlns=\"urn:old\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4265",
+    "source": "<Rect fx:width=\"2\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4322",
+    "source": "<Rect gap=\"1\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4367",
+    "source": "<VBox fill=\"#abcdef\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4427",
+    "source": "<Rect id=\"x\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4471",
+    "source": "<Rect width=\"1\" width=\"2\"/>",
+    "ok": false,
+    "position": {
+      "offset": 16,
+      "line": 1,
+      "column": 17
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4534",
+    "source": "<Rect width=\"1\"height=\"2\"/>",
+    "ok": false,
+    "position": {
+      "offset": 15,
+      "line": 1,
+      "column": 16
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4581",
+    "source": "<Rect width={2}/>",
+    "ok": false,
+    "position": {
+      "offset": 12,
+      "line": 1,
+      "column": 13
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4630",
+    "source": "<Rect width=\"{2}\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4677",
+    "source": "<Rect width=\"-1\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4721",
+    "source": "<Rect height=\"-2\"/>",
+    "ok": false,
+    "position": {
+      "offset": 14,
+      "line": 1,
+      "column": 15
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4761",
+    "source": "<Rect width=\"NaN\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4816",
+    "source": "<Rect width=\"1e400\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4864",
+    "source": "<Rect width=\"1e39\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4919",
+    "source": "<Rect width=\"0x10\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:4967",
+    "source": "<Rect width=\"2px\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5022",
+    "source": "<Rect width=\"2\n\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5077",
+    "source": "<Rect fill=\"#aabbcc\n\"/>",
+    "ok": false,
+    "position": {
+      "offset": 12,
+      "line": 1,
+      "column": 13
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5118",
+    "source": "<Rect width=\" 2 \"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5165",
+    "source": "<HBox gap=\"-1\"/>",
+    "ok": false,
+    "position": {
+      "offset": 11,
+      "line": 1,
+      "column": 12
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5210",
+    "source": "<Rect fill_width=\"True\"/>",
+    "ok": false,
+    "position": {
+      "offset": 18,
+      "line": 1,
+      "column": 19
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5258",
+    "source": "<Rect fill_height=\"1\"/>",
+    "ok": false,
+    "position": {
+      "offset": 19,
+      "line": 1,
+      "column": 20
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5312",
+    "source": "<Rect fill=\"#fff\"/>",
+    "ok": false,
+    "position": {
+      "offset": 12,
+      "line": 1,
+      "column": 13
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5348",
+    "source": "<Rect fill=\"red\"/>",
+    "ok": false,
+    "position": {
+      "offset": 12,
+      "line": 1,
+      "column": 13
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5391",
+    "source": "<Rect width=\"&#50;\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5430",
+    "source": "<Rect width=\"<\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5482",
+    "source": "<Rect width=\"\\2\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5518",
+    "source": "<?xml version=\"1.0\"?><Rect/>",
+    "ok": false,
+    "position": {
+      "offset": 1,
+      "line": 1,
+      "column": 2
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5582",
+    "source": "<!DOCTYPE Rect><Rect/>",
+    "ok": false,
+    "position": {
+      "offset": 1,
+      "line": 1,
+      "column": 2
+    }
+  },
+  {
+    "id": "tests/transpile-gogo.test.ts:5640",
+    "source": "extends VBox\n<Rect/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 2,
+      "column": 1
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2567",
+    "source": "<Text font_size=\"0\"/>",
+    "ok": false,
+    "position": {
+      "offset": 17,
+      "line": 1,
+      "column": 18
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2629",
+    "source": "<Button font_size=\"-1\"/>",
+    "ok": false,
+    "position": {
+      "offset": 19,
+      "line": 1,
+      "column": 20
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2694",
+    "source": "<Text font_size=\"2.5\"/>",
+    "ok": false,
+    "position": {
+      "offset": 17,
+      "line": 1,
+      "column": 18
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2758",
+    "source": "<Text font_size=\"2147483648\"/>",
+    "ok": false,
+    "position": {
+      "offset": 17,
+      "line": 1,
+      "column": 18
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2829",
+    "source": "<Text font_size=\"NaN\"/>",
+    "ok": false,
+    "position": {
+      "offset": 17,
+      "line": 1,
+      "column": 18
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2893",
+    "source": "<Text color=\"red\"/>",
+    "ok": false,
+    "position": {
+      "offset": 13,
+      "line": 1,
+      "column": 14
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2937",
+    "source": "<Button disabled=\"False\"/>",
+    "ok": false,
+    "position": {
+      "offset": 18,
+      "line": 1,
+      "column": 19
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:2994",
+    "source": "<Text disabled=\"true\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:3055",
+    "source": "<Button gap=\"2\"/>",
+    "ok": false,
+    "position": {
+      "offset": 8,
+      "line": 1,
+      "column": 9
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:3110",
+    "source": "<Button fill=\"#ffffff\"/>",
+    "ok": false,
+    "position": {
+      "offset": 8,
+      "line": 1,
+      "column": 9
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:3172",
+    "source": "<Rect text=\"oops\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:3229",
+    "source": "<Text font=\"resource\"/>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:3290",
+    "source": "<Text><Rect/></Text>",
+    "ok": false,
+    "position": {
+      "offset": 7,
+      "line": 1,
+      "column": 8
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:3342",
+    "source": "<Button><Text/></Button>",
+    "ok": false,
+    "position": {
+      "offset": 9,
+      "line": 1,
+      "column": 10
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:3400",
+    "source": "extends RefCounted\nfunc build():\n    return <Button pressed=\"handler\"/>\n",
+    "ok": false,
+    "position": {
+      "offset": 61,
+      "line": 3,
+      "column": 29
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:6681",
+    "source": "extends RefCounted\nfunc build():\n    return <Text pressed={handler}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 50,
+      "line": 3,
+      "column": 18
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:6744",
+    "source": "extends RefCounted\nfunc build():\n    return <VBox pressed={handler}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 50,
+      "line": 3,
+      "column": 18
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:6807",
+    "source": "extends RefCounted\nfunc build():\n    return <Button clicked={handler}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 52,
+      "line": 3,
+      "column": 20
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:6872",
+    "source": "extends RefCounted\nfunc build():\n    return <Button released={handler}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 52,
+      "line": 3,
+      "column": 20
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:6938",
+    "source": "extends RefCounted\nfunc build():\n    return <Button pressed=\"handler\"/>\n",
+    "ok": false,
+    "position": {
+      "offset": 61,
+      "line": 3,
+      "column": 29
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:7002",
+    "source": "extends RefCounted\nfunc build():\n    return <Button pressed={one} pressed={two}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 66,
+      "line": 3,
+      "column": 34
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:7093",
+    "source": "<Button text=\"a\" text=\"b\"/>",
+    "ok": false,
+    "position": {
+      "offset": 17,
+      "line": 1,
+      "column": 18
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:7156",
+    "source": "extends RefCounted\nfunc build():\n    return <Button pressed={}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 60,
+      "line": 3,
+      "column": 28
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:7238",
+    "source": "<Button><Rect/></Button>",
+    "ok": false,
+    "position": {
+      "offset": 9,
+      "line": 1,
+      "column": 10
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:7296",
+    "source": "<Text>{child}</Text>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "tests/signal-gogo.test.ts:7348",
+    "source": "extends RefCounted\nfunc build():\n    return <fx:Button pressed={handler}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 45,
+      "line": 3,
+      "column": 13
+    }
+  },
+  {
+    "id": "empty",
+    "source": "",
+    "ok": false,
+    "position": {
+      "offset": 0,
+      "line": 1,
+      "column": 1
+    }
+  },
+  {
+    "id": "no-close",
+    "source": "<VBox>",
+    "ok": false,
+    "position": {
+      "offset": 6,
+      "line": 1,
+      "column": 7
+    }
+  },
+  {
+    "id": "deep",
+    "source": "<VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox><VBox>",
+    "ok": false,
+    "position": {
+      "offset": 1536,
+      "line": 1,
+      "column": 1537
+    }
+  },
+  {
+    "id": "wrong-close",
+    "source": "extends RefCounted\nfunc build():\n    return <VBox></HBox>\n",
+    "ok": false,
+    "position": {
+      "offset": 52,
+      "line": 3,
+      "column": 20
+    }
+  },
+  {
+    "id": "bad-child",
+    "source": "extends RefCounted\nfunc build():\n    return <VBox>{[1,2}</VBox>\n",
+    "ok": false,
+    "position": {
+      "offset": 55,
+      "line": 3,
+      "column": 23
+    }
+  },
+  {
+    "id": "open-expression",
+    "source": "extends RefCounted\nfunc build():\n    return <Rect width={1/>\n",
+    "ok": false,
+    "position": {
+      "offset": 56,
+      "line": 3,
+      "column": 24
+    }
+  },
+  {
+    "id": "open-string",
+    "source": "extends RefCounted\nfunc build():\n    return <Rect width={\"unfinished}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 57,
+      "line": 3,
+      "column": 25
+    }
+  },
+  {
+    "id": "empty-comment-expression",
+    "source": "extends RefCounted\nfunc build():\n    return <Rect width={# comment\n}/>\n",
+    "ok": false,
+    "position": {
+      "offset": 56,
+      "line": 3,
+      "column": 24
+    }
+  },
+  {
+    "id": "bare-markup",
+    "source": "extends RefCounted\n<Rect/>",
+    "ok": false,
+    "position": {
+      "offset": 19,
+      "line": 2,
+      "column": 1
+    }
+  },
+  {
+    "id": "class-markup",
+    "source": "extends RefCounted\nclass Data:\n    func build():\n        return <Rect/>\n",
+    "ok": false,
+    "position": {
+      "offset": 64,
+      "line": 4,
+      "column": 16
+    }
+  },
+  {
+    "id": "unclosed-paren",
+    "source": "extends RefCounted\nvar x = (1\n",
+    "ok": false,
+    "position": {
+      "offset": 27,
+      "line": 2,
+      "column": 9
+    }
+  },
+  {
+    "id": "unmatched",
+    "source": "extends RefCounted\nvar x = ]\n",
+    "ok": false,
+    "position": {
+      "offset": 27,
+      "line": 2,
+      "column": 9
+    }
+  },
+  {
+    "id": "bad-string",
+    "source": "extends RefCounted\nvar x = \"missing\n",
+    "ok": false,
+    "position": {
+      "offset": 27,
+      "line": 2,
+      "column": 9
+    }
+  },
+  {
+    "id": "bom",
+    "source": "﻿<Rect/>",
+    "ok": false,
+    "position": {
+      "offset": 0,
+      "line": 1,
+      "column": 1
+    }
+  },
+  {
+    "id": "unicode-trim",
+    "source": " ",
+    "ok": false,
+    "position": {
+      "offset": 0,
+      "line": 1,
+      "column": 1
+    }
+  },
+  {
+    "id": "examples/compiled/Layout.gogo",
+    "source": "<!-- T04 markup-only example; mixed GDScript arrives in T05. -->\n<VBox gap=\"16\">\n    <Rect height=\"64\" fill_width=\"true\" fill=\"#8566e0\" />\n    <HBox gap=\"12\" fill_width=\"true\" fill_height=\"true\">\n        <Rect width=\"160\" fill_height=\"true\" fill=\"#30c9b0\" />\n        <Rect fill_width=\"true\" fill_height=\"true\" fill=\"#50466f\" />\n    </HBox>\n</VBox>\n",
+    "ok": true,
+    "tree": {
+      "mode": "markup",
+      "parts": [
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 65,
+              "line": 2,
+              "column": 1
+            },
+            "end": {
+              "offset": 347,
+              "line": 8,
+              "column": 8
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "gap",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 76,
+                    "line": 2,
+                    "column": 12
+                  },
+                  "end": {
+                    "offset": 78,
+                    "line": 2,
+                    "column": 14
+                  }
+                },
+                "value": 16
+              }
+            }
+          ],
+          "children": [
+            {
+              "kind": "component-expression",
+              "name": "Rect",
+              "span": {
+                "start": {
+                  "offset": 85,
+                  "line": 3,
+                  "column": 5
+                },
+                "end": {
+                  "offset": 138,
+                  "line": 3,
+                  "column": 58
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "height",
+                  "value": {
+                    "kind": "number-literal",
+                    "span": {
+                      "start": {
+                        "offset": 99,
+                        "line": 3,
+                        "column": 19
+                      },
+                      "end": {
+                        "offset": 101,
+                        "line": 3,
+                        "column": 21
+                      }
+                    },
+                    "value": 64
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_width",
+                  "value": {
+                    "kind": "boolean-literal",
+                    "span": {
+                      "start": {
+                        "offset": 115,
+                        "line": 3,
+                        "column": 35
+                      },
+                      "end": {
+                        "offset": 119,
+                        "line": 3,
+                        "column": 39
+                      }
+                    },
+                    "value": true
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill",
+                  "value": {
+                    "kind": "color-literal",
+                    "span": {
+                      "start": {
+                        "offset": 127,
+                        "line": 3,
+                        "column": 47
+                      },
+                      "end": {
+                        "offset": 134,
+                        "line": 3,
+                        "column": 54
+                      }
+                    },
+                    "value": "#8566e0ff"
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "HBox",
+              "span": {
+                "start": {
+                  "offset": 143,
+                  "line": 4,
+                  "column": 5
+                },
+                "end": {
+                  "offset": 339,
+                  "line": 7,
+                  "column": 12
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "gap",
+                  "value": {
+                    "kind": "number-literal",
+                    "span": {
+                      "start": {
+                        "offset": 154,
+                        "line": 4,
+                        "column": 16
+                      },
+                      "end": {
+                        "offset": 156,
+                        "line": 4,
+                        "column": 18
+                      }
+                    },
+                    "value": 12
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_width",
+                  "value": {
+                    "kind": "boolean-literal",
+                    "span": {
+                      "start": {
+                        "offset": 170,
+                        "line": 4,
+                        "column": 32
+                      },
+                      "end": {
+                        "offset": 174,
+                        "line": 4,
+                        "column": 36
+                      }
+                    },
+                    "value": true
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_height",
+                  "value": {
+                    "kind": "boolean-literal",
+                    "span": {
+                      "start": {
+                        "offset": 189,
+                        "line": 4,
+                        "column": 51
+                      },
+                      "end": {
+                        "offset": 193,
+                        "line": 4,
+                        "column": 55
+                      }
+                    },
+                    "value": true
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "kind": "component-expression",
+                  "name": "Rect",
+                  "span": {
+                    "start": {
+                      "offset": 204,
+                      "line": 5,
+                      "column": 9
+                    },
+                    "end": {
+                      "offset": 258,
+                      "line": 5,
+                      "column": 63
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "width",
+                      "value": {
+                        "kind": "number-literal",
+                        "span": {
+                          "start": {
+                            "offset": 217,
+                            "line": 5,
+                            "column": 22
+                          },
+                          "end": {
+                            "offset": 220,
+                            "line": 5,
+                            "column": 25
+                          }
+                        },
+                        "value": 160
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill_height",
+                      "value": {
+                        "kind": "boolean-literal",
+                        "span": {
+                          "start": {
+                            "offset": 235,
+                            "line": 5,
+                            "column": 40
+                          },
+                          "end": {
+                            "offset": 239,
+                            "line": 5,
+                            "column": 44
+                          }
+                        },
+                        "value": true
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill",
+                      "value": {
+                        "kind": "color-literal",
+                        "span": {
+                          "start": {
+                            "offset": 247,
+                            "line": 5,
+                            "column": 52
+                          },
+                          "end": {
+                            "offset": 254,
+                            "line": 5,
+                            "column": 59
+                          }
+                        },
+                        "value": "#30c9b0ff"
+                      }
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "kind": "component-expression",
+                  "name": "Rect",
+                  "span": {
+                    "start": {
+                      "offset": 267,
+                      "line": 6,
+                      "column": 9
+                    },
+                    "end": {
+                      "offset": 327,
+                      "line": 6,
+                      "column": 69
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "fill_width",
+                      "value": {
+                        "kind": "boolean-literal",
+                        "span": {
+                          "start": {
+                            "offset": 285,
+                            "line": 6,
+                            "column": 27
+                          },
+                          "end": {
+                            "offset": 289,
+                            "line": 6,
+                            "column": 31
+                          }
+                        },
+                        "value": true
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill_height",
+                      "value": {
+                        "kind": "boolean-literal",
+                        "span": {
+                          "start": {
+                            "offset": 304,
+                            "line": 6,
+                            "column": 46
+                          },
+                          "end": {
+                            "offset": 308,
+                            "line": 6,
+                            "column": 50
+                          }
+                        },
+                        "value": true
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill",
+                      "value": {
+                        "kind": "color-literal",
+                        "span": {
+                          "start": {
+                            "offset": 316,
+                            "line": 6,
+                            "column": 58
+                          },
+                          "end": {
+                            "offset": 323,
+                            "line": 6,
+                            "column": 65
+                          }
+                        },
+                        "value": "#50466fff"
+                      }
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "identifiers": [],
+      "indentation": "\t"
+    }
+  },
+  {
+    "id": "examples/mixed/Mixed.gogo",
+    "source": "extends EstragonSurface\n# Authored GDScript: literals containing markup are ordinary strings.\nconst DESCRIPTION: String = \"<Rect> is not markup inside a string\"\nvar spacing: float = 12.0\nvar header_height: float = 48.0\nvar sidebar_width: float = 120.0\nvar accent: Color = Color(\"8566e0\")\nvar constructions: int = 0\n\n\nfunc _init() -> void:\n    set_root(build_view())\n\n\nfunc make_panel(panel_width: float, color: Color) -> EstragonRect:\n    constructions += 1\n    return <Rect width={panel_width} fill_height={true} fill={color} />\n\n\nfunc build_view() -> EstragonVBox:\n    var small: bool = sidebar_width < 80.0\n    var actual_gap: float = spacing / 2.0 if small else spacing\n    return (\n        <VBox gap={actual_gap}>\n            <Rect height={header_height + 8.0} fill_width=\"true\" fill={accent} />\n            <HBox gap={spacing} fill_width={true} fill_height=\"true\">\n                {make_panel(sidebar_width, Color(\"30c9b0\"))}\n                <Rect fill_width=\"true\" fill_height={true}\n                    fill={Color(\"50466f\") if sidebar_width > 0 else Color.BLACK} />\n            </HBox>\n        </VBox>\n    )\n\n\nfunc rebuild() -> void:\n    # Explicit construction-time values, not reactive bindings.\n    set_root(build_view())\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 469,
+              "line": 17,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 469,
+              "line": 17,
+              "column": 12
+            },
+            "end": {
+              "offset": 529,
+              "line": 17,
+              "column": 72
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 481,
+                    "line": 17,
+                    "column": 24
+                  },
+                  "end": {
+                    "offset": 494,
+                    "line": 17,
+                    "column": 37
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 482,
+                        "line": 17,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 493,
+                        "line": 17,
+                        "column": 36
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "property",
+              "name": "fill_height",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 507,
+                    "line": 17,
+                    "column": 50
+                  },
+                  "end": {
+                    "offset": 513,
+                    "line": 17,
+                    "column": 56
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 508,
+                        "line": 17,
+                        "column": 51
+                      },
+                      "end": {
+                        "offset": 512,
+                        "line": 17,
+                        "column": 55
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "property",
+              "name": "fill",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 519,
+                    "line": 17,
+                    "column": 62
+                  },
+                  "end": {
+                    "offset": 526,
+                    "line": 17,
+                    "column": 69
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 520,
+                        "line": 17,
+                        "column": 63
+                      },
+                      "end": {
+                        "offset": 525,
+                        "line": 17,
+                        "column": 68
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 529,
+              "line": 17,
+              "column": 72
+            },
+            "end": {
+              "offset": 695,
+              "line": 24,
+              "column": 9
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 695,
+              "line": 24,
+              "column": 9
+            },
+            "end": {
+              "offset": 1110,
+              "line": 31,
+              "column": 16
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "gap",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 705,
+                    "line": 24,
+                    "column": 19
+                  },
+                  "end": {
+                    "offset": 717,
+                    "line": 24,
+                    "column": 31
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 706,
+                        "line": 24,
+                        "column": 20
+                      },
+                      "end": {
+                        "offset": 716,
+                        "line": 24,
+                        "column": 30
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": [
+            {
+              "kind": "component-expression",
+              "name": "Rect",
+              "span": {
+                "start": {
+                  "offset": 731,
+                  "line": 25,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 800,
+                  "line": 25,
+                  "column": 82
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "height",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 744,
+                        "line": 25,
+                        "column": 26
+                      },
+                      "end": {
+                        "offset": 765,
+                        "line": 25,
+                        "column": 47
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 745,
+                            "line": 25,
+                            "column": 27
+                          },
+                          "end": {
+                            "offset": 764,
+                            "line": 25,
+                            "column": 46
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_width",
+                  "value": {
+                    "kind": "boolean-literal",
+                    "span": {
+                      "start": {
+                        "offset": 778,
+                        "line": 25,
+                        "column": 60
+                      },
+                      "end": {
+                        "offset": 782,
+                        "line": 25,
+                        "column": 64
+                      }
+                    },
+                    "value": true
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 789,
+                        "line": 25,
+                        "column": 71
+                      },
+                      "end": {
+                        "offset": 797,
+                        "line": 25,
+                        "column": 79
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 790,
+                            "line": 25,
+                            "column": 72
+                          },
+                          "end": {
+                            "offset": 796,
+                            "line": 25,
+                            "column": 78
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "HBox",
+              "span": {
+                "start": {
+                  "offset": 813,
+                  "line": 26,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 1094,
+                  "line": 30,
+                  "column": 20
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "gap",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 823,
+                        "line": 26,
+                        "column": 23
+                      },
+                      "end": {
+                        "offset": 832,
+                        "line": 26,
+                        "column": 32
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 824,
+                            "line": 26,
+                            "column": 24
+                          },
+                          "end": {
+                            "offset": 831,
+                            "line": 26,
+                            "column": 31
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_width",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 844,
+                        "line": 26,
+                        "column": 44
+                      },
+                      "end": {
+                        "offset": 850,
+                        "line": 26,
+                        "column": 50
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 845,
+                            "line": 26,
+                            "column": 45
+                          },
+                          "end": {
+                            "offset": 849,
+                            "line": 26,
+                            "column": 49
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_height",
+                  "value": {
+                    "kind": "boolean-literal",
+                    "span": {
+                      "start": {
+                        "offset": 864,
+                        "line": 26,
+                        "column": 64
+                      },
+                      "end": {
+                        "offset": 868,
+                        "line": 26,
+                        "column": 68
+                      }
+                    },
+                    "value": true
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "kind": "gdscript-expression",
+                  "span": {
+                    "start": {
+                      "offset": 887,
+                      "line": 27,
+                      "column": 17
+                    },
+                    "end": {
+                      "offset": 931,
+                      "line": 27,
+                      "column": 61
+                    }
+                  },
+                  "parts": [
+                    {
+                      "kind": "gdscript-source",
+                      "span": {
+                        "start": {
+                          "offset": 888,
+                          "line": 27,
+                          "column": 18
+                        },
+                        "end": {
+                          "offset": 930,
+                          "line": 27,
+                          "column": 60
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "component-expression",
+                  "name": "Rect",
+                  "span": {
+                    "start": {
+                      "offset": 948,
+                      "line": 28,
+                      "column": 17
+                    },
+                    "end": {
+                      "offset": 1074,
+                      "line": 29,
+                      "column": 84
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "fill_width",
+                      "value": {
+                        "kind": "boolean-literal",
+                        "span": {
+                          "start": {
+                            "offset": 966,
+                            "line": 28,
+                            "column": 35
+                          },
+                          "end": {
+                            "offset": 970,
+                            "line": 28,
+                            "column": 39
+                          }
+                        },
+                        "value": true
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill_height",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 984,
+                            "line": 28,
+                            "column": 53
+                          },
+                          "end": {
+                            "offset": 990,
+                            "line": 28,
+                            "column": 59
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 985,
+                                "line": 28,
+                                "column": 54
+                              },
+                              "end": {
+                                "offset": 989,
+                                "line": 28,
+                                "column": 58
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 1016,
+                            "line": 29,
+                            "column": 26
+                          },
+                          "end": {
+                            "offset": 1071,
+                            "line": 29,
+                            "column": 81
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 1017,
+                                "line": 29,
+                                "column": 27
+                              },
+                              "end": {
+                                "offset": 1070,
+                                "line": 29,
+                                "column": 80
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1110,
+              "line": 31,
+              "column": 16
+            },
+            "end": {
+              "offset": 1234,
+              "line": 38,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "EstragonSurface",
+        "const",
+        "DESCRIPTION",
+        "String",
+        "var",
+        "spacing",
+        "float",
+        "header_height",
+        "sidebar_width",
+        "accent",
+        "Color",
+        "constructions",
+        "int",
+        "func",
+        "_init",
+        "void",
+        "set_root",
+        "build_view",
+        "make_panel",
+        "panel_width",
+        "color",
+        "EstragonRect",
+        "return",
+        "true",
+        "EstragonVBox",
+        "small",
+        "bool",
+        "actual_gap",
+        "if",
+        "else",
+        "BLACK",
+        "rebuild"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "examples/counter/Counter.gogo",
+    "source": "extends EstragonSurface\n\nvar count: int = 0\n\n\nfunc _init() -> void:\n    set_root(build_view())\n\n\nfunc increment() -> void:\n    count += 1\n    set_root(build_view())\n\n\nfunc reset_count() -> void:\n    count = 0\n    set_root(build_view())\n\n\nfunc build_view() -> EstragonVBox:\n    return (\n        <VBox gap={12}>\n            <Text text=\"Estragon Gogo Counter\" font_size=\"26\" color=\"#bba2ef\" />\n            <Text text={\"Count: %d\" % count} font_size={24} />\n            <HBox gap=\"12\" fill_width=\"true\">\n                <Button text=\"+\" fill_width=\"true\" pressed={increment} />\n                <Button text=\"Reset\" fill_width=\"true\" disabled={count == 0} pressed={reset_count} />\n            </HBox>\n            <Text text=\"Gogo generates the signal connections. Explicit rebuild; automatic cleanup.\" font_size=\"16\" />\n        </VBox>\n    )\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 294,
+              "line": 22,
+              "column": 9
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 294,
+              "line": 22,
+              "column": 9
+            },
+            "end": {
+              "offset": 830,
+              "line": 30,
+              "column": 16
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "gap",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 304,
+                    "line": 22,
+                    "column": 19
+                  },
+                  "end": {
+                    "offset": 308,
+                    "line": 22,
+                    "column": 23
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 305,
+                        "line": 22,
+                        "column": 20
+                      },
+                      "end": {
+                        "offset": 307,
+                        "line": 22,
+                        "column": 22
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": [
+            {
+              "kind": "component-expression",
+              "name": "Text",
+              "span": {
+                "start": {
+                  "offset": 322,
+                  "line": 23,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 390,
+                  "line": 23,
+                  "column": 81
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "text",
+                  "value": {
+                    "kind": "string-literal",
+                    "span": {
+                      "start": {
+                        "offset": 334,
+                        "line": 23,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 355,
+                        "line": 23,
+                        "column": 46
+                      }
+                    },
+                    "value": "Estragon Gogo Counter"
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "font_size",
+                  "value": {
+                    "kind": "integer-literal",
+                    "span": {
+                      "start": {
+                        "offset": 368,
+                        "line": 23,
+                        "column": 59
+                      },
+                      "end": {
+                        "offset": 370,
+                        "line": 23,
+                        "column": 61
+                      }
+                    },
+                    "value": 26
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "color",
+                  "value": {
+                    "kind": "color-literal",
+                    "span": {
+                      "start": {
+                        "offset": 379,
+                        "line": 23,
+                        "column": 70
+                      },
+                      "end": {
+                        "offset": 386,
+                        "line": 23,
+                        "column": 77
+                      }
+                    },
+                    "value": "#bba2efff"
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "Text",
+              "span": {
+                "start": {
+                  "offset": 403,
+                  "line": 24,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 453,
+                  "line": 24,
+                  "column": 63
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "text",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 414,
+                        "line": 24,
+                        "column": 24
+                      },
+                      "end": {
+                        "offset": 435,
+                        "line": 24,
+                        "column": 45
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 415,
+                            "line": 24,
+                            "column": 25
+                          },
+                          "end": {
+                            "offset": 434,
+                            "line": 24,
+                            "column": 44
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "font_size",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 446,
+                        "line": 24,
+                        "column": 56
+                      },
+                      "end": {
+                        "offset": 450,
+                        "line": 24,
+                        "column": 60
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 447,
+                            "line": 24,
+                            "column": 57
+                          },
+                          "end": {
+                            "offset": 449,
+                            "line": 24,
+                            "column": 59
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "HBox",
+              "span": {
+                "start": {
+                  "offset": 466,
+                  "line": 25,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 695,
+                  "line": 28,
+                  "column": 20
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "gap",
+                  "value": {
+                    "kind": "number-literal",
+                    "span": {
+                      "start": {
+                        "offset": 477,
+                        "line": 25,
+                        "column": 24
+                      },
+                      "end": {
+                        "offset": 479,
+                        "line": 25,
+                        "column": 26
+                      }
+                    },
+                    "value": 12
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_width",
+                  "value": {
+                    "kind": "boolean-literal",
+                    "span": {
+                      "start": {
+                        "offset": 493,
+                        "line": 25,
+                        "column": 40
+                      },
+                      "end": {
+                        "offset": 497,
+                        "line": 25,
+                        "column": 44
+                      }
+                    },
+                    "value": true
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "kind": "component-expression",
+                  "name": "Button",
+                  "span": {
+                    "start": {
+                      "offset": 516,
+                      "line": 26,
+                      "column": 17
+                    },
+                    "end": {
+                      "offset": 573,
+                      "line": 26,
+                      "column": 74
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "text",
+                      "value": {
+                        "kind": "string-literal",
+                        "span": {
+                          "start": {
+                            "offset": 530,
+                            "line": 26,
+                            "column": 31
+                          },
+                          "end": {
+                            "offset": 531,
+                            "line": 26,
+                            "column": 32
+                          }
+                        },
+                        "value": "+"
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill_width",
+                      "value": {
+                        "kind": "boolean-literal",
+                        "span": {
+                          "start": {
+                            "offset": 545,
+                            "line": 26,
+                            "column": 46
+                          },
+                          "end": {
+                            "offset": 549,
+                            "line": 26,
+                            "column": 50
+                          }
+                        },
+                        "value": true
+                      }
+                    },
+                    {
+                      "kind": "signal",
+                      "name": "pressed",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 559,
+                            "line": 26,
+                            "column": 60
+                          },
+                          "end": {
+                            "offset": 570,
+                            "line": 26,
+                            "column": 71
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 560,
+                                "line": 26,
+                                "column": 61
+                              },
+                              "end": {
+                                "offset": 569,
+                                "line": 26,
+                                "column": 70
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "kind": "component-expression",
+                  "name": "Button",
+                  "span": {
+                    "start": {
+                      "offset": 590,
+                      "line": 27,
+                      "column": 17
+                    },
+                    "end": {
+                      "offset": 675,
+                      "line": 27,
+                      "column": 102
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "text",
+                      "value": {
+                        "kind": "string-literal",
+                        "span": {
+                          "start": {
+                            "offset": 604,
+                            "line": 27,
+                            "column": 31
+                          },
+                          "end": {
+                            "offset": 609,
+                            "line": 27,
+                            "column": 36
+                          }
+                        },
+                        "value": "Reset"
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "fill_width",
+                      "value": {
+                        "kind": "boolean-literal",
+                        "span": {
+                          "start": {
+                            "offset": 623,
+                            "line": 27,
+                            "column": 50
+                          },
+                          "end": {
+                            "offset": 627,
+                            "line": 27,
+                            "column": 54
+                          }
+                        },
+                        "value": true
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "disabled",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 638,
+                            "line": 27,
+                            "column": 65
+                          },
+                          "end": {
+                            "offset": 650,
+                            "line": 27,
+                            "column": 77
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 639,
+                                "line": 27,
+                                "column": 66
+                              },
+                              "end": {
+                                "offset": 649,
+                                "line": 27,
+                                "column": 76
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "signal",
+                      "name": "pressed",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 659,
+                            "line": 27,
+                            "column": 86
+                          },
+                          "end": {
+                            "offset": 672,
+                            "line": 27,
+                            "column": 99
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 660,
+                                "line": 27,
+                                "column": 87
+                              },
+                              "end": {
+                                "offset": 671,
+                                "line": 27,
+                                "column": 98
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "kind": "component-expression",
+              "name": "Text",
+              "span": {
+                "start": {
+                  "offset": 708,
+                  "line": 29,
+                  "column": 13
+                },
+                "end": {
+                  "offset": 814,
+                  "line": 29,
+                  "column": 119
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "text",
+                  "value": {
+                    "kind": "string-literal",
+                    "span": {
+                      "start": {
+                        "offset": 720,
+                        "line": 29,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 795,
+                        "line": 29,
+                        "column": 100
+                      }
+                    },
+                    "value": "Gogo generates the signal connections. Explicit rebuild; automatic cleanup."
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "font_size",
+                  "value": {
+                    "kind": "integer-literal",
+                    "span": {
+                      "start": {
+                        "offset": 808,
+                        "line": 29,
+                        "column": 113
+                      },
+                      "end": {
+                        "offset": 810,
+                        "line": 29,
+                        "column": 115
+                      }
+                    },
+                    "value": 16
+                  }
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 830,
+              "line": 30,
+              "column": 16
+            },
+            "end": {
+              "offset": 837,
+              "line": 32,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "EstragonSurface",
+        "var",
+        "count",
+        "int",
+        "func",
+        "_init",
+        "void",
+        "set_root",
+        "build_view",
+        "increment",
+        "reset_count",
+        "EstragonVBox",
+        "return"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "tests/fixtures/hybrid-edges.gogo",
+    "source": "extends RefCounted\nconst MULTILINE: String = \"\"\"<Rect/> } is literal\n    # <HBox> still a string\n\"\"\"\nconst RAW: String = r\"<Rect>\\t\\\"}\"\nvar events: Array[int] = []\nvar initial: EstragonRect = <Rect width=\"2\" height=\"2\"/>\n\n\nstatic func _gogo_build_0() -> int:\n    return 99\n\n\nfunc mark(value: int) -> float:\n    events.append(value)\n    return float(value)\n\n\nfunc make_child() -> EstragonRect:\n    events.append(3)\n    return <Rect width={7.0} height=\"5\" />\n\n\nfunc build() -> EstragonVBox:\n    var left: int = 1\n    var threshold: int = 2\n    var comparison: bool = (left<threshold and left<=threshold and 8 >> 1 == 4)\n    var values: Dictionary = {\"width\": 5.0, \"text\": \"} <Rect>\"}\n    var callback: Callable = func() -> EstragonRect:\n        return <Rect width={1.0} height=\"2\" />\n    var child: EstragonRect = callback.call()\n    if not comparison:\n        return <VBox/>\n    return <VBox gap={mark(1)}>\n        <Rect width={mark(2) + (5 / 2)} height={float(values[\"width\"])}\n            fill_width={left\n                <threshold} fill={Color(\"abcdef\")} />\n        {make_child()}\n        {child}\n        {<Rect width={4.0} height=\"5\" />}\n    </VBox>\n\n\nfunc loop_children() -> EstragonHBox:\n    var row := <HBox gap=\"1\"/>\n    for index in range(2):\n        row.add_child(<Rect width={float(index + 1)} height=\"2\" />)\n    return row\n\n\nfunc continued_comparison() -> bool:\n    var left: int = 1\n    var right: int = 2\n    return left \\\n        <right\n\n\nfunc conditional_child(flag: bool) -> EstragonVBox:\n    return <VBox>{<Rect width={mark(8)} height=\"2\"/> if flag else <Rect width={mark(9)} height=\"2\"/>}</VBox>\n\n\nstatic func static_panel() -> EstragonRect:\n    return <Rect width={3.0} height=\"1\"/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 192,
+              "line": 7,
+              "column": 29
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 192,
+              "line": 7,
+              "column": 29
+            },
+            "end": {
+              "offset": 220,
+              "line": 7,
+              "column": 57
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 205,
+                    "line": 7,
+                    "column": 42
+                  },
+                  "end": {
+                    "offset": 206,
+                    "line": 7,
+                    "column": 43
+                  }
+                },
+                "value": 2
+              }
+            },
+            {
+              "kind": "property",
+              "name": "height",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 216,
+                    "line": 7,
+                    "column": 53
+                  },
+                  "end": {
+                    "offset": 217,
+                    "line": 7,
+                    "column": 54
+                  }
+                },
+                "value": 2
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 220,
+              "line": 7,
+              "column": 57
+            },
+            "end": {
+              "offset": 425,
+              "line": 21,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 425,
+              "line": 21,
+              "column": 12
+            },
+            "end": {
+              "offset": 456,
+              "line": 21,
+              "column": 43
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 437,
+                    "line": 21,
+                    "column": 24
+                  },
+                  "end": {
+                    "offset": 442,
+                    "line": 21,
+                    "column": 29
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 438,
+                        "line": 21,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 441,
+                        "line": 21,
+                        "column": 28
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "property",
+              "name": "height",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 451,
+                    "line": 21,
+                    "column": 38
+                  },
+                  "end": {
+                    "offset": 452,
+                    "line": 21,
+                    "column": 39
+                  }
+                },
+                "value": 5
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 456,
+              "line": 21,
+              "column": 43
+            },
+            "end": {
+              "offset": 750,
+              "line": 30,
+              "column": 16
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 750,
+              "line": 30,
+              "column": 16
+            },
+            "end": {
+              "offset": 781,
+              "line": 30,
+              "column": 47
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 762,
+                    "line": 30,
+                    "column": 28
+                  },
+                  "end": {
+                    "offset": 767,
+                    "line": 30,
+                    "column": 33
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 763,
+                        "line": 30,
+                        "column": 29
+                      },
+                      "end": {
+                        "offset": 766,
+                        "line": 30,
+                        "column": 32
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "property",
+              "name": "height",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 776,
+                    "line": 30,
+                    "column": 42
+                  },
+                  "end": {
+                    "offset": 777,
+                    "line": 30,
+                    "column": 43
+                  }
+                },
+                "value": 2
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 781,
+              "line": 30,
+              "column": 47
+            },
+            "end": {
+              "offset": 866,
+              "line": 33,
+              "column": 16
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 866,
+              "line": 33,
+              "column": 16
+            },
+            "end": {
+              "offset": 873,
+              "line": 33,
+              "column": 23
+            }
+          },
+          "attributes": [],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 873,
+              "line": 33,
+              "column": 23
+            },
+            "end": {
+              "offset": 885,
+              "line": 34,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 885,
+              "line": 34,
+              "column": 12
+            },
+            "end": {
+              "offset": 1153,
+              "line": 41,
+              "column": 12
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "gap",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 895,
+                    "line": 34,
+                    "column": 22
+                  },
+                  "end": {
+                    "offset": 904,
+                    "line": 34,
+                    "column": 31
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 896,
+                        "line": 34,
+                        "column": 23
+                      },
+                      "end": {
+                        "offset": 903,
+                        "line": 34,
+                        "column": 30
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": [
+            {
+              "kind": "component-expression",
+              "name": "Rect",
+              "span": {
+                "start": {
+                  "offset": 914,
+                  "line": 35,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 1060,
+                  "line": 37,
+                  "column": 54
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "width",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 926,
+                        "line": 35,
+                        "column": 21
+                      },
+                      "end": {
+                        "offset": 945,
+                        "line": 35,
+                        "column": 40
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 927,
+                            "line": 35,
+                            "column": 22
+                          },
+                          "end": {
+                            "offset": 944,
+                            "line": 35,
+                            "column": 39
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "height",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 953,
+                        "line": 35,
+                        "column": 48
+                      },
+                      "end": {
+                        "offset": 977,
+                        "line": 35,
+                        "column": 72
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 954,
+                            "line": 35,
+                            "column": 49
+                          },
+                          "end": {
+                            "offset": 976,
+                            "line": 35,
+                            "column": 71
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill_width",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 1001,
+                        "line": 36,
+                        "column": 24
+                      },
+                      "end": {
+                        "offset": 1034,
+                        "line": 37,
+                        "column": 28
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 1002,
+                            "line": 36,
+                            "column": 25
+                          },
+                          "end": {
+                            "offset": 1033,
+                            "line": 37,
+                            "column": 27
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "fill",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 1040,
+                        "line": 37,
+                        "column": 34
+                      },
+                      "end": {
+                        "offset": 1057,
+                        "line": 37,
+                        "column": 51
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 1041,
+                            "line": 37,
+                            "column": 35
+                          },
+                          "end": {
+                            "offset": 1056,
+                            "line": 37,
+                            "column": 50
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "gdscript-expression",
+              "span": {
+                "start": {
+                  "offset": 1069,
+                  "line": 38,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 1083,
+                  "line": 38,
+                  "column": 23
+                }
+              },
+              "parts": [
+                {
+                  "kind": "gdscript-source",
+                  "span": {
+                    "start": {
+                      "offset": 1070,
+                      "line": 38,
+                      "column": 10
+                    },
+                    "end": {
+                      "offset": 1082,
+                      "line": 38,
+                      "column": 22
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "gdscript-expression",
+              "span": {
+                "start": {
+                  "offset": 1092,
+                  "line": 39,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 1099,
+                  "line": 39,
+                  "column": 16
+                }
+              },
+              "parts": [
+                {
+                  "kind": "gdscript-source",
+                  "span": {
+                    "start": {
+                      "offset": 1093,
+                      "line": 39,
+                      "column": 10
+                    },
+                    "end": {
+                      "offset": 1098,
+                      "line": 39,
+                      "column": 15
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "gdscript-expression",
+              "span": {
+                "start": {
+                  "offset": 1108,
+                  "line": 40,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 1141,
+                  "line": 40,
+                  "column": 42
+                }
+              },
+              "parts": [
+                {
+                  "kind": "component-expression",
+                  "name": "Rect",
+                  "span": {
+                    "start": {
+                      "offset": 1109,
+                      "line": 40,
+                      "column": 10
+                    },
+                    "end": {
+                      "offset": 1140,
+                      "line": 40,
+                      "column": 41
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "width",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 1121,
+                            "line": 40,
+                            "column": 22
+                          },
+                          "end": {
+                            "offset": 1126,
+                            "line": 40,
+                            "column": 27
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 1122,
+                                "line": 40,
+                                "column": 23
+                              },
+                              "end": {
+                                "offset": 1125,
+                                "line": 40,
+                                "column": 26
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "height",
+                      "value": {
+                        "kind": "number-literal",
+                        "span": {
+                          "start": {
+                            "offset": 1135,
+                            "line": 40,
+                            "column": 36
+                          },
+                          "end": {
+                            "offset": 1136,
+                            "line": 40,
+                            "column": 37
+                          }
+                        },
+                        "value": 5
+                      }
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1153,
+              "line": 41,
+              "column": 12
+            },
+            "end": {
+              "offset": 1209,
+              "line": 45,
+              "column": 16
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "HBox",
+          "span": {
+            "start": {
+              "offset": 1209,
+              "line": 45,
+              "column": 16
+            },
+            "end": {
+              "offset": 1224,
+              "line": 45,
+              "column": 31
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "gap",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 1220,
+                    "line": 45,
+                    "column": 27
+                  },
+                  "end": {
+                    "offset": 1221,
+                    "line": 45,
+                    "column": 28
+                  }
+                },
+                "value": 1
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1224,
+              "line": 45,
+              "column": 31
+            },
+            "end": {
+              "offset": 1274,
+              "line": 47,
+              "column": 23
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 1274,
+              "line": 47,
+              "column": 23
+            },
+            "end": {
+              "offset": 1318,
+              "line": 47,
+              "column": 67
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 1286,
+                    "line": 47,
+                    "column": 35
+                  },
+                  "end": {
+                    "offset": 1304,
+                    "line": 47,
+                    "column": 53
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 1287,
+                        "line": 47,
+                        "column": 36
+                      },
+                      "end": {
+                        "offset": 1303,
+                        "line": 47,
+                        "column": 52
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "property",
+              "name": "height",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 1313,
+                    "line": 47,
+                    "column": 62
+                  },
+                  "end": {
+                    "offset": 1314,
+                    "line": 47,
+                    "column": 63
+                  }
+                },
+                "value": 2
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1318,
+              "line": 47,
+              "column": 67
+            },
+            "end": {
+              "offset": 1517,
+              "line": 59,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 1517,
+              "line": 59,
+              "column": 12
+            },
+            "end": {
+              "offset": 1614,
+              "line": 59,
+              "column": 109
+            }
+          },
+          "attributes": [],
+          "children": [
+            {
+              "kind": "gdscript-expression",
+              "span": {
+                "start": {
+                  "offset": 1523,
+                  "line": 59,
+                  "column": 18
+                },
+                "end": {
+                  "offset": 1607,
+                  "line": 59,
+                  "column": 102
+                }
+              },
+              "parts": [
+                {
+                  "kind": "component-expression",
+                  "name": "Rect",
+                  "span": {
+                    "start": {
+                      "offset": 1524,
+                      "line": 59,
+                      "column": 19
+                    },
+                    "end": {
+                      "offset": 1558,
+                      "line": 59,
+                      "column": 53
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "width",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 1536,
+                            "line": 59,
+                            "column": 31
+                          },
+                          "end": {
+                            "offset": 1545,
+                            "line": 59,
+                            "column": 40
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 1537,
+                                "line": 59,
+                                "column": 32
+                              },
+                              "end": {
+                                "offset": 1544,
+                                "line": 59,
+                                "column": 39
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "height",
+                      "value": {
+                        "kind": "number-literal",
+                        "span": {
+                          "start": {
+                            "offset": 1554,
+                            "line": 59,
+                            "column": 49
+                          },
+                          "end": {
+                            "offset": 1555,
+                            "line": 59,
+                            "column": 50
+                          }
+                        },
+                        "value": 2
+                      }
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "kind": "gdscript-source",
+                  "span": {
+                    "start": {
+                      "offset": 1558,
+                      "line": 59,
+                      "column": 53
+                    },
+                    "end": {
+                      "offset": 1572,
+                      "line": 59,
+                      "column": 67
+                    }
+                  }
+                },
+                {
+                  "kind": "component-expression",
+                  "name": "Rect",
+                  "span": {
+                    "start": {
+                      "offset": 1572,
+                      "line": 59,
+                      "column": 67
+                    },
+                    "end": {
+                      "offset": 1606,
+                      "line": 59,
+                      "column": 101
+                    }
+                  },
+                  "attributes": [
+                    {
+                      "kind": "property",
+                      "name": "width",
+                      "value": {
+                        "kind": "gdscript-expression",
+                        "span": {
+                          "start": {
+                            "offset": 1584,
+                            "line": 59,
+                            "column": 79
+                          },
+                          "end": {
+                            "offset": 1593,
+                            "line": 59,
+                            "column": 88
+                          }
+                        },
+                        "parts": [
+                          {
+                            "kind": "gdscript-source",
+                            "span": {
+                              "start": {
+                                "offset": 1585,
+                                "line": 59,
+                                "column": 80
+                              },
+                              "end": {
+                                "offset": 1592,
+                                "line": 59,
+                                "column": 87
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "kind": "property",
+                      "name": "height",
+                      "value": {
+                        "kind": "number-literal",
+                        "span": {
+                          "start": {
+                            "offset": 1602,
+                            "line": 59,
+                            "column": 97
+                          },
+                          "end": {
+                            "offset": 1603,
+                            "line": 59,
+                            "column": 98
+                          }
+                        },
+                        "value": 2
+                      }
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1614,
+              "line": 59,
+              "column": 109
+            },
+            "end": {
+              "offset": 1672,
+              "line": 63,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Rect",
+          "span": {
+            "start": {
+              "offset": 1672,
+              "line": 63,
+              "column": 12
+            },
+            "end": {
+              "offset": 1702,
+              "line": 63,
+              "column": 42
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "width",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 1684,
+                    "line": 63,
+                    "column": 24
+                  },
+                  "end": {
+                    "offset": 1689,
+                    "line": 63,
+                    "column": 29
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 1685,
+                        "line": 63,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 1688,
+                        "line": 63,
+                        "column": 28
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "kind": "property",
+              "name": "height",
+              "value": {
+                "kind": "number-literal",
+                "span": {
+                  "start": {
+                    "offset": 1698,
+                    "line": 63,
+                    "column": 38
+                  },
+                  "end": {
+                    "offset": 1699,
+                    "line": 63,
+                    "column": 39
+                  }
+                },
+                "value": 1
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1702,
+              "line": 63,
+              "column": 42
+            },
+            "end": {
+              "offset": 1703,
+              "line": 64,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "const",
+        "MULTILINE",
+        "String",
+        "RAW",
+        "r",
+        "var",
+        "events",
+        "Array",
+        "int",
+        "initial",
+        "EstragonRect",
+        "static",
+        "func",
+        "_gogo_build_0",
+        "return",
+        "mark",
+        "value",
+        "float",
+        "append",
+        "make_child",
+        "build",
+        "EstragonVBox",
+        "left",
+        "threshold",
+        "comparison",
+        "bool",
+        "and",
+        "values",
+        "Dictionary",
+        "callback",
+        "Callable",
+        "child",
+        "call",
+        "if",
+        "not",
+        "Color",
+        "loop_children",
+        "EstragonHBox",
+        "row",
+        "for",
+        "index",
+        "in",
+        "range",
+        "add_child",
+        "continued_comparison",
+        "right",
+        "conditional_child",
+        "flag",
+        "else",
+        "static_panel"
+      ],
+      "indentation": "    "
+    }
+  },
+  {
+    "id": "tests/fixtures/signal-edges.gogo",
+    "source": "extends RefCounted\n\nclass Receiver extends EstragonRect:\n    var calls: int = 0\n    func receive() -> void:\n        calls += 1\n\nvar events: Array[String] = []\nvar receiver: Receiver = Receiver.new()\n\nfunc record(value: String) -> void:\n    events.append(value)\n\nfunc label(value: String) -> String:\n    events.append(value)\n    return value\n\nfunc callback(value: String) -> Callable:\n    events.append(value)\n    return record.bind(value)\n\nfunc build() -> EstragonVBox:\n    var local: Callable = record.bind(\"local\")\n    return <VBox>\n        <Button pressed={callback(\"first\")} text={label(\"label\")} />\n        <Button text=\"Local\" pressed={local} color={Color.CORAL} font_size={22} disabled={false} />\n        <Button text=\"Lambda\" pressed={func() -> void: record(\"lambda\")} />\n    </VBox>\n\nfunc build_receiver_button() -> EstragonButton:\n    return <Button text=\"Receiver\" pressed={receiver.receive}/>\n\nstatic func build_static(callback_value: Callable) -> EstragonButton:\n    return <Button text=\"Static\" pressed={callback_value}/>\n\nfunc build_capture(payload: RefCounted) -> EstragonButton:\n    return <Button text=\"Capture\" pressed={func() -> void: payload.set_meta(\"called\", true)}/>\n",
+    "ok": true,
+    "tree": {
+      "mode": "hybrid",
+      "parts": [
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 0,
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "offset": 528,
+              "line": 24,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "VBox",
+          "span": {
+            "start": {
+              "offset": 528,
+              "line": 24,
+              "column": 12
+            },
+            "end": {
+              "offset": 791,
+              "line": 28,
+              "column": 12
+            }
+          },
+          "attributes": [],
+          "children": [
+            {
+              "kind": "component-expression",
+              "name": "Button",
+              "span": {
+                "start": {
+                  "offset": 543,
+                  "line": 25,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 603,
+                  "line": 25,
+                  "column": 69
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "signal",
+                  "name": "pressed",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 559,
+                        "line": 25,
+                        "column": 25
+                      },
+                      "end": {
+                        "offset": 578,
+                        "line": 25,
+                        "column": 44
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 560,
+                            "line": 25,
+                            "column": 26
+                          },
+                          "end": {
+                            "offset": 577,
+                            "line": 25,
+                            "column": 43
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "text",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 584,
+                        "line": 25,
+                        "column": 50
+                      },
+                      "end": {
+                        "offset": 600,
+                        "line": 25,
+                        "column": 66
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 585,
+                            "line": 25,
+                            "column": 51
+                          },
+                          "end": {
+                            "offset": 599,
+                            "line": 25,
+                            "column": 65
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "Button",
+              "span": {
+                "start": {
+                  "offset": 612,
+                  "line": 26,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 703,
+                  "line": 26,
+                  "column": 100
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "text",
+                  "value": {
+                    "kind": "string-literal",
+                    "span": {
+                      "start": {
+                        "offset": 626,
+                        "line": 26,
+                        "column": 23
+                      },
+                      "end": {
+                        "offset": 631,
+                        "line": 26,
+                        "column": 28
+                      }
+                    },
+                    "value": "Local"
+                  }
+                },
+                {
+                  "kind": "signal",
+                  "name": "pressed",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 641,
+                        "line": 26,
+                        "column": 38
+                      },
+                      "end": {
+                        "offset": 648,
+                        "line": 26,
+                        "column": 45
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 642,
+                            "line": 26,
+                            "column": 39
+                          },
+                          "end": {
+                            "offset": 647,
+                            "line": 26,
+                            "column": 44
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "color",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 655,
+                        "line": 26,
+                        "column": 52
+                      },
+                      "end": {
+                        "offset": 668,
+                        "line": 26,
+                        "column": 65
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 656,
+                            "line": 26,
+                            "column": 53
+                          },
+                          "end": {
+                            "offset": 667,
+                            "line": 26,
+                            "column": 64
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "font_size",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 679,
+                        "line": 26,
+                        "column": 76
+                      },
+                      "end": {
+                        "offset": 683,
+                        "line": 26,
+                        "column": 80
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 680,
+                            "line": 26,
+                            "column": 77
+                          },
+                          "end": {
+                            "offset": 682,
+                            "line": 26,
+                            "column": 79
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "kind": "property",
+                  "name": "disabled",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 693,
+                        "line": 26,
+                        "column": 90
+                      },
+                      "end": {
+                        "offset": 700,
+                        "line": 26,
+                        "column": 97
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 694,
+                            "line": 26,
+                            "column": 91
+                          },
+                          "end": {
+                            "offset": 699,
+                            "line": 26,
+                            "column": 96
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": []
+            },
+            {
+              "kind": "component-expression",
+              "name": "Button",
+              "span": {
+                "start": {
+                  "offset": 712,
+                  "line": 27,
+                  "column": 9
+                },
+                "end": {
+                  "offset": 779,
+                  "line": 27,
+                  "column": 76
+                }
+              },
+              "attributes": [
+                {
+                  "kind": "property",
+                  "name": "text",
+                  "value": {
+                    "kind": "string-literal",
+                    "span": {
+                      "start": {
+                        "offset": 726,
+                        "line": 27,
+                        "column": 23
+                      },
+                      "end": {
+                        "offset": 732,
+                        "line": 27,
+                        "column": 29
+                      }
+                    },
+                    "value": "Lambda"
+                  }
+                },
+                {
+                  "kind": "signal",
+                  "name": "pressed",
+                  "value": {
+                    "kind": "gdscript-expression",
+                    "span": {
+                      "start": {
+                        "offset": 742,
+                        "line": 27,
+                        "column": 39
+                      },
+                      "end": {
+                        "offset": 776,
+                        "line": 27,
+                        "column": 73
+                      }
+                    },
+                    "parts": [
+                      {
+                        "kind": "gdscript-source",
+                        "span": {
+                          "start": {
+                            "offset": 743,
+                            "line": 27,
+                            "column": 40
+                          },
+                          "end": {
+                            "offset": 775,
+                            "line": 27,
+                            "column": 72
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 791,
+              "line": 28,
+              "column": 12
+            },
+            "end": {
+              "offset": 852,
+              "line": 31,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Button",
+          "span": {
+            "start": {
+              "offset": 852,
+              "line": 31,
+              "column": 12
+            },
+            "end": {
+              "offset": 904,
+              "line": 31,
+              "column": 64
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "text",
+              "value": {
+                "kind": "string-literal",
+                "span": {
+                  "start": {
+                    "offset": 866,
+                    "line": 31,
+                    "column": 26
+                  },
+                  "end": {
+                    "offset": 874,
+                    "line": 31,
+                    "column": 34
+                  }
+                },
+                "value": "Receiver"
+              }
+            },
+            {
+              "kind": "signal",
+              "name": "pressed",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 884,
+                    "line": 31,
+                    "column": 44
+                  },
+                  "end": {
+                    "offset": 902,
+                    "line": 31,
+                    "column": 62
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 885,
+                        "line": 31,
+                        "column": 45
+                      },
+                      "end": {
+                        "offset": 901,
+                        "line": 31,
+                        "column": 61
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 904,
+              "line": 31,
+              "column": 64
+            },
+            "end": {
+              "offset": 987,
+              "line": 34,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Button",
+          "span": {
+            "start": {
+              "offset": 987,
+              "line": 34,
+              "column": 12
+            },
+            "end": {
+              "offset": 1035,
+              "line": 34,
+              "column": 60
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "text",
+              "value": {
+                "kind": "string-literal",
+                "span": {
+                  "start": {
+                    "offset": 1001,
+                    "line": 34,
+                    "column": 26
+                  },
+                  "end": {
+                    "offset": 1007,
+                    "line": 34,
+                    "column": 32
+                  }
+                },
+                "value": "Static"
+              }
+            },
+            {
+              "kind": "signal",
+              "name": "pressed",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 1017,
+                    "line": 34,
+                    "column": 42
+                  },
+                  "end": {
+                    "offset": 1033,
+                    "line": 34,
+                    "column": 58
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 1018,
+                        "line": 34,
+                        "column": 43
+                      },
+                      "end": {
+                        "offset": 1032,
+                        "line": 34,
+                        "column": 57
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1035,
+              "line": 34,
+              "column": 60
+            },
+            "end": {
+              "offset": 1107,
+              "line": 37,
+              "column": 12
+            }
+          }
+        },
+        {
+          "kind": "component-expression",
+          "name": "Button",
+          "span": {
+            "start": {
+              "offset": 1107,
+              "line": 37,
+              "column": 12
+            },
+            "end": {
+              "offset": 1190,
+              "line": 37,
+              "column": 95
+            }
+          },
+          "attributes": [
+            {
+              "kind": "property",
+              "name": "text",
+              "value": {
+                "kind": "string-literal",
+                "span": {
+                  "start": {
+                    "offset": 1121,
+                    "line": 37,
+                    "column": 26
+                  },
+                  "end": {
+                    "offset": 1128,
+                    "line": 37,
+                    "column": 33
+                  }
+                },
+                "value": "Capture"
+              }
+            },
+            {
+              "kind": "signal",
+              "name": "pressed",
+              "value": {
+                "kind": "gdscript-expression",
+                "span": {
+                  "start": {
+                    "offset": 1138,
+                    "line": 37,
+                    "column": 43
+                  },
+                  "end": {
+                    "offset": 1188,
+                    "line": 37,
+                    "column": 93
+                  }
+                },
+                "parts": [
+                  {
+                    "kind": "gdscript-source",
+                    "span": {
+                      "start": {
+                        "offset": 1139,
+                        "line": 37,
+                        "column": 44
+                      },
+                      "end": {
+                        "offset": 1187,
+                        "line": 37,
+                        "column": 92
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "children": []
+        },
+        {
+          "kind": "gdscript-source",
+          "span": {
+            "start": {
+              "offset": 1190,
+              "line": 37,
+              "column": 95
+            },
+            "end": {
+              "offset": 1191,
+              "line": 38,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "identifiers": [
+        "extends",
+        "RefCounted",
+        "class",
+        "Receiver",
+        "EstragonRect",
+        "var",
+        "calls",
+        "int",
+        "func",
+        "receive",
+        "void",
+        "events",
+        "Array",
+        "String",
+        "receiver",
+        "new",
+        "record",
+        "value",
+        "append",
+        "label",
+        "return",
+        "callback",
+        "Callable",
+        "bind",
+        "build",
+        "EstragonVBox",
+        "local",
+        "Color",
+        "CORAL",
+        "false",
+        "build_receiver_button",
+        "EstragonButton",
+        "static",
+        "build_static",
+        "callback_value",
+        "build_capture",
+        "payload",
+        "set_meta",
+        "true"
+      ],
+      "indentation": "    "
+    }
+  }
+]

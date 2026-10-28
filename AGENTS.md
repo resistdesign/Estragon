@@ -71,6 +71,8 @@ Do not modify the accepted architecture or silently reduce Gogo's language featu
 
 **Implemented:**
 
+- `addons/estragon/compiler/`: N01 native GDScript lexer, hybrid parser, typed built-in validation and source diagnostics, independent of editor/runtime/Bun. Native emission/maps (N02) and editor cutover (N03) remain pending; the working editor still uses the TypeScript compiler. See GOGO_LANGUAGE and the Godot-only `sh tools/check-native-frontend.sh` harness.
+
 - `tools/transpile-gogo.ts` + `tools/gogo/`: T04/T05 namespace-free component parser, GDScript lexical composition, typed factories and range source maps. Mixed methods/expressions and generated Button.pressed callbacks work within GOGO_LANGUAGE; bindings remain future work.
 - `tools/gogo.ts`: **stage-0** strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun. Its syntax is temporary.
 - A `View` document root containing zero or more `Rect` leaves at explicit canvas coordinates; no nested containers or component registry.

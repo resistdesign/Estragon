@@ -18,6 +18,8 @@ jobs:
         run: bun run typecheck
       - name: Unit tests
         run: bun run test
+      - name: Check native frontend reference transcript
+        run: bun tools/native-frontend-cases.ts
       - name: Check committed example IR matches source
         run: bun run verify:ir
       - name: Check committed GDScript matches Gogo source
@@ -43,6 +45,8 @@ jobs:
           unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot-bin"
           chmod +x "$RUNNER_TEMP/godot-bin/Godot_v4.7-stable_linux.x86_64"
           echo "GODOT_BIN=$RUNNER_TEMP/godot-bin/Godot_v4.7-stable_linux.x86_64" >> "$GITHUB_ENV"
+      - name: Native frontend with Bun unavailable
+        run: sh tools/check-native-frontend.sh
       - name: Import, parse every GDScript, and run runtime smoke
         run: bun run check:godot
       - name: Prove import, parse, and runtime failures are rejected

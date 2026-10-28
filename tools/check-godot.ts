@@ -86,6 +86,7 @@ async function validate(project: string): Promise<void> {
     const resource = `res://${relative(project, path).split("\\").join("/")}`;
     requireSuccess(`parse ${resource}`, await run(project, ["--script", resource, "--check-only"]));
   }
+  requireSuccess("native Gogo frontend", await run(project, ["--script", "res://tests/godot/native_frontend.gd", "--quit-after", "120"]), "ESTRAGON_NATIVE_FRONTEND_OK");
   requireSuccess("runtime smoke", await run(project, ["--script", SMOKE, "--quit-after", "120"]), COMPLETE);
   requireSuccess("component foundations", await run(project, ["--script", "res://tests/godot/components.gd", "--quit-after", "120"]), "ESTRAGON_COMPONENTS_OK");
   requireSuccess("layout, rendering and lifecycle", await run(project, ["--script", "res://tests/godot/layout.gd", "--quit-after", "120"]), "ESTRAGON_LAYOUT_OK");

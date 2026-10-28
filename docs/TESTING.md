@@ -416,6 +416,28 @@ real editor/graphics APIs but does not certify physical keyboard shortcuts,
 platform dialogs or every OS/window-manager behavior. Record whether manual
 keyboard/remote-tree checks ran separately.
 
+## Native frontend without Bun (N01)
+
+```sh
+GODOT_BIN=/absolute/path/to/godot sh tools/check-native-frontend.sh
+```
+
+This requires only the pinned Godot 4.7 editor and standard system shell tools.
+It copies only the native compiler, test script and committed reference transcript
+into a fresh minimal project, without an import pass or editor plugin. Godot runs
+with `/usr/bin:/bin` PATH; the test asserts Bun is unavailable there. Success
+requires exit zero, no engine errors, and both `NATIVE_FRONTEND_NO_BUN` and
+`ESTRAGON_NATIVE_FRONTEND_OK`. The full Godot harness also runs these frontend
+tests. CI checks the optional TypeScript transcript separately with
+`bun tools/native-frontend-cases.ts`; that check is not needed for native use.
+
+The native test checks reference acceptance, typed trees/source spans and first
+error starts, lossless tokens, truncations, recursion limits, independent calls,
+and a tiny test-only literal-to-executable-GDScript proof. General code generation
+and Counter execution through the native compiler belong to N02. There is no
+editor or visual behavior change in N01; manual editor/visual smoke testing is
+not evidence of native emission or native Play integration yet.
+
 ## Known gaps
 
 Headless CI does not validate pixels, colors, GPU behavior, or the remote editor

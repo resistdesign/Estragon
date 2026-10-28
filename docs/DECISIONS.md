@@ -155,6 +155,8 @@ See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
 
 **Execution:** N01 native GDScript lexer/parser/typed frontend → N02 native emitter/maps, T04–T07 parity and interactive Counter → N03 no-Bun native editor cutover with real F5/F6 failure/recovery tests in a fresh Godot-only project. These tasks move **ahead of T09/T10**. Preserve existing working T08 behavior until N03 passes; do not silently fall back to Bun once cut over. TypeScript/Bun may remain **optional developer/CI reference tests**, never user-facing editor dependencies.
 
+**N01 implementation:** The addon now includes a scene-independent native lexer, hybrid parser, typed built-in validation and source-located diagnostics. Godot-only tests consume checked reference transcripts with Bun unavailable. General emission/maps and editor cutover remain N02/N03; the current editor still requires the transitional Bun compiler. See GOGO_LANGUAGE for API and parity boundaries.
+
 **Cost/constraints:** Temporary compiler duplication is acceptable to establish semantic parity. Keep codegen independent of EditorInterface, renderer and application scene tree. Preserve accepted Gogo syntax, deterministic output, authored source maps, event/callback semantics, lifecycle and fail-closed builds. GDScript type semantics remain Godot's responsibility. This does not solve arbitrary `@Bindable` annotations in ordinary authored `.gd`; R01/T09 remain separate.
 
 ## Unresolved, intentionally not invented
