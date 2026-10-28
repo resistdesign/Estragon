@@ -6,6 +6,12 @@ T04 implements namespace-free standalone markup and T05 implements a minimal **G
 
 This document records the target developer experience: **Gogo should feel like TSX, using GDScript as its programming language.** This is **not** a claim that its language features or Godot integrations already work. Exact grammar, editor integration, and new annotations in ordinary `.gd` files need prototypes.
 
+## Native Godot compiler decision (ADR-0012; not yet implemented)
+
+**Accepted owner direction, 2026-10-28:** Developers will compile Gogo **inside Godot using only the bundled addon**. The T04–T07 TypeScript compiler and T08 editor's Bun subprocess successfully proved the language and compile-before-Play workflow; the owner manually verified a Gogo font-size change in Godot. Bun is now **transitional**, not a permanent user requirement.
+
+**Next priority:** N01 GDScript-native parser and typed model, N02 native emitter/source maps and full current-language parity, then N03 editor cutover with **no Bun/Node, external compiler process or executable setting**. Do not start T09/T10 before N03. Preserve current working T08 until the native path passes clean Godot-only verification; TypeScript/Bun may remain optional contributor/CI tooling. Native compiler must not depend on EditorInterface or rendering. The R01 `@Bindable` question remains separate.
+
 ## The central correction: compile Gogo to GDScript
 
 **Gogo combines GDScript with XML-like component expressions and transpiles to real GDScript.** It is not intended to produce a persistent JSON UI description for a runtime XML/JSON interpreter.

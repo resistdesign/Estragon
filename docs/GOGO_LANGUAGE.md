@@ -2,6 +2,8 @@
 
 **Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. T07 adds Text/Button properties and generated pressed connections; T08 adds optional automatic editor compilation/highlighting; bindings and broader editor services remain future work.
 
+**Compiler migration, accepted but not implemented:** ADR-0012/N01–N03 replace the user-facing Bun compiler with bundled GDScript-native compilation. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
+
 ## Standalone markup-to-GDScript subset (T04, extended in T07)
 
 ```gogo

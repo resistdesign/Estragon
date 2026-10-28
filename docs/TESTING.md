@@ -1,5 +1,9 @@
 # Tests and verification
 
+## Native Godot compiler acceptance (planned N01–N03)
+
+Current tests below verify the **transitional Bun/TypeScript** toolchain and T08 editor bridge. N01/N02 require standalone **Godot-native tests running without Bun**; N03 additionally requires a fresh Godot project with only the addon and no Bun/Node PATH or executable setting. Editing Gogo then pressing F5/F6 must run fresh generated code; invalid Gogo/GDScript must block both and recover when fixed. Existing Bun tests may remain optional CI/reference checks, not an end-user prerequisite.
+
 ## Compiler typechecking and tests
 
 Requires **Bun 1.4.4**. From the repository root:
