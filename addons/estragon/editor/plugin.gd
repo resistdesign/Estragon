@@ -11,12 +11,14 @@ var _timer: Timer
 var _diagnostics: RichTextLabel
 var _building: bool = false
 var _active: bool = false
+var _extensions_pending: bool = true
 var last_report: Dictionary = {}
 var build_count: int = 0
 
 
 func _enter_tree() -> void:
 	_active = true
+	_extensions_pending = true
 	# Retire only Estragon-owned legacy setup; never rewrite user preferences.
 	for key in ["estragon/editor/bun_executable", "estragon/editor/build_timeout_seconds"]:
 		if ProjectSettings.has_setting(key): ProjectSettings.clear(key)
@@ -49,6 +51,20 @@ func _enter_tree() -> void:
 	EditorInterface.get_resource_filesystem().sources_changed.connect(_sources_changed)
 	resource_saved.connect(_resource_saved)
 	_compile()
+	if not _apply_extension_setting(): _schedule()
+
+
+func _apply_extension_setting() -> bool:
+	if not _extensions_pending: return true
+	var filesystem := EditorInterface.get_resource_filesystem()
+	if filesystem.is_scanning() or filesystem.is_importing(): return false
+	var settings := EditorInterface.get_editor_settings()
+	settings.mark_setting_changed(TEXT_EXTENSIONS_SETTING)
+	# set_setting alone does not update EditorNode's cached text extensions.
+	# Use the public notification consumed by Godot's own settings UI.
+	get_tree().root.propagate_notification(EditorSettings.NOTIFICATION_EDITOR_SETTINGS_CHANGED)
+	_extensions_pending = false
+	return true
 
 
 func _schedule() -> void:
@@ -71,6 +87,9 @@ func _save_external_data() -> void:
 
 func _compile_saved() -> void:
 	if _active:
+		if not _apply_extension_setting():
+			_schedule()
+			return
 		_compile()
 
 
