@@ -1,6 +1,6 @@
 # Estragon reactivity and component architecture contract
 
-**Owner direction accepted 2026-10-29; implementation pending.** This document is the durable brief for staged T09 delivery. It extends [the binding design](BINDING.md), [the execution plan](EXECUTION_PLAN.md), [accepted decisions](DECISIONS.md), and the live [T09 umbrella issue #5](https://github.com/resistdesign/Estragon/issues/5). It does **not** claim that reactivity, collections, x/y positioning, keyed repeaters or `EstragonBox` exist yet.
+**Owner direction accepted 2026-10-29; implementation pending.** This document is the durable brief for staged T09 delivery. It extends [the binding design](BINDING.md), [the execution plan](EXECUTION_PLAN.md), [accepted decisions](DECISIONS.md), and the live [T09 umbrella issue #5](https://github.com/resistdesign/Estragon/issues/5). It does **not** claim that reactivity, collections, x/y positioning, keyed repeaters or `EstragonBox` exist yet. **Version baseline:** ADR-0014 requires Godot **4.0+** for all future implementations. [C01 #41](https://github.com/resistdesign/Estragon/issues/41) must close current API gaps and prove native editor/runtime/compiler compatibility before releases claim 4.0+. Current 4.7 checks are insufficient.
 
 ## Language boundary and authoring
 
@@ -67,7 +67,7 @@ Other Estragon classes should continue to share behavior through cohesive inheri
 
 ## Recommended task boundaries and proofs
 
-**E01 #37 first (editor correctness):** auto-select Gogo highlighting for new/restored/already-open tabs. The bug is reproduced by the owner; selecting the Gogo highlighter manually works. Real-editor tests must fail before the fix and pass after. Do not hide it inside binding work.
+**E01 #37 first (editor correctness, 4.0+ evidence required):** auto-select Gogo highlighting for new/restored/already-open tabs. The bug is reproduced by the owner; selecting the Gogo highlighter manually works. Real-editor tests must fail before the fix and pass after. Do not hide it inside binding work.
 
 **T09-A — observable Gogo property and data-model foundation:** code-only Gogo modules, explicit lowercase annotation parsing/typechecking, generated setters/notifications, typed non-Node model proof and native editor/semantic tests. Confirm no implicit UI rebuild is needed to observe a plain property. Define/verify custom accessors, inheritance and equality. One scoped issue/PR.
 
@@ -79,7 +79,7 @@ Other Estragon classes should continue to share behavior through cohesive inheri
 
 ### Acceptance and quality gate across stages
 
-- Tests include 1) typed scalar update without manual refresh, 2) non-Node model update, 3) nested-object replacement, 4) layout/position dirty-phase behavior, 5) collection insert/remove/replace/move/item update, 6) keyed repeat behavior and owner cleanup, 7) fail-closed source diagnostics, 8) fresh Godot-only editor F5/F6 without Bun/Node.
+- Tests include 1) typed scalar update without manual refresh, 2) non-Node model update, 3) nested-object replacement, 4) layout/position dirty-phase behavior, 5) collection insert/remove/replace/move/item update, 6) keyed repeat behavior and owner cleanup, 7) fail-closed source diagnostics, 8) fresh Godot-only editor F5/F6 without Bun/Node, **including the 4.0 baseline and each supported 4.x minor per C01**.
 - Keep native compiler, source maps, callback evaluation semantics and independent component tree. Stage only supported properties/syntax; unknown types and unsupported mutations should fail visibly rather than pretend to be reactive.
 - Protect the shipped Counter and legacy demo during migration. Never merge on behalf of the user. Maintain linked GitHub issues, scoped PRs, CI, checked acceptance evidence and durable session handoffs per `AGENTS.md`.
 
