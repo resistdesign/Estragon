@@ -6,11 +6,11 @@ T04 implements namespace-free standalone markup and T05 implements a minimal **G
 
 This document records the target developer experience: **Gogo should feel like TSX, using GDScript as its programming language.** This is **not** a claim that its language features or Godot integrations already work. Exact grammar, editor integration, and new annotations in ordinary `.gd` files need prototypes.
 
-## Native Godot compiler decision (ADR-0012; native compiler implemented, editor cutover pending)
+## Native Godot compiler decision (ADR-0012; native compiler and editor implemented)
 
-**Accepted owner direction, 2026-10-28:** Developers will compile Gogo **inside Godot using only the bundled addon**. The T04–T07 TypeScript compiler and T08 editor's Bun subprocess successfully proved the language and compile-before-Play workflow; the owner manually verified a Gogo font-size change in Godot. Bun is now **transitional**, not a permanent user requirement.
+**Accepted owner direction, 2026-10-28:** Developers will compile Gogo **inside Godot using only the bundled addon**. The T04–T07 TypeScript compiler and T08 editor's Bun subprocess successfully proved the language and compile-before-Play workflow; the owner manually verified a Gogo font-size change in Godot. N03 replaces that bridge; Bun is optional repository/reference tooling.
 
-**Current state:** N01 provides the GDScript-native parser/model; N02 adds native generation/maps, Godot semantic validation and Counter runtime parity. Next is N03 editor cutover with **no Bun/Node, external compiler process or executable setting**. Do not start T09/T10 before N03. Preserve current working T08 until the native path passes clean Godot-only verification; TypeScript/Bun may remain optional contributor/CI tooling. Native compiler must not depend on EditorInterface or rendering. The R01 `@Bindable` question remains separate.
+**Current state:** N01 provides the GDScript-native parser/model; N02 adds native generation/maps, Godot semantic validation and Counter runtime parity. N03 provides native editor compilation with **no Bun/Node, external compiler process or executable setting**. Do not start T09/T10 before N03. The native path is covered by fresh-project Godot-only editor verification; TypeScript/Bun may remain optional contributor/CI tooling. Native compiler must not depend on EditorInterface or rendering. The R01 `@Bindable` question remains separate.
 
 ## The central correction: compile Gogo to GDScript
 
@@ -136,7 +136,7 @@ The addon should make `.gogo` a real authoring language, not merely an extension
 - Generated GDScript remains inspectable/debuggable without becoming the file that developers are expected to hand-edit.
 - Editor settings must not be needlessly overwritten; clean install/disable behavior matters.
 
-The current plugin only registers the text file extension. **Godot 4.7 editor syntax integration needs a concrete spike**, including verification of custom highlighter selection for non-GDScript text files. Investigate `EditorSyntaxHighlighter`, `ScriptEditor`, language extensions, and/or a dedicated authoring view. Keep Bun/TypeScript as the present tooling implementation; determine how it gets invoked and packaged without promising that a normal Godot player requires Bun.
+The plugin uses Godot 4.7 native TextFiles and automatic mixed highlighting, direct bundled compilation, authored diagnostics and a shared F5/F6 build gate. Broader language services remain future work. See EDITOR for current behavior and the measured API limits.
 
 ## `@Bindable` in GDScript: required experience, unresolved mechanics
 
@@ -285,6 +285,6 @@ The optional editor plugin now adds mixed Gogo coloring to the native text edito
 compiles configured source roots on saved/filesystem changes and gates both main
 and current-scene Play on fresh compilation/native validation. Source-located
 errors appear in the Gogo bottom panel; no manual compiler command is needed
-after one-time plugin/Bun setup. Completion, clickable navigation, debugger
+after enabling the addon, without external compiler setup. Completion, clickable navigation, debugger
 remapping and polished preview remain future work. See EDITOR/ADR-0011 for exact
 source/output policy, existing-tab limitations and verified Godot 4.7 APIs.

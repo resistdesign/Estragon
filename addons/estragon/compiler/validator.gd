@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Explicit built-in contracts. GDScript syntax/types remain Godot's authority.
 const Model = preload("res://addons/estragon/compiler/model.gd")

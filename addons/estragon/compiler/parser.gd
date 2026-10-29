@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Recursive-descent component islands composed with lexically retained GDScript.
 const Model = preload("res://addons/estragon/compiler/model.gd")

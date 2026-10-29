@@ -12,7 +12,7 @@ Estragon is at an experimental design and scaffold stage. Read [VISION.md](docs/
 
 ## Native compilation is the immediate priority
 
-Owner decision ADR-0012: the Godot addon must compile Gogo without requiring users to install Bun, Node or a separate compiler. T08's working subprocess is transitional. N01 native parser, N02 native generation/parity, and N03 no-Bun editor cutover **precede T09/T10**. Godot-only verification must be independent of Bun; Bun/TypeScript remains optional contributor/CI reference tooling. Follow [the execution plan](docs/EXECUTION_PLAN.md), [issue #30](https://github.com/resistdesign/Estragon/issues/30) and AGENTS.md.
+Owner decision ADR-0012: the Godot addon must compile Gogo without requiring users to install Bun, Node or a separate compiler. N01–N03 provide the bundled native parser, generation/parity and editor build gate; no editor subprocess or executable setting remains. Godot-only verification must be independent of Bun; Bun/TypeScript remains optional contributor/CI reference tooling. Follow [the execution plan](docs/EXECUTION_PLAN.md), [N03 / issue #35](https://github.com/resistdesign/Estragon/issues/35) and AGENTS.md.
 
 ## Development
 

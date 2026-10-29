@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Native source -> typed frontend result. No emitter, subprocess or editor state.
 const Model = preload("res://addons/estragon/compiler/model.gd")

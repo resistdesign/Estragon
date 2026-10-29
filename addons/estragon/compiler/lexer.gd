@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Re-entrant token scanner: caller supplies the offset and lexical context.
 ## Regexes classify Unicode characters only; no source rewriting/evaluation.

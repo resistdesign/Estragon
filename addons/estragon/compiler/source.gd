@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Source ranges use code-point indexes internally and compatible UTF-16 externally.
 const Model = preload("res://addons/estragon/compiler/model.gd")

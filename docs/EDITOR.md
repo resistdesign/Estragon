@@ -1,140 +1,128 @@
 # Editing and running Gogo in Godot 4.7
 
-**Implemented in T08:** native text-file editing, automatic mixed-language
-highlighting, build on saved/source changes, authored diagnostics and compilation
-before both Run Project and Run Current Scene. Completion, language-server
-navigation, debugger source maps, live preview and bindings remain future work.
+Estragon's optional editor plugin uses the bundled **native GDScript compiler**.
+Install Godot and the addon, enable the plugin, edit Gogo and press Play.
+**No Bun, Node, TypeScript, executable setting, shell or compiler command is
+required.** Repository TypeScript tools are optional contributor/reference tools.
+Completion, debugger remapping, live preview and bindings remain future work.
 
-## Native compiler migration (accepted; not yet implemented)
+## Getting started
 
-**ADR-0012:** T08 uses Bun only as a **temporary editor build bridge**. The owner manually verified changing Counter.gogo font size and pressing Play on 2026-10-28. The next work is N01 native parser, N02 native GDScript emission and maps, and N03 a fully Godot-native editor build with **no Bun executable or external process**. This comes before bindings and legacy retirement.
+1. Copy `addons/estragon` into a Godot 4.7 project, or open this repository's
+   `project.godot`. Enable **Estragon (experimental)** in Project Settings > Plugins.
+2. Open `.gogo` files from the FileSystem dock. Godot's normal Script Editor
+   selects the Gogo mixed-language highlighter automatically. A tab opened before
+   the plugin was first enabled may need reopening; known tabs regain highlighting
+   after disable/re-enable.
+3. For the working example, open `examples/counter/Counter.tscn`, edit
+   `Counter.gogo`, and use Run Current Scene (F6). Set that scene as the main scene
+   to use Run Project (F5). The repository's legacy main scene is preserved.
+   In a new application, attach the generated surface script to a single Node
+   host as in Counter.tscn; Estragon components do not become Godot Nodes/Controls.
 
-Until N03 merges, the Bun setup instructions below remain accurate for **the current T08 plugin**. After N03, users must be able to install Estragon and compile Gogo with Godot alone. Preserve source mapping, highlighter, F5/F6 fail-closed behavior, saved and unsaved edits, and diagnostics, without silently falling back to Bun. See [execution plan](EXECUTION_PLAN.md).
+There is no compiler setup step. Existing projects may keep an explicit
+`gogo.config.json`; fresh projects work without one. Plugin enablement is optional
+and is never forced in the owner's checkout or global editor settings by tests.
+Legacy Estragon executable/timeout settings are cleared in memory on enable;
+they are neither read nor registered, and no fallback process exists.
 
-## One-time setup
+## Sources and generated resources
 
-1. Install Bun 1.4.4. Open the root `project.godot` in the pinned Godot 4.7 editor.
-2. Enable **Estragon (experimental)** in Project > Project Settings > Plugins.
-   The plugin remains optional and is never force-enabled by the repository.
-3. If a GUI-launched editor cannot find Bun, set **Estragon > Editor > Bun
-   Executable** in Project Settings to the absolute executable path. Turn on
-   Advanced Settings if needed. Paths with spaces are supported. No shell is
-   launched: shell startup files, aliases and version-manager initialization are
-   not used. Automatic lookup checks the editor's inherited PATH, `~/.bun/bin`
-   and common Homebrew locations. An explicitly configured invalid path is an
-   error, not a fallback to a different executable.
-4. Double-click `examples/counter/Counter.gogo` in the FileSystem dock. It opens
-   in Godot's normal Script Editor with the **Gogo** highlighter automatically.
-   Files already open before first enable may need closing/reopening; Godot's
-   highlighter registration does not retroactively select them. Known tabs
-   regain Gogo highlighting after plugin disable/re-enable.
-5. Open `examples/counter/Counter.tscn` and use Run Current Scene (F6; Command-R
-   on macOS). To demonstrate Run Project (F5), set this scene as the main scene
-   in your local project settings first. The repository's legacy main scene is
-   preserved. **No manual compiler command is needed during normal development.**
-
-The text-extension setting `docks/filesystem/textfile_extensions` is global to
-Godot and persists on disable, as in the earlier plugin. Estragon only appends
-`gogo` if absent and preserves existing entries verbatim. It does not enable
-external editors or overwrite editor preferences. Disabling stops compilation,
-removes hooks/panel and replaces active Gogo coloring with a native plain
-highlighter; generated files remain usable. Re-enable restores hooks once.
-
-## Source discovery and output policy
-
-`gogo.config.json` at the project root has the strict shape:
+Without configuration, scan project sources recursively, excluding the root
+`addons` directory, hidden entries, and `generated`, `tests`, `vendor` and
+`node_modules` directories. This avoids scanning the addon and dependencies.
+An explicit `gogo.config.json` remains authoritative:
 
 ```json
-{
-  "version": 1,
-  "source_roots": ["examples/compiled", "examples/mixed", "examples/counter"]
-}
+{"version": 1, "source_roots": ["examples/compiled", "examples/mixed", "examples/counter"]}
 ```
 
-Only these project-relative roots are compiled, recursively and in sorted order.
-Overlapping roots deduplicate. Add your application directory (for example `ui`)
-when introducing sources. Hidden directories, `generated`, `tests`, `vendor` and
-`node_modules` are skipped. A root cannot escape the project or name an excluded
-path; symlink sources/outputs are rejected. This avoids invalid test fixtures,
-dependencies and the legacy namespaced XML/JSON demo. Do not configure the legacy
-demo as a new-compiler source. Missing/malformed config or roots block Play.
+Explicit roots are nonempty project-relative files/directories; traversal is
+sorted and deduplicated. Missing/invalid roots or configuration block the build.
+Roots cannot escape the project or name hidden/excluded paths. Symlink sources
+and generated paths are rejected. The repository config deliberately excludes
+the legacy namespaced XML demo and invalid test fixtures; keep it when using
+this repository. A fresh project needs no config file.
 
-`folder/Screen.gogo` produces `folder/generated/Screen.gd` and, for hybrid source,
-`Screen.gd.map.json`. The adjacent `generated` directory is compiler-owned;
-authored scripts belong elsewhere. Existing examples/scenes keep their paths.
-Source names are stable project-relative paths, so checked-in code/maps match
-manual CLI output. Source is never rewritten. UID sidecars are left intact.
-Unchanged outputs are not rewritten. All sources pass the Gogo frontend before
-any output is touched; a frontend failure preserves the previous outputs.
+`folder/Screen.gogo` generates `folder/generated/Screen.gd`, and hybrid modules
+also generate `Screen.gd.map.json` using the existing version-1 map format.
+Standalone mode removes an obsolete hybrid map. The adjacent `generated`
+directory is compiler-owned; authored scripts belong elsewhere. Existing scene
+paths and UID sidecars are preserved. Byte-identical files are not rewritten. A first native build can normalize older
+TypeScript output formatting/map serialization; subsequent unchanged builds do
+not churn those files.
+Outputs from renamed/deleted sources are not deleted automatically; update scene
+references and remove obsolete generated artifacts deliberately.
 
-Outputs from deleted/renamed sources are not automatically deleted: update scene
-references and remove obsolete generated artifacts deliberately. This plugin
-builds configured sources, not an import/export or source migration system.
+Every build compiles all sources before touching outputs. Changed code/maps are
+staged with rename backups, then validated by Godot at their actual output paths.
+A syntax, type, path or publication failure blocks Play and restores prior output
+bytes/maps/timestamps. No failed build authorizes stale code to run. Errors during
+rollback report the retained backup path for recovery. Transactions prevent
+partial output after a reported failure; this is not a filesystem crash journal.
 
-## Save and Play behavior
+Validation/reloads are dependency ordered using the native lexer for static
+extends/preload paths and Godot's literal semantics. Each validated dependency is
+refreshed in place before checking its dependents, so cached base fields/types
+cannot cause stale checks. Failed transactions restore prior cached code too.
+This retains resource/class identity and updates already-loaded dependencies.
+Filesystem records are refreshed; newly generated directories request a scan.
+Running applications are not hot-reloaded: stop/re-run after editing.
 
-Saved Gogo resources and Godot filesystem changes schedule a short coalesced
-build. This uses native editor notifications, not per-frame source polling.
-External changes are detected when Godot scans them (normally on window focus);
-use Scan Sources if necessary. Invalid saved source appears in the **Gogo**
-bottom panel; it does not make stale generated output eligible for Play.
+## Save, unsaved edits and Play
 
-Before either Play action, `_build()` saves native Script Editor buffers and
-runs the authoritative build regardless of the background build state. The same
-hook gates F5/F6. Bun runs the existing TypeScript pipeline, then the standard
-Godot executable checks every configured generated script in a separate headless
-process. Native GDScript parse/type errors are mapped back to original Gogo
-coordinates while retaining engine diagnostics. The hook returns false on any
-failure, so Godot does not start the game. Fix the source and press Play again.
+Enablement builds current saved sources. Saved Gogo resources and filesystem
+changes schedule a short coalesced native build; there is no per-frame source
+polling. External edits are detected when Godot scans (normally on window focus);
+use Scan Sources if necessary. Background builds use saved sources.
 
-A successful build updates Godot's filesystem records for changed `.gd` paths.
-The newly launched game reads the fresh files. Running games are not hot-reloaded;
-stop/re-run after edits. These are ordinary generated scripts, not an interpreter.
-GDScript semantic errors can leave a newly generated but invalid `.gd` on disk;
-the build still fails and execution is blocked. Runtime-only errors (for example
-an invalid dynamic Callable or out-of-range computed size) remain runtime errors;
-this is not a promise to execute user code safely during compilation.
+Both Play modes use the same `_build()` gate. It saves native Script Editor
+buffers, including modified Gogo TextFile tabs, then compiles and semantically
+validates all current source. A Gogo buffer that cannot be saved blocks Play
+instead of using old disk content. Dirty edits need no manual Save before Play.
+Invalid source appears in the **Gogo** diagnostics panel. Repair it and press
+Play again; no compiler restart or external tool recovery is needed.
 
-The editor build is synchronous to honor Godot's boolean `_build` gate. The UI
-can pause briefly during a build. **Build Timeout Seconds** defaults to 30 and is
-bounded to 1–120; each native script check also has a 10-second limit. A missing
-Bun/compiler, launch failure, crash, malformed/missing report or timeout is a
-visible failure. No shell quoting or shell-specific configuration is required.
-Large projects and incremental/background compilation are future optimization.
+Compilation is synchronous because Godot's `_build()` requires a boolean result.
+Large projects can briefly pause the editor. No external process/timeout setting
+exists. Incremental/background compilation is future work. Runtime-only errors,
+such as invalid dynamic Callables or sizes, remain runtime errors; compilation
+does not execute a UI to prove arbitrary application behavior.
 
-## Highlighting and diagnostics
+## Highlighting, diagnostics and lifecycle
 
-The registered `EditorSyntaxHighlighter` advertises the `gogo` extension. Godot
-4.7 selects it for TextFile resources; Estragon does not register Gogo as a
-GDScript language or import it as a scene. The normal Script Editor retains its
-search, save and other text-editing facilities. Lexical coloring distinguishes
-GDScript declarations, component tags, attributes, expression braces, strings
-(including multiline strings), and code/markup comments. It is presentation-only,
-not the compiler parser; ambiguous/malformed partial code may be colored
-approximately. Compiler diagnostics always come from the TypeScript pipeline
-and native Godot checks, not the highlighter.
+Godot 4.7 selects the registered `EditorSyntaxHighlighter` for `.gogo` TextFiles.
+It colors GDScript declarations, tags, attributes, braces, strings/multiline strings
+and code/markup comments. Coloring is approximate for partial/malformed source;
+all diagnostics come from the native compiler and Godot semantic validator.
+The panel shows original file:line:column. Godot's reload API supplies lines,
+not exact error columns; generated spans map to their owning authored location.
+Engine diagnostics remain visible. No debugger breakpoint/source remapping or
+clickable diagnostic navigation is implemented.
 
-The **Gogo** bottom panel shows original file:line:column diagnostics and native
-mapped traces; select/copy them to locate the authored source. There is no custom
-completion service, clickable diagnostic navigation or debugger breakpoint
-remapping yet. Generated `.gd` remains inspectable; edit the `.gogo` source.
+The global `docks/filesystem/textfile_extensions` preference is only appended
+with `gogo` when absent, preserving all existing values. It persists on disable.
+Disabling removes subscriptions/timers/panel and detaches active Gogo highlighters;
+re-enabling restores known tabs and one set of hooks. Generated files remain
+usable. Restart uses the same native source discovery/build path.
 
-## Verified APIs and limits
+## Evidence and API boundaries
 
-Godot 4.7's pinned source establishes two relevant contracts, also exercised by
-our isolated editor tests:
+The independent `sh tools/check-editor.sh` harness runs a copied self-contained
+Godot editor and fresh application project with an empty executable PATH, no
+repository toolchain/config/generated application scripts, and no user preference
+changes. It exercises native file opening/highlighting, saved/unsaved/external
+edits, actual main/current scene run commands, button/text/resize/cleanup assertions
+in the launched application, malformed/semantic errors blocking both modes,
+repair, resource/class identity, plugin lifecycle, no-op behavior and full editor
+restart. It also runs native transactional build tests. See TESTING for commands
+and graphics/physical-keyboard coverage.
 
-- [ScriptEditor extension selection](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/script/script_editor_plugin.cpp#L2314)
-  selects registered highlighters by extension for text files. Registration alone
-  does not update already-open files; unregistering alone leaves their active
-  highlighter in place, so Estragon explicitly detaches its active instances.
-- [EditorRunBar run path](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/run/editor_run_bar.cpp#L255)
-  handles both main/current scene modes, autosaves, then calls the editor build
-  gate. See also [`EditorPlugin._build`](https://docs.godotengine.org/en/4.7/classes/class_editorplugin.html#class-editorplugin-private-method-build).
+Relevant Godot contracts:
 
-`bun run test:editor` uses a copied, self-contained Godot executable and isolated
-project/settings to test actual native file opening, automatic highlighter
-assignment, saving and both run commands. Test drivers never enable the plugin
-in the user's project or modify global editor settings. On macOS the copied
-binary is ad-hoc signed for local test execution only. See TESTING for precise
-coverage and the separate manual keyboard/visual procedure.
+- [Native TextFile highlighter selection](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/script/script_editor_plugin.cpp#L2314).
+- [Common main/current run path](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/run/editor_run_bar.cpp#L255)
+  and [EditorPlugin._build](https://docs.godotengine.org/en/4.7/classes/class_editorplugin.html#class-editorplugin-private-method-build).
+- [Resource.set_path_cache](https://docs.godotengine.org/en/4.7/classes/class_resource.html#class-resource-method-set-path-cache)
+  for isolated semantic validation; explicit Script reloads then synchronize the
+  committed editor resources without replacing them.

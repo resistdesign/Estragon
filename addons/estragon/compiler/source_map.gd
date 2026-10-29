@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Version-1 range maps, shared by native generation and diagnostic consumers.
 const Model = preload("res://addons/estragon/compiler/model.gd")

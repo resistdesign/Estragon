@@ -55,5 +55,5 @@ jobs:
         run: bun run check:godot
       - name: Prove import, parse, and runtime failures are rejected
         run: bun run test:godot-harness
-      - name: Verify isolated editor highlighting, automatic builds and both Play paths
-        run: bun run test:editor
+      - name: Verify fresh native editor Play, transactions and restart without Bun or Node
+        run: sh tools/check-editor.sh

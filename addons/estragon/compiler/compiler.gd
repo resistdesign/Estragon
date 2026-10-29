@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Pure native compilation. Semantic validation/loading is an explicit next step.
 const Model = preload("res://addons/estragon/compiler/model.gd")
