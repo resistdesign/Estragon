@@ -4,13 +4,13 @@
 
 T04 implements namespace-free standalone markup and T05 implements a minimal **GDScript-first hybrid** Gogo → GDScript subset. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) and ADR-0009 for executable syntax, construction-time semantics and source mapping. T07 adds Text/Button and generated Button.pressed wiring; bindings remain future work; T08 adds native editor highlighting and automatic compilation before Play.
 
-This document records the target developer experience: **Gogo should feel like TSX, using GDScript as its programming language.** This is **not** a claim that its language features or Godot integrations already work. Exact grammar, editor integration, and new annotations in ordinary `.gd` files need prototypes.
+This document records the target developer experience: **Gogo should feel like TSX, using GDScript as its programming language.** This is **not** a claim that the planned reactive features already work. ADR-0013 selects lowercase `@bindable` in authored `.gogo` only; ordinary `.gd` annotations are not required.
 
 ## Native Godot compiler decision (ADR-0012; native compiler and editor implemented)
 
 **Accepted owner direction, 2026-10-28:** Developers will compile Gogo **inside Godot using only the bundled addon**. The T04–T07 TypeScript compiler and T08 editor's Bun subprocess successfully proved the language and compile-before-Play workflow; the owner manually verified a Gogo font-size change in Godot. N03 replaces that bridge; Bun is optional repository/reference tooling.
 
-**Current state:** N01 provides the GDScript-native parser/model; N02 adds native generation/maps, Godot semantic validation and Counter runtime parity. N03 provides native editor compilation with **no Bun/Node, external compiler process or executable setting**. Do not start T09/T10 before N03. The native path is covered by fresh-project Godot-only editor verification; TypeScript/Bun may remain optional contributor/CI tooling. Native compiler must not depend on EditorInterface or rendering. The R01 `@Bindable` question remains separate.
+**Current state:** N01 provides the GDScript-native parser/model; N02 adds native generation/maps, Godot semantic validation and Counter runtime parity. N03 provides native editor compilation with **no Bun/Node, external compiler process or executable setting**. Do not start T09/T10 before N03. The native path is covered by fresh-project Godot-only editor verification; TypeScript/Bun may remain optional contributor/CI tooling. Native compiler must not depend on EditorInterface or rendering. R01 #38 remains unmerged research evidence; the owner's Gogo-only `@bindable` decision is accepted (ADR-0013).
 
 ## The central correction: compile Gogo to GDScript
 
@@ -19,23 +19,24 @@ This document records the target developer experience: **Gogo should feel like T
 Target pipeline:
 
 ~~~text
-  User-authored *.gogo           User-authored GDScript + @Bindable (desired)
-          |                                      |
-    XML/semantic parser                 source-aware transformation
-          |                                      |
-   type, schema, events, bindings, source-location analysis
-          |                                      |
-          +---------- typed compiler model ------+
-                             |
-                   generated GDScript (*.gd)
-                             |
-                   Godot's GDScript compiler
-                             |
-              Estragon component instances + wiring
-                             |
-         Estragon-owned layout / state / events / paint
-                             |
-            Estragon renderer → Godot graphics APIs
+            Authored *.gogo source
+       UI modules + code-only model modules
+  GDScript-like declarations, <Components>, @bindable
+                       |
+          native Gogo lexer/typed parser
+                       |
+      observable model + component codegen
+              with source maps
+                       |
+             generated ordinary *.gd
+                       |
+           Godot's GDScript compiler
+                       |
+          Estragon UI tree + data objects
+                       |
+    scoped subscriptions and layout invalidation
+                       |
+             paint / renderer adapter
 ~~~
 
 - The compiler may use an **internal AST/IR** to separate parsing, validation, and code generation. An *internal* IR is not the previously assumed **serialized JSON runtime contract**.
@@ -76,7 +77,7 @@ A single authored `.gogo` file should ideally allow GDScript declarations and fu
 # Counter.gogo — PROPOSED hybrid syntax, NOT executable today
 extends VBox
 
-@Bindable var count: int = 0
+@bindable var count: int = 0
 
 func increment() -> void:
     count += 1
@@ -92,7 +93,7 @@ func render() -> DisplayObject:
 
 The compiler owns the `.gogo` source, processes both GDScript-shaped code and XML-like element expressions, and emits **valid `.gd` code** with typed references, signal connections, subscriptions and source maps. This sketch is not a decision about exact render method names, base classes, or generated code shape.
 
-**Separate technical issue:** the Gogo compiler can handle `@Bindable` inside its *own* hybrid source, but that **does not solve the desired `@Bindable` annotation in ordinary user-authored `.gd` files**. Stock Godot parses those itself; addon-defined GDScript annotations are not simply registered by an `EditorPlugin`. Preserve both requirements and prove the mechanism for each.
+**Accepted boundary (ADR-0013):** Gogo owns `@bindable` exactly (lowercase) in authored `.gogo`; the compiler lowers it before Godot parses the generated `.gd`. Ordinary `.gd` custom annotations are explicitly **not** part of the product requirement. Code-only model `.gogo` files are included; this capability is not implemented yet. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md).
 
 ### Grammar and semantics to specify
 
@@ -138,25 +139,27 @@ The addon should make `.gogo` a real authoring language, not merely an extension
 
 The plugin uses Godot 4.7 native TextFiles and automatic mixed highlighting, direct bundled compilation, authored diagnostics and a shared F5/F6 build gate. Broader language services remain future work. See EDITOR for current behavior and the measured API limits.
 
-## `@Bindable` in GDScript: required experience, unresolved mechanics
+## Native Gogo `@bindable`: owner-accepted direction, not yet implemented
 
-**Developer-experience requirement:** with Estragon's addon enabled, authors should be able to declare a property as bindable in familiar GDScript authoring and have the necessary property accessors/change notifications generated for them.
-
-Conceptual authoring:
+**Official authoring syntax:** lowercase `@bindable` **only in Gogo `.gogo`**. Code-only model modules are first-class authored Gogo sources, with typed non-Node data properties and generated ordinary GDScript accessors/change notifications. Do not require `.bgd`, external compilation, manual setter boilerplate, arbitrary native `.gd` annotations or source rewriting in place.
 
 ~~~gdscript
-# Desired source ergonomics, NOT accepted stock GDScript today.
+# PlayerState.gogo — proposed, NOT executable yet
+class_name PlayerState
 extends RefCounted
 
-@Bindable
-var player_name: String = "World"
+@bindable var name: String = "World"
+@bindable var score: int = 0
+
+func add_point() -> void:
+    score += 1
 ~~~
 
-Generated GDScript should implement the specified getter/setter and change-notification contract without requiring hand-written boilerplate. Observability must work for plain objects (`RefCounted`/`Resource`) without a per-object Godot `Node` requirement. Define equality, initialization, assignment, custom accessor, inheritance, nesting, and collections semantics before claiming full support.
+Bindings should subscribe to generated model notifications and update **visual and layout properties** (including width/height and eventual x/y) as well as user data. Collection objects must be observable like Flex's ArrayCollection: structural add/remove/replace/move/reset and item-property changes must propagate, not merely replacement of the collection variable. Nested-object replacement, stable keyed repeated views and automatic subscription disposal are essential; no per-frame polling or gratuitous full component rebuild.
 
-**Critical technical constraint:** in stock Godot 4.7, installing an `EditorPlugin` does **not** register arbitrary new GDScript annotations. An unrecognized `@Bindable` in an ordinary `.gd` will not transparently become valid GDScript merely because the addon exists.
+**Component inheritance:** implemented `EstragonDisplayObject → EstragonContainer → EstragonStack → EstragonHBox/EstragonVBox`; owner's canonical target is `EstragonDisplayObject → EstragonContainer → EstragonBox → EstragonHBox/EstragonVBox` with shared box algorithms and backward compatibility. Current runtime has no public x/y component properties: their interaction with parent-managed layout must be designed and tested.
 
-**Research, don't hand-wave:** determine whether there is a safe interception/preprocessing mechanism that preserves the visible `.gd` authoring experience *before Godot parses the source*. If not, evaluate an editor language/extension integration, separate source extension (previously proposed `.bgd`), or engine/parser change, and spell out the tradeoffs. An alternative extension is a possible fallback, **not** a silent substitute for the requested experience. Never rewrite the user's source in place or falsely advertise unsupported syntax as executable.
+See [ADR-0013](DECISIONS.md), [the phased T09 contract](REACTIVITY_PLAN.md) and [live issue #5](https://github.com/resistdesign/Estragon/issues/5). R01's [research report](BINDABLE_FEASIBILITY.md) establishes the old stock-Godot annotation limitation; it no longer blocks the accepted Gogo-only strategy. E01 [#37](https://github.com/resistdesign/Estragon/issues/37) is the next independent editor fix.
 
 ## Automatic signals and event handlers
 
@@ -223,7 +226,7 @@ Implications:
 
 **Optional secondary models:** markup-root shorthand for simple screens, separately authored `.gd` code-behind when useful, or an MXML-style `<Script>` block. None should be a mandatory workaround for basic event callbacks. The user-visible preference is **TSX-like interleaving**; evaluate optional alternatives after proving that experience.
 
-**Critical distinction:** `@Bindable` inside compiler-owned `.gogo` might be straightforward to transform, but `@Bindable` directly in an ordinary `.gd` file is a separate, potentially much harder integration with Godot's own parser. Do not promise either without verified compile-and-editor behavior.
+**Compiler-only annotation:** official lowercase `@bindable` is allowed in authored Gogo only. Implement its parser, type contract, property lowering and native-editor/source-map verification before claiming it works; ordinary `.gd` annotations are intentionally outside scope.
 
 ### Required parser/editor prototype
 
@@ -240,7 +243,7 @@ Probe ambiguous `<` comparisons versus tags, nested braces, quotes containing an
 1. **Design and prove Gogo → GDScript:** use a minimal component and emit runnable GDScript with deterministic output, build errors, and source mapping. Retain the JSON sample during the transition.
 2. **Build base runtime types:** `DisplayObject`-style object, `Container`-style object, then a working `VBox`/`HBox` layout. Demonstrate resize-driven relayout without Godot `Control` widgets.
 3. **Wire editor compilation:** syntax support, diagnostics, generated-code location, and a save/build/run pipeline that can't accidentally run stale generated files.
-4. **Prototype `@Bindable` feasibility:** test actual stock Godot 4.7 editor/parser behavior; decide the least intrusive sustainable authoring strategy with explicit tradeoffs.
+4. **Implement the accepted Gogo-only `@bindable` path:** use R01 results as historical evidence, then deliver typed observable code-only model Gogo modules and dependent property updates under the staged T09 scope.
 5. **Generate signal handlers and connections;** add typed properties, IDs, and runtime lifetime tests.
 6. **Implement binding expressions and observable state** with a dependency graph and cleanup semantics.
 7. **Prototype TSX-style GDScript and markup in one `.gogo` file**, then evaluate optional markup-only shorthand and separate code-behind. Finalize the grammar from compiler and editor evidence.
@@ -255,7 +258,7 @@ The direction is realized only when a fresh project can:
 - Compile it into runnable GDScript and show a responsive `VBox`/`HBox` layout of Estragon objects.
 - Connect and invoke a declared event handler without manual signal wiring.
 - Demonstrate observable updates and correct disposal without per-frame polling.
-- Provide a credible solution (or clearly stated limitation) for `@Bindable` authoring in a `.gd` source file.
+- Demonstrate verified lowercase `@bindable` authoring in Gogo and generated typed notifications for non-Node models, without promising custom annotations in ordinary `.gd`.
 - Demonstrate a TSX-like single-file `.gogo` source combining GDScript methods and nested markup expressions, with typed props, generated handlers and useful diagnostics; evaluate optional code-behind separately.
 - Run deterministically through the editor and through automated tests, with no runtime XML/JSON interpretation and no generated Godot UI node hierarchy.
 
