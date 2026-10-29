@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 2, 2026-10-28. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 (#32) and N02 (#34) are merged; N03 implements direct native editor compilation, validated by fresh-project no-tools Play/restart tests. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
+**Plan version:** 3, 2026-10-29. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 (#32) and N02 (#34) are merged; N03 is merged in PR #36 (`a87c33b`), providing direct native editor compilation validated by fresh-project no-tools Play/restart tests. R01 provides feasibility evidence; the ordinary `.gd` annotation integration awaits an explicit owner decision. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -164,7 +164,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### T09 — Observable properties and Gogo bindings
 
-**Related:** [issue #5](https://github.com/resistdesign/Estragon/issues/5). **Prerequisites:** **N03 merged** and findings of R01. Postponed behind the native migration.
+**Related:** [issue #5](https://github.com/resistdesign/Estragon/issues/5). **Prerequisites:** **N03 merged** and reviewed R01 findings plus an explicit owner decision on the unsupported ordinary `.gd` annotation path. **E01 #37 must land before T09's final integrated authoring milestone.**
 
 - Implement a minimal correctly scoped observable-property contract and generated Gogo dependency updates, including cleanup and no per-frame polling.
 - Prove that a change to a model property updates a visible Estragon component; test nested dependency replacement, disposal, and feedback/cycle failure behavior before expanding to two-way/collection support.
@@ -178,14 +178,21 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Remove obsolete JSON runtime parsing/fixtures/commands only when no active consumer depends on them; update docs/tests/AGENTS together.
 - Do not delete an otherwise useful example until a working replacement is merged.
 
-### R01 — Research: `@Bindable` in ordinary authored `.gd` (parallel)
+### E01 — Automatic Gogo highlighting activation (separate editor fix)
+
+**Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **Schedule:** next standalone editor fix after active R01, before T09's final integrated authoring milestone.
+
+- Reproduce the owner-confirmed restored-tab activation bug; prove automatic selection for new, existing and restored Gogo tabs, disable/re-enable and restart. Preserve unrelated user settings.
+- Extend the real isolated editor tests to inspect actual highlighter attachment/colors without manual selection. Deliver a separate focused PR; no R01 implementation scope.
+
+### R01 — Research: `@Bindable` in ordinary authored `.gd`
 
 **Related:** [issue #4](https://github.com/resistdesign/Estragon/issues/4). **Prerequisite:** none.
 
 - Test stock Godot 4.7 parsing and available addon/editor pre-parse hooks with a minimal reproducible experiment.
 - Write down *verified* results, source/code links, trade-offs and a recommendation for retaining the normal `.gd` editing experience.
 - If true native-looking annotation handling is impossible through current public hooks, clearly state that limitation and **seek a user decision** before choosing an alternate extension or Godot fork. No speculative production preprocessor.
-- May be researched in parallel with N01–N03; findings inform T09 but do not block the native compiler migration.
+- Findings: [R01 report](BINDABLE_FEASIBILITY.md) and Godot-only `sh tools/check-bindable.sh`. Native setters and partial remaps work, but no complete supported ordinary `.gd`/native-editor path was found. Research completion does not authorize a source-extension or syntax replacement. T09 annotation integration remains gated on owner decision.
 
 ### R02 — Rendering backend research (deferred)
 

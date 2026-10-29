@@ -213,6 +213,8 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Reactive state (future work)
 
+- R01 findings and isolated stock-4.7 probes are in `docs/BINDABLE_FEASIBILITY.md` and `sh tools/check-bindable.sh`. Runtime loader/remap successes do not intercept native ScriptEditor validation. No alternate source boundary is approved; obtain an explicit owner architecture decision before implementing T09's annotation path. E01 #37 is a separate editor fix required before T09's final integrated authoring milestone.
+
 - The desired `@Bindable` experience in ordinary authored `.gd` **is not supported in stock Godot**. Research/verify a pre-parse integration path and consider `.bgd` only as an explicit fallback, not an approved substitution.
 - Before implementation, establish observable-property semantics, typed setters, initialization/equality behavior, and inheritance/custom-accessor behavior.
 - Account for nested path replacement, subscriptions and disposal, collection mutation, cycles, two-way feedback protection, and batched invalidation.

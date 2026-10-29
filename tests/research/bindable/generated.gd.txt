@@ -1,0 +1,25 @@
+@tool
+class_name R01Model
+extends RefCounted
+
+signal changed(property: StringName, previous: Variant, current: Variant)
+var notification_count: int = 0
+var count: int = 7:
+	set(value):
+		if count == value:
+			return
+		var previous := count
+		count = value
+		notification_count += 1
+		changed.emit(&"count", previous, value)
+var title: String = "initial":
+	set(value):
+		if title == value:
+			return
+		var previous := title
+		title = value
+		notification_count += 1
+		changed.emit(&"title", previous, value)
+
+func increment() -> void:
+	count += 1

@@ -26,6 +26,8 @@ The initial proof uses `RenderingServer` canvas primitives to render pixels with
 
 The desired experience is `@Bindable` in ordinary user-authored `.gd`, transformed into typed getters/setters and notifications. **Stock GDScript does not accept arbitrary addon-defined annotations**, and a simple `EditorPlugin` cannot register them. Explore real pre-parse source transformation/editor integration before considering a separate source extension (`.bgd`) or engine/parser modification. None of these mechanisms is confirmed; do not silently replace the requested `.gd` experience with `.bgd`.
 
+**R01 evidence, 2026-10-29 (not an alternate architecture decision):** [Feasibility report](BINDABLE_FEASIBILITY.md) records native runtime, loader/cache/remap/import/language and real ScriptEditor experiments. Fixed generated setters work, but native authored-buffer validation rejects `@Bindable` independently of those loading hooks. No complete supported stock 4.7 integration was found. Retain the requested ordinary `.gd` experience as unmet; obtain an explicit owner decision before adopting a different source boundary or engine dependency.
+
 ## ADR-0005 — Edit the original Gogo source
 
 **Status: provisional. 2026-10-25.**

@@ -1,10 +1,10 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-28. T01–T08 and native planning PR #31 are merged. N01 is merged in PR #32 (`efaad96`). N02 is merged in PR #34 (`8a864a2`). N03 implements the native editor cutover and remains **In review until approval and merge**. Normal addon editing/Play uses only Godot; TypeScript/Bun is optional reference tooling.
+**Snapshot:** 2026-10-29. T01–T08 and native planning PR #31 are merged. N01 is merged in PR #32 (`efaad96`). N02 is merged in PR #34 (`8a864a2`). N03 is merged in PR #36 (`a87c33b`). R01 records feasibility evidence in its review PR; T09 annotation integration requires an explicit owner decision. Normal addon editing/Play uses only Godot; TypeScript/Bun is optional reference tooling.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** Check [N03 / issue #35](https://github.com/resistdesign/Estragon/issues/35) and its latest PR/handoff. After N03 merges, recheck T09/R01 prerequisites and T10 scope before claiming new work. Do not start T09/T10 before N03. GitHub holds live progress; AGENTS.md's cleanup authorization remains in effect.
+**Start here:** Check [R01 / issue #4](https://github.com/resistdesign/Estragon/issues/4) and its latest PR/handoff plus the [feasibility report](BINDABLE_FEASIBILITY.md). The ordinary `.gd` annotation path needs an owner decision before T09. [E01 #37](https://github.com/resistdesign/Estragon/issues/37) is the next standalone editor fix and must precede T09's final integrated authoring milestone. GitHub holds live progress; AGENTS.md's cleanup authorization remains in effect.
 
 ## Current plan register
 
@@ -20,10 +20,11 @@
 | **T08** | **Done** | Native highlighting, saved-source builds and F5/F6 gate | [#28](https://github.com/resistdesign/Estragon/issues/28); umbrella [#6](https://github.com/resistdesign/Estragon/issues/6) | Merged [PR #29](https://github.com/resistdesign/Estragon/pull/29), `53809cf`; isolated editor/Play evidence in #28/#29; owner manually verified font-size edit and Play. |
 | **N01** | **Done (merged PR #32)** | Native Gogo lexer/parser/typed frontend | [#30](https://github.com/resistdesign/Estragon/issues/30) | Godot-only no-Bun proof: 103 reference cases, 558 assertions; full Bun/runtime/editor suites pass. Exact CI and handoff in issue/PR. |
 | **N02** | **Done (merged PR #34)** | Native codegen, source maps and T04–T07 parity | [#33](https://github.com/resistdesign/Estragon/issues/33) | Godot-only generation, direct Counter and shared runtime/negative tests; exact CI/evidence/handoff in issue/PR. |
-| **N03** | **In review; Done only upon approval + merge** | Native editor builds, both Play gates, resources and restart without tools | [#35](https://github.com/resistdesign/Estragon/issues/35) | Fresh self-contained editor/game with empty PATH; native transactions/cache/class identity and Play failure/recovery. Exact checks/CI/handoff in issue/PR. |
-| T09 | Queued (N03, R01 findings) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |
-| T10 | Queued (N03, parity) | Retire legacy JSON safely | Create task issue on pickup | Pending |
-| **R01** | **Ready, parallel** | Ordinary `.gd` `@Bindable` feasibility | [#4](https://github.com/resistdesign/Estragon/issues/4) | Pending |
+| **N03** | **Done (merged PR #36)** | Native editor builds, both Play gates, resources and restart without tools | [#35](https://github.com/resistdesign/Estragon/issues/35) | Fresh self-contained editor/game with empty PATH; native transactions/cache/class identity and Play failure/recovery. Exact checks/CI/handoff in issue/PR. |
+| T09 | Queued (R01 review + owner architecture decision; E01 gate) | Observable properties and bindings | [#5](https://github.com/resistdesign/Estragon/issues/5) (umbrella) | Pending |
+| T10 | Ready (verify legacy parity on pickup) | Retire legacy JSON safely | Create task issue on pickup | Pending |
+| **R01** | **In review; research complete only upon approval + merge** | Ordinary `.gd` `@Bindable` feasibility | [#4](https://github.com/resistdesign/Estragon/issues/4) | [Evidence](BINDABLE_FEASIBILITY.md), isolated Godot-only runtime/editor probes; exact checks/CI/handoff in issue/PR. Negative integration finding; no fallback adopted. |
+| **E01** | **Ready; next standalone editor fix** | Automatic Gogo highlighter activation, including restored tabs | [#37](https://github.com/resistdesign/Estragon/issues/37) | Required before final T09 authoring milestone; not implemented by R01. |
 | R02 | Deferred | Renderer-backend research | [#2](https://github.com/resistdesign/Estragon/issues/2) | Pending |
 
 **Statuses:** `Queued` = waiting on planned predecessor(s); `Ready` = actionable and unclaimed; `Active` = owned issue + branch with work underway; `Blocked` = evidence and decision/unblock step required; `In review` = PR open and awaiting approval/checks; `Done` = verified, approved and merged; `Deferred` = explicitly outside the current milestone. Never mark `Done` on an unmerged branch. A research task may complete with a well-evidenced negative feasibility finding.
