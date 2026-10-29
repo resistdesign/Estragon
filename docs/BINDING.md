@@ -1,6 +1,6 @@
 # Bindable properties and reactivity
 
-**Status: planned.** No custom annotation or expression binding compiles today. Read the [design direction](DESIGN_DIRECTION.md) for the TSX-like Gogo/GDScript authoring goal.
+**Status: planned; R01 feasibility evidence available.** No custom annotation or expression binding compiles today. [R01 findings and reproducible experiments](BINDABLE_FEASIBILITY.md) show partial runtime interception, but no complete supported ordinary `.gd`/native-editor path in stock Godot 4.7. An explicit owner architecture decision is required before T09 annotation implementation; no alternate syntax or extension has been adopted. Read the [design direction](DESIGN_DIRECTION.md) for the TSX-like Gogo/GDScript authoring goal.
 
 ## Developer experience
 
@@ -34,7 +34,7 @@ The sample intentionally leaves model scope/imports and exact binding syntax uns
 
 ## Godot parser integration: a hard prerequisite
 
-An `EditorPlugin` cannot register arbitrary new annotations in ordinary `.gd` source. The GDScript parser will reject an unknown annotation unless source is transformed **before** it parses, or the engine/parser is extended. Therefore the specific requested experience—`@Bindable` directly in regular authored `.gd` files—**has not been proven possible with stock addon extension points**.
+An `EditorPlugin` cannot register arbitrary new annotations in ordinary `.gd` source. The GDScript parser will reject an unknown annotation unless source is transformed **before** it parses, or the engine/parser is extended. Therefore the specific requested experience—`@Bindable` directly in regular authored `.gd` files—**was not achieved by the stock addon paths tested in R01**.
 
 Investigate the supported editor/parser source lifecycle and interception points. A custom compiler can recognize `@Bindable` in its **own** mixed `.gogo` source, but that does not automatically solve ordinary `.gd` files. If a reliable stock-editor interception path does not exist, document the trade-offs of a custom source extension, controlled generated script interface, and engine/parser change **before** changing the promised UX. The old `.bgd` suggestion is only a fallback candidate, not an accepted replacement.
 

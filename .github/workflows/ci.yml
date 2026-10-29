@@ -47,6 +47,8 @@ jobs:
           unzip -q "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot-bin"
           chmod +x "$RUNNER_TEMP/godot-bin/Godot_v4.7-stable_linux.x86_64"
           echo "GODOT_BIN=$RUNNER_TEMP/godot-bin/Godot_v4.7-stable_linux.x86_64" >> "$GITHUB_ENV"
+      - name: R01 stock Godot annotation and real-editor feasibility probes
+        run: sh tools/check-bindable.sh
       - name: Native frontend with Bun unavailable
         run: sh tools/check-native-frontend.sh
       - name: Native compilation and Counter runtime with Bun and Node unavailable

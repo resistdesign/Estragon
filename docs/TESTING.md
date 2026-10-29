@@ -497,3 +497,7 @@ physical-mouse/editor F5/F6 test. The independent editor suite above proves nati
 Headless CI does not validate pixels, colors, GPU behavior, or the remote editor
 scene tree. Automated visual snapshots, multi-platform CI and benchmarks do not
 exist yet. **Passing headless CI does not establish visual correctness.**
+
+## R01 annotation feasibility research
+
+Run `GODOT_BIN=/absolute/path/to/Godot sh tools/check-bindable.sh` with the pinned 4.7 binary. This standalone harness needs no Bun/Node: fresh projects, empty executable PATH and self-contained real editor settings. It asserts expected parser/dependency/language/import failures alongside successful typed setter and remap execution, exact authored diagnostics and unchanged authored bytes. `ESTRAGON_KEEP_BINDABLE_TEST=1` retains isolated logs. See [findings and limits](BINDABLE_FEASIBILITY.md); a passing research suite does not mean `@Bindable` is supported.

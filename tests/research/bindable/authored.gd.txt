@@ -1,0 +1,9 @@
+@tool
+class_name R01Model
+extends RefCounted
+
+@Bindable var count: int = 7
+@Bindable var title: String = "initial"
+
+func increment() -> void:
+	count += 1
