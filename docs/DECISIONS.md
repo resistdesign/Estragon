@@ -20,13 +20,13 @@ Estragon names the framework. Gogo names the language and its compiler; markup f
 
 The initial proof uses `RenderingServer` canvas primitives to render pixels without `Control` nodes. This is not a selection of the final engine backend. Investigate `RenderingDevice`, custom shaders, batching and native/GDExtension implementation when we have representative UI workloads. Keep IR, component tree, layout and binding independent of the graphics interface.
 
-## ADR-0004 — Bindable syntax strategy
+## ADR-0004 — Bindable syntax strategy (historical proposal)
 
-**Status: provisional. 2026-10-25.**
+**Status: superseded by ADR-0013 on 2026-10-29.** Original R01 research premise retained below as history.
 
 The desired experience is `@Bindable` in ordinary user-authored `.gd`, transformed into typed getters/setters and notifications. **Stock GDScript does not accept arbitrary addon-defined annotations**, and a simple `EditorPlugin` cannot register them. Explore real pre-parse source transformation/editor integration before considering a separate source extension (`.bgd`) or engine/parser modification. None of these mechanisms is confirmed; do not silently replace the requested `.gd` experience with `.bgd`.
 
-**R01 evidence, 2026-10-29 (not an alternate architecture decision):** [Feasibility report](BINDABLE_FEASIBILITY.md) records native runtime, loader/cache/remap/import/language and real ScriptEditor experiments. Fixed generated setters work, but native authored-buffer validation rejects `@Bindable` independently of those loading hooks. No complete supported stock 4.7 integration was found. Retain the requested ordinary `.gd` experience as unmet; obtain an explicit owner decision before adopting a different source boundary or engine dependency.
+**R01 evidence, 2026-10-29:** [Feasibility report](BINDABLE_FEASIBILITY.md) records native runtime, loader/cache/remap/import/language and real ScriptEditor experiments. Fixed generated setters work, but native authored-buffer validation rejects `@Bindable`. **The owner subsequently chose Gogo-only lowercase `@bindable` in ADR-0013; the old `.gd` requirement is no longer an open blocker.**
 
 ## ADR-0005 — Edit the original Gogo source
 
@@ -46,7 +46,7 @@ Estragon is distributed under the [MIT License](../LICENSE).
 
 Gogo (`.gogo`) should support **XML-like component expressions directly mixed with GDScript**, borrowing TSX's compositional authoring model and Flex 4's runtime/component principles. Component tags are **unprefixed** (`<VBox>`, `<Button>`); mandatory XML namespace prefixes and `xmlns` declarations are rejected as the product direction. The transpiler generates valid GDScript for typed Estragon components, automatic event/signal wiring, and later bindings. The first prototype's JSON output and namespaced XML are **temporary scaffolding**, not the final language contract.
 
-The *experience* is accepted; precise grammar, imports, binding semantics, parser architecture, editor integration, GDScript class organization, and handling `@Bindable` in ordinary `.gd` files are still open engineering decisions. See [design direction](DESIGN_DIRECTION.md).
+The *experience* is accepted; precise grammar, imports, binding semantics, parser architecture, editor integration and GDScript class organization remain implementation decisions. ADR-0013 settles the annotation spelling and authored `.gogo` boundary. See [design direction](DESIGN_DIRECTION.md).
 
 
 ## ADR-0008 — Framework-owned automatic component lifecycle
@@ -167,10 +167,36 @@ See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
 
 **Cost/constraints:** Temporary compiler duplication is acceptable to establish semantic parity. Keep codegen independent of EditorInterface, renderer and application scene tree. Preserve accepted Gogo syntax, deterministic output, authored source maps, event/callback semantics, lifecycle and fail-closed builds. GDScript type semantics remain Godot's responsibility. This does not solve arbitrary `@Bindable` annotations in ordinary authored `.gd`; R01/T09 remain separate.
 
+## ADR-0013 — Lowercase `@bindable` belongs to Gogo; observable models, collections and layout
+
+**Status: accepted owner decision, 2026-10-29. Implementation remains planned. Supersedes ADR-0004's authoring-boundary requirement.**
+
+**Source/annotation:** The one official syntax is **`@bindable` (lowercase) in authored `.gogo` only**. Gogo is the developer-facing language, including code-only typed model modules; the bundled native Gogo compiler transforms declarations into ordinary valid GDScript properties, typed accessors and observable change notifications. No custom annotation is registered in native authored `.gd`; no `.bgd`, engine fork or external compiler is required. The [R01 findings](BINDABLE_FEASIBILITY.md) remain research evidence rather than an implementation or a block on this decision.
+
+**Behavior:** Plain assignments (e.g. `count += 1`) to bindable Gogo properties notify dependent bindings without hand-written setters, manual signals or full root reconstruction. Dependency-aware subscriptions update affected typed component props, including text/paint and **layout geometry** when such props are implemented. Explicitly specify `x`/`y` semantics relative to layout-managed parent coordinates; current components do not expose them. Coalesce invalidation, avoid per-frame polling, detach observers on unmount/transfer according to framework lifecycle and preserve identity where possible.
+
+**Data:** Support non-Node bindable Gogo objects/models and an **ArrayCollection-inspired observable collection**. Model property updates, collection reference changes, structural add/remove/replace/move/reset and bindable item-property updates are distinct events. Repeated/list components must eventually react with stable identity and keyed reconciliation. A raw `Array.append()` is not assumed to emit change events solely because its variable is bindable.
+
+**Shared layout hierarchy:** The current implemented chain is `EstragonDisplayObject → EstragonContainer → EstragonStack → EstragonHBox/EstragonVBox`. Owner target is `EstragonDisplayObject → EstragonContainer → EstragonBox → EstragonHBox/EstragonVBox`: centralize shared box sizing/orientation/gap behavior and preserve existing Stack consumers through a tested migration. Do not create a Godot `Control`/`Node` tree.
+
+**Delivery:** Fix automatic Gogo highlighting separately in [E01 #37](https://github.com/resistdesign/Estragon/issues/37). Stage T09 across reviewable property/model, component/layout, collection/repeater, and two-way/cycle-hardening slices. The [T09 live issue #5](https://github.com/resistdesign/Estragon/issues/5) and [REACTIVITY_PLAN](REACTIVITY_PLAN.md) contain the detailed contracts. Do not claim these features implemented or merge automatically.
+
+## ADR-0014 — Support Godot 4.0 and all subsequent 4.x versions
+
+**Status: accepted owner requirement, 2026-10-29. Implementation/verification in progress; 4.0 compatibility is NOT yet established.**
+
+**Decision:** Estragon's distributed GDScript addon, Gogo compiler, native editor integration, emitted code, independent component runtime, layout/rendering and examples must support **Godot 4.0+**, including each later minor release in Godot 4.x. The minimum must not silently rise to the 4.7 version used for current tests. Bun/Node remain optional contributor tools, never a user-side build dependency.
+
+**Current gap:** The published Godot 4.0 `ScriptEditor` API omits `save_all_scripts()` and `get_unsaved_files()` called by N03's F5/F6 build gate; the Godot 4.0 `Resource` API omits `set_path_cache()` used in native Gogo semantic validation. E01 #40 repairs 4.7 restored/highlighting tabs using a bound undocumented `_get_edited_resource()` plus ScriptEditor ItemList path/metadata; this is not evidence of older-version support. The repository's `project.godot` currently carries a `4.7` feature marker. These examples establish the need for a broader audit, not an exhaustive defect list.
+
+**Requirements:** Prefer stable public Godot 4.0 APIs; if an internal workaround is unavoidable, version/capability-gate its narrow adapter and test every supported engine version with real editors, without manipulating user preferences or discarding unsaved source. Preserve fail-closed compile-before-Play, source maps, native semantic validation, correct script/class identity, generated GDScript syntax, runtime layout/input/paint, and all E01 new/open/restored Gogo highlighting. Test real 4.0–4.7 engines and maintain a repeatable matrix, including source/scene versioning and plugin load/import evidence. Do not mislabel 4.7 CI green as 4.0+ certification.
+
+**Delivery:** Full cross-cutting compatibility gate [C01 issue #41](https://github.com/resistdesign/Estragon/issues/41). Highlighter E01 PR #40 must receive a specific 4.0+ compatibility review; the Godot-only T09 `@bindable` plan in ADR-0013 remains accepted but implementation must target the 4.0 baseline. No automatic merge, unsupported capability promises or unapproved minimum-version increases.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.
-- **Bindable source integration:** preserve the desired `@Bindable` annotation in ordinary authored `.gd`; prove a workable pre-parse/tooling mechanism or evaluate explicit fallbacks.
+- **Bindable semantics and staged integration:** implement approved Gogo-only `@bindable` in code-only models and UI classes, generated setters/notifications, nested dependencies, observable collections, reactive geometry and lifecycle. See ADR-0013 and [REACTIVITY_PLAN](REACTIVITY_PLAN.md).
 - **Gogo language:** TSX-like GDScript/markup grammar, component import/resolution, typed expression/event/binding semantics and optional markup-only shorthand.
 - **Node integration:** which components, if any, deserve optional Godot node wrappers.
 - **Layout/style semantics:** borrow selected Flex ideas, establish a new model, or align with modern UI layouts.

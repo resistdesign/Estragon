@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 3, 2026-10-29. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 (#32) and N02 (#34) are merged; N03 is merged in PR #36 (`a87c33b`), providing direct native editor compilation validated by fresh-project no-tools Play/restart tests. R01 provides feasibility evidence; the ordinary `.gd` annotation integration awaits an explicit owner decision. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
+**Plan version:** 5, 2026-10-29. **Status:** N01–N03 and T01–T08 are merged; Godot-only Gogo compilation/editor Play is shipped. **R01 #38 and architecture PR #39 are merged**, documenting why ordinary authored `.gd` custom annotations are not supported. **The owner chose Gogo-only lowercase `@bindable` on 2026-10-29 (ADR-0013).** E01 #37 automatic Gogo highlighting is in review (PR #40, 4.7 tested); **C01 #41 now establishes required Godot 4.0+ compatibility and is a release/support gate**; T09-A through T09-D are planned incremental slices for observable Gogo models, bindings/layout, collections/repeaters and two-way/cycle hardening. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md), [T09 issue #5](https://github.com/resistdesign/Estragon/issues/5) and [WORK_STATUS.md](WORK_STATUS.md) for accepted scope and live handoffs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -13,7 +13,7 @@ The first integrated milestone (T01–T08, **transitionally Bun-powered**) is an
 5. The Godot editor recognizes Gogo, automatically transpiles before Run and clearly reports failures against the authored source. Failed builds must not run stale generated code.
 6. CI covers strict TypeScript tests and actual Godot script/runtime checks; a documented visual check covers what headless CI cannot prove.
 
-**Not required to claim this first milestone:** completed `@Bindable` support in ordinary authored `.gd`; full JSX grammar, full Flex compatibility, a complete component suite, sophisticated graphics backends, or polished visual editor. Those follow independent evidence and reviews.
+**Not required to claim this first milestone:** Gogo `@bindable` or completed reactive bindings, full JSX grammar, full Flex compatibility, a complete component suite, sophisticated graphics backends or polished visual editor. Those follow independent evidence and reviews. Ordinary `.gd` custom annotations are no longer an accepted requirement (ADR-0013).
 
 
 ## Immediate priority: native Gogo compilation inside Godot (ADR-0012)
@@ -56,8 +56,9 @@ T01 → T02 → T03 → T04 → T05 → T06 → T07 (merged)
                                       │
                        N03 native editor cutover (no Bun)
                               ├───────┴────────┐
-                       T09 bindings (+R01)   T10 legacy JSON retirement
-R01 @Bindable-in-.gd research: independent, informs T09
+                       E01 #37 editor fix → T09-A models → T09-B UI/layout → T09-C collections → T09-D two-way
+                        T10 legacy JSON retirement (independent)
+R01 #38 research: merged; historical evidence, no longer a T09 syntax blocker
 R02 graphics research: deferred
 ~~~
 
@@ -162,13 +163,16 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Require a **clean Godot-only project without Bun/Node installed/configured** to complete the accepted N03 gate above. Test malformed markup/semantic errors and recovery through both Play paths, including in isolated real Godot editor integration tests.
 - Keep Bun/TypeScript only as optional repository/CI reference tooling, never as an addon requirement. Update user docs and AGENTS after successful migration. Do not retire the legacy JSON demo in this PR.
 
-### T09 — Observable properties and Gogo bindings
+### T09 — Native Gogo `@bindable`: models, UI/layout and observable collections
 
-**Related:** [issue #5](https://github.com/resistdesign/Estragon/issues/5). **Prerequisites:** **N03 merged** and reviewed R01 findings plus an explicit owner decision on the unsupported ordinary `.gd` annotation path. **E01 #37 must land before T09's final integrated authoring milestone.**
+**Umbrella:** [T09 #5](https://github.com/resistdesign/Estragon/issues/5). **Prerequisites:** N03 merged; R01 #38 findings reviewed/merged for historical record; **owner syntax decision is now made** (ADR-0013). E01 #37 is a separate next editor fix and must be merged before the final T09 integrated authoring milestone. See the [detailed staged contract](REACTIVITY_PLAN.md). Do not claim T09 complete from one implementation PR.
 
-- Implement a minimal correctly scoped observable-property contract and generated Gogo dependency updates, including cleanup and no per-frame polling.
-- Prove that a change to a model property updates a visible Estragon component; test nested dependency replacement, disposal, and feedback/cycle failure behavior before expanding to two-way/collection support.
-- **Do not claim `@Bindable` works in ordinary `.gd` unless R01 proves a supported implementation path.** If the requested syntax cannot be met, split/stop the blocked annotation integration and seek a decision rather than quietly requiring `.bgd` or manual setters.
+- **T09-A: bindable property + data-model compiler foundation.** In compiler-owned Gogo only, recognize the **exact lowercase `@bindable`** declaration on typed properties, including code-only non-Node model `.gogo` modules. Generate valid native GDScript accessors, change notifications, correct initialization/equality and source maps; prove normal assignments, inheritance/custom setters as specified and editor fail-closed checks. No native `.gd` annotations or `.bgd` substitution.
+- **T09-B: dependent component props, layout and identity.** Compile explicit dependency-aware reactive expressions, subscribe/unsubscribe and automatically update affected component properties without `set_root(build_view())`; nested replacement, batching and lifecycle/transfer safety. Prove text, color, width/height, gap and geometry invalidation. **`x`/`y` are not implemented**: specify how positioned/absolute children interact with parent VBox/HBox layout before adding them. **Verified hierarchy:** `DisplayObject → Container → Stack → VBox/HBox`; target shared `EstragonBox extends EstragonContainer` with HBox/VBox extending Box. Refactor compatibly and test the existing Stack contract in a focused step.
+- **T09-C: ArrayCollection-like observable data and repeated content.** Typed observable collection reference and separate mutation events for add/insert/remove/replace/move/reset plus bindable item-property changes. Support stable keyed/list reconciliation, collection replacement, no duplicated updates or leaked subscriptions; a plain Array's mutation is not automatically observable.
+- **T09-D: assignable two-way bindings and edge semantics.** Event adapters, cycle/feedback guards, nested null paths, batched invalidation and integrated collection/layout/editor demonstration; split more PRs as appropriate.
+
+**Shared acceptance:** actual Godot 4.0+ compatibility (C01/ADR-0014), native Godot-only F5/F6, deterministic typed source maps, no per-frame polling, no per-component Godot Control/Node, proper tree/layout/paint dirty phases and framework-owned cleanup. Preserve supported Gogo/Counter behavior, tests and examples. Each slice gets a scoped task issue, focused PR, exact Godot-positive/negative tests and durable handoff; do not auto-merge.
 
 ### T10 — Retire the legacy JSON prototype safely
 
@@ -178,13 +182,21 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Remove obsolete JSON runtime parsing/fixtures/commands only when no active consumer depends on them; update docs/tests/AGENTS together.
 - Do not delete an otherwise useful example until a working replacement is merged.
 
+### C01 — Godot 4.0+ compatibility (owner baseline requirement; project-wide)
+
+**Tracking:** [C01 #41](https://github.com/resistdesign/Estragon/issues/41). **Owner decision:** ADR-0014. **Target:** Godot 4.0 through all later 4.x minors, not just 4.7. **Status:** unverified/required; Godot 4.7 test success does not establish compatibility.
+
+- Audit GDScript syntax, plugin lifecycle, all compiler/emitter/validation methods, editor APIs, generated resource/UID/scene formats, and runtime component/graphics APIs using **Godot 4.0 as the minimum**. Known gaps: `ScriptEditor.save_all_scripts()`, `get_unsaved_files()` and `Resource.set_path_cache()` are documented in 4.7 but not 4.0; the E01 4.7 editor association adapter reaches undocumented UI internals; `project.godot` advertises a 4.7 feature.
+- Implement public-API 4.0-compatible paths where possible; version-gate any unavoidable private adapter with real-engine proof. Never compromise source freshness, F5/F6 fail-closed behavior, generated-script/class identity, startup/restart highlighting, component lifecycle or user configuration.
+- Run native Gogo + editor + runtime tests on actual latest patches of Godot 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6 and 4.7. Maintain an automated multi-version matrix when feasible; report GUI/manual checks separately. Verify fresh install with only Godot/addon, no Bun/Node.
+- The compatibility evidence is a **review gate for E01 PR #40's claim of universal highlighting** and a shipping gate for T09/Estragon releases; do not silently raise the minimum engine. Keep C01 as separate scoped work as needed, with issue/PR and durable handoff.
+
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
-**Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **Schedule:** R01 is merged in #38; E01 is the focused editor fix before T09-A. T09 architecture remains in live #5 and open docs PR #39; do not mix it into E01.
+**Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **Schedule:** next focused implementation (E01), before T09 binding work's final editor authoring proof; do not mix E01 into T09.
 
 - Reproduce the owner-confirmed restored-tab activation bug; prove automatic selection for new, existing and restored Gogo tabs, disable/re-enable and restart. Preserve unrelated user settings.
 - Extend the real isolated editor tests to inspect actual highlighter attachment/colors without manual selection. Deliver a separate focused PR; no R01 implementation scope.
-- E01 delivery: deferred exact-path association after tab creation/restoration and plugin enablement; Godot-only regressions seed persisted Plain Text state and check new/already-open/restored tabs, token colors, non-Gogo preservation and clean re-enable. Exact CI/checkpoints/handoff remain in #37 and its PR.
 
 ### R01 — Research: `@Bindable` in ordinary authored `.gd`
 
@@ -193,7 +205,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Test stock Godot 4.7 parsing and available addon/editor pre-parse hooks with a minimal reproducible experiment.
 - Write down *verified* results, source/code links, trade-offs and a recommendation for retaining the normal `.gd` editing experience.
 - If true native-looking annotation handling is impossible through current public hooks, clearly state that limitation and **seek a user decision** before choosing an alternate extension or Godot fork. No speculative production preprocessor.
-- Findings: [R01 report](BINDABLE_FEASIBILITY.md) and Godot-only `sh tools/check-bindable.sh`. Native setters and partial remaps work, but no complete supported ordinary `.gd`/native-editor path was found. Research completion does not authorize a source-extension or syntax replacement. T09 annotation integration remains gated on owner decision.
+- Findings: [R01 report](BINDABLE_FEASIBILITY.md) and Godot-only `sh tools/check-bindable.sh`. Native setters and partial remaps work, but no complete supported ordinary `.gd`/native-editor path was found. Research completion did not authorize an alternate source extension. **The owner has since accepted lowercase `@bindable` in authored Gogo only (ADR-0013), so T09's source boundary is no longer blocked on ordinary `.gd` annotations.**
 
 ### R02 — Rendering backend research (deferred)
 
@@ -214,3 +226,5 @@ A task begins by checking the *latest* main branch, its tracking issue, open PRs
 - Keep design direction separate from scheduling: a blocked or slow task does **not** authorize a different product architecture.
 - GitHub issues/PRs hold **live execution state and session handoffs**; [WORK_STATUS.md](WORK_STATUS.md) is the concise, reviewed snapshot updated when plan/task completions land on `main`.
 - Completing a task requires its acceptance tests and human-approved merged PR, not merely a Codex message that it is finished.
+
+**Delivery queue:** one open PR total, including drafts/docs/research. E01 #40 → C01-A #42 → measured C01 fixes → T09-A #43 → T09-B/C/D #5. Future tasks remain issues until the current PR merges or closes; a blocked PR requires an owner decision, never a bypass PR.
