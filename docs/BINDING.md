@@ -1,52 +1,61 @@
 # Bindable properties and reactivity
 
-**Status: planned; R01 feasibility evidence available.** No custom annotation or expression binding compiles today. [R01 findings and reproducible experiments](BINDABLE_FEASIBILITY.md) show partial runtime interception, but no complete supported ordinary `.gd`/native-editor path in stock Godot 4.7. An explicit owner architecture decision is required before T09 annotation implementation; no alternate syntax or extension has been adopted. Read the [design direction](DESIGN_DIRECTION.md) for the TSX-like Gogo/GDScript authoring goal.
+**Status: planned; owner-approved source boundary 2026-10-29.** Only `@bindable` (lowercase) in **authored `.gogo`** is an accepted annotation. Ordinary authored `.gd` remains normal GDScript; it must not contain a custom Estragon annotation. The prior `@Bindable`-in-`.gd` direction is superseded by [ADR-0013](DECISIONS.md). [R01 research](BINDABLE_FEASIBILITY.md) is retained as evidence explaining why native Godot 4.7 did not support the old proposal. No observable property transformation or reactive binding is implemented yet.
 
-## Developer experience
+Read the [T09 implementation contract](REACTIVITY_PLAN.md) for accepted goals, staging and tests, and the [live umbrella issue #5](https://github.com/resistdesign/Estragon/issues/5) for work status. Source examples below are **proposed, not executable**.
 
-The desired experience is **`@Bindable` on normal GDScript properties in the Godot editor**, generating typed getters/setters, change notifications and binding plumbing automatically. Flex 4's `[Bindable]` is a conceptual precedent, not a drop-in implementation.
+## Gogo authoring
 
-~~~gdscript
-# Desired authoring experience — NOT valid stock Godot 4.7 syntax today.
+A model may be a **code-only `.gogo` module**, not just a visual component:
+
+```gdscript
+# Player.gogo (proposed)
+class_name Player
 extends RefCounted
 
-@Bindable var player_name: String = "World"
-@Bindable var score: int = 0
+@bindable var name: String = "World"
+@bindable var score: int = 0
 
 func add_point() -> void:
     score += 1
-~~~
+```
 
-Gogo should recognize observable state as typed GDScript expressions inside markup:
+A UI Gogo module can bind to its own state and to model state:
 
-~~~text
-# UI.gogo — proposed mixed-language source, NOT executable today
-extends VBox
+```gdscript
+# Counter.gogo (proposed binding behavior)
+extends EstragonSurface
 
-func render() -> DisplayObject:
-    return <VBox gap={8}>
-        <Text value={"Score: %d" % score} />
-        <Button label="+" pressed={add_point} />
+@bindable var count: int = 0
+
+func increment() -> void:
+    count += 1
+
+func build_view() -> EstragonVBox:
+    return <VBox>
+        <Text text={"Count: %d" % count} />
+        <Button text="+" pressed={increment} />
     </VBox>
-~~~
+```
 
-The sample intentionally leaves model scope/imports and exact binding syntax unspecified. A value expression is **not automatically reactive** just because it uses braces; the compiler must establish dependency tracking and update semantics, including safe handling of nested paths, collections and disposal.
+T09 must define the binding-expression contract precisely. **Current braced expressions are construction-time values**; syntax coloring or annotation recognition by itself does not make `{count}` reactive. The native compiler should emit typed accessors, property-change notifications, a dependency graph and scoped subscriptions; application code should not call `set_root(build_view())` or emit signals manually to make a bindable value refresh.
 
-## Godot parser integration: a hard prerequisite
+## Observable data and ArrayCollection-like semantics
 
-An `EditorPlugin` cannot register arbitrary new annotations in ordinary `.gd` source. The GDScript parser will reject an unknown annotation unless source is transformed **before** it parses, or the engine/parser is extended. Therefore the specific requested experience—`@Bindable` directly in regular authored `.gd` files—**was not achieved by the stock addon paths tested in R01**.
+- Support bindable properties on **non-Node data classes**, including typechecking, inheritance and suitable `RefCounted`/`Resource` behavior.
+- Distinguish **collection reference replacement** (`@bindable var items`) from **mutation of its contents**. A raw `Array.append()` does not automatically become observable merely because the variable containing the Array is bindable.
+- Provide an observable **EstragonArrayCollection-like** object publishing changes for addition, insertion, removal, replacement, movement, reset and changes to bindable item objects. Define event payloads, item identity and indexing, and subscription ownership.
+- Repeated/list views should reconcile affected children with stable keys, preserve unaffected components and release observers automatically on removal/replacement. Sort/filter/view APIs can be staged but should be considered in event semantics.
 
-Investigate the supported editor/parser source lifecycle and interception points. A custom compiler can recognize `@Bindable` in its **own** mixed `.gogo` source, but that does not automatically solve ordinary `.gd` files. If a reliable stock-editor interception path does not exist, document the trade-offs of a custom source extension, controlled generated script interface, and engine/parser change **before** changing the promised UX. The old `.bgd` suggestion is only a fallback candidate, not an accepted replacement.
+## Layout and other dependent properties
 
-Never rewrite user-authored `.gd` files in place, hide persistent parser errors, or claim custom annotations work because syntax highlighting accepts them.
+Bindings should update **all supported typed component properties**, including text, color, enabled state, width/height, gap/fill flags and eventually position x/y, using correct layout vs paint invalidation. Current components do **not** expose x/y; design their semantics against parent-managed HBox/VBox layout, nested geometry and hit-testing before adding them. No per-frame polling, full-tree rebuild for every property change, duplicated signal hookups, or hand-disposed UI components.
 
-## Required compiler and runtime semantics
+## Engineering contracts and explicit boundaries
 
-- Typed property get/set behavior, equality/change suppression, initialization, inherited and custom accessors.
-- A consistent generated change-notification contract for `RefCounted`, `Resource` and other relevant object bases without forcing Godot `Node` objects.
-- Nested dependency paths, replacement of intermediate objects, collection mutation and unsubscribe/dispose behavior.
-- One-way expressions; assignable two-way bindings, event adapters and feedback/cycle protection.
-- Batched/coalesced invalidation tied to Estragon component layout/paint, not frame polling.
-- Source-location-aware errors, generated-to-authored source maps and tests for edge cases.
+- Generate deterministic, valid GDScript and source maps from the bundled native Godot-only Gogo compiler. Invalid declarations fail closed in the editor before F5/F6.
+- Define property initialization, equality suppression, custom setter composition, nested dependency replacement, null/re-entrant states, batched notification and cycle/feedback behavior with native Godot tests.
+- Keep Estragon runtime components independent of Godot `Control`/`Node`. For layout inheritance, the implemented shared `EstragonStack` already sits under `EstragonContainer` and above HBox/VBox; the approved target abstraction is a named `EstragonBox` base, introduced compatibly in its own tested checkpoint.
+- E01 [issue #37](https://github.com/resistdesign/Estragon/issues/37) fixes automatic Gogo syntax-highlighter selection separately, before T09's final integrated authoring check.
 
-First prove actual parse/compile behavior in the target Godot version, then define the observable semantics and add a source-aware transformer, binding graph and reproducible tests.
+**Do not** revive custom annotations in ordinary `.gd`, silently select `.bgd`, implement regex rewriting or require Bun/Node for user compilation. Use [R01 evidence](BINDABLE_FEASIBILITY.md) to explain the old parser limitation, not as a blocker to the accepted Gogo-only path.
