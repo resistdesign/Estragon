@@ -6,14 +6,18 @@ Install Godot and the addon, enable the plugin, edit Gogo and press Play.
 required.** Repository TypeScript tools are optional contributor/reference tools.
 Completion, debugger remapping, live preview and bindings remain future work.
 
+**Compatibility:** ADR-0014 requires Godot 4.0+. The complete workflow below is
+verified on 4.7; older addon startup is currently blocked. Isolated E01 results,
+remaining filtered-tab limits and exact failures are in [E01_COMPATIBILITY](E01_COMPATIBILITY.md).
+
 ## Getting started
 
 1. Copy `addons/estragon` into a Godot 4.7 project, or open this repository's
    `project.godot`. Enable **Estragon (experimental)** in Project Settings > Plugins.
 2. Open `.gogo` files from the FileSystem dock. Godot's normal Script Editor
-   selects the Gogo mixed-language highlighter automatically. A tab opened before
-   the plugin was first enabled may need reopening; known tabs regain highlighting
-   after disable/re-enable.
+   selects the Gogo mixed-language highlighter automatically, including already-open
+   and restored tabs with an old Plain Text selection. Reopening the file or
+   manually choosing Edit > Syntax Highlighter > Gogo is not required.
 3. For the working example, open `examples/counter/Counter.tscn`, edit
    `Counter.gogo`, and use Run Current Scene (F6). Set that scene as the main scene
    to use Run Project (F5). The repository's legacy main scene is preserved.
@@ -91,7 +95,13 @@ does not execute a UI to prove arbitrary application behavior.
 
 ## Highlighting, diagnostics and lifecycle
 
-Godot 4.7 selects the registered `EditorSyntaxHighlighter` for `.gogo` TextFiles.
+The plugin registers an `EditorSyntaxHighlighter` for new `.gogo` TextFiles and
+repairs the association after native tab creation/restoration and on enablement.
+Godot 4.7 applies cached per-file highlighter state *after* extension selection;
+old Plain Text state can otherwise override Gogo even while compilation succeeds.
+Registration also does not update tabs that were already open. E01 fixes both
+paths with a coalesced deferred association pass, triggered by tab lifecycle and
+visibility events rather than per-frame polling.
 It colors GDScript declarations, tags, attributes, braces, strings/multiline strings
 and code/markup comments. Coloring is approximate for partial/malformed source;
 all diagnostics come from the native compiler and Godot semantic validator.
@@ -103,7 +113,10 @@ clickable diagnostic navigation is implemented.
 The global `docks/filesystem/textfile_extensions` preference is only appended
 with `gogo` when absent, preserving all existing values. It persists on disable.
 Disabling removes subscriptions/timers/panel and detaches active Gogo highlighters;
-re-enabling restores known tabs and one set of hooks. Generated files remain
+re-enabling associates all identifiable open Gogo tabs and one set of hooks.
+Other extensions retain their selected highlighters, including files named
+`Something.gogo.txt`. The association pass does not edit source, change global
+preferences, or rewrite per-file editor cache files. Generated files remain
 usable. Restart uses the same native source discovery/build path.
 
 ## Evidence and API boundaries
@@ -118,8 +131,24 @@ repair, resource/class identity, plugin lifecycle, no-op behavior and full edito
 restart. It also runs native transactional build tests. See TESTING for commands
 and graphics/physical-keyboard coverage.
 
+The association adapter first reads the current highlighter's bound
+`_get_edited_resource()` method. Godot does not expose a resource getter on
+ScriptEditorBase, and a never-associated Plain Text highlighter can return null.
+For that case, the adapter uses the native ScriptEditor's exact resource-path
+ItemList tooltips and tab-index metadata, validated against the actual tab parent.
+It does not identify a language from buffer contents, display names or filenames
+without extensions. This small UI adapter and the bound underscore method are
+**Godot-version-sensitive**; it is capability-checked and its native-list fallback
+is gated to the actually tested 4.0–4.7 range. The real editor regression must run
+on upgrades. Isolated association success is not complete addon compatibility.
+Filtered-out never-associated tabs without resource metadata are deferred until
+the native list exposes their path; the plugin never changes the user's filter.
+
 Relevant Godot contracts:
 
+- [Cached TextFile highlighter restoration](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/script/script_editor_base.cpp#L630),
+  [script-list exact path/index metadata](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/script/script_editor_plugin.cpp#L2078),
+  and [bound highlighter resource getter](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/script/syntax_highlighters.cpp#L64).
 - [Native TextFile highlighter selection](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/script/script_editor_plugin.cpp#L2314).
 - [Common main/current run path](https://github.com/godotengine/godot/blob/5b4e0cb0f/editor/run/editor_run_bar.cpp#L255)
   and [EditorPlugin._build](https://docs.godotengine.org/en/4.7/classes/class_editorplugin.html#class-editorplugin-private-method-build).

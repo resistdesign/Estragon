@@ -123,9 +123,13 @@ limits, mapped diagnostics and the runnable no-handwritten-connection example.
 
 Use Godot 4.7's native TextFile/ScriptEditor and registered EditorSyntaxHighlighter
 with `gogo` extension association. Pinned engine source and isolated real-editor
-tests demonstrate automatic selection; no replacement IDE or source importer is
-needed. Existing tabs opened before initial registration may require reopening.
-Disable restores a native plain highlighter; known tabs recover on re-enable.
+tests demonstrate automatic selection for new tabs; no replacement IDE or source
+importer is needed. **E01 correction:** registration alone misses existing tabs,
+and native cached Plain Text state can override extension selection on restore.
+An event-driven deferred association pass repairs open/restored `.gogo` tabs;
+non-Gogo highlighters and preferences are preserved. The resource-path adapter's
+version-sensitive native-list fallback and test coverage are documented in EDITOR.
+Disable detaches active Gogo highlighters and owned hooks; re-enable repairs tabs.
 
 The project declares strict source roots in gogo.config.json. Output is adjacent
 `generated/<name>.gd` plus hybrid maps, preserving existing scenes and UID files.

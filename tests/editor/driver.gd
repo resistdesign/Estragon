@@ -4,6 +4,8 @@ extends EditorPlugin
 
 var _failed: bool = false
 var _checks: int = 0
+var _unrelated: Array[TextEdit] = []
+var _unrelated_highlighters: Array[SyntaxHighlighter] = []
 
 func _enter_tree() -> void:
 	if OS.get_environment("ESTRAGON_EDITOR_TEST") == "1":
@@ -32,6 +34,7 @@ func _run() -> void:
 	if FileAccess.file_exists("res://.godot/estragon/restart.txt"):
 		await _restart()
 		return
+	await _existing_plain_tab()
 	# Only this self-contained editor: prove our gate saves dirty TextFiles
 	# even when Godot's own pre-run autosave is disabled.
 	EditorInterface.get_editor_settings().set_setting("run/auto_save/save_before_running", false)
@@ -167,6 +170,9 @@ func _run() -> void:
 	await _wait()
 	await _wait()
 	_check(load("res://examples/counter/generated/Named.gd") == named_script and named_script.source_code.contains("4.0"), "named Script identity retained with current generated code")
+	var fresh_editor := await _open_text(named_path)
+	_check_gogo(fresh_editor.get_base_editor() as TextEdit, "new Gogo tab while enabled")
+	await _open_text("res://examples/counter/Counter.gogo")
 	var settings := EditorInterface.get_editor_settings()
 	var extensions = settings.get_setting("docks/filesystem/textfile_extensions")
 	EditorInterface.set_plugin_enabled("estragon/editor", false)
@@ -174,6 +180,9 @@ func _run() -> void:
 	_check(_find_plugin(get_tree().root) == null, "plugin disables")
 	_check(code.syntax_highlighter.get_script() == null, "disable detaches highlighter")
 	_check(settings.get_setting("docks/filesystem/textfile_extensions") == extensions, "disable preserves user extension settings")
+	var disabled_editor := await _open_text("res://examples/counter/Disabled.gogo")
+	var disabled_code := disabled_editor.get_base_editor() as TextEdit
+	_check(disabled_code.syntax_highlighter.get_script() == null, "disabled plugin has no stale new-tab association hook")
 	# Preserve imperfect existing CSV entries while adding the exact extension
 	# Godot recognizes; its native extension cache does not trim these entries.
 	settings.set_setting("docks/filesystem/textfile_extensions", "txt,md, .gogo")
@@ -182,12 +191,15 @@ func _run() -> void:
 	plugin = _find_plugin(get_tree().root)
 	_check(plugin != null and plugin._build(), "plugin re-enables cleanly")
 	_check(settings.get_setting("docks/filesystem/textfile_extensions") == "txt,md, .gogo,gogo", "extension registration preserves existing CSV verbatim")
-	_check(code.syntax_highlighter.get_script() == load("res://addons/estragon/editor/highlighter.gd"), "known Gogo tab regains highlighting on re-enable")
+	_check_gogo(code, "Gogo tab on second re-enable")
+	_check_gogo(disabled_code, "new plain tab on second re-enable")
+	_check_unrelated()
 	await _wait()
 	await _wait()
 	var quiet_count: int = plugin.build_count
 	await _wait()
 	_check(plugin.build_count == quiet_count, "no endless generated-file rebuild loop")
+	await _open_text("res://examples/counter/Counter.gogo")
 	code.text = source.replace("var count: int = 0", "var count: int = 3") + proof
 	_check(plugin._build(), "prepare restart with latest source")
 	var marker := FileAccess.open("res://.godot/estragon/restart.txt", FileAccess.WRITE)
@@ -197,7 +209,89 @@ func _run() -> void:
 	print("ESTRAGON_EDITOR_PHASE_1_OK" if not _failed else "ESTRAGON_EDITOR_FAILED")
 	get_tree().quit(1 if _failed else 0)
 
+func _open_text(path: String) -> ScriptEditorBase:
+	var dock := EditorInterface.get_file_system_dock()
+	dock.navigate_to_path(path)
+	await _wait()
+	for tree in dock.find_children("*", "Tree", true, false):
+		var selected: TreeItem = tree.get_selected()
+		if selected != null and selected.get_metadata(0) is String and selected.get_metadata(0) == path:
+			tree.item_activated.emit()
+	await _wait()
+	return EditorInterface.get_script_editor().get_current_editor()
+
+func _color_at(code: TextEdit, line: int, column: int) -> Color:
+	var spans := code.syntax_highlighter.get_line_syntax_highlighting(line)
+	var keys := spans.keys()
+	keys.sort()
+	var color := Color.WHITE
+	for key in keys:
+		if int(key) > column: break
+		color = spans[key].color
+	return color
+
+func _check_gogo(code: TextEdit, context: String) -> void:
+	var highlighter = load("res://addons/estragon/editor/highlighter.gd")
+	_check(code.syntax_highlighter != null and code.syntax_highlighter.get_script() == highlighter, context + " attached Gogo highlighter")
+	_check(_color_at(code, 0, 0) == highlighter.KEYWORD, context + " actual declaration token color")
+	for line in range(code.get_line_count()):
+		var column := code.get_line(line).find("<")
+		if column >= 0:
+			_check(_color_at(code, line, column) == highlighter.TAG, context + " actual markup token color")
+			return
+	_check(false, context + " contains expected markup")
+
+func _check_unrelated() -> void:
+	for index in range(_unrelated.size()):
+		_check(_unrelated[index].syntax_highlighter == _unrelated_highlighters[index], "unrelated file retains exact highlighter instance")
+
+func _existing_plain_tab() -> void:
+	EditorInterface.set_plugin_enabled("estragon/editor", false)
+	await _wait()
+	var editor := await _open_text("res://examples/counter/Counter.gogo")
+	_check(editor != null, "Gogo opens while plugin disabled")
+	if editor == null: return
+	var code := editor.get_base_editor() as CodeEdit
+	print("E01_PLAIN_RESOURCE ", code.syntax_highlighter.call("_get_edited_resource"))
+	_check(not code.has_meta("estragon_gogo_path") and code.syntax_highlighter.get_script() == null, "reproduction: untagged plain Gogo tab")
+	var second_editor := await _open_text("res://examples/counter/Background.gogo")
+	var background := second_editor.get_base_editor() as CodeEdit
+	for path in ["res://examples/counter/Notes.md", "res://examples/counter/Counter.gogo.txt"]:
+		var unrelated_editor := await _open_text(path)
+		var unrelated := unrelated_editor.get_base_editor() as TextEdit
+		_unrelated.append(unrelated)
+		_unrelated_highlighters.append(unrelated.syntax_highlighter)
+	var extensions = EditorInterface.get_editor_settings().get_setting("docks/filesystem/textfile_extensions")
+	EditorInterface.set_plugin_enabled("estragon/editor", true)
+	await _wait()
+	var plugin := _find_plugin(get_tree().root)
+	_check(plugin != null and plugin.last_report.ok, "reproduction: native Gogo build succeeded")
+	_check(EditorInterface.get_editor_settings().get_setting("docks/filesystem/textfile_extensions") == extensions, "association preserves existing extension preference")
+	_check_gogo(code, "already-open untagged Gogo")
+	_check_gogo(background, "already-open background Gogo")
+	_check(code.syntax_highlighter != background.syntax_highlighter, "one highlighter per Gogo editor")
+	_check_unrelated()
+	# Leave Counter visible for the existing authoring/Play regression suite.
+	await _open_text("res://examples/counter/Counter.gogo")
+
+func _check_restored_highlighting() -> void:
+	# Inspect restored buffers before navigating/reopening any file. The shell
+	# harness seeded Plain Text in the isolated native per-file cache.
+	var found: int = 0
+	for editor in EditorInterface.get_script_editor().get_open_script_editors():
+		var code := editor.get_base_editor() as TextEdit
+		if code == null: continue
+		var resource: Resource = code.syntax_highlighter.call("_get_edited_resource") as Resource
+		var path: String = resource.resource_path if resource != null else str(code.get_meta("estragon_gogo_path", ""))
+		if path in ["res://examples/counter/Counter.gogo", "res://examples/counter/Background.gogo"]:
+			found += 1
+			_check_gogo(code, "restored " + path)
+		elif path.ends_with(".md") or path.ends_with(".gogo.txt"):
+			_check(code.syntax_highlighter.get_script() != load("res://addons/estragon/editor/highlighter.gd"), "restored unrelated file retains native highlighter")
+	_check(found == 2, "both persisted plain Gogo tabs restored without reopening")
+
 func _restart() -> void:
+	_check_restored_highlighting()
 	var plugin := _find_plugin(get_tree().root)
 	_check(plugin != null and plugin._build(), "editor restart builds with Godot alone")
 	DirAccess.remove_absolute("res://.godot/estragon/run-proof.txt")

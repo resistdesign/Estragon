@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-29",
+  "platform": "macOS",
+  "scope": "E01 focused evidence; NOT release certification",
+  "results": [
+    {
+      "engine": "4.0.4",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "blocked",
+      "end_to_end_old_engine_play": "blocked",
+      "public_api_probe": "E01_API save_all_scripts=false get_unsaved_files=false set_path_cache=false Logger=false"
+    },
+    {
+      "engine": "4.1.4",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "blocked",
+      "end_to_end_old_engine_play": "blocked",
+      "public_api_probe": "E01_API save_all_scripts=false get_unsaved_files=false set_path_cache=false Logger=false"
+    },
+    {
+      "engine": "4.2.2",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "blocked",
+      "end_to_end_old_engine_play": "blocked",
+      "public_api_probe": "E01_API save_all_scripts=false get_unsaved_files=false set_path_cache=false Logger=false"
+    },
+    {
+      "engine": "4.3",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "blocked",
+      "end_to_end_old_engine_play": "blocked",
+      "public_api_probe": "E01_API save_all_scripts=false get_unsaved_files=false set_path_cache=false Logger=false"
+    },
+    {
+      "engine": "4.4.1",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "blocked",
+      "end_to_end_old_engine_play": "blocked",
+      "public_api_probe": "E01_API save_all_scripts=false get_unsaved_files=false set_path_cache=true Logger=false"
+    },
+    {
+      "engine": "4.5.2",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "blocked",
+      "end_to_end_old_engine_play": "blocked",
+      "public_api_probe": "E01_API save_all_scripts=false get_unsaved_files=false set_path_cache=true Logger=true"
+    },
+    {
+      "engine": "4.6.3",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "blocked",
+      "end_to_end_old_engine_play": "blocked",
+      "public_api_probe": "E01_API save_all_scripts=false get_unsaved_files=false set_path_cache=true Logger=true"
+    },
+    {
+      "engine": "4.7",
+      "isolated_assertions": 46,
+      "normal_and_restart_cases": "pass",
+      "hidden_unassociated_filtered_tab": "unmet",
+      "complete_addon_startup": "startup_ok",
+      "end_to_end_old_engine_play": "covered_by_separate_existing_suites",
+      "public_api_probe": "E01_API save_all_scripts=true get_unsaved_files=true set_path_cache=true Logger=true"
+    }
+  ]
+}

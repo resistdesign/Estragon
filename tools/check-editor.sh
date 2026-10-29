@@ -20,7 +20,11 @@ fi
 [ "$("$workspace/godot" --headless --version)" = '4.7.stable.official.5b4e0cb0f' ] || { echo 'Expected pinned Godot 4.7.' >&2; exit 1; }
 cp -R "$root/addons/estragon" "$project/addons/"
 cp "$root/examples/counter/Counter.gogo" "$root/examples/counter/Counter.tscn" "$project/examples/counter/"
-cp "$root/tests/editor/game_proof.txt" "$root/tests/editor/highlighter_tests.gd" "$project/tests/editor/"
+cp "$root/examples/counter/Counter.gogo" "$project/examples/counter/Background.gogo"
+cp "$root/examples/counter/Counter.gogo" "$project/examples/counter/Disabled.gogo"
+cp "$root/examples/counter/Counter.gogo" "$project/examples/counter/Counter.gogo.txt"
+printf '# Unrelated Markdown\n' > "$project/examples/counter/Notes.md"
+cp "$root/tests/editor/game_proof.txt" "$root/tests/editor/highlighter_tests.gd" "$root/tests/editor/seed_plain.gd" "$project/tests/editor/"
 cp "$root/tests/godot/native_build.gd" "$project/tests/godot/"
 cp "$root/tests/editor/driver.gd" "$project/tests/editor/driver/driver.gd"
 printf '[plugin]\nname="Isolated test driver"\ndescription="Test only"\nauthor="Estragon"\nversion="1"\nscript="driver.gd"\n' > "$project/tests/editor/driver/plugin.cfg"
@@ -65,6 +69,9 @@ for phase in 1 2; do
         env PATH="$workspace/no-tools" "$workspace/godot" --headless --path "$project" --script res://tests/godot/native_build.gd --quit-after 120 > "$workspace/build.log" 2>&1 || { cat "$workspace/build.log"; exit 1; }
         cat "$workspace/build.log"
         grep -qx ESTRAGON_NATIVE_BUILD_OK "$workspace/build.log"
+        env PATH="$workspace/no-tools" ESTRAGON_EDITOR_TEST=1 "$workspace/godot" --headless --path "$project" --script res://tests/editor/seed_plain.gd > "$workspace/seed.log" 2>&1 || { cat "$workspace/seed.log"; exit 1; }
+        cat "$workspace/seed.log"
+        grep -qx ESTRAGON_SEEDED_PLAIN_RESTORE "$workspace/seed.log"
     fi
 done
 printf 'ESTRAGON_EDITOR_OK\n'

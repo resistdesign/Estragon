@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 5, 2026-10-29. **Status:** N01–N03 and T01–T08 are merged; Godot-only Gogo compilation/editor Play is shipped. **R01 #38 is research in review (unmerged)**, documenting why ordinary authored `.gd` custom annotations are not supported. **The owner chose Gogo-only lowercase `@bindable` on 2026-10-29 (ADR-0013).** E01 #37 automatic Gogo highlighting is in review (PR #40, 4.7 tested); **C01 #41 now establishes required Godot 4.0+ compatibility and is a release/support gate**; T09-A through T09-D are planned incremental slices for observable Gogo models, bindings/layout, collections/repeaters and two-way/cycle hardening. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md), [T09 issue #5](https://github.com/resistdesign/Estragon/issues/5) and [WORK_STATUS.md](WORK_STATUS.md) for accepted scope and live handoffs.
+**Plan version:** 5, 2026-10-29. **Status:** N01–N03 and T01–T08 are merged; Godot-only Gogo compilation/editor Play is shipped. **R01 #38 and architecture PR #39 are merged**, documenting why ordinary authored `.gd` custom annotations are not supported. **The owner chose Gogo-only lowercase `@bindable` on 2026-10-29 (ADR-0013).** E01 #37 automatic Gogo highlighting is in review (PR #40, 4.7 tested); **C01 #41 now establishes required Godot 4.0+ compatibility and is a release/support gate**; T09-A through T09-D are planned incremental slices for observable Gogo models, bindings/layout, collections/repeaters and two-way/cycle hardening. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md), [T09 issue #5](https://github.com/resistdesign/Estragon/issues/5) and [WORK_STATUS.md](WORK_STATUS.md) for accepted scope and live handoffs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -40,7 +40,7 @@ Write the production compiler **in GDScript, bundled in the addon**. It should w
 - Estragon owns component identity/lifecycle, layout, signals, input and painting. A Godot host is allowed; one Godot node or Control per UI component is not.
 - Generated code is not hand-maintained. It must be deterministic, validated by Godot, and traceable to its authored Gogo source.
 - Each task below is a **reviewable PR** with tests, documentation and evidence appropriate to its scope. Do not merge on behalf of the user without explicit permission.
-- **Gate to start a dependent task:** the prerequisite is merged or the user explicitly authorizes isolated parallel development with a documented shared interface. Research `R01` is independent and may run alongside `T01`.
+- **Gate to start a dependent task:** its prerequisites and the current repository PR are merged/closed. Keep future research/dependencies in issues while the sole PR is active; do not start competing implementation.
 - If an acceptance criterion proves infeasible, record evidence and a blocker in the issue, propose options, and **stop rather than quietly change the product requirements**.
 
 ## Dependency map
@@ -56,13 +56,13 @@ T01 → T02 → T03 → T04 → T05 → T06 → T07 (merged)
                                       │
                        N03 native editor cutover (no Bun)
                               ├───────┴────────┐
-                       E01 #37 editor fix → T09-A models → T09-B UI/layout → T09-C collections → T09-D two-way
+                       E01 #37 → C01-A #42 audit → C01 fixes → T09-A #43 models → T09-B UI/layout → T09-C collections → T09-D two-way
                         T10 legacy JSON retirement (independent)
-R01 #38 research: in review; historical evidence, no longer a T09 syntax blocker
+R01 #38 research: merged; historical evidence, no longer a T09 syntax blocker
 R02 graphics research: deferred
 ~~~
 
-This is the preferred *merge order*, not a request to implement everything in one PR. With explicit coordination, compiler/runtime spikes may run on isolated branches in parallel after interface agreement; record that agreement in issues and do not silently stack dependent PRs.
+This is the sequential delivery order, not a request to implement everything in one PR. Maintain issue-only research/backlog while the single PR is active; do not open stacked or competing PRs.
 
 ## Work packages and acceptance
 
@@ -196,7 +196,8 @@ This is the preferred *merge order*, not a request to implement everything in on
 **Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **Schedule:** next focused implementation (E01), before T09 binding work's final editor authoring proof; do not mix E01 into T09.
 
 - Reproduce the owner-confirmed restored-tab activation bug; prove automatic selection for new, existing and restored Gogo tabs, disable/re-enable and restart. Preserve unrelated user settings.
-- Extend the real isolated editor tests to inspect actual highlighter attachment/colors without manual selection. Deliver a separate focused PR; no R01 implementation scope.
+- Extend the real isolated editor tests to inspect actual highlighter attachment/colors without manual selection. The existing #40 remains the sole PR; no replacement or stacked delivery.
+- [Measured E01 matrix](E01_COMPATIBILITY.md): isolated 4.0–4.7 normal/restart behavior verified; filtered unassociated identity and older full-addon startup remain unmet/blocked. Owner must choose hold versus explicit limited merge; C01 remains a release gate. After #40 closes, C01-A #42 is next.
 
 ### R01 — Research: `@Bindable` in ordinary authored `.gd`
 
@@ -226,3 +227,5 @@ A task begins by checking the *latest* main branch, its tracking issue, open PRs
 - Keep design direction separate from scheduling: a blocked or slow task does **not** authorize a different product architecture.
 - GitHub issues/PRs hold **live execution state and session handoffs**; [WORK_STATUS.md](WORK_STATUS.md) is the concise, reviewed snapshot updated when plan/task completions land on `main`.
 - Completing a task requires its acceptance tests and human-approved merged PR, not merely a Codex message that it is finished.
+
+**Delivery queue:** one open PR total, including drafts/docs/research. E01 #40 → C01-A #42 → measured C01 fixes → T09-A #43 → T09-B/C/D #5. Future tasks remain issues until the current PR merges or closes; a blocked PR requires an owner decision, never a bypass PR.

@@ -63,7 +63,7 @@ Do not modify the accepted architecture or silently reduce Gogo's language featu
 - **Audit before extending:** `ScriptEditor.save_all_scripts()`, `ScriptEditor.get_unsaved_files()` and `Resource.set_path_cache()` are used today but absent from the published 4.0 public APIs. The 4.7 syntax-highlighter association also uses an undocumented `_get_edited_resource()` plus native editor ItemList path/metadata. None may be assumed to function on 4.0 without equivalent tested compatibility behavior.
 - Prefer documented, stable Godot **4.0** public APIs. Isolate any indispensable version-specific editor adapter behind tested capability/version checks rather than depending on fixed UI hierarchy. Never silently sacrifice correctness, unsaved-buffer fail-closed F5/F6, script identity, cached resources, or syntax highlighting on older versions.
 - **Prove on actual engines**, ideally automated matrix of latest 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6 and 4.7 patches; preserve negative diagnostics and no-Bun user workflow. Keep manual editor/graphics checks distinct from automated evidence. Check project `config/features` and generated resource formats for 4.0.
-- E01 [PR #40](https://github.com/resistdesign/Estragon/pull/40) remains 4.7-verified only and has a compatibility review blocker; see #41 before claiming its behavior across 4.0+. Preserve ADR-0013 Gogo-only lowercase `@bindable` while designing T09 against the 4.0 baseline. **Do not auto-merge or silently downgrade support claims.**
+- E01 [PR #40](https://github.com/resistdesign/Estragon/pull/40) has isolated highlighter evidence on 4.0–4.7 but full-addon older-version acceptance is blocked (see `docs/E01_COMPATIBILITY.md`); see #41 before claiming its behavior across 4.0+. Preserve ADR-0013 Gogo-only lowercase `@bindable` while designing T09 against the 4.0 baseline. **Do not auto-merge or silently downgrade support claims.**
 
 ## Non-negotiable architecture
 
@@ -127,6 +127,20 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 
 ## Required execution planning, tracking, and cross-session continuation
 
+### Repository-wide limit: one open PR total
+
+The owner requires **at most one open pull request across this entire repository**,
+including drafts, documentation, research and agent-created PRs. Check the complete
+open-PR list before starting delivery. Resume the existing PR/branch; never open a
+replacement, stacked or competing PR while it is open. Future features, bugs,
+research and dependencies stay in durable GitHub issues until the current PR is
+merged or closed. Finish or close it before opening the next PR. A blocked PR
+must record evidence and be presented for an owner decision; do not bypass it with
+another PR. **Never merge automatically.** Every task requires an issue,
+actionable plan, implementation checkpoints, exact verification evidence and a
+cross-session handoff. The queue after E01 #40 is C01-A #42, then focused C01
+fixes and T09-A #43 as verified dependencies permit.
+
 **This protocol is mandatory for Codex and other contributors working on planned features.** Session/chat context is temporary; **GitHub issues/PRs and committed repository files are the durable team memory**.
 
 ### Four different sources of truth
@@ -151,7 +165,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 - In the task issue or linked draft PR, write an **actionable mini-plan**: objective, files/layers touched, steps/checklist, measurable acceptance criteria, validation commands, risks/unknowns, dependencies, and explicit out-of-scope work. Include the work ID and issue link in the PR.
 - Keep the plan **small enough for one PR**. Split unexpected scope into a linked follow-up task instead of broadening the current PR. Work in testable checkpoints; post meaningful progress to the issue/PR as steps actually land, with commit/test links where available.
 - If dependencies, task scope or the work sequence must change, propose a **reviewed plan update** to `docs/EXECUTION_PLAN.md` and the related issue, with rationale. Changes to accepted architecture also require an ADR update or explicit review. Don't silently re-plan the project in a chat reply.
-- Check current issue/PR before making a new branch, especially when running multiple Codex sessions. Parallel sessions need **separate issues, branches/worktrees and declared integration contracts**; no shared dirty worktree or competing changes to the same files without coordination.
+- Check current issue/PR before making a new branch, especially when running multiple Codex sessions. Other sessions may maintain issue-only backlog/research while the single PR is active; do not create competing implementation work or PRs.
 - Research tasks can end with an **evidence-backed limitation**; R01 did so. The owner has since explicitly chosen lowercase Gogo-only `@bindable` (ADR-0013). Never revert to the superseded ordinary-`.gd` promise or select `.bgd` without a new decision.
 
 ### Progress checkpoints and honest verification
