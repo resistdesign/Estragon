@@ -39,14 +39,14 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 - **No mandatory XML namespaces or prefixed element names.** Target Gogo uses `<VBox>`, `<Button>` and `<MyWidget>`, not `<fx:VBox>` or `xmlns` declarations. The **current stage-0 XML parser still needs its legacy namespace**, but that requirement must not be carried into the new grammar.
 - **TSX-like single-file mixing:** the preferred experience is GDScript declarations, functions, expressions and callbacks interleaved with XML-like component expressions inside an authored `.gogo` source. Braces contain GDScript, not JavaScript or TypeScript. T05 supports a specified hybrid subset with braced construction-time expressions and source maps. T07 adds zero-argument Button callbacks; bindings and broader editor tooling remain future work.
 - **Generated GDScript:** emit deterministic, valid `.gd` constructing Estragon's component hierarchy and automatically connecting typed signal handlers and, later, observable bindings. Generated files are not hand-edited, and no Godot UI widget tree is produced.
-- **`@Bindable` in ordinary authored `.gd` is a distinct requested goal.** Stock Godot cannot register arbitrary GDScript annotations via an addon. Do not claim this works without proving a pre-parse/source integration. A separate `.bgd` extension is only a possible fallback, not an accepted replacement.
-- **Real runtime components:** implement independent `DisplayObject`/`Container`-style bases, responsive `VBox`/`HBox` and later common UI components. Resolve naming collisions with Godot's classes. Keep existing JSON prototype functional until a GDScript-generating vertical slice is proven.
+- **Owner-approved reactivity syntax (ADR-0013, 2026-10-29):** the official annotation is **exactly lowercase `@bindable`, supported in authored `.gogo` only**, including code-only data/model modules. The Gogo compiler lowers it into valid GDScript; ordinary `.gd` does NOT gain addon-defined annotations, and `.bgd` is not approved. Consult [REACTIVITY_PLAN.md](docs/REACTIVITY_PLAN.md) and [T09 #5](https://github.com/resistdesign/Estragon/issues/5).
+- **Real runtime components and shared inheritance:** verified current chain is `EstragonDisplayObject → EstragonContainer → EstragonStack → EstragonVBox/EstragonHBox`. Owner's target is a canonical `EstragonBox` common base directly below `EstragonContainer`, with HBox/VBox sharing layout behavior. Migrate with compatibility tests instead of duplicating the stack algorithm or creating Godot `Control`/`Node` components.
 
 ## Highest priority: native Godot Gogo compiler and editor (N01–N03 implemented)
 
 **Owner decision, 2026-10-28, ADR-0012:** Estragon users must compile and run Gogo with **Godot and the bundled addon alone**. No Bun, Node, TypeScript, external compiler processes, shell setup, separate language server or GDExtension binary may be required for normal editing or Play. The former T08 Bun bridge has been replaced by direct native compilation/validation in N03.
 
-**N01/N02 are merged; N03 delivers the native editor cutover ahead of T09/T10.** N03 is tracked in [issue #35](https://github.com/resistdesign/Estragon/issues/35). The complete dependency and acceptance criteria are in [EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md). R01 bindable feasibility can be researched independently, but not used to delay native compilation.
+**N01/N02/N03 are merged.** R01 research is in [PR #38](https://github.com/resistdesign/Estragon/pull/38) pending review; its unsupported ordinary-`.gd` requirement is superseded by ADR-0013. **E01 #37 is the next scoped editor fix** (auto Gogo highlighter selection); afterward deliver T09 incrementally per [REACTIVITY_PLAN.md](docs/REACTIVITY_PLAN.md). The native compiler/editor must stay independent of Bun/Node.
 
 - **N01:** GDScript-native lexer/parser/typed component and event validation, original source spans and diagnostics, with native Godot tests. Never implement mixed syntax with regex substitutions.
 - **N02:** GDScript-native emitter, source maps, full current Gogo semantic parity and an interactive native-generated Counter; use Bun/TypeScript only for optional reference checks.
@@ -84,7 +84,7 @@ Do not modify the accepted architecture or silently reduce Gogo's language featu
 **Not implemented:**
 
 - Reconciliation, generalized layout beyond the minimal stack rules, general styling, keyboard/touch input, focus, accessibility, or a broader widget catalog.
-- `@Bindable` compilation in ordinary GDScript `.gd`, one-/two-way Gogo bindings, observable collections, or a dependency graph.
+- Gogo-only lowercase `@bindable` compilation, code-only bindable model classes, one-/two-way Gogo bindings, ArrayCollection-like observable collections, keyed list reconciliation, reactive position/layout properties or a dependency graph.
 - A `.bgd` frontend, Gogo language server, completion/navigation, live preview, debugger remapping, or a `RenderingDevice` backend.
 
 Do not write new examples, PR descriptions, or documentation that imply these proposed capabilities already work. `docs/ROADMAP.md` and tracking issues describe **desired outcomes**, not shipped behavior.
@@ -112,6 +112,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 | `docs/DESIGN_DIRECTION.md` | Target language/renderer architecture, mixed GDScript, signal generation and unresolved Godot constraints |
 | `docs/EXECUTION_PLAN.md` | Stable scoped Codex tasks, dependencies, acceptance criteria and gates |
 | `docs/WORK_STATUS.md` | Reviewed task status snapshot and cross-session handoff/resume template |
+| `docs/REACTIVITY_PLAN.md`, `docs/BINDING.md` | Accepted Gogo-only bindable/data/collection/layout contracts and staged T09 scope |
 | `docs/TESTING.md`, `CONTRIBUTING.md` | Verification and contribution standards |
 | `Assets/` | Project-owned visual/source assets; preserve originals |
 
@@ -142,7 +143,7 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 - Keep the plan **small enough for one PR**. Split unexpected scope into a linked follow-up task instead of broadening the current PR. Work in testable checkpoints; post meaningful progress to the issue/PR as steps actually land, with commit/test links where available.
 - If dependencies, task scope or the work sequence must change, propose a **reviewed plan update** to `docs/EXECUTION_PLAN.md` and the related issue, with rationale. Changes to accepted architecture also require an ADR update or explicit review. Don't silently re-plan the project in a chat reply.
 - Check current issue/PR before making a new branch, especially when running multiple Codex sessions. Parallel sessions need **separate issues, branches/worktrees and declared integration contracts**; no shared dirty worktree or competing changes to the same files without coordination.
-- Research tasks can end with an **evidence-backed limitation**, but must not quietly substitute a different developer experience (especially `@Bindable` in ordinary `.gd`).
+- Research tasks can end with an **evidence-backed limitation**; R01 did so. The owner has since explicitly chosen lowercase Gogo-only `@bindable` (ADR-0013). Never revert to the superseded ordinary-`.gd` promise or select `.bgd` without a new decision.
 
 ### Progress checkpoints and honest verification
 
@@ -213,9 +214,8 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ### Reactive state (future work)
 
-- R01 findings and isolated stock-4.7 probes are in `docs/BINDABLE_FEASIBILITY.md` and `sh tools/check-bindable.sh`. Runtime loader/remap successes do not intercept native ScriptEditor validation. No alternate source boundary is approved; obtain an explicit owner architecture decision before implementing T09's annotation path. E01 #37 is a separate editor fix required before T09's final integrated authoring milestone.
-
-- The desired `@Bindable` experience in ordinary authored `.gd` **is not supported in stock Godot**. Research/verify a pre-parse integration path and consider `.bgd` only as an explicit fallback, not an approved substitution.
+- R01's Godot 4.7 findings live in `docs/BINDABLE_FEASIBILITY.md` and `sh tools/check-bindable.sh`; they explain why native `.gd` annotations are not supported. The owner has settled the authoring boundary: `@bindable` **only in Gogo**, transpiled to typed GDScript; there is no approved `.bgd` alternative. See ADR-0013 and `docs/REACTIVITY_PLAN.md`.
+- Implement reactive visual/layout properties as well as model data properties. `x`/`y` do not yet exist and require explicit parent-layout semantics; bindable data models and observable ArrayCollection-like contents (including item mutations) are required. No per-frame polling or full-tree refresh for routine property changes. E01 #37 is still a separately tracked editor fix.
 - Before implementation, establish observable-property semantics, typed setters, initialization/equality behavior, and inheritance/custom-accessor behavior.
 - Account for nested path replacement, subscriptions and disposal, collection mutation, cycles, two-way feedback protection, and batched invalidation.
 - Keep observable models usable without inheriting from a Godot `Node`. Test state changes independently from drawing.
