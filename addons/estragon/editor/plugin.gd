@@ -27,7 +27,7 @@ func _enter_tree() -> void:
 		var existing := str(settings.get_setting(TEXT_EXTENSIONS_SETTING))
 		var registered := false
 		for extension in existing.split(","):
-			if extension.strip_edges().trim_prefix(".") == "gogo":
+			if extension == "gogo":
 				registered = true
 		if not registered:
 			settings.set_setting(TEXT_EXTENSIONS_SETTING, existing + ("," if not existing.is_empty() else "") + "gogo")

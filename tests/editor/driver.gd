@@ -174,10 +174,14 @@ func _run() -> void:
 	_check(_find_plugin(get_tree().root) == null, "plugin disables")
 	_check(code.syntax_highlighter.get_script() == null, "disable detaches highlighter")
 	_check(settings.get_setting("docks/filesystem/textfile_extensions") == extensions, "disable preserves user extension settings")
+	# Preserve imperfect existing CSV entries while adding the exact extension
+	# Godot recognizes; its native extension cache does not trim these entries.
+	settings.set_setting("docks/filesystem/textfile_extensions", "txt,md, .gogo")
 	EditorInterface.set_plugin_enabled("estragon/editor", true)
 	await _wait()
 	plugin = _find_plugin(get_tree().root)
 	_check(plugin != null and plugin._build(), "plugin re-enables cleanly")
+	_check(settings.get_setting("docks/filesystem/textfile_extensions") == "txt,md, .gogo,gogo", "extension registration preserves existing CSV verbatim")
 	_check(code.syntax_highlighter.get_script() == load("res://addons/estragon/editor/highlighter.gd"), "known Gogo tab regains highlighting on re-enable")
 	await _wait()
 	await _wait()
