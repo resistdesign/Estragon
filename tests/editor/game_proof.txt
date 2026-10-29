@@ -1,0 +1,49 @@
+
+func _gogo_test_click(button: EstragonButton) -> void:
+    for down in [true, false]:
+        var event := InputEventMouseButton.new()
+        event.position = button.get_surface_rect().get_center()
+        event.button_index = MOUSE_BUTTON_LEFT
+        event.pressed = down
+        get_viewport().push_input(event, true)
+
+func _gogo_test_capture(stage: String, initial: int) -> void:
+    if OS.get_environment("ESTRAGON_EDITOR_NATIVE") != "1": return
+    await get_tree().process_frame
+    await RenderingServer.frame_post_draw
+    get_viewport().get_texture().get_image().save_png("res://.godot/estragon/game-%d-%s.png" % [initial, stage])
+
+func _ready() -> void:
+    _gogo_test_run.call_deferred()
+
+func _gogo_test_run() -> void:
+    get_window().size = Vector2i(640, 360)
+    await get_tree().process_frame
+    await get_tree().process_frame
+    var starting_size := get_viewport().get_visible_rect().size
+    var initial: int = count
+    var initial_label: String = get_root().get_children()[1].text
+    var flags := {"one_host": get_child_count() == 0}
+    await _gogo_test_capture("initial", initial)
+    var old_button: EstragonButton = get_root().get_children()[2].get_children()[0]
+    flags.one_connection = old_button.pressed.get_connections().size() == 1
+    _gogo_test_click(old_button)
+    await get_tree().process_frame
+    flags.increment = count == initial + 1 and get_root().get_children()[1].text == "Count: %d" % count
+    flags.cleanup = old_button.is_disposed() and old_button.pressed.get_connections().is_empty()
+    await _gogo_test_capture("increment", initial)
+    _gogo_test_click(get_root().get_children()[2].get_children()[1])
+    await get_tree().process_frame
+    flags.reset = count == 0 and get_root().get_children()[1].text == "Count: 0"
+    get_window().size = Vector2i(800, 400)
+    await get_tree().process_frame
+    await get_tree().process_frame
+    flags.resize = get_viewport().get_visible_rect().size != starting_size and get_root().get_layout_rect().size == get_viewport().get_visible_rect().size
+    flags.button_layout = is_equal_approx(get_root().get_children()[2].get_children()[0].get_layout_rect().size.x, (get_viewport().get_visible_rect().size.x - 12.0) / 2.0)
+    await _gogo_test_capture("reset-resized", initial)
+    var file := FileAccess.open("res://.godot/estragon/interaction-proof.json", FileAccess.WRITE)
+    file.store_string(JSON.stringify(flags))
+    file.close()
+    file = FileAccess.open("res://.godot/estragon/run-proof.txt", FileAccess.WRITE)
+    file.store_string(str(initial) + "|" + initial_label)
+    file.close()

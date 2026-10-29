@@ -10,17 +10,22 @@ The design is a **standalone UI stack hosted by Godot**: Estragon owns its logic
 
 ## Where we're going
 
-**Gogo is XML-like markup with TSX-style GDScript composition.** Developers should be able to write unprefixed components such as `<VBox>` and `<Button>`, combine them directly with GDScript expressions and methods in `.gogo`, and have the compiler generate ordinary GDScript that instantiates Estragon's independent runtime objects and wires signals/bindings. **No `xmlns` or `<fx:...` prefixes** in the intended language. Minimal independent runtime/stack classes exist; a fuller component suite and Gogo-aware editor support remain planned. The desired `@Bindable` experience in ordinary `.gd` files requires a separate feasibility investigation.
+**Gogo is XML-like markup with TSX-style GDScript composition.** Developers should be able to write unprefixed components such as `<VBox>` and `<Button>`, combine them directly with GDScript expressions and methods in `.gogo`, and have the compiler generate ordinary GDScript that instantiates Estragon's independent runtime objects and wires signals/bindings. **No `xmlns` or `<fx:...` prefixes** in the intended language. Minimal independent runtime/stack classes exist; a fuller component suite and broader editor services remain planned. The desired `@Bindable` experience in ordinary `.gd` files requires a separate feasibility investigation.
 
-Core Gogo-to-GDScript compilation, independent layout and interactive generated signal wiring work; **Bun-free Godot-native compilation** is the next unimplemented goal. Read the [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md) for the remaining decisions and technical constraints.
+Native Gogo-to-GDScript compilation, editor builds, independent layout and interactive generated signal wiring work with **Godot and the addon alone**. Read the [Gogo-to-GDScript design direction](docs/DESIGN_DIRECTION.md) for the remaining decisions and technical constraints.
 
-## Immediate priority: Godot-only Gogo compilation
+## Godot-only authoring
 
-**Accepted direction, 2026-10-28:** Estragon will compile Gogo **entirely inside Godot** with its bundled GDScript compiler. Normal users must never need Bun/Node, TypeScript, a configured executable, or a separately installed compiler.
+Copy `addons/estragon` into Godot 4.7 and enable **Estragon (experimental)**.
+Open/edit Gogo in the native Script Editor, then press Play. The bundled native
+compiler builds saved or modified buffers and blocks stale execution on errors.
+No Bun, Node, TypeScript, executable configuration or manual compiler command
+is needed. Fresh projects need no compiler config file; explicit source-root
+configuration remains supported. See [editor setup](docs/EDITOR.md).
 
-**Not implemented yet.** The currently working T08 editor plugin still launches Bun. The owner manually verified editing Gogo font size and rerunning in Godot. That is a proven **temporary bridge**. The next tasks are **N01 native parser → N02 native emitter and source maps → N03 native editor cutover without Bun**. The TypeScript/Bun compiler may remain as optional contributor/CI reference tooling after cutover.
-
-See [ADR-0012](docs/DECISIONS.md), [execution plan](docs/EXECUTION_PLAN.md) and [work status](docs/WORK_STATUS.md). T09 bindings and T10 legacy retirement wait until N03.
+N01–N03 implement the native compiler/editor migration under
+[ADR-0012](docs/DECISIONS.md). Bun/TypeScript remains optional contributor/CI
+reference tooling. Bindings and legacy retirement remain separate work.
 
 ## Status: experimental vertical slices
 
@@ -41,26 +46,13 @@ not the new compiler's runtime format.
 
 ## Try the Gogo-to-GDScript slice
 
-Requires Bun 1.4.4 and the pinned Godot 4.7 editor (see TESTING):
-
-```sh
-bun install --frozen-lockfile
-bun run transpile examples/compiled/Layout.gogo --output examples/compiled/generated/Layout.gd
-bun run check
-bun run check:godot
-```
+Requires Godot 4.7 and the enabled Estragon plugin.
 
 Open `examples/compiled/Compiled.tscn` in Godot and run that scene. Edit `.gogo`
-and recompile; do not edit generated `.gd`. The optional editor plugin compiles on save and before Play; see EDITOR for setup.
+and press Play; do not edit generated `.gd`. The optional editor plugin compiles on save and before Play; see EDITOR for setup.
 Generated code mounts components on an EstragonSurface; cleanup is automatic.
 
 ## Try hybrid GDScript/Gogo
-
-```sh
-bun run transpile examples/mixed/Mixed.gogo --output examples/mixed/generated/Mixed.gd
-bun run check
-bun run check:godot
-```
 
 Run `examples/mixed/Mixed.tscn`. The authored source contains typed GDScript
 members, ordinary helper/build methods, nested markup and computed properties.
@@ -79,17 +71,11 @@ For compiler-generated connections, run the Gogo Counter below. See the
 
 ## Try interactive Gogo
 
-```sh
-bun run transpile examples/counter/Counter.gogo --output examples/counter/generated/Counter.gd
-bun run check
-bun run check:godot
-```
-
 Run `examples/counter/Counter.tscn`. Click `+` to increment and Reset to return
 to zero. The authored `.gogo` contains GDScript state/handlers and Text/Button
 markup with `pressed={increment}`; Gogo generates all signal connections. Explicit
 root rebuilding refreshes text/disabled state and automatically disconnects old
-handlers. The optional T08 plugin automates editor builds after one-time setup; no bindings are implied. See the
+handlers. The optional plugin builds natively on save and Play; no bindings are implied. See the
 [signal contract](docs/GOGO_LANGUAGE.md#t07-generated-signals-and-interactive-gogo-implemented).
 
 ## Try the initial slice
@@ -106,7 +92,7 @@ Open this directory as a Godot project (`project.godot`) and run the main scene.
 
 Enable **Estragon (experimental)** in Godot's Plugins settings for normal Gogo
 authoring: mixed syntax highlighting, automatic saved-source builds and checked
-compilation before F5/F6. Configure Bun once if needed; no compiler commands are
+compilation before F5/F6. No external tools or compiler commands are
 required during normal development. The plugin preserves existing editor
 extension settings. See [editor setup and verified limits](docs/EDITOR.md).
 

@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 2, 2026-10-28. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 is merged (#32); N02 implements native generation/maps and runtime parity; N03 editor cutover remains pending. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
+**Plan version:** 2, 2026-10-28. **Status:** active. T01–T08 are merged (#29), as is the native planning PR #31. The highest priority immediately after T08 is **N01 → N02 → N03: native Godot Gogo compilation**, before T09/T10. N01 (#32) and N02 (#34) are merged; N03 implements direct native editor compilation, validated by fresh-project no-tools Play/restart tests. This is the *delivery plan*; [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md) and [DECISIONS.md](DECISIONS.md) define product direction. [ROADMAP.md](ROADMAP.md) remains the broader, non-sequential product roadmap. **Live progress and handoffs** are managed under [WORK_STATUS.md](WORK_STATUS.md) and GitHub issues/PRs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -18,7 +18,7 @@ The first integrated milestone (T01–T08, **transitionally Bun-powered**) is an
 
 ## Immediate priority: native Gogo compilation inside Godot (ADR-0012)
 
-**Accepted owner decision, 2026-10-28:** A developer using Estragon in Godot must need **only Godot and the bundled Estragon addon**. **No Bun/Node/TypeScript installation or compiler executable configuration for editing, building, or running Gogo.** T08 currently uses Bun for compile-before-Play; that working integration is a **temporary bridge**, not the final architecture. The owner has manually verified T08 by changing Counter.gogo's font size and rerunning the scene in Godot. That successful test triggers this priority shift.
+**Accepted owner decision, 2026-10-28:** A developer using Estragon in Godot must need **only Godot and the bundled Estragon addon**. **No Bun/Node/TypeScript installation or compiler executable configuration for editing, building, or running Gogo.** T08 originally used Bun as a **temporary bridge**; N03 replaces it with the bundled native compiler/validator. The owner has manually verified T08 by changing Counter.gogo's font size and rerunning the scene in Godot. That successful test triggers this priority shift.
 
 Write the production compiler **in GDScript, bundled in the addon**. It should work without editor UI state, external processes, runtime JSON interpreters, one Godot Node/Control per component, GDExtension binaries, or Godot forks. Keep parsing, typed validation, code emission and source mapping separate from rendering and editor presentation. Preserve the accepted TSX-like GDScript + unprefixed markup language, evaluation order and generated signal behavior.
 
@@ -52,7 +52,7 @@ T01 → T02 → T03 → T04 → T05 → T06 → T07 (merged)
                                       │
                        N01 native lexer/parser (merged PR #32)
                                       │
-                       N02 native codegen + source maps + parity
+                       N02 native codegen + source maps + parity (merged PR #34)
                                       │
                        N03 native editor cutover (no Bun)
                               ├───────┴────────┐
@@ -155,7 +155,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### N03 — Godot-native editor cutover, Bun removed from user workflow
 
-**Prerequisite:** N02 merged. **Tracking:** create a scoped issue on pickup.
+**Prerequisite:** N02 merged PR #34. **Tracking:** [N03 / issue #35](https://github.com/resistdesign/Estragon/issues/35).
 
 - Replace the editor's external Bun/build-gogo process with **direct native compiler calls**. Keep the same configured source-root policy, generated script/maps, unchanged output handling, native GDScript validation, source-located diagnostics, error panel and F5/F6 fail-closed gate.
 - Maintain save/unsaved buffer handling, filesystem changes, resource refresh, plugin enable/disable, recovery and lifecycle. Remove the Bun executable setting/discovery and all compiler subprocess usage; do not use a hidden Bun fallback.
@@ -195,7 +195,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 The implementation agent should be given a **work ID**, not a whole milestone. Example:
 
-> Continue **N02** from the latest handoff on [issue #33](https://github.com/resistdesign/Estragon/issues/33). Read `AGENTS.md`, this plan and `docs/WORK_STATUS.md`; keep the T08 bridge working, use Godot-only tests, open one focused PR and leave a handoff. Do **not** merge.
+> Continue **N03** from the latest handoff on [issue #35](https://github.com/resistdesign/Estragon/issues/35). Read `AGENTS.md`, this plan and `docs/WORK_STATUS.md`; keep the T08 bridge working, use Godot-only tests, open one focused PR and leave a handoff. Do **not** merge.
 
 A task begins by checking the *latest* main branch, its tracking issue, open PRs and the latest handoff. It ends with verified evidence and a durable handoff or an explicitly reviewed merge. See `AGENTS.md` for the required protocol.
 

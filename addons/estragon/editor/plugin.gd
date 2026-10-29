@@ -1,6 +1,6 @@
 @tool
 extends EditorPlugin
-## Native ScriptEditor authoring; synchronous bounded build gate for every Play.
+## Native ScriptEditor authoring and direct Godot compilation before every Play.
 
 const BuildService = preload("res://addons/estragon/editor/build_service.gd")
 const Highlighter = preload("res://addons/estragon/editor/highlighter.gd")
@@ -17,7 +17,9 @@ var build_count: int = 0
 
 func _enter_tree() -> void:
 	_active = true
-	_register_settings()
+	# Retire only Estragon-owned legacy setup; never rewrite user preferences.
+	for key in ["estragon/editor/bun_executable", "estragon/editor/build_timeout_seconds"]:
+		if ProjectSettings.has_setting(key): ProjectSettings.clear(key)
 	var settings := EditorInterface.get_editor_settings()
 	if settings.has_setting(TEXT_EXTENSIONS_SETTING):
 		var existing := str(settings.get_setting(TEXT_EXTENSIONS_SETTING))
@@ -46,18 +48,7 @@ func _enter_tree() -> void:
 	EditorInterface.get_resource_filesystem().filesystem_changed.connect(_schedule)
 	EditorInterface.get_resource_filesystem().sources_changed.connect(_sources_changed)
 	resource_saved.connect(_resource_saved)
-	_schedule()
-
-
-func _register_settings() -> void:
-	if not ProjectSettings.has_setting(BuildService.BUN_SETTING):
-		ProjectSettings.set_setting(BuildService.BUN_SETTING, "")
-	ProjectSettings.set_initial_value(BuildService.BUN_SETTING, "")
-	ProjectSettings.add_property_info({"name": BuildService.BUN_SETTING, "type": TYPE_STRING, "hint": PROPERTY_HINT_GLOBAL_FILE, "hint_string": ""})
-	if not ProjectSettings.has_setting(BuildService.TIMEOUT_SETTING):
-		ProjectSettings.set_setting(BuildService.TIMEOUT_SETTING, 30.0)
-	ProjectSettings.set_initial_value(BuildService.TIMEOUT_SETTING, 30.0)
-	ProjectSettings.add_property_info({"name": BuildService.TIMEOUT_SETTING, "type": TYPE_FLOAT, "hint": PROPERTY_HINT_RANGE, "hint_string": "1,120,1"})
+	_compile()
 
 
 func _schedule() -> void:
@@ -80,7 +71,7 @@ func _save_external_data() -> void:
 
 func _compile_saved() -> void:
 	if _active:
-		_compile(false)
+		_compile()
 
 
 func _build() -> bool:
@@ -88,26 +79,40 @@ func _build() -> bool:
 		return false
 	# Includes native TextFile tabs, not only GDScript. Never compile old disk
 	# contents when the author's buffer is newer, even with autosave disabled.
-	EditorInterface.get_script_editor().save_all_scripts()
+	var scripts := EditorInterface.get_script_editor()
+	scripts.save_all_scripts()
 	_timer.stop()
-	return _compile(true)
+	for path in scripts.get_unsaved_files():
+		if path.ends_with(".gogo"):
+			last_report = {"ok": false, "changed": [], "outputs": [], "diagnostics": [path + ":1:1: Cannot save latest Gogo buffer; resolve the Save error before Play."]}
+			_show_report()
+			return false
+	return _compile()
 
 
-func _compile(validate: bool) -> bool:
+func _compile() -> bool:
 	_building = true
 	build_count += 1
-	last_report = BuildService.run_build(validate)
+	last_report = BuildService.run_build()
+	_show_report()
+	# Refresh paths without reimporting authored source. The child game's fresh
+	# process reads these exact bytes; editor resources are synchronized as well.
+	var filesystem := EditorInterface.get_resource_filesystem()
+	var needs_scan := false
+	for path in last_report.get("changed", []):
+		var resource_path := "res://" + str(path)
+		if filesystem.get_filesystem_path(resource_path.get_base_dir()) == null: needs_scan = true
+		filesystem.update_file(resource_path)
+	if needs_scan and not filesystem.is_scanning() and not filesystem.is_importing(): filesystem.scan()
+	_building = false
+	return last_report.ok
+
+
+func _show_report() -> void:
 	_diagnostics.text = "Gogo build succeeded." if last_report.ok else "\n\n".join(PackedStringArray(last_report.diagnostics))
 	if not last_report.ok:
 		make_bottom_panel_item_visible(_diagnostics)
 		push_warning("Estragon: Gogo compilation failed; Play blocked.\n" + _diagnostics.text)
-	# Refresh paths without reimporting authored source. The child game's fresh
-	# process reads these exact bytes; editor resources are synchronized as well.
-	var filesystem := EditorInterface.get_resource_filesystem()
-	for path in last_report.get("changed", []):
-		filesystem.update_file("res://" + str(path))
-	_building = false
-	return last_report.ok
 
 
 func _exit_tree() -> void:

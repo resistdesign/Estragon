@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Optional Godot semantic validation, separate from deterministic source emission.
 ## Uses native Logger only for the synchronous reload window; never spawns tools.
@@ -36,11 +37,20 @@ static func validate(compilation: Compiler.Compilation, generated_path: String =
 	# Preserve relative references and registered class_name identity while
 	# leaving any cached application script untouched (Godot 4.7 Resource API).
 	script.set_path_cache(generated_path)
+	return reload_script(compilation, script)
+
+## Explicit editor publication step; callers retain Resource identity and state.
+## validate() above remains isolated from the application's resource cache.
+static func reload_script(compilation: Compiler.Compilation, script: GDScript, keep_state: bool = false) -> Validation:
+	var result := Validation.new()
+	if not compilation.ok:
+		result.diagnostics.assign(compilation.diagnostics)
+		return result
 	script.source_code = compilation.code
 	var logger := Capture.new()
 	logger.path = script.resource_path
 	OS.add_logger(logger)
-	var error := script.reload()
+	var error := script.reload(keep_state)
 	OS.remove_logger(logger)
 	for message in logger.snapshot():
 		var diagnostic := Model.Diagnostic.new()

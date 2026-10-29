@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Typed frontend -> ordinary GDScript. All output is range-mapped, never rewritten.
 const Model = preload("res://addons/estragon/compiler/model.gd")

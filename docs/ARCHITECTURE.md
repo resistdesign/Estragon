@@ -4,11 +4,11 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
-## Godot-native compiler migration (ADR-0012; compiler implemented, editor cutover pending)
+## Godot-native compiler migration (ADR-0012; native compiler and editor implemented)
 
-The T08 editor's external Bun build is a **tested transitional bridge**. Estragon's target is a **bundled GDScript-native compiler**: Gogo source → native lexer/parser/typed model (N01) → native GDScript emission/source maps (N02) → direct EditorPlugin build/validation on F5/F6 (N03) → generated ordinary `.gd` → Estragon's independent runtime.
+N03 replaces the former T08 external build with the **bundled GDScript-native compiler**: Gogo source → native lexer/parser/typed model (N01) → native GDScript emission/source maps (N02) → direct EditorPlugin build/validation on F5/F6 (N03) → generated ordinary `.gd` → Estragon's independent runtime.
 
-No Bun/Node is required to **use** the final addon, and no runtime XML/JSON interpreter, engine fork, native extension dependency or per-component Godot Node/Control is introduced. Keep compiler logic separate from editor UI, scene tree and renderer; retain current supported syntax and generated signal semantics. Cutover only after an actual Godot-only editor run with Bun absent, source errors blocking Play, and recovery after fixing source. Existing TypeScript tests may remain optional CI/reference tooling.
+No Bun/Node is required to **use** the final addon, and no runtime XML/JSON interpreter, engine fork, native extension dependency or per-component Godot Node/Control is introduced. Keep compiler logic separate from editor UI, scene tree and renderer; retain current supported syntax and generated signal semantics. Fresh-project Godot-only editor tests exercise Play with tools absent, error blocking and recovery. Existing TypeScript tests may remain optional CI/reference tooling.
 
 N01 lives entirely in `addons/estragon/compiler/`: `source.gd` indexes source,
 `lexer.gd` scans tokens at explicit offsets, `parser.gd` composes balanced GDScript
@@ -24,8 +24,9 @@ GDScript.reload() with a scoped, thread-safe Logger to capture generated-line
 errors, then maps them back to Gogo. Failed validation exposes no executable
 script. Validation uses Resource.set_path_cache() with the real output path to
 preserve relative resources and registered class_name identity without taking
-over cached application scripts. No file publication/discovery or editor changes are included; N03 owns
-that integration. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for the API and measured parity.
+over cached application scripts. N03's native build service adds tool-mode loading, source discovery, transactional
+publication and explicit state-preserving editor resource reload. The standalone
+validation API remains isolated from application caches; editor publication synchronizes cached generated Scripts transactionally. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for the API and measured parity.
 
 ## Mixed-source direction (T05 subset implemented; later services planned)
 
@@ -354,20 +355,30 @@ is used. See GOGO_LANGUAGE/ADR-0010 for validation limits and TESTING for the ga
 
 Track independently dirtied state, layout and paint; retain component identities; batch paint primitives; minimize allocations and GPU submissions; manage scissoring/clips and cache glyphs/resources. Measure CPU and GPU cost, startup time, frame pacing and memory on concrete workloads instead of assuming lower-level drawing automatically means faster rendering.
 
-## Godot editor compilation boundary (T08)
+## Godot editor compilation boundary (T08/N03)
 
-The optional EditorPlugin integrates the native Script Editor, lexical Gogo
-highlighter and diagnostics bottom panel. Editor Controls are tooling only;
-application components/rendering remain unchanged. Saved-source/filesystem events
-coalesce a build; the common F5/F6 `_build` hook saves buffers and gates execution
-on direct Bun/TypeScript compilation plus separate native Godot semantic checks.
-An explicit gogo.config.json lists sorted project source roots; adjacent generated
-code/maps preserve existing resource paths. Reports in .godot carry diagnostics,
-outputs and changed paths; they are build metadata, never runtime UI data.
+The optional EditorPlugin owns native TextFile highlighting, saved-source events,
+unsaved-buffer save-before-Play and the diagnostic panel. The scene-independent
+native `editor/build_service.gd` handles project discovery, compile-all and semantic
+validation, staged/rollback publication and in-place generated Script refresh.
+It uses no subprocess, executable setting or reference TypeScript code.
 
-The build service bounds subprocess lifetime, detects missing/crashed compilers,
-and fails closed. It does not rely on shell startup configuration. TypeScript
-still owns the language pipeline, Godot owns generated GDScript semantics, and
-the editor only presents/adapts them. Successful changed paths update the resource
-filesystem; a fresh game executes them. No live game hot-reload or replacement
-source editor is introduced. See EDITOR, TESTING and ADR-0011 for precise behavior.
+Explicit gogo.config.json roots remain authoritative; absent config scans project
+sources excluding addon/dependency/hidden/generated/test directories. Adjacent
+outputs/maps preserve resource paths and UIDs. Identical bytes are not rewritten.
+All source/path checks precede staging; all semantics pass before a build succeeds.
+Rename backups restore output bytes/maps/timestamps after a failure, and the common
+F5/F6 `_build` returns false. This is transactional failure handling, not crash
+journaling or an application sandbox.
+
+Order native validation/reloads from static extends/preload edges using the
+existing lexer; Godot decodes lexer-proven resource string literals, never
+application expressions. Refresh each validated dependency in place before its
+dependents; on failure restore old disk/cache code. Godot's GDScript cache can
+retain bytecode despite resource-filesystem updates or ResourceLoader replace
+modes; the explicit reload is tested with changed dependency types and live Script
+identity. Filesystem records/class metadata are updated for committed paths. A
+fresh game process reads current files; no live game hot-reload is introduced.
+All compiler modules are tool-callable but remain independent of EditorInterface,
+UI state and rendering. Editor Controls remain tooling only. See EDITOR, TESTING
+and ADR-0012 for the verified no-tools workflow and remaining editor features.

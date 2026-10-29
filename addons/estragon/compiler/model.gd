@@ -1,3 +1,4 @@
+@tool
 extends RefCounted
 ## Native frontend data only. No Nodes, runtime components or editor services.
 

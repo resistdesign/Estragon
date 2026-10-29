@@ -42,17 +42,17 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 - **`@Bindable` in ordinary authored `.gd` is a distinct requested goal.** Stock Godot cannot register arbitrary GDScript annotations via an addon. Do not claim this works without proving a pre-parse/source integration. A separate `.bgd` extension is only a possible fallback, not an accepted replacement.
 - **Real runtime components:** implement independent `DisplayObject`/`Container`-style bases, responsive `VBox`/`HBox` and later common UI components. Resolve naming collisions with Godot's classes. Keep existing JSON prototype functional until a GDScript-generating vertical slice is proven.
 
-## Highest priority: native Godot Gogo compiler (N01/N02 implemented; N03 pending)
+## Highest priority: native Godot Gogo compiler and editor (N01–N03 implemented)
 
-**Owner decision, 2026-10-28, ADR-0012:** Estragon users must compile and run Gogo with **Godot and the bundled addon alone**. No Bun, Node, TypeScript, external compiler processes, shell setup, separate language server or GDExtension binary may be required for normal editing or Play. The T08 Bun-backed editor build is a **temporary bridge**, manually verified in Godot by the user.
+**Owner decision, 2026-10-28, ADR-0012:** Estragon users must compile and run Gogo with **Godot and the bundled addon alone**. No Bun, Node, TypeScript, external compiler processes, shell setup, separate language server or GDExtension binary may be required for normal editing or Play. The former T08 Bun bridge has been replaced by direct native compilation/validation in N03.
 
-**Do N01 → N02 → N03 immediately after T08 and the native-compiler planning PR merge, ahead of T09/T10.** N01 is tracked in [issue #30](https://github.com/resistdesign/Estragon/issues/30). The complete dependency and acceptance criteria are in [EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md). R01 bindable feasibility can be researched independently, but not used to delay native compilation.
+**N01/N02 are merged; N03 delivers the native editor cutover ahead of T09/T10.** N03 is tracked in [issue #35](https://github.com/resistdesign/Estragon/issues/35). The complete dependency and acceptance criteria are in [EXECUTION_PLAN.md](docs/EXECUTION_PLAN.md). R01 bindable feasibility can be researched independently, but not used to delay native compilation.
 
 - **N01:** GDScript-native lexer/parser/typed component and event validation, original source spans and diagnostics, with native Godot tests. Never implement mixed syntax with regex substitutions.
 - **N02:** GDScript-native emitter, source maps, full current Gogo semantic parity and an interactive native-generated Counter; use Bun/TypeScript only for optional reference checks.
 - **N03:** Replace editor Bun subprocess and executable setting with direct bundled native compilation/validation, preserving highlighting, saved/unsaved edits, F5/F6 fail-closed checks, diagnostics and recovery. Prove use in a fresh Godot project **without Bun installed or available**.
 
-Keep T08 working until N03 passes. The native compiler may use Godot core string/array/value APIs but **must not depend on EditorInterface, rendering, or a running scene tree**; keep parsing, typed model, codegen and source maps separate. Preserve supported Gogo syntax, callback order and automatic lifecycle. No runtime XML/JSON interpreter or Godot Control tree. Existing TypeScript/Bun scripts/tests may remain as **optional developer/CI tools**, never as the app's required build process or fallback.
+Preserve the native editor workflow; never reintroduce a Bun fallback. The native compiler may use Godot core string/array/value APIs but **must not depend on EditorInterface, rendering, or a running scene tree**; keep parsing, typed model, codegen and source maps separate. Preserve supported Gogo syntax, callback order and automatic lifecycle. No runtime XML/JSON interpreter or Godot Control tree. Existing TypeScript/Bun scripts/tests may remain as **optional developer/CI tools**, never as the app's required build process or fallback.
 
 Do not modify the accepted architecture or silently reduce Gogo's language features to simplify the port. Checkpoint progress in issues/PRs, run Godot-only positive/negative tests, and leave durable session handoffs.
 
@@ -71,7 +71,7 @@ Do not modify the accepted architecture or silently reduce Gogo's language featu
 
 **Implemented:**
 
-- `addons/estragon/compiler/`: N01 native GDScript lexer, hybrid parser, typed built-in validation and source diagnostics, independent of editor/runtime/Bun. N02 adds native emission/maps and explicit Godot semantic validation; editor cutover (N03) remains pending; the working editor still uses the TypeScript compiler. See GOGO_LANGUAGE and the Godot-only `sh tools/check-native-frontend.sh` and `sh tools/check-native-generation.sh` harnesses. Native compile API: `compiler.gd`; semantic validation: `script_validation.gd`; no external process or file publication is involved.
+- `addons/estragon/compiler/`: N01 native GDScript lexer, hybrid parser, typed built-in validation and source diagnostics, independent of editor/runtime/Bun. N02 adds native emission/maps and explicit Godot semantic validation; N03 uses them directly for native editor builds, transactional publication and Script refresh; no executable setup is needed. See GOGO_LANGUAGE and the Godot-only `sh tools/check-native-frontend.sh` and `sh tools/check-native-generation.sh` harnesses. Native compile API: `compiler.gd`; semantic validation: `script_validation.gd`; no external process or file publication is involved.
 
 - `tools/transpile-gogo.ts` + `tools/gogo/`: T04/T05 namespace-free component parser, GDScript lexical composition, typed factories and range source maps. Mixed methods/expressions and generated Button.pressed callbacks work within GOGO_LANGUAGE; bindings remain future work.
 - `tools/gogo.ts`: **stage-0** strict, namespace-aware TypeScript Gogo compiler and deterministic JSON IR generator, executed with Bun. Its syntax is temporary.
@@ -103,7 +103,8 @@ Do not write new examples, PR descriptions, or documentation that imply these pr
 | `addons/estragon/runtime/display_object.gd`, `container.gd` | Independent component ownership, disposal and invalidation foundations |
 | `tests/godot/components.gd` | Standalone component contract tests through T01 validation |
 | `examples/hello/Hello.tscn`, `project.godot` | Minimal Godot application host |
-| `addons/estragon/editor/`, `tools/build-gogo.ts` | Optional native editor highlighting, build gate and project source discovery |
+| `addons/estragon/editor/` | Native highlighting, project discovery, transactional builds, resource refresh and F5/F6 gate |
+| `tools/build-gogo.ts` | Optional historical TypeScript build/reference tool; never used by the addon |
 | `docs/GOGO_LANGUAGE.md` | Implemented Gogo subset vs speculative syntax |
 | `docs/ARCHITECTURE.md`, `docs/VISION.md` | System boundaries and direction |
 | `docs/BINDING.md`, `docs/EDITOR.md` | Planned reactivity and editor work |
@@ -217,12 +218,13 @@ If an IR change is incompatible, deliberately define/version the new contract an
 - Account for nested path replacement, subscriptions and disposal, collection mutation, cycles, two-way feedback protection, and batched invalidation.
 - Keep observable models usable without inheriting from a Godot `Node`. Test state changes independently from drawing.
 
-### Editor integration (T08 transitional Bun bridge; N03 removes the dependency)
+### Editor integration (T08/N03; native Godot only)
 
-- The current T08 plugin has native highlighting and F5/F6 gating but **spawns Bun**. N03 must retain that behavior via direct native compiler calls, remove Bun executable settings/process launch, and preserve source-map errors. Source discovery policy lives in `gogo.config.json` and docs/EDITOR.md. Completion, debugger remapping and visual preview remain future work.
-- That editor setting is **global and persists after disabling the plugin**. Never erase existing values, force-enable the plugin, or silently change someone's editor configuration in a test.
-- Keep editable `.gogo` source accessible; do not replace it with imported `.tscn` widget trees.
-- Source diagnostics and previews must ultimately come from the Gogo compiler and Estragon renderer, respectively.
+- The plugin calls the bundled compiler and semantic validator directly; no subprocess, Bun discovery/configuration or fallback is allowed. Explicit gogo.config.json remains authoritative; without it scan project sources with documented exclusions. See EDITOR.
+- Stage/validate multi-file outputs and restore old code/maps/timestamps on failure. Preserve no-op bytes/UIDs. Explicitly refresh generated GDScript resources in place; filesystem records alone do not guarantee current cached bytecode. Test dependent scripts and class identity.
+- Before both Play paths save native Gogo buffers; unsavable or invalid source must block stale execution. Keep automatic highlighting, diagnostics, saved/external-source notifications and clean disable/re-enable/restart behavior.
+- The text-extension editor preference is **global and persists after disabling the plugin**. Never erase existing values, force-enable the plugin in the owner's checkout, or silently change user preferences in tests. Real-editor tests use a copied self-contained binary/project and empty executable PATH.
+- Keep editable Gogo accessible. Completion/navigation, debugger remapping and live preview remain future work. No Godot Controls or component Nodes at runtime.
 
 ### Documentation, examples, and assets
 
@@ -233,7 +235,7 @@ If an IR change is incompatible, deliberately define/version the new contract an
 
 ## Verification commands (repository root)
 
-**Current contributor/test workflow only:** Bun 1.4.4 runs existing TypeScript tools and tests. These may remain optional CI/reference tools; production Gogo compilation must become Godot-native under N01–N03. The TypeScript compiler checks do **not** require Godot:
+**Current contributor/test workflow only:** Bun 1.4.4 runs existing TypeScript tools and tests. These may remain optional CI/reference tools; normal Gogo compilation/editing/Play is already Godot-native under N01–N03. The TypeScript compiler checks do **not** require Godot:
 
 ```sh
 bun install --frozen-lockfile
@@ -275,6 +277,8 @@ bun run test:godot-harness
 bun run test:editor
 # Independent native compile/runtime proof, with Bun/Node unavailable:
 sh tools/check-native-generation.sh
+# Independent fresh-project native editor/Play/restart proof:
+sh tools/check-editor.sh
 ```
 
 See `docs/TESTING.md` for `GODOT_BIN`, version pinning, isolation and failure detection. Editor integration tests must use the self-contained isolated harness; never force-enable the plugin or alter user editor settings in tests.

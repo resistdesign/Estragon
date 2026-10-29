@@ -2,7 +2,7 @@
 
 **Status:** T04 implements a small namespace-free markup-to-GDScript slice targeting the independent component runtime. The legacy namespaced XML-to-JSON demo is preserved separately. T05 adds a GDScript-first hybrid subset with component/property/child expressions and range source maps. T07 adds Text/Button properties and generated pressed connections; T08 adds optional automatic editor compilation/highlighting; bindings and broader editor services remain future work.
 
-**Compiler migration:** N01/N02 implement bundled GDScript-native parsing, typed validation, generation and source maps. Editor cutover (N03) remains pending under ADR-0012; the working editor still uses Bun. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
+**Compiler migration:** N01/N02 implement bundled GDScript-native parsing, typed validation, generation and source maps. N03 integrates that compiler directly into the editor under ADR-0012, with no external compiler or executable setup. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
 
 ## Native frontend (N01)
 
@@ -19,7 +19,7 @@ else:
 
 No imports, editor services, runtime components, external executables or packages
 are needed to analyze source. This frontend API does **not** emit or execute applications; the native compilation API below consumes the same model.
-T08's compiler commands and editor behavior below remain unchanged until N03.
+The editor calls the native compilation/validation APIs below.
 
 `model.gd` defines typed RefCounted data: `Module` retains source-ordered `Code`
 and `Component` parts; `GdExpression` recursively retains code/component parts.
@@ -88,8 +88,9 @@ The compiler and validation require Godot alone, with no subprocesses, packages,
 Bun/Node, editor services or application scene tree. Runtime classes must be
 available through Godot's normal project import/class registration. Emission
 constructs the existing Estragon classes; it does not introduce an interpreter.
-File discovery, safe output publication, resource reload and compile-before-Play
-remain the existing T08 behavior until N03; this API does not write files.
+This compilation API does not write files. The native editor build service owns
+source discovery, transactional publication, resource refresh and compile-before-Play;
+see EDITOR.
 
 Hybrid output preserves authored ranges and uses collision-safe `_gogo_build_N`
 static factories with typed arguments. Dynamic property/child/Callable expressions
@@ -124,7 +125,7 @@ The Godot-only harness compiles and runs Layout, Mixed, Counter and both edge
 fixtures, exercises native semantic/callback failures, and compares checked reference
 output/map digests. See TESTING for exact commands and a direct Counter visual test.
 No known compatibility gap remains within the tested T04–T07 subset; this is not
-a full GDScript frontend, incremental compiler, editor cutover or new grammar.
+a full GDScript frontend, incremental compiler or new grammar.
 
 ## Standalone markup-to-GDScript subset (T04, extended in T07)
 
@@ -166,7 +167,7 @@ Colors normalize to lowercase RGBA with opaque alpha added when omitted.
 Fixed sizing overrides fill; stack allocation/overflow follows the
 [T03 runtime contract](ARCHITECTURE.md#minimal-sizing-and-layout-rules).
 
-Compile and verify with Bun 1.4.4, from the repository root:
+Optional contributor/reference CLI (Bun 1.4.4); normal authoring uses the native editor:
 
 ```sh
 bun run transpile examples/compiled/Layout.gogo --output examples/compiled/generated/Layout.gd
@@ -289,8 +290,8 @@ names avoid identifiers in the authored module; full inherited-symbol resolution
 is not implemented. Prefer the supported runtime bases for application screens
 and `RefCounted` for independent helper/factory modules.
 
-TypeScript validates markup structure and literal types and checks expression
-boundaries. **Godot is the authority for GDScript syntax, name resolution and
+The native frontend validates markup structure, literal types and expression
+boundaries; the optional TypeScript reference validates the same contract. **Godot is the authority for GDScript syntax, name resolution and
 static/runtime types.** Transpilation alone can succeed on a balanced expression
 that Godot later rejects. Typed factory arguments expose static mismatches to
 Godot; Variant-dependent mismatches, null/duplicate children and dynamic sizing
@@ -372,7 +373,7 @@ new button, and preserve existing generated-name collision handling and maps.
 
 Godot parses/typechecks generated GDScript. Missing method names and statically
 incompatible argument/property types are rejected by Godot with mapped Gogo
-positions in the validation runner. The Bun frontend validates the component/
+positions in the validation runner. The native frontend validates the component/
 attribute contract and expression boundaries; it does not implement GDScript's
 semantic checker. Native conversions and Variant-dependent errors remain native
 Godot behavior. Literal font sizes must be positive 32-bit integers; expression
@@ -473,13 +474,14 @@ This stage-0 compiler and sample stay working until the real transpiler and runt
 
 Design and test component imports/resolution, property types, attribute expressions, children and fragments (if any), signal callback conventions, binding expressions, typed component references, error recovery, GDScript-language islands and source maps. Favor Flex 4's class/component model and modern TSX's composition ergonomics without copying HTML, React's runtime semantics, or XML namespace ceremony. Produce compile errors for unknown features instead of silent fallback.
 
-## Automatic editor builds (T08)
+## Automatic native editor builds (T08/N03)
 
-Enable Estragon in Godot 4.7 and configure Bun once if it is not discoverable.
-The native Script Editor opens `.gogo` with automatic mixed highlighting. Saving
-sources and pressing either Play command generates these same ordinary scripts
-and maps without manual compiler commands. gogo.config.json explicitly defines
-source roots; adjacent generated paths preserve scene references. Failed frontend,
-process or native GDScript validation blocks execution and reports authored
-locations. The language/evaluation/lifecycle contract is unchanged. See
-[EDITOR.md](EDITOR.md) for exact policy, setup and existing-tab/highlighting limits.
+Enable Estragon in Godot 4.7; no compiler setup is needed. The native Script
+Editor opens Gogo with mixed highlighting. Saving sources and either Play command
+build these ordinary scripts/maps through bundled GDScript APIs, with no external
+process. Dirty buffers are saved before the authoritative Play build. Explicit
+config roots remain supported; absent config scans project sources with documented
+exclusions. Adjacent generated paths preserve scenes/UIDs, and unchanged bytes
+are not rewritten. Frontend/semantic/publication failures restore prior outputs
+and block stale execution. See [EDITOR.md](EDITOR.md) for transactions, resource
+refresh, diagnostics, setup and existing-tab/highlighting limits.

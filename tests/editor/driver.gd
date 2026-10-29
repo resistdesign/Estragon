@@ -1,6 +1,6 @@
 @tool
 extends EditorPlugin
-## Only loaded by check-editor.ts in its self-contained, disposable editor.
+## Only loaded by the self-contained, Godot-only editor integration harness.
 
 var _failed: bool = false
 var _checks: int = 0
@@ -28,10 +28,19 @@ func _find_plugin(node: Node) -> EditorPlugin:
 	return null
 
 func _run() -> void:
-	ProjectSettings.set_setting("estragon/editor/bun_executable", OS.get_environment("ESTRAGON_TEST_BUN"))
 	await _wait()
+	if FileAccess.file_exists("res://.godot/estragon/restart.txt"):
+		await _restart()
+		return
+	# Only this self-contained editor: prove our gate saves dirty TextFiles
+	# even when Godot's own pre-run autosave is disabled.
+	EditorInterface.get_editor_settings().set_setting("run/auto_save/save_before_running", false)
 	var plugin := _find_plugin(get_tree().root)
 	_check(plugin != null, "plugin enabled")
+	_check(not DirAccess.dir_exists_absolute("res://tools") and not FileAccess.file_exists("res://package.json"), "fresh project has no repository toolchain")
+	_check(not ProjectSettings.has_setting("estragon/editor/bun_executable"), "no executable configuration")
+	for directory in OS.get_environment("PATH").split(":", false):
+		_check(DirAccess.get_files_at(directory).is_empty(), "editor and games have no tool executables")
 	if plugin == null:
 		get_tree().quit(1)
 		return
@@ -63,9 +72,7 @@ func _run() -> void:
 		await RenderingServer.frame_post_draw
 		get_tree().root.get_texture().get_image().save_png("res://.godot/estragon/editor-highlight.png")
 	var source := FileAccess.get_file_as_string("res://examples/counter/Counter.gogo")
-	var proof := "\n\nfunc _ready() -> void:\n    var file := FileAccess.open(\"res://.godot/estragon/run-proof.txt\", FileAccess.WRITE)\n    file.store_string(str(count) + \"|\" + get_root().get_children()[1].text)\n    file.close()\n"
-	if OS.get_environment("ESTRAGON_EDITOR_NATIVE") == "1":
-		proof += "    await get_tree().process_frame\n    await RenderingServer.frame_post_draw\n    get_viewport().get_texture().get_image().save_png(\"res://.godot/estragon/game-\" + str(count) + \".png\")\n"
+	var proof := FileAccess.get_file_as_string("res://tests/editor/game_proof.txt")
 	code.text = source.replace("var count: int = 0", "var count: int = 5") + proof
 	EditorInterface.get_script_editor().save_all_scripts()
 	await _wait()
@@ -77,18 +84,18 @@ func _run() -> void:
 	EditorInterface.open_scene_from_path("res://examples/counter/Counter.tscn")
 	await _wait()
 	EditorInterface.play_main_scene()
-	await _wait()
-	await _wait()
+	await _wait_for_proof("7|Count: 7")
 	print("PROOF_F5 ", FileAccess.file_exists("res://.godot/estragon/run-proof.txt"), " GENERATED_READY ", FileAccess.get_file_as_string("res://examples/counter/generated/Counter.gd").contains("func _ready"))
 	_check(EditorInterface.is_playing_scene(), "F5 starts project")
 	_check(FileAccess.get_file_as_string("res://.godot/estragon/run-proof.txt") == "7|Count: 7", "F5 saves buffer and executes new generated expression")
+	_check_interactions()
+	_check(EditorInterface.get_edited_scene_root().get_script().source_code.contains("var count: int = 7"), "editor resource reflects newest generated source")
 	EditorInterface.stop_playing_scene()
 	await _wait()
 	DirAccess.remove_absolute("res://.godot/estragon/run-proof.txt")
 	code.text = source.replace("var count: int = 0", "var count: int = 9") + proof
 	EditorInterface.play_current_scene()
-	await _wait()
-	await _wait()
+	await _wait_for_proof("9|Count: 9")
 	_check(EditorInterface.is_playing_scene(), "F6 starts current scene")
 	_check(FileAccess.get_file_as_string("res://.godot/estragon/run-proof.txt") == "9|Count: 9", "F6 executes newest generated state/text")
 	EditorInterface.stop_playing_scene()
@@ -104,22 +111,33 @@ func _run() -> void:
 	_check(not EditorInterface.is_playing_scene(), "invalid Gogo blocks F6")
 	code.text = source + proof
 	EditorInterface.play_current_scene()
-	await _wait()
-	await _wait()
+	await _wait_for_proof("0|Count: 0")
 	_check(EditorInterface.is_playing_scene(), "fix allows F6 recovery")
 	_check(FileAccess.get_file_as_string("res://.godot/estragon/run-proof.txt") == "0|Count: 0", "recovery runs fixed code")
 	EditorInterface.stop_playing_scene()
 	await _wait()
-	# Native compiler errors must block too, not merely Gogo syntax errors.
+	# Both actual Play paths must reject native semantic errors as well.
+	DirAccess.remove_absolute("res://.godot/estragon/run-proof.txt")
+	var valid_output := FileAccess.get_file_as_string("res://examples/counter/generated/Counter.gd")
 	code.text = source.replace("pressed={increment}", "pressed={missing_handler}")
-	_check(not plugin._build(), "GDScript semantic error blocks Play")
-	_check("Gogo source: examples/counter/Counter.gogo:" in str(plugin.last_report.diagnostics), "Godot diagnostic mapped to Gogo")
+	EditorInterface.play_main_scene()
+	await _wait()
+	_check(not EditorInterface.is_playing_scene() and not FileAccess.file_exists("res://.godot/estragon/run-proof.txt"), "semantic error blocks F5 without stale execution")
+	_check("examples/counter/Counter.gogo:" in str(plugin.last_report.diagnostics), "Godot diagnostic mapped to Gogo")
+	EditorInterface.play_current_scene()
+	await _wait()
+	_check(not EditorInterface.is_playing_scene() and not FileAccess.file_exists("res://.godot/estragon/run-proof.txt"), "semantic error blocks F6 without stale execution")
+	_check(FileAccess.get_file_as_string("res://examples/counter/generated/Counter.gd") == valid_output, "semantic failure retains previous generated bytes")
+	code.text = source + proof
+	EditorInterface.play_main_scene()
+	await _wait_for_proof("0|Count: 0")
+	_check(EditorInterface.is_playing_scene(), "semantic repair allows F5 recovery")
+	_check(FileAccess.get_file_as_string("res://.godot/estragon/run-proof.txt") == "0|Count: 0", "semantic repair executes current code")
+	_check_interactions()
+	EditorInterface.stop_playing_scene()
+	await _wait()
 	code.text = source
-	_check(plugin._build(), "semantic fix recovers")
-	var service = load("res://addons/estragon/editor/build_service.gd")
-	ProjectSettings.set_setting(service.BUN_SETTING, "/nonexistent/bun")
-	_check(not plugin._build() and "Bun" in str(plugin.last_report.diagnostics), "missing Bun blocks build with actionable error")
-	ProjectSettings.set_setting(service.BUN_SETTING, OS.get_environment("ESTRAGON_TEST_BUN"))
+	_check(plugin._build(), "restore after semantic repair")
 	var external := FileAccess.open("res://examples/counter/Counter.gogo", FileAccess.WRITE)
 	external.store_string(source.replace("var count: int = 0", "var count: int = 4"))
 	external.close()
@@ -129,32 +147,26 @@ func _run() -> void:
 	_check(FileAccess.get_file_as_string("res://examples/counter/generated/Counter.gd").contains("var count: int = 4"), "external changed source compiles after filesystem scan")
 	code.text = source
 	_check(plugin._build(), "restore after external edit")
-	var previous := FileAccess.get_file_as_string(service.COMPILER)
-	var file := FileAccess.open(service.COMPILER, FileAccess.WRITE)
-	file.store_string("process.exit(17);\n")
-	file.close()
-	_check(not plugin._build() and "report" in str(plugin.last_report.diagnostics), "compiler crash without report blocks Play")
-	file = FileAccess.open(service.COMPILER, FileAccess.WRITE)
-	file.store_string(previous)
-	file.close()
-	_check(plugin._build(), "compiler restore recovers")
-	file = FileAccess.open(service.COMPILER, FileAccess.WRITE)
-	file.store_string('import { writeFileSync } from "node:fs"; writeFileSync(process.argv[5], JSON.stringify({ok:true,diagnostics:[]}));\n')
-	file.close()
-	_check(not plugin._build() and "invalid compiler report" in str(plugin.last_report.diagnostics), "malformed success report cannot bypass build gate")
-	file = FileAccess.open(service.COMPILER, FileAccess.WRITE)
-	file.store_string(previous)
-	file.close()
-	file = FileAccess.open(service.COMPILER, FileAccess.WRITE)
-	file.store_string("await new Promise(() => {});\n")
-	file.close()
-	ProjectSettings.set_setting(service.TIMEOUT_SETTING, 1.0)
-	_check(not plugin._build() and "timed out" in str(plugin.last_report.diagnostics), "hung compiler times out and blocks Play")
-	ProjectSettings.set_setting(service.TIMEOUT_SETTING, 30.0)
-	file = FileAccess.open(service.COMPILER, FileAccess.WRITE)
-	file.store_string(previous)
-	file.close()
-	_check(plugin._build(), "timeout recovery succeeds")
+	# New and changed named output must preserve Godot resource/class identity.
+	var named_path := "res://examples/counter/Named.gogo"
+	var named_source := "class_name EstragonEditorNamedProbe\nextends RefCounted\nfunc build() -> EstragonRect:\n    return <Rect width=\"2\"/>\n"
+	var named_file := FileAccess.open(named_path, FileAccess.WRITE)
+	named_file.store_string(named_source)
+	named_file.close()
+	EditorInterface.get_resource_filesystem().scan()
+	await _wait()
+	await _wait()
+	_check(FileAccess.file_exists("res://examples/counter/generated/Named.gd"), "new Gogo file compiles automatically")
+	var named_script := load("res://examples/counter/generated/Named.gd") as GDScript
+	_check(named_script.get_global_name() == "EstragonEditorNamedProbe", "generated class identity recognized")
+	_check(ProjectSettings.get_global_class_list().any(func(entry: Dictionary) -> bool: return entry.class == "EstragonEditorNamedProbe" and entry.path == "res://examples/counter/generated/Named.gd"), "new generated class registered at its resource path")
+	named_file = FileAccess.open(named_path, FileAccess.WRITE)
+	named_file.store_string(named_source.replace('width="2"', 'width="4"'))
+	named_file.close()
+	EditorInterface.get_resource_filesystem().scan()
+	await _wait()
+	await _wait()
+	_check(load("res://examples/counter/generated/Named.gd") == named_script and named_script.source_code.contains("4.0"), "named Script identity retained with current generated code")
 	var settings := EditorInterface.get_editor_settings()
 	var extensions = settings.get_setting("docks/filesystem/textfile_extensions")
 	EditorInterface.set_plugin_enabled("estragon/editor", false)
@@ -172,6 +184,37 @@ func _run() -> void:
 	var quiet_count: int = plugin.build_count
 	await _wait()
 	_check(plugin.build_count == quiet_count, "no endless generated-file rebuild loop")
+	code.text = source.replace("var count: int = 0", "var count: int = 3") + proof
+	_check(plugin._build(), "prepare restart with latest source")
+	var marker := FileAccess.open("res://.godot/estragon/restart.txt", FileAccess.WRITE)
+	marker.store_string("ready")
+	marker.close()
 	print("Editor checks: ", _checks)
-	print("ESTRAGON_EDITOR_OK" if not _failed else "ESTRAGON_EDITOR_FAILED")
+	print("ESTRAGON_EDITOR_PHASE_1_OK" if not _failed else "ESTRAGON_EDITOR_FAILED")
 	get_tree().quit(1 if _failed else 0)
+
+func _restart() -> void:
+	var plugin := _find_plugin(get_tree().root)
+	_check(plugin != null and plugin._build(), "editor restart builds with Godot alone")
+	DirAccess.remove_absolute("res://.godot/estragon/run-proof.txt")
+	EditorInterface.play_main_scene()
+	await _wait_for_proof("3|Count: 3")
+	_check(EditorInterface.is_playing_scene(), "restart F5 runs")
+	_check(FileAccess.get_file_as_string("res://.godot/estragon/run-proof.txt") == "3|Count: 3", "restart executes current generated code")
+	_check_interactions()
+	EditorInterface.stop_playing_scene()
+	await _wait()
+	print("ESTRAGON_EDITOR_PHASE_2_OK" if not _failed else "ESTRAGON_EDITOR_FAILED")
+	get_tree().quit(1 if _failed else 0)
+
+func _check_interactions() -> void:
+	var flags: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://.godot/estragon/interaction-proof.json"))
+	_check(flags is Dictionary and flags.size() == 7, "launched game reports all interaction assertions")
+	if flags is Dictionary:
+		for key in flags:
+			_check(flags[key] == true, "launched Counter " + key)
+
+func _wait_for_proof(expected: String) -> void:
+	for attempt in range(50):
+		if FileAccess.file_exists("res://.godot/estragon/run-proof.txt") and FileAccess.get_file_as_string("res://.godot/estragon/run-proof.txt") == expected: return
+		await get_tree().create_timer(0.2).timeout

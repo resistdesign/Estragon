@@ -1,8 +1,11 @@
 # Tests and verification
 
-## Native Godot compiler acceptance (planned N01–N03)
+## Native Godot compiler/editor acceptance (N01–N03)
 
-Current tests below verify the **transitional Bun/TypeScript** toolchain and T08 editor bridge. N01/N02 require standalone **Godot-native tests running without Bun**; N03 additionally requires a fresh Godot project with only the addon and no Bun/Node PATH or executable setting. Editing Gogo then pressing F5/F6 must run fresh generated code; invalid Gogo/GDScript must block both and recover when fixed. Existing Bun tests may remain optional CI/reference checks, not an end-user prerequisite.
+Normal Godot authoring uses the bundled native compiler and editor build gate;
+Bun/Node/TypeScript are not user prerequisites. The standalone native frontend,
+generation/runtime and fresh-project editor harnesses below run independently
+of Bun. Existing TypeScript tests remain optional contributor/CI parity tooling.
 
 ## Compiler typechecking and tests
 
@@ -345,76 +348,78 @@ This is a real graphics check, **not part of headless CI**. It does not replace
 interactive editor resizing/remote-tree inspection. Record exactly which checks
 actually ran in the PR/handoff; do not label headless geometry tests visual proof.
 
-## T08 automatic editor compilation and highlighting
+## Native editor compilation, Play and restart (T08/N03)
 
 ```sh
+GODOT_BIN=/absolute/path/to/godot sh tools/check-editor.sh
+# Optional repository wrapper for the same independent harness:
 bun run test:editor
 ```
 
-The harness copies the project and official editor executable into a temporary
-self-contained directory (`_sc_`). It enables Estragon plus a test-only driver in
-that copy, configures the absolute Bun executable and isolates EditorSettings.
-On macOS it ad-hoc signs only the copied executable. The user's project plugin
-state/global settings are untouched. `GODOT_BIN` selects the same pinned editor as
-other checks. CI runs this in the Godot job with headless game subprocesses.
+The shell creates a fresh project containing the addon, Counter.gogo/scene and
+necessary test resources, with no tools/TypeScript/package files, configuration
+or generated application scripts. It copies the official Godot executable into
+a self-contained directory (`_sc_`) so project/plugin/editor preferences are
+isolated. macOS ad-hoc signing applies only to that copied test binary. Every
+editor, game and build-test process uses an empty executable PATH; no Bun/Node
+or fallback compiler can be discovered. The owner's project/plugin/settings are
+never changed. CI runs the shell directly in its Godot job.
 
-The real editor driver exercises native file-dock opening and automatic extension
-highlighter selection, 16 lexical color/cache checks, saved-file and external
-source builds, both `play_main_scene()` and `play_current_scene()` (the native
-F5/F6 run paths), changed unsaved buffers, current game state/text, invalid Gogo
-blocking both modes, recovery, mapped GDScript semantic errors, missing Bun,
-compiler crash/malformed report, timeout, plugin disable/re-enable, preserved extension settings,
-restored highlighting and no endless rebuild loop. Test-only Counter `_ready`
-records actual launched game state/text; checking only `_build()` is insufficient.
-Failures exit nonzero or omit the required `ESTRAGON_EDITOR_OK` marker. Unexpected
-script errors also fail; deliberately injected semantic/build failures are
-expected diagnostics. The complete run has 32 integration assertions plus the
-16 lexical checks. Authored examples and generated fixtures in the checkout are
-never modified by these tests.
+The real editor driver opens Gogo through FileSystem, verifies automatic native
+highlighting (plus 16 lexical checks), saved/unsaved/external changes (including with Godot pre-run autosave disabled), and actual
+`play_main_scene()`/`play_current_scene()` run commands. The launched Counter
+records initial state/text and verifies +/Reset through viewport pointer events,
+new labels, responsive geometry after viewport resize, one host/connection and
+cleanup of old buttons. Invalid markup and GDScript semantics block **both**
+Play modes without producing a game proof; repair recovers. It checks unchanged
+output/cache identity, generated class registration, disable/re-enable, preserved
+extension settings and lack of rebuild loops. A second full editor process proves
+restart still builds/runs current source without external tools.
 
-`tests/editor-build.test.ts` adds 13 Bun tests for explicit sorted/deduplicated
-source discovery, excluded paths, strict config errors, source/output symlinks,
-compile-all-before-write, recovery, stable code/maps/mtime, source preservation,
-missing native compiler and CLI reports. Full Bun suite: 150 tests. Every new
-GDScript is also parsed by check:godot; editor-only objects are tested in the real
-editor, not instantiated in an ordinary game process.
+`native_build.gd` runs in the same isolated project/PATH and covers sorted/default
+and explicit discovery, exclusions/dedup, bad config/roots, symlink rejection,
+no-op code/maps/UID/timestamps, all-file frontend failure, semantic rollback,
+repair, mode/map transition and changed multi-file dependency types/cached code.
+It counts expected engine diagnostics; unexpected errors fail. The editor shell
+also rejects unexpected script/game errors and requires phase/build markers.
 
-### Manual Godot 4.7 procedure
+The optional TypeScript `tests/editor-build.test.ts` coverage remains intact as
+reference tooling. It does not participate in native compilation. Authored
+examples and checked generated fixtures in the checkout are never modified.
 
-1. Follow EDITOR's one-time setup. Enable the plugin, configure absolute Bun if
-   needed, open Counter.gogo from FileSystem and confirm normal Script Editor
-   with Gogo coloring (declarations/tags/props/braces/strings/comments).
-   A tab already open before initial enable may need reopening.
-2. Open Counter.tscn. Change `var count: int = 0` to 7 in Counter.gogo, leave it
-   unsaved, and use Run Current Scene (F6/Command-R). Confirm Count: 7 and working
-   buttons; stop. Set Counter.tscn as main scene locally, change to 9, press F5,
-   and confirm Count: 9. No manual compiler command should be required.
-3. Break a component/property, press each Play action and confirm no game starts;
-   inspect the Gogo bottom panel for authored file/line/column. Fix it and confirm
-   execution resumes with current values. Repeat using an undefined handler to
-   verify native GDScript errors map back to Counter.gogo.
-4. Save a valid source while stopped and inspect generated output updating.
-   Change it externally and refocus/scan sources; confirm regeneration. Generated
-   code/maps should not churn for unchanged source; never edit them by hand.
-5. Configure an invalid Bun path: Play must fail with an actionable setup message.
-   Restore the correct executable and recover. Disable/re-enable twice: no
-   duplicate panel/hooks, editor errors or lost extension settings. Known open
-   Gogo tabs should regain highlighting. Stop/restart the editor and repeat.
-6. Restore count/main scene/Bun settings after the smoke test if desired. Inspect
-   the remote tree while running: one host, no component Controls or Node tree.
-
-For repeatable native graphics evidence, the same isolated harness supports:
+### Graphics evidence and manual Godot 4.7 procedure
 
 ```sh
-ESTRAGON_KEEP_EDITOR_TEST=1 ESTRAGON_EDITOR_NATIVE=1 bun run test:editor
+GODOT_BIN=/absolute/path/to/godot ESTRAGON_KEEP_EDITOR_TEST=1 \
+  ESTRAGON_EDITOR_NATIVE=1 sh tools/check-editor.sh
 ```
 
-It saves a native editor screenshot and launched Count 7/9/0 PNGs under the
-reported temporary project's `.godot/estragon`. Inspect them with the log/results;
-these are local temporary artifacts, not committed golden images. This exercises
-real editor/graphics APIs but does not certify physical keyboard shortcuts,
-platform dialogs or every OS/window-manager behavior. Record whether manual
-keyboard/remote-tree checks ran separately.
+This captures the native highlighted editor and actual launched Counter's initial,
+incremented and reset/resized states under the temporary project's
+`.godot/estragon`. The test changes **only its isolated** editor preference to
+run games in separate native windows, enabling actual window/viewport resizing.
+Godot's default embedded **Fixed Size** deliberately keeps a fixed viewport;
+use the Game bar's Stretch to Fit (or unembedded play) when manually checking
+responsive resize. The plugin never changes this user preference. See
+[Godot's game-embedding sizing contract](https://docs.godotengine.org/en/4.7/tutorials/editor/game_embedding.html).
+
+Automated run commands/graphics/pointer injection do not certify physical keys,
+mouse/window-manager behavior or every platform dialog. Manual procedure:
+
+1. Enable the addon in Godot 4.7, open Counter.gogo from FileSystem, and verify
+   mixed highlighting. No executable setting or compiler install is needed.
+2. Open Counter.tscn; edit count or label without saving, press F6, then F5 with
+   this scene set as main. Verify newest text, +/Reset and viewport resizing.
+3. Break a tag/property, then a handler name/type; both keys must refuse Play
+   with authored diagnostics. Repair and rerun. Check saved/external changes too.
+4. Rebuild unchanged source: no generated file churn. Disable/re-enable and
+   restart: no duplicate hooks, lost extension settings or stale outputs.
+5. Inspect the remote tree: one host, independent components; restore local
+   source/main scene settings if desired.
+
+Record whether this physical-key/manual procedure ran separately from automated
+native graphics captures. Compiler/semantic errors remain engine log entries;
+the Gogo panel presents the current authored-source report.
 
 ## Native frontend without Bun (N01)
 
@@ -485,8 +490,7 @@ This saves `native-counter-zero.png`, `native-counter-one.png`, and
 4.7 Vulkan run produced and inspected all three: Count 0/disabled Reset, Count 1/
 enabled Reset, then Count 0 and a wider row at 800×400 (initially 640×360).
 These are native graphics captures with synthesized pointer events, not a manual
-physical-mouse/editor F5/F6 test. The existing isolated editor regression suite
-continues to test the unchanged Bun bridge; N03 must prove native editor Play.
+physical-mouse/editor F5/F6 test. The independent editor suite above proves native editor Play without external tools.
 
 ## Known gaps
 
