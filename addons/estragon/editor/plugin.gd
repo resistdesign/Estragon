@@ -36,7 +36,7 @@ func _enter_tree() -> void:
 	_highlighter = Highlighter.new()
 	EditorInterface.get_script_editor().register_syntax_highlighter(_highlighter)
 	_highlighter_association = HighlighterAssociation.new()
-	_highlighter_association.start()
+	_highlighter_association.start(get_editor_interface())
 	_timer = Timer.new()
 	_timer.one_shot = true
 	_timer.wait_time = 0.4

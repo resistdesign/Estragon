@@ -8,9 +8,14 @@ var _scripts: ScriptEditor
 var _tree: SceneTree
 var _active: bool = false
 var _pending: bool = false
+var _tested_adapter: bool = false
 
-func start() -> void:
-	_scripts = EditorInterface.get_script_editor()
+func start(interface: EditorInterface) -> void:
+	var version := Engine.get_version_info()
+	_tested_adapter = version.major == 4 and version.minor >= 0 and version.minor <= 7
+	if not _tested_adapter:
+		push_warning("Estragon E01: native tab-path adapter is unverified on this engine; UI fallback disabled. See C01 compatibility requirements.")
+	_scripts = interface.get_script_editor()
 	_tree = _scripts.get_tree()
 	_active = true
 	_tree.node_added.connect(_node_added)
@@ -53,8 +58,8 @@ func _refresh() -> void:
 		code.syntax_highlighter = Highlighter.new()
 
 func _path(editor: ScriptEditorBase, code: TextEdit) -> String:
-	if code.syntax_highlighter is EditorSyntaxHighlighter:
-		# Bound in stock 4.7, although omitted from its generated class docs.
+	if code.syntax_highlighter is EditorSyntaxHighlighter and code.syntax_highlighter.has_method("_get_edited_resource"):
+		# Capability-check the bound getter; it is not a published API contract.
 		var resource: Resource = code.syntax_highlighter.call("_get_edited_resource") as Resource
 		if resource != null: return resource.resource_path
 	# A never-associated Plain Text tab has a null highlighter resource, and
@@ -62,12 +67,13 @@ func _path(editor: ScriptEditorBase, code: TextEdit) -> String:
 	# supplies exact path tooltips and tab indices (not filtered-list indices).
 	# Validate both against the tab's actual parent; never guess from contents
 	# or a basename. Pinned-engine adapter covered by real editor regressions.
+	if not _tested_adapter: return str(code.get_meta(PATH_META, ""))
 	var tabs := editor.get_parent() as TabContainer
 	if tabs == null: return ""
 	for list in _scripts.find_children("*", "ItemList", true, false):
 		for item in range(list.item_count):
 			var index: Variant = list.get_item_metadata(item)
-			if index is not int or index < 0 or index >= tabs.get_tab_count(): continue
+			if not (index is int) or index < 0 or index >= tabs.get_tab_count(): continue
 			if tabs.get_tab_control(index) != editor: continue
 			var path: String = list.get_item_tooltip(item)
 			if path.begins_with("res://"): return path

@@ -1,0 +1,49 @@
+[
+  {
+    "minor": "4.0",
+    "version": "4.0.4.stable.official.fc0b241c9",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.0.4-stable/Godot_v4.0.4-stable_macos.universal.zip",
+    "archive_sha256": "a345a0777652323b24497b19c34bfea363cf1ed496dd2eb86befbdab287ab747"
+  },
+  {
+    "minor": "4.1",
+    "version": "4.1.4.stable.official.fe0e8e557",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.1.4-stable/Godot_v4.1.4-stable_macos.universal.zip",
+    "archive_sha256": "6ef7dd271b7a7868c60e16357cd3085b12b892967daf84aa491c38108565d94d"
+  },
+  {
+    "minor": "4.2",
+    "version": "4.2.2.stable.official.15073afe3",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.2.2-stable/Godot_v4.2.2-stable_macos.universal.zip",
+    "archive_sha256": "57646027e4b304dc65570b3f29d78a7eefa862e287d4e99f432bc381143d1ec5"
+  },
+  {
+    "minor": "4.3",
+    "version": "4.3.stable.official.77dcf97d8",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_macos.universal.zip",
+    "archive_sha256": "d17940b913b3f3bf54c941eeb09042099d93865c6e2638e09e20f7c649aa474a"
+  },
+  {
+    "minor": "4.4",
+    "version": "4.4.1.stable.official.49a5bc7b6",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_macos.universal.zip",
+    "archive_sha256": "6c670596d21afb7917c739d0b85b10b4ac6a44051ffa2a672f90bc7da5062864"
+  },
+  {
+    "minor": "4.5",
+    "version": "4.5.2.stable.official.6ce3de25a",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.5.2-stable/Godot_v4.5.2-stable_macos.universal.zip",
+    "archive_sha256": "2a3f35cf5813b0d26e3f4c15dabc5e7c58407fceec7bae5291740772f72d141a"
+  },
+  {
+    "minor": "4.6",
+    "version": "4.6.3.stable.official.7d41c59c4",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/Godot_v4.6.3-stable_macos.universal.zip",
+    "archive_sha256": "30630f3e9b11e10b35c1f90ba8814185dcec43fae1a48345159be7552c64bfe8"
+  },
+  {
+    "minor": "4.7",
+    "version": "4.7.stable.official.5b4e0cb0f",
+    "provenance": "Installed official macOS Godot.app; CI separately pins the official Linux archive checksum in .github/workflows/ci.yml."
+  }
+]

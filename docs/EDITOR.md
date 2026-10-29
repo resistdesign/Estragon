@@ -6,6 +6,10 @@ Install Godot and the addon, enable the plugin, edit Gogo and press Play.
 required.** Repository TypeScript tools are optional contributor/reference tools.
 Completion, debugger remapping, live preview and bindings remain future work.
 
+**Compatibility:** ADR-0014 requires Godot 4.0+. The complete workflow below is
+verified on 4.7; older addon startup is currently blocked. Isolated E01 results,
+remaining filtered-tab limits and exact failures are in [E01_COMPATIBILITY](E01_COMPATIBILITY.md).
+
 ## Getting started
 
 1. Copy `addons/estragon` into a Godot 4.7 project, or open this repository's
@@ -134,7 +138,9 @@ For that case, the adapter uses the native ScriptEditor's exact resource-path
 ItemList tooltips and tab-index metadata, validated against the actual tab parent.
 It does not identify a language from buffer contents, display names or filenames
 without extensions. This small UI adapter and the bound underscore method are
-**Godot-version-sensitive**; the real editor regression must run on upgrades.
+**Godot-version-sensitive**; it is capability-checked and its native-list fallback
+is gated to the actually tested 4.0–4.7 range. The real editor regression must run
+on upgrades. Isolated association success is not complete addon compatibility.
 Filtered-out never-associated tabs without resource metadata are deferred until
 the native list exposes their path; the plugin never changes the user's filter.
 
