@@ -177,6 +177,18 @@ See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
 
 **Delivery:** Fix automatic Gogo highlighting separately in [E01 #37](https://github.com/resistdesign/Estragon/issues/37). Stage T09 across reviewable property/model, component/layout, collection/repeater, and two-way/cycle-hardening slices. The [T09 live issue #5](https://github.com/resistdesign/Estragon/issues/5) and [REACTIVITY_PLAN](REACTIVITY_PLAN.md) contain the detailed contracts. Do not claim these features implemented or merge automatically.
 
+## ADR-0014 — Support Godot 4.0 and all subsequent 4.x versions
+
+**Status: accepted owner requirement, 2026-10-29. Implementation/verification in progress; 4.0 compatibility is NOT yet established.**
+
+**Decision:** Estragon's distributed GDScript addon, Gogo compiler, native editor integration, emitted code, independent component runtime, layout/rendering and examples must support **Godot 4.0+**, including each later minor release in Godot 4.x. The minimum must not silently rise to the 4.7 version used for current tests. Bun/Node remain optional contributor tools, never a user-side build dependency.
+
+**Current gap:** The published Godot 4.0 `ScriptEditor` API omits `save_all_scripts()` and `get_unsaved_files()` called by N03's F5/F6 build gate; the Godot 4.0 `Resource` API omits `set_path_cache()` used in native Gogo semantic validation. E01 #40 repairs 4.7 restored/highlighting tabs using a bound undocumented `_get_edited_resource()` plus ScriptEditor ItemList path/metadata; this is not evidence of older-version support. The repository's `project.godot` currently carries a `4.7` feature marker. These examples establish the need for a broader audit, not an exhaustive defect list.
+
+**Requirements:** Prefer stable public Godot 4.0 APIs; if an internal workaround is unavoidable, version/capability-gate its narrow adapter and test every supported engine version with real editors, without manipulating user preferences or discarding unsaved source. Preserve fail-closed compile-before-Play, source maps, native semantic validation, correct script/class identity, generated GDScript syntax, runtime layout/input/paint, and all E01 new/open/restored Gogo highlighting. Test real 4.0–4.7 engines and maintain a repeatable matrix, including source/scene versioning and plugin load/import evidence. Do not mislabel 4.7 CI green as 4.0+ certification.
+
+**Delivery:** Full cross-cutting compatibility gate [C01 issue #41](https://github.com/resistdesign/Estragon/issues/41). Highlighter E01 PR #40 must receive a specific 4.0+ compatibility review; the Godot-only T09 `@bindable` plan in ADR-0013 remains accepted but implementation must target the 4.0 baseline. No automatic merge, unsupported capability promises or unapproved minimum-version increases.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.
