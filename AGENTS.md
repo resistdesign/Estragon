@@ -56,6 +56,15 @@ Preserve the native editor workflow; never reintroduce a Bun fallback. The nativ
 
 Do not modify the accepted architecture or silently reduce Gogo's language features to simplify the port. Checkpoint progress in issues/PRs, run Godot-only positive/negative tests, and leave durable session handoffs.
 
+## Minimum supported Godot: 4.0+ (owner decision, 2026-10-29)
+
+**Accepted product requirement:** The end-user Estragon addon, editor workflow, native Gogo compiler/codegen/validator, generated GDScript, runtime/layout/renderer and sample projects must work on **Godot 4.0 and every subsequent Godot 4.x minor**. The existing **4.7-only tests do not certify this**, and the current code is **not yet verified 4.0-compatible**. Track the compatibility audit and version matrix in [C01 #41](https://github.com/resistdesign/Estragon/issues/41); treat it as a baseline before claiming T09/Estragon cross-version support. The owner has not approved raising the minimum engine version.
+
+- **Audit before extending:** `ScriptEditor.save_all_scripts()`, `ScriptEditor.get_unsaved_files()` and `Resource.set_path_cache()` are used today but absent from the published 4.0 public APIs. The 4.7 syntax-highlighter association also uses an undocumented `_get_edited_resource()` plus native editor ItemList path/metadata. None may be assumed to function on 4.0 without equivalent tested compatibility behavior.
+- Prefer documented, stable Godot **4.0** public APIs. Isolate any indispensable version-specific editor adapter behind tested capability/version checks rather than depending on fixed UI hierarchy. Never silently sacrifice correctness, unsaved-buffer fail-closed F5/F6, script identity, cached resources, or syntax highlighting on older versions.
+- **Prove on actual engines**, ideally automated matrix of latest 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6 and 4.7 patches; preserve negative diagnostics and no-Bun user workflow. Keep manual editor/graphics checks distinct from automated evidence. Check project `config/features` and generated resource formats for 4.0.
+- E01 [PR #40](https://github.com/resistdesign/Estragon/pull/40) remains 4.7-verified only and has a compatibility review blocker; see #41 before claiming its behavior across 4.0+. Preserve ADR-0013 Gogo-only lowercase `@bindable` while designing T09 against the 4.0 baseline. **Do not auto-merge or silently downgrade support claims.**
+
 ## Non-negotiable architecture
 
 1. **Own the UI.** Never implement Gogo by generating Godot `Control`, `Container`, `Label`, `Button`, or `.tscn` widget trees. Do not delegate Estragon's application layout, styling, hit testing, focus, or visual semantics to Godot's GUI system.
