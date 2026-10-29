@@ -1,6 +1,6 @@
 @tool
 extends EditorSyntaxHighlighter
-## Presentation-only lexical coloring. The TypeScript compiler owns diagnostics.
+## Presentation-only lexical coloring. The native compiler owns diagnostics.
 
 const CODE := Color("dedede")
 const KEYWORD := Color("ff7085")

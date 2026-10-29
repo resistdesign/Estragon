@@ -376,6 +376,16 @@ output/cache identity, generated class registration, disable/re-enable, preserve
 extension settings and lack of rebuild loops. A second full editor process proves
 restart still builds/runs current source without external tools.
 
+E01 additionally opens untagged plain Gogo tabs while the plugin is disabled,
+then enables it without reopening them or selecting Gogo manually. It checks
+actual attached highlighter classes and declaration/markup token colors, two
+independent editors, fresh tabs, repeated disable/re-enable and exact preservation
+of Markdown/plain-text highlighters (including Gogo-looking `.gogo.txt`). Before
+the second process, `seed_plain.gd` changes **only the temporary project's** native
+per-file cache entries to `Plain Text`, reproducing older restored-tab state.
+Startup assertions inspect restored buffers before any navigation/reopening.
+This fixture does not modify the owner's cache or persistent editor preferences.
+
 `native_build.gd` runs in the same isolated project/PATH and covers sorted/default
 and explicit discovery, exclusions/dedup, bad config/roots, symlink rejection,
 no-op code/maps/UID/timestamps, all-file frontend failure, semantic rollback,
@@ -407,7 +417,10 @@ Automated run commands/graphics/pointer injection do not certify physical keys,
 mouse/window-manager behavior or every platform dialog. Manual procedure:
 
 1. Enable the addon in Godot 4.7, open Counter.gogo from FileSystem, and verify
-   mixed highlighting. No executable setting or compiler install is needed.
+   mixed highlighting. Also open it before enabling Estragon, then enable the
+   plugin with the tab still open; colors should appear automatically. Restart
+   with the tab open and verify colors without menu selection. Check a Markdown
+   or plain text tab keeps its own highlighter. No compiler install is needed.
 2. Open Counter.tscn; edit count or label without saving, press F6, then F5 with
    this scene set as main. Verify newest text, +/Reset and viewport resizing.
 3. Break a tag/property, then a handler name/type; both keys must refuse Play

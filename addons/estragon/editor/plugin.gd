@@ -3,10 +3,12 @@ extends EditorPlugin
 ## Native ScriptEditor authoring and direct Godot compilation before every Play.
 
 const BuildService = preload("res://addons/estragon/editor/build_service.gd")
+const HighlighterAssociation = preload("res://addons/estragon/editor/highlighter_association.gd")
 const Highlighter = preload("res://addons/estragon/editor/highlighter.gd")
 const TEXT_EXTENSIONS_SETTING := "docks/filesystem/textfile_extensions"
 
 var _highlighter: EditorSyntaxHighlighter
+var _highlighter_association: RefCounted
 var _timer: Timer
 var _diagnostics: RichTextLabel
 var _building: bool = false
@@ -33,10 +35,8 @@ func _enter_tree() -> void:
 			settings.set_setting(TEXT_EXTENSIONS_SETTING, existing + ("," if not existing.is_empty() else "") + "gogo")
 	_highlighter = Highlighter.new()
 	EditorInterface.get_script_editor().register_syntax_highlighter(_highlighter)
-	for editor in EditorInterface.get_script_editor().get_open_script_editors():
-		var code := editor.get_base_editor() as TextEdit
-		if code != null and code.has_meta("estragon_gogo"):
-			code.syntax_highlighter = Highlighter.new()
+	_highlighter_association = HighlighterAssociation.new()
+	_highlighter_association.start()
 	_timer = Timer.new()
 	_timer.one_shot = true
 	_timer.wait_time = 0.4
@@ -147,13 +147,8 @@ func _exit_tree() -> void:
 		_timer.stop()
 		_timer.free()
 		_timer = null
-	# Godot retains highlighters on already-open files after unregistering.
-	# Detach our instances first so disable/re-enable never leaves stale ones.
-	for editor in EditorInterface.get_script_editor().get_open_script_editors():
-		var text_edit := editor.get_base_editor() as TextEdit
-		if text_edit != null and text_edit.syntax_highlighter != null and text_edit.syntax_highlighter.get_script() == Highlighter:
-			text_edit.set_meta("estragon_gogo", true)
-			text_edit.syntax_highlighter = EditorSyntaxHighlighter.new()
+	_highlighter_association.stop()
+	_highlighter_association = null
 	EditorInterface.get_script_editor().unregister_syntax_highlighter(_highlighter)
 	_highlighter = null
 	if _diagnostics != null:

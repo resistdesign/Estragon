@@ -180,10 +180,11 @@ This is the preferred *merge order*, not a request to implement everything in on
 
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
-**Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **Schedule:** next standalone editor fix after active R01, before T09's final integrated authoring milestone.
+**Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **Schedule:** R01 is merged in #38; E01 is the focused editor fix before T09-A. T09 architecture remains in live #5 and open docs PR #39; do not mix it into E01.
 
 - Reproduce the owner-confirmed restored-tab activation bug; prove automatic selection for new, existing and restored Gogo tabs, disable/re-enable and restart. Preserve unrelated user settings.
 - Extend the real isolated editor tests to inspect actual highlighter attachment/colors without manual selection. Deliver a separate focused PR; no R01 implementation scope.
+- E01 delivery: deferred exact-path association after tab creation/restoration and plugin enablement; Godot-only regressions seed persisted Plain Text state and check new/already-open/restored tabs, token colors, non-Gogo preservation and clean re-enable. Exact CI/checkpoints/handoff remain in #37 and its PR.
 
 ### R01 — Research: `@Bindable` in ordinary authored `.gd`
 
