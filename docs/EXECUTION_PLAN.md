@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 4, 2026-10-29. **Status:** N01–N03 and T01–T08 are merged; Godot-only Gogo compilation/editor Play is shipped. **R01 #38 is research in review (unmerged)**, documenting why ordinary authored `.gd` custom annotations are not supported. **The owner chose Gogo-only lowercase `@bindable` on 2026-10-29 (ADR-0013).** E01 #37 automatic Gogo highlighting is the next scoped editor fix; T09-A through T09-D are planned incremental slices for observable Gogo models, bindings/layout, collections/repeaters and two-way/cycle hardening. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md), [T09 issue #5](https://github.com/resistdesign/Estragon/issues/5) and [WORK_STATUS.md](WORK_STATUS.md) for accepted scope and live handoffs.
+**Plan version:** 5, 2026-10-29. **Status:** N01–N03 and T01–T08 are merged; Godot-only Gogo compilation/editor Play is shipped. **R01 #38 is research in review (unmerged)**, documenting why ordinary authored `.gd` custom annotations are not supported. **The owner chose Gogo-only lowercase `@bindable` on 2026-10-29 (ADR-0013).** E01 #37 automatic Gogo highlighting is in review (PR #40, 4.7 tested); **C01 #41 now establishes required Godot 4.0+ compatibility and is a release/support gate**; T09-A through T09-D are planned incremental slices for observable Gogo models, bindings/layout, collections/repeaters and two-way/cycle hardening. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md), [T09 issue #5](https://github.com/resistdesign/Estragon/issues/5) and [WORK_STATUS.md](WORK_STATUS.md) for accepted scope and live handoffs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -172,7 +172,7 @@ This is the preferred *merge order*, not a request to implement everything in on
 - **T09-C: ArrayCollection-like observable data and repeated content.** Typed observable collection reference and separate mutation events for add/insert/remove/replace/move/reset plus bindable item-property changes. Support stable keyed/list reconciliation, collection replacement, no duplicated updates or leaked subscriptions; a plain Array's mutation is not automatically observable.
 - **T09-D: assignable two-way bindings and edge semantics.** Event adapters, cycle/feedback guards, nested null paths, batched invalidation and integrated collection/layout/editor demonstration; split more PRs as appropriate.
 
-**Shared acceptance:** native Godot-only F5/F6, deterministic typed source maps, no per-frame polling, no per-component Godot Control/Node, proper tree/layout/paint dirty phases and framework-owned cleanup. Preserve supported Gogo/Counter behavior, tests and examples. Each slice gets a scoped task issue, focused PR, exact Godot-positive/negative tests and durable handoff; do not auto-merge.
+**Shared acceptance:** actual Godot 4.0+ compatibility (C01/ADR-0014), native Godot-only F5/F6, deterministic typed source maps, no per-frame polling, no per-component Godot Control/Node, proper tree/layout/paint dirty phases and framework-owned cleanup. Preserve supported Gogo/Counter behavior, tests and examples. Each slice gets a scoped task issue, focused PR, exact Godot-positive/negative tests and durable handoff; do not auto-merge.
 
 ### T10 — Retire the legacy JSON prototype safely
 
@@ -181,6 +181,15 @@ This is the preferred *merge order*, not a request to implement everything in on
 - Convert/replace the old sample with the new generated-GDScript pipeline and prove matching or improved rendering, CI and local editor behavior.
 - Remove obsolete JSON runtime parsing/fixtures/commands only when no active consumer depends on them; update docs/tests/AGENTS together.
 - Do not delete an otherwise useful example until a working replacement is merged.
+
+### C01 — Godot 4.0+ compatibility (owner baseline requirement; project-wide)
+
+**Tracking:** [C01 #41](https://github.com/resistdesign/Estragon/issues/41). **Owner decision:** ADR-0014. **Target:** Godot 4.0 through all later 4.x minors, not just 4.7. **Status:** unverified/required; Godot 4.7 test success does not establish compatibility.
+
+- Audit GDScript syntax, plugin lifecycle, all compiler/emitter/validation methods, editor APIs, generated resource/UID/scene formats, and runtime component/graphics APIs using **Godot 4.0 as the minimum**. Known gaps: `ScriptEditor.save_all_scripts()`, `get_unsaved_files()` and `Resource.set_path_cache()` are documented in 4.7 but not 4.0; the E01 4.7 editor association adapter reaches undocumented UI internals; `project.godot` advertises a 4.7 feature.
+- Implement public-API 4.0-compatible paths where possible; version-gate any unavoidable private adapter with real-engine proof. Never compromise source freshness, F5/F6 fail-closed behavior, generated-script/class identity, startup/restart highlighting, component lifecycle or user configuration.
+- Run native Gogo + editor + runtime tests on actual latest patches of Godot 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6 and 4.7. Maintain an automated multi-version matrix when feasible; report GUI/manual checks separately. Verify fresh install with only Godot/addon, no Bun/Node.
+- The compatibility evidence is a **review gate for E01 PR #40's claim of universal highlighting** and a shipping gate for T09/Estragon releases; do not silently raise the minimum engine. Keep C01 as separate scoped work as needed, with issue/PR and durable handoff.
 
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
