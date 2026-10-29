@@ -33,35 +33,43 @@ validation API remains isolated from application caches; editor publication sync
 The [design direction](DESIGN_DIRECTION.md) is **Gogo's XML-like markup and GDScript mixed in one authored `.gogo` source**, transpiled to GDScript—not JSON UI data interpreted by Godot.
 
 ~~~text
-  *.gogo: GDScript + <Component> elements    authored *.gd with @Bindable
-                  |                            (desired; parser hook TBD)
-          hybrid source frontend                          |
-                  |                          GDScript-aware preprocessing
-          typed components, props,                        |
-          expressions, signals, bindings -----------------+
-                  |
-         deterministic GDScript generator
-                  |
-        ordinary generated *.gd scripts
-                  |
-          Godot GDScript compilation
-                  |
-           Estragon component instances
-            /           |          \
-         layout      reactive       input
-                     state/events
-            \           |          /
-             paint / retained display list
-                        |
-              renderer backend interface
-                  /              \
-        RenderingServer      RenderingDevice
-            adapter           (research)
-                  \              /
-                  Godot Viewport
+        Authored *.gogo (UI + code-only data/model modules)
+          GDScript-like source, <Component>, @bindable (planned)
+                              |
+                 native Gogo lexer/parser
+                              |
+              typed components / model members
+                  expressions, source spans
+                              |
+          Gogo emitter: typed GDScript + source maps
+                              |
+               Godot's native GDScript parser
+                              |
+          Estragon component tree + observable models
+                  /          |           \
+              layout    dependency graph   input
+                  \          |           /
+                    paint / display list
+                              |
+                  renderer backend
+                     /             \
+             RenderingServer   RenderingDevice
+                 current          research
+                     \             /
+                      Godot Viewport
 ~~~
 
 A typed *compiler-internal* AST or intermediate model is useful; that is **not** a mandate for serialized JSON as the runtime format. Component construction, typed references and signal connections should be produced as **GDScript code**. Estragon's component tree remains independent of Godot's `Control`/`Node` hierarchy.
+
+## Planned reactivity and inheritance invariants (ADR-0013)
+
+**Source boundary:** only `@bindable` in compiler-owned `.gogo` is accepted; code-only data/model `.gogo` modules must become ordinary typed generated `.gd` scripts. [R01](BINDABLE_FEASIBILITY.md) documents why ordinary native authored `.gd` annotations are not an addon feature. Generated source should provide property change notifications, collection events, dependent subscriptions, and fail-closed native semantic validation. None of this new reactive behavior is implemented today.
+
+**Layout reactivity:** property bindings should update the existing measured/arranged/painted component properties using correct dirty phases, **including eventual x/y positioning**. Current `EstragonDisplayObject` has width, height and fill sizing flags but no public x/y properties. Decide whether x/y are layout-managed positions or offsets/absolute positions, and validate nested layout, hit-testing and resize behavior rather than implicitly overriding parent Box positioning.
+
+**Implemented inheritance:** `EstragonDisplayObject → EstragonContainer → EstragonStack → EstragonVBox/EstragonHBox`. Stack owns shared layout policy, orientation and gap. **Accepted target:** `EstragonDisplayObject → EstragonContainer → EstragonBox → EstragonVBox/EstragonHBox`. Consolidate shared layout code in Box, retain existing Stack compatibility where necessary and demonstrate tests for current generated examples. Do not duplicate code in subclasses or use a Godot `Control`/`Node` per component.
+
+**Data and collection boundary:** `@bindable` on a collection reference is separate from mutations to collection contents. A dedicated observable ArrayCollection-like class will publish structural and bindable item changes; typed repeater/list consumers must retain item identity and unsubscribe automatically. [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md) records ordered T09 acceptance cases. E01 [#37](https://github.com/resistdesign/Estragon/issues/37) separately fixes automatic highlighting before the final editor demonstration.
 
 **Current state:** the first prototype uses `tools/gogo.ts` to emit `*.gogo.json` for a minimal `RenderingServer` host. Keep this stage-0 demo working until a new Gogo-to-GDScript vertical slice is proven, then migrate it deliberately. Its namespace-prefixed XML is **not** the intended new Gogo syntax.
 
@@ -70,7 +78,7 @@ A typed *compiler-internal* AST or intermediate model is useful; that is **not**
 | Layer | Owns | Does not own |
 | --- | --- | --- |
 | Gogo frontend/codegen (T04/T05 subset implemented) | Hybrid GDScript/markup parsing, component/type resolution, diagnostics, generated GDScript and source maps | Rendering, Godot nodes |
-| Binding compiler (planned) | Observable properties, dependency descriptors and source transformation | Per-frame polling |
+| Gogo binding compiler (planned) | Lowercase `@bindable` in `.gogo`, typed model accessors, property/collection dependency tracking and source maps | Native `.gd` annotations, runtime markup interpretation or per-frame polling |
 | Component runtime (foundations implemented; reconciliation planned) | Independent objects, identity, ownership, disposal and dirty flags | Godot scene tree |
 | Layout engine (minimal stacks implemented) | Natural/fixed/fill sizes and nested VBox/HBox; broader layout planned | `Container` nodes |
 | Input system (primary mouse implemented) | Reverse-order hit testing/capture; propagation/focus/keyboard/IME planned | `Control` event routing |
