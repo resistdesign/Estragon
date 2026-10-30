@@ -56,6 +56,9 @@ func _initialize() -> void:
 	var captured := "captured"
 	var named_zero := func same_name() -> void: effects.append("named zero")
 	var named_required := func same_name(value: String) -> void: effects.append(value)
+	var native_target := Node.new()
+	var freed_target := Callable(native_target, "get_name")
+	native_target.free()
 	var callbacks := [
 		["method_zero", zero], ["method_required", required], ["method_optional", optional],
 		["method_bound", required.bind("bound")], ["method_optional_bound", optional.bind("bound")],
@@ -68,7 +71,7 @@ func _initialize() -> void:
 		["named_lambda_zero", named_zero], ["named_lambda_required", named_required],
 		["returned_lambda_zero", returned_lambda(false)], ["returned_lambda_required", returned_lambda(true)],
 		["bound_lambda", named_required.bind("bound")], ["unbound_lambda", named_zero.unbind(1)],
-		["empty", Callable()], ["missing", Callable(self, "missing")],
+		["empty", Callable()], ["missing", Callable(self, "missing")], ["freed_target", freed_target],
 	]
 	var rows: Array = []
 	for item in callbacks:

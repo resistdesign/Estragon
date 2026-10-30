@@ -583,3 +583,17 @@ affected script parses to pass. Other red compiler/editor stages remain visible.
 Cold Text-first invalid-text failures are tracked in #48/#41 and retained as FAIL;
 they are not silently waived by successful collection or warmed by fixture loads.
 The C01-A baseline snapshot is preserved; C01-B results are stored separately.
+
+
+## C01-C callable metadata evidence (not a compatibility fix)
+
+The C01 collector also runs `callback_metadata.gd`: 21 candidate observations,
+no candidate invocation, Object/Script method reflection, binding metadata,
+transient connection checks and modern native arity controls. Its exact expected
+metadata errors are counted by `tools/callback_metadata_evidence.py`; unexpected
+errors/missing observations fail. The `callback_metadata_probe` stage is required
+for evidence integrity in CI. A PASS there proves the experiment completed,
+not callback portability: `callback_arity_api` stays BLOCKED on 4.0–4.2, and the
+unchanged generated Counter/signals retain actual FAIL results. See
+[C01_C_CALLBACKS.md](C01_C_CALLBACKS.md) for source evidence, limits and the required
+owner decision. No production emitter/guard/reference fixture is changed.

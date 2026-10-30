@@ -7,8 +7,8 @@ def validate_metadata(output, minor):
     prefix = "C01_CALLBACK_METADATA "
     rows = [json.loads(line[len(prefix):]) for line in output.splitlines() if line.startswith(prefix)]
     by_name = {row["name"]: row for row in rows}
-    if len(rows) != 20 or len(by_name) != 20:
-        raise ValueError("Expected all 20 distinct callable observations")
+    if len(rows) != 21 or len(by_name) != 21:
+        raise ValueError("Expected all 21 distinct callable observations")
     # get_method() itself reports an expected native error for opaque lambdas
     # on older engines. No Logger API is required to count exact diagnostics.
     errors = [line for line in output.splitlines()
@@ -27,7 +27,7 @@ def validate_metadata(output, minor):
     for row in rows:
         if row["valid"] and row["connect_error"] != 0:
             raise ValueError("Revisit connect-as-validation alternative: " + row["name"])
-    if by_name["empty"]["valid"] or by_name["missing"]["valid"]:
+    if any(by_name[name]["valid"] for name in ["empty", "missing", "freed_target"]):
         raise ValueError("Invalid callable control was unexpectedly valid")
     counts = {"method_zero": 0, "method_required": 1, "method_optional": 1,
               "method_bound": 0, "method_optional_bound": 0, "method_unbound": 1,
