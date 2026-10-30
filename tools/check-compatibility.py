@@ -21,7 +21,6 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 ERROR = re.compile(r"SCRIPT ERROR:|(?:^|\n)ERROR:|Parse Error:|Assertion failed:")
 ANSI = re.compile(r"\x1b\[[0-9;]*m")
-PIN = "4.7.stable.official.5b4e0cb0f"
 
 
 def classify(code, output, marker=None, timed_out=False):
@@ -32,18 +31,28 @@ def classify(code, output, marker=None, timed_out=False):
     return "PASS"
 
 
-def execute(command, cwd, env, log, marker=None, timeout=60, expected_errors=False):
+def execute(command, cwd, env, log, marker=None, timeout=60, expected_errors=False, abort_on_error=False):
     start = time.monotonic()
     with log.open("w") as stream:
         process = subprocess.Popen(command, cwd=cwd, env=env, stdout=stream,
                                    stderr=subprocess.STDOUT, start_new_session=True)
         timed_out = False
-        try:
-            code = process.wait(timeout=timeout)
-        except subprocess.TimeoutExpired:
-            timed_out = True
-            os.killpg(process.pid, signal.SIGKILL)
-            code = process.wait()
+        aborted = False
+        while process.poll() is None:
+            remaining = timeout - (time.monotonic() - start)
+            if remaining <= 0:
+                timed_out = True
+                os.killpg(process.pid, signal.SIGKILL)
+                break
+            if abort_on_error and ERROR.search(ANSI.sub("", log.read_text(errors="replace"))):
+                aborted = True
+                os.killpg(process.pid, signal.SIGKILL)
+                break
+            try:
+                process.wait(timeout=min(0.2, remaining))
+            except subprocess.TimeoutExpired:
+                pass
+        code = process.wait()
     output = ANSI.sub("", log.read_text(errors="replace"))
     log.write_text(output)
     status = classify(code, "" if expected_errors else output,
@@ -51,7 +60,8 @@ def execute(command, cwd, env, log, marker=None, timeout=60, expected_errors=Fal
     if expected_errors and marker not in output.splitlines():
         status = "FAIL"
     return {"status": status, "command": command, "exit_code": code,
-            "timeout": timed_out, "seconds": round(time.monotonic() - start, 2),
+            "timeout": timed_out, "aborted_on_error": aborted,
+            "seconds": round(time.monotonic() - start, 2),
             "log": log.name,
             "diagnostics": [line for line in output.splitlines()
                             if ERROR.search(line) or "at:" in line][:30]}
@@ -84,7 +94,7 @@ def audit(engine, output, editor):
             folder.mkdir()
             env[key] = str(folder)
         version = subprocess.run([str(binary), "--headless", "--version"], env=env,
-                                 capture_output=True, text=True, timeout=20)
+                                 capture_output=True, text=True, timeout=60)
         result["version"] = version.stdout.strip()
         manifest = json.loads((ROOT / "tests/compatibility/engines.json").read_text())
         known = next((item for item in manifest if item["version"] == result["version"]), None)
@@ -107,7 +117,7 @@ def audit(engine, output, editor):
 
         def run(name, args, marker=None, **kwargs):
             stages[name] = execute(base + args, workspace, env, target / (name + ".log"),
-                                   marker, **kwargs)
+                                   marker, abort_on_error=(marker is not None and not kwargs.get("expected_errors")), **kwargs)
             return stages[name]["status"] == "PASS"
 
         run("import", ["--editor", "--quit"])
@@ -129,6 +139,8 @@ def audit(engine, output, editor):
         # test-only API cannot contaminate the addon startup/import verdict.
         for name in ["godot", "fixtures"]:
             shutil.copytree(ROOT / "tests" / name, project / "tests" / name)
+        shutil.copy2(ROOT / "tests/compatibility/numeric_literals.gd", project / "numeric_literals.gd")
+        run("numeric_literals", ["--script", "res://numeric_literals.gd"], "C01_NUMERIC_OK")
         run("frontend", ["--script", "res://tests/godot/native_frontend.gd",
                          "--", "--require-no-bun"], "ESTRAGON_NATIVE_FRONTEND_OK")
         # Remove checked generated code before emission: the runtime must consume
