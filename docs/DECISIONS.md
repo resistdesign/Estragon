@@ -193,6 +193,25 @@ See EDITOR/TESTING for setup, API evidence, guarantees and manual procedures.
 
 **Delivery:** Full cross-cutting compatibility gate [C01 issue #41](https://github.com/resistdesign/Estragon/issues/41). Highlighter E01 PR #40 must receive a specific 4.0+ compatibility review; the Godot-only T09 `@bindable` plan in ADR-0013 remains accepted but implementation must target the 4.0 baseline. No automatic merge, unsupported capability promises or unapproved minimum-version increases.
 
+## Compatibility engineering amendment — progressive enhancement (2026-10-30)
+
+**Accepted owner refinement:** [C01-C #46](https://github.com/resistdesign/Estragon/issues/46#issuecomment-6534935109).
+Godot 4.0+ remains mandatory. Implement a compatibility bridge when supported
+older APIs provide a clean, safe solution with reasonable ongoing maintenance.
+Do not manufacture brittle introspection or elaborate infrastructure solely to
+reproduce newer optional diagnostics. Where bridging is disproportionate,
+preserve valid behavior, retain all available safeguards, and let incompatible
+operations use the older engine's normal error path. Newer engines may provide
+earlier or richer diagnostics. Record and test this difference explicitly.
+
+For C01-C, opaque lambda arity cannot be recovered through public 4.0 reflection.
+The owner approves skipping only proactive arity checks on 4.0–4.2; invalid and
+disposed callbacks, connection errors and automatic cleanup remain guarded.
+4.3+ retains early required/optional-argument rejection. Older engines permit
+optional-argument invocation and report required-argument errors at invocation.
+This does not waive editor freshness, fail-closed Play or other required semantic
+behavior, and does not approve unit-helper, Box or reactive implementation.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.

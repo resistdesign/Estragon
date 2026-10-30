@@ -1,18 +1,39 @@
-# C01-C callback guard investigation — owner decision required
+# C01-C callback compatibility and progressive diagnostics
 
 Tracking: [#46](https://github.com/resistdesign/Estragon/issues/46), parent #41.
-Base: `005ce53` (C01-B #53 and documentation #56 merged). **The production port
-is blocked; this evidence does not implement or certify C01-C.** Existing native
-and optional reference emitters, generated fixtures and callback guards remain
-unchanged. No minimum-version or language contract change is made.
+Base: `005ce53` (C01-B #53 and documentation #56 merged).
+The [owner refinement](https://github.com/resistdesign/Estragon/issues/46#issuecomment-6534935109)
+approves a narrow progressive-enhancement fallback after the investigation below.
+Godot 4.0–4.2 skip unsupported proactive arity introspection; all versions retain
+validity, direct-target disposal, connection and automatic lifecycle checks.
+Godot 4.3+ retains early zero-argument validation, including optional parameters.
+No arbitrary Callable provenance restriction, adapter system or minimum-version
+increase is introduced.
+
+## Implementation
+
+Native and optional reference emitters retain typed Callable factory inputs.
+Each generated event aliases its already-evaluated argument to a uniquely named
+Variant, then short-circuits the native `get_argument_count()` query behind
+`Engine.get_version_info()["minor"] >= 3`. Variant dispatch prevents the older
+parser from statically resolving the missing Callable API; the version guard
+prevents its execution there. Authored expressions still evaluate once in their
+original order, and every emitted line maps to the event expression's source span.
+Existing invalid/disposed-target and connection checks remain unchanged.
+
+On older engines, an incompatible required/unbound callback connects and reports
+the normal signal-invocation error when activated. An optional-argument callback
+runs using its default. Neither is invoked during construction. Newer engines
+reject both required and optional arity before connection. This difference is
+explicitly approved; lack of introspection does not reject valid opaque Callables.
 
 ## Required behavior
 
 Button.pressed accepts a native Callable expression, including local variables,
 factory parameters, computed/returned Callables, bound methods and lambdas.
-Expressions evaluate once in authored order. Before connection, the guard must
-reject invalid Callables, every nonzero remaining argument count (including
-optional parameters), and direct disposed component targets. Normal activation,
+Expressions evaluate once in authored order. Before connection, all versions reject invalid Callables and direct disposed
+component targets. On 4.3+, the guard additionally rejects every nonzero remaining
+argument count (including optional parameters). Normal activation,
 source-mapped errors, single connections and owner cleanup must remain intact.
 Validation must not invoke application callbacks merely to discover their arity.
 
@@ -54,20 +75,16 @@ observations, changed metadata conclusions or unexpected counts fail the probe.
 
 ## Recorded matrix
 
-[Structured results](../tests/compatibility/c01-c-results.json) record all nine
-pinned engines, binary hashes, 21 observations per engine and individual stages.
-The eight latest patches ran in [CI](https://github.com/resistdesign/Estragon/actions/runs/41138213341);
-the pinned 4.7.0 baseline ran locally from the same clean source commit `9387a32`.
-
-| Engines | Metadata experiment | Arity API | Counter parse / generated signals |
-| --- | --- | --- | --- |
-| 4.0.4, 4.1.4, 4.2.2 | PASS | BLOCKED | FAIL / FAIL |
-| 4.3, 4.4.1, 4.5.2, 4.6.3, 4.7.0, 4.7.2 | PASS | PASS | PASS / PASS |
-
-These API and signal results do not certify full-addon compatibility. Other
-recorded failures remain visible, including #48 cold Text-first loading on
-4.0/4.1 and #44 filtered highlighting. No new manual graphical smoke test was
-performed for this evidence-only change.
+[Structured results](../tests/compatibility/c01-c-results.json) record exact
+versions, binary hashes, 21 observations per engine and individual stages.
+The initial investigation snapshot is superseded by implementation verification.
+`callback_guard_*` processes independently check empty, missing, freed and disposed
+targets, required/optional methods and lambdas, and unbound callbacks. Expected
+engine errors are counted exactly and matched to authored source or normal
+invocation diagnostics. Generated-signals tests exercise evaluation order, bound
+optional/static callbacks, pointer activation, no duplicate connections and cleanup.
+Other compatibility failures remain visible, including #48 cold Text-first loading
+and #44 filtered highlighting. Headless evidence does not certify graphics.
 
 ## Findings
 
@@ -139,34 +156,18 @@ and need an explicit design decision and separate implementation proof.
 | Find a lambda by reading its script text/name | Cannot associate arbitrary parameter/returned/native external Callables reliably; no regex/source rewriting substitute |
 | Engine fork/GDExtension or raising the engine minimum | Conflicts with the accepted bundled-GDScript/Godot-4.0 baseline; not proposed as an implementation shortcut |
 
-## Concrete owner decision
+## Decision and continuity
 
-No production fallback has been selected. Two reviewable paths are:
+The initial investigation correctly rejected method reflection, connection
+success and unchecked wrappers as universal pre-connection arity proof. The owner
+then explicitly approved normal older-engine invocation semantics rather than
+an elaborate callback representation or an opaque-Callable restriction.
+[AGENTS.md](../AGENTS.md) and [DECISIONS.md](DECISIONS.md) record this as a
+repository-wide engineering principle: implement small safe compatibility bridges;
+where bridging is disproportionate, preserve valid behavior and reserve optional
+early diagnostics for capable engines.
 
-1. **Keep the current arbitrary native Callable contract unchanged.** Keep C01-C
-   blocked and retain the existing guard until a complete supported mechanism is
-   demonstrated. No claim of 4.0–4.2 generated callbacks; no dependent milestone
-   advances merely because the evidence PR is merged.
-2. **Authorize a compiler-owned verified callback-adapter design.** Explore lowering
-   compiler-owned callbacks into known typed zero-argument methods while preserving
-   captured scope, order, source maps, original target ownership/disposal and cleanup.
-   Opaque Callables from ordinary `.gd`/external factories need an explicit boundary:
-   reject unknown provenance on older engines or require an approved, genuinely
-   validated adapter representation. An unchecked user-declared argument count
-   is not proof. This changes the currently supported arbitrary Callable boundary
-   and requires owner approval before production work or acceptance changes.
-
-The second option is an architecture investigation proposal, not an implemented
-or fully proved solution. Inline-lambda lowering alone cannot preserve every
-arbitrary external Callable. Neither option silently raises the minimum engine.
-
-## Remaining work and continuity
-
-C01-C's generated Counter/guard/signals acceptance remains open on 4.0–4.2.
-Source/reference emitters and fixtures remain byte-for-byte unchanged rather
-than normalizing an incomplete fallback. Existing 4.7 behavior is regression
-tested. Full per-version results and CI are linked from #46/its review PR.
-Cold Text-first dependency loading remains #48; C01-D numeric work, reactivity,
-Box/padding and the accepted-but-deferred unit helpers (#54/#56) are untouched.
-No later implementation starts while this sole PR is open. Owner review must
-decide the callback boundary; this evidence is not task completion.
+Cold Text-first dependency loading remains #48. C01-D numeric work, reactivity,
+Box/padding and the approved but deferred unit helpers (#54/#56) are untouched.
+C01-C remains in review until its sole PR is approved and merged; do not start a
+successor implementation or claim full-addon certification from this scoped fix.

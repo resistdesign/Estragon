@@ -3,6 +3,13 @@ extends SceneTree
 
 var _checks: int = 0
 var _failed: bool = false
+var _callback_values: Array = []
+
+func _optional(value: String = "default") -> void:
+	_callback_values.append(value)
+
+static func _static_record(values: Array) -> void:
+	values.append("static")
 
 
 func _initialize() -> void:
@@ -109,6 +116,16 @@ func _run() -> void:
 	_click(viewport, static_button)
 	_check(module.events[-1] == "static", "static authored factory accepts native callable")
 	_check(children[0].pressed.get_connections().is_empty(), "lambda/bound/local connections removed with old tree")
+	# Optional parameters remain rejected unbound on modern engines; binding
+	# every parameter is valid on every engine, including static methods.
+	for callback in [_optional.bind("bound optional"), _static_record.bind(_callback_values)]:
+		var bound_button: EstragonButton = module.build_static(callback)
+		_check(bound_button.pressed.get_connections().size() == 1, "bound callback connects once")
+		bound_button.pressed.emit()
+		surface.set_root(bound_button)
+		surface.set_root(null)
+		_check(bound_button.pressed.get_connections().is_empty(), "bound callback owner cleanup")
+	_check(_callback_values == ["bound optional", "static"], "optional bound and static callbacks execute once")
 	# A direct callback target is a logical component, separate from its source.
 	var owner := EstragonContainer.new()
 	var destination := EstragonContainer.new()

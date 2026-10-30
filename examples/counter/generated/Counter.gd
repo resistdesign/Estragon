@@ -58,7 +58,8 @@ static func _gogo_build_0(
     var component_4: EstragonButton = EstragonButton.new()
     component_4.text = "+"
     component_4.fill_width = true
-    if not _gogo_value_3.is_valid() or _gogo_value_3.get_argument_count() != 0:
+    var _gogo_callback_component_4: Variant = _gogo_value_3
+    if not _gogo_value_3.is_valid() or (Engine.get_version_info()["minor"] >= 3 and _gogo_callback_component_4.get_argument_count() != 0):
         push_error("examples/counter/Counter.gogo:26:60: Button.pressed requires a valid zero-argument Callable with a live target")
     elif _gogo_value_3.get_object() is EstragonDisplayObject and (_gogo_value_3.get_object() as EstragonDisplayObject).is_disposed():
         push_error("examples/counter/Counter.gogo:26:60: Button.pressed requires a valid zero-argument Callable with a live target")
@@ -70,7 +71,8 @@ static func _gogo_build_0(
     component_5.text = "Reset"
     component_5.fill_width = true
     component_5.disabled = _gogo_value_4
-    if not _gogo_value_5.is_valid() or _gogo_value_5.get_argument_count() != 0:
+    var _gogo_callback_component_5: Variant = _gogo_value_5
+    if not _gogo_value_5.is_valid() or (Engine.get_version_info()["minor"] >= 3 and _gogo_callback_component_5.get_argument_count() != 0):
         push_error("examples/counter/Counter.gogo:27:86: Button.pressed requires a valid zero-argument Callable with a live target")
     elif _gogo_value_5.get_object() is EstragonDisplayObject and (_gogo_value_5.get_object() as EstragonDisplayObject).is_disposed():
         push_error("examples/counter/Counter.gogo:27:86: Button.pressed requires a valid zero-argument Callable with a live target")

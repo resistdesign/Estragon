@@ -65,6 +65,20 @@ Do not modify the accepted architecture or silently reduce Gogo's language featu
 - **Prove on actual engines**, ideally automated matrix of latest 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6 and 4.7 patches; preserve negative diagnostics and no-Bun user workflow. Keep manual editor/graphics checks distinct from automated evidence. Check project `config/features` and generated resource formats for 4.0.
 - E01 [PR #40](https://github.com/resistdesign/Estragon/pull/40) has isolated highlighter evidence on 4.0–4.7 but full-addon older-version acceptance is blocked (see `docs/E01_COMPATIBILITY.md`); see #41 before claiming its behavior across 4.0+. Preserve ADR-0013 Gogo-only lowercase `@bindable` while designing T09 against the 4.0 baseline. **Do not auto-merge or silently downgrade support claims.**
 
+## Compatibility engineering: pragmatic bridges and progressive enhancement
+
+Owner refinement, 2026-10-30 ([C01-C #46](https://github.com/resistdesign/Estragon/issues/46#issuecomment-6534935109)):
+bridge older-engine gaps when supported APIs offer a clean, safe solution with
+reasonable implementation and maintenance cost. Prefer small compatibility
+bridges over fragile introspection, custom infrastructure or extensive backports.
+When a bridge is disproportionately complex or brittle, preserve valid behavior
+and use the older engine's normal error path; reserve improved or earlier
+diagnostics for engines exposing the capability. Missing optional introspection
+must not reject otherwise valid inputs or raise the engine minimum. Keep all
+available safeguards, document the precise diagnostic difference and test both
+paths. C01-C applies this to proactive Callable arity checks only; validity,
+disposal, connection and automatic lifecycle checks remain mandatory.
+
 ## Non-negotiable architecture
 
 1. **Own the UI.** Never implement Gogo by generating Godot `Control`, `Container`, `Label`, `Button`, or `.tscn` widget trees. Do not delegate Estragon's application layout, styling, hit testing, focus, or visual semantics to Godot's GUI system.

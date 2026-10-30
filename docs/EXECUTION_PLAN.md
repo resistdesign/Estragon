@@ -217,11 +217,18 @@ C01-A PR #52 merged `46bc752`. C01-B #45 now supplies the [focused runtime corre
 
 Each issue contains measurable acceptance and exact evidence. Preserve semantic diagnostics, callback order, native no-tools workflow and framework-owned runtime. Do not replace unavailable APIs with unchecked no-ops. T09-A #43 remains queued behind blocking compatibility foundations; the lowercase Gogo-only annotation/model/Box/collection/two-way destination is unchanged.
 
-### C01-C capability blocker and decision gate
+### C01-C progressive diagnostics
 
-C01-B PR #53 (`29fc202`) and docs PR #56 (`005ce53`) are merged. C01-C #46's [actual callback metadata investigation](C01_C_CALLBACKS.md) establishes an unresolved boundary: ordinary method reflection does not expose opaque captured/returned lambda signatures on 4.0–4.2, and native Signal.connect accepts incompatible arity. Existing arbitrary Callable inputs cannot all be validated without executing user code or changing their supported representation/source boundary. No guard removal, unchecked wrapper or universal method-list fallback is implemented.
-
-The focused C01-C evidence PR is **not implementation completion**. Obtain the owner's explicit choice between preserving the present contract with C01-C blocked, or authorizing a compiler-owned verified callback-adapter investigation with an explicit older-engine boundary for opaque external Callables. That proposal must preserve capture scope, evaluation order, maps, direct-target disposal and cleanup; no unchecked declared arity is accepted as proof. Do not silently raise the engine minimum or start C01-D/T09 because an evidence PR merges. The unit-helper specification remains approved but deferred; no Box/padding or `to_pixels()` implementation is part of this work.
+C01-B #53 and documentation #56 are merged. The [C01-C investigation](C01_C_CALLBACKS.md)
+proved public 4.0 reflection cannot recover opaque lambda arity. The owner
+[approved pragmatic compatibility bridges and progressive enhancement](https://github.com/resistdesign/Estragon/issues/46#issuecomment-6534935109):
+skip only unsupported proactive arity introspection on 4.0–4.2; preserve valid
+Callables, other available safeguards and normal invocation errors. 4.3+ retains
+early required/optional rejection. Test both paths with actual engines, source
+maps, invalid/disposed targets, connection ownership and lifecycle. No elaborate
+adapter or external-Callable restriction is authorized or needed. Full-addon
+compatibility remains gated by later C01 tasks; no successor starts before merge.
+Unit helpers, Box/padding and reactivity remain outside this milestone.
 
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 

@@ -4,7 +4,13 @@
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** C01-B PR #53 merged at `29fc202`; documentation PR #56 merged at `005ce53` and preserves the approved pixel-only core/deferred unit-helper direction. **C01-C #46** now has [a measured opaque-Callable blocker](C01_C_CALLBACKS.md): public 4.0 reflection cannot recover the required lambda arity, and native connection success does not validate it. Existing production guards are unchanged. Check #46's sole evidence PR/CI/handoff and obtain an explicit owner callback-boundary decision before any fallback or dependent implementation. The cold Text-first defect remains #48; reactivity, Box/padding and `to_pixels()` remain queued/deferred.
+**Start here:** C01-B #53 (`29fc202`) and docs #56 (`005ce53`) are merged.
+C01-C #46 / PR #57 implements the owner-approved progressive callback checks:
+all guards remain available across versions, while proactive arity checks run
+only on 4.3+. See [evidence and diagnostic differences](C01_C_CALLBACKS.md).
+Check live CI/handoff before continuing; C01-D cannot start before this PR merges.
+Cold Text-first remains #48. The pixel-only core and deferred unit-helper
+specification remain approved; reactivity, Box/padding and `to_pixels()` are untouched.
 
 ## Current plan register
 
@@ -28,7 +34,7 @@
 | **C01** | **Required release gate; incomplete** | Godot 4.0+ native editor/compiler/runtime support | [#41](https://github.com/resistdesign/Estragon/issues/41) | [Measured baseline](C01_COMPATIBILITY.md); red older-engine stages remain. |
 | **C01-A** | **Done (merged PR #52)** | Selectable official-engine matrix, source inventory and prioritized issues | [#42](https://github.com/resistdesign/Estragon/issues/42) | 4.0–4.7 actual engine evidence, latest 4.7.2 plus 4.7.0 pin, collector failure tests and informational CI; merge `46bc752`, exact final CI/handoff in #42/#52. |
 | **C01-B** | **Done (scoped fix merged PR #53)** | Scalar component maxima, button label clamp and 4.0 incoming-signal key parsing | [#45](https://github.com/resistdesign/Estragon/issues/45) | [Runtime evidence](C01_B_RUNTIME.md); merge `29fc202`, individual scoped stages are required by CI. Remaining cold Text-first negatives retained as FAIL under #48. |
-| **C01-C** | **Blocked: owner decision; evidence PR for review, not production completion** | Preserve callback guards with Godot 4.0 APIs; opaque lambda signatures unavailable | [#46](https://github.com/resistdesign/Estragon/issues/46) | [Capability evidence/options](C01_C_CALLBACKS.md); existing 4.0–4.2 generated callback failures remain. No production contract change. |
+| **C01-C** | **In review (not merged)** | Version-gated proactive arity checks; preserve valid callbacks and lifecycle | [#46](https://github.com/resistdesign/Estragon/issues/46) | [Implementation/evidence](C01_C_CALLBACKS.md); owner-approved normal invocation semantics on 4.0–4.2. Check live matrix/CI before acceptance. |
 | C01-D…H | Queued; one PR at a time | Precision → validation/identity → editor startup → unsaved Play → integration/release | [#47](https://github.com/resistdesign/Estragon/issues/47), [#48](https://github.com/resistdesign/Estragon/issues/48), [#49](https://github.com/resistdesign/Estragon/issues/49), [#50](https://github.com/resistdesign/Estragon/issues/50), [#51](https://github.com/resistdesign/Estragon/issues/51) | Reviewed sequence in EXECUTION_PLAN; no later implementation started. E01-F #44 remains separate and precedes final release disposition. |
 | R02 | Deferred | Renderer-backend research | [#2](https://github.com/resistdesign/Estragon/issues/2) | Pending |
 
@@ -44,7 +50,7 @@
 - Future work belongs in issues while the current PR is active. A blocked PR
   needs documented evidence and an owner decision, not another PR. No automatic
   merges. Every task has a durable issue, checkpoints, verification and handoff.
-- Queue: C01-C #46 (owner decision) → C01-D…H #47–51 with E01-F #44 → T09-A #43 →
+- Queue: C01-C #46 (review) → C01-D…H #47–51 with E01-F #44 → T09-A #43 →
   T09-B/C/D #5. #40 merged. Check live issues before advancing.
 
 - **One work ID per focused implementation PR.** A planning/ADR/process-only PR may be unassigned if it is explicitly labeled as such and includes no implementation work. The task issue is the durable conversation: scope, current owner/session or branch, plan/checklist, evidence, blockers, handoffs and linked PR.

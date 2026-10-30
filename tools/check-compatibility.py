@@ -153,7 +153,7 @@ def audit(engine, output, editor):
             stages["callback_metadata_probe"]["reason"] = str(error)
         stages["callback_arity_api"] = ({"status": "PASS", "reason": "Native arity query available; generated-signals behavior is tested separately"}
             if int(known["minor"].split(".")[1]) >= 3 else unavailable(
-                "C01-C: complete safe arity validation of opaque Callables needs an owner-approved boundary; see callback_metadata"))
+                "Native proactive arity query unavailable; owner-approved normal invocation fallback, tested separately"))
         run("frontend", ["--script", "res://tests/godot/native_frontend.gd",
                          "--", "--require-no-bun"], "ESTRAGON_NATIVE_FRONTEND_OK")
         # Remove checked generated code before emission: the runtime must consume
@@ -204,6 +204,28 @@ def audit(engine, output, editor):
             else:
                 run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker,
                     expected_errors=(name == "semantic_identity"))
+        # Expected callback diagnostics differ only in proactive arity support.
+        # Invalid/disposed targets are always rejected before connection.
+        for mode in ["empty", "missing", "freed", "disposed", "required", "optional",
+                     "lambda_required", "lambda_optional", "unbound"]:
+            name = "callback_guard_" + mode
+            if not emitted:
+                stages[name] = unavailable("Native emission failed")
+                continue
+            run(name, ["--script", "res://tests/godot/callback_guards.gd", "--", mode],
+                "C01_CALLBACK_GUARD_OK " + mode, expected_errors=True)
+            errors = [line for line in (target / (name + ".log")).read_text().splitlines() if ERROR.search(line)]
+            early = int(known["minor"].split(".")[1]) >= 3
+            invalid = mode in ["empty", "missing", "freed", "disposed"]
+            if early or invalid:
+                correct = len(errors) == 1 and "signal-edges.gogo:34:" in errors[0] and "valid zero-argument Callable" in errors[0]
+            elif mode in ["optional", "lambda_optional"]:
+                correct = not errors
+            else:
+                correct = len(errors) == 1 and "Error calling from signal" in errors[0] and "argument" in errors[0].lower()
+            if not correct:
+                stages[name]["status"] = "FAIL"
+                stages[name]["reason"] = "Unexpected callback diagnostic sequence: " + repr(errors)
         # Export engine API metadata as additional audit evidence. This does not
         # execute unavailable methods or substitute capability presence for use.
         run("api_dump", ["--dump-extension-api"])

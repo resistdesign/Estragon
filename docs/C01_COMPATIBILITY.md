@@ -10,9 +10,9 @@ filtered-tab exception remains [#44](https://github.com/resistdesign/Estragon/is
 C01-A PR #52 is merged. Subsequent [C01-B runtime evidence](C01_B_RUNTIME.md)
 is recorded separately; the table and snapshot below retain the audit baseline.
 
-C01-C's [callback metadata investigation](C01_C_CALLBACKS.md) identifies a
-separate owner-decision gate for opaque Callables; no production guard fallback
-or compatibility success is claimed by the evidence probe.
+C01-C's [callback investigation and fix](C01_C_CALLBACKS.md) records the owner-approved
+progressive arity diagnostics. Its separate snapshot does not alter this original
+audit baseline or certify full-addon compatibility.
 
 ## Reproduction and evidence
 
