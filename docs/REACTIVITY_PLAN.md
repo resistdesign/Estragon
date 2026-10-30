@@ -39,6 +39,28 @@ The existing brace expressions evaluate at construction time. T09 must define a 
 
 For inspiration, Apache Flex [ArrayCollection and data providers](https://flex.apache.org/doc/flex/using/flx_about_dataproviders_ab.html) describe collection change events, item-property notifications and data views. Estragon should implement its own deliberately scoped contracts, not promise API parity with ActionScript.
 
+## Deferred pixel conversion helpers and possible syntactic sugar (owner decision, 2026-10-30)
+
+**Accepted core contract:** Estragon's numeric dimensions and spacing use **pixels only**. `height={100}` and `height="100"` represent 100 pixels. `height="100%"` is **not** valid Gogo today and must fail with a source-located diagnostic; `auto` and existing fill flags retain their own semantics. The planned padding/margin box model in [#55](https://github.com/resistdesign/Estragon/issues/55) likewise uses pixel-valued lengths.
+
+**Deferred extension:** Provide ordinary, reusable helpers that convert a number plus a unit into a **pixel number**, which can be passed through the same Gogo component properties and ordinary reactive property bindings as any other numeric expression. The approved direction is helper functions, **not** unit-aware core properties, an alternate layout engine, or compiler-generated layout callbacks. The friendly four-argument sketch is worth preserving; a standalone percentage conversion must also know *which dimension* supplies the reference:
+
+```gdscript
+# Conceptual future API only; not implemented and exact signatures TBD.
+to_pixels(parent, child, 50, "%")           # desired concise form, if target axis is known
+to_pixels(parent, child, 50, "%", "height") # explicitly convert relative to a height
+to_pixels(parent, child, 50, "%", "width")  # explicitly convert relative to a width
+```
+
+**Required context and behavior:**
+
+- A helper must have access to the relevant **parent and child width/height geometry**, not merely the authored width/height declarations; choose the reference box (e.g., the parent's **available content width or height**) according to the **target dimension/axis**. Other future units may require viewport, padding/margin, font or other contextual measurements. The exact API can use an explicit axis/property argument or a typed conversion context; never silently guess whether a percentage refers to width or height.
+- Results are ordinary finite numeric **pixels**. Use existing or planned typed Gogo expression bindings for properties such as `width`, `height`, `padding` or `margin`; **do not invent separate unit-binding machinery**. When relevant geometry changes on resize/relayout, normal dependency tracking must observe that geometry and re-evaluate the bound helper expression at a safe stage; no per-frame polling. Existing braced expressions are construction-time until T09 bindings ship, so this behavior is a future requirement, not current functionality.
+- Specify and test layout ordering and dependency cycles, especially `auto` parents, child-dependent measurements and self-referential percentages. Define overflow, invalid measurements and diagnostics without unstable repeated relayout.
+- **Optional syntactic sugar can come later**, after helpers and normal bindings work. It may lower to the same pixel-returning helpers, but is **not** permission to accept `height="50%"` in the current grammar or change the pixel-only runtime contract. No compiler/runtime work belongs in the current [L01 #55](https://github.com/resistdesign/Estragon/issues/55) or C01 compatibility PRs.
+
+See [deferred helper issue #54](https://github.com/resistdesign/Estragon/issues/54). This section specifies direction, not an implemented API.
+
 ## Inheritance and shared component behavior
 
 **Verified existing Godot classes:**
