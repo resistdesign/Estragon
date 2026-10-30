@@ -22,7 +22,9 @@ original order, and every emitted line maps to the event expression's source spa
 Existing invalid/disposed-target and connection checks remain unchanged.
 
 On older engines, an incompatible required/unbound callback connects and reports
-the normal signal-invocation error when activated. An optional-argument callback
+the normal signal-invocation error when activated. Old Godot also logs a
+method-name lookup error while formatting a failed opaque-lambda invocation;
+the tests require this exact two-error sequence rather than suppressing it. An optional-argument callback
 runs using its default. Neither is invoked during construction. Newer engines
 reject both required and optional arity before connection. This difference is
 explicitly approved; lack of introspection does not reject valid opaque Callables.

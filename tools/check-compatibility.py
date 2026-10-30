@@ -222,7 +222,15 @@ def audit(engine, output, editor):
             elif mode in ["optional", "lambda_optional"]:
                 correct = not errors
             else:
-                correct = len(errors) == 1 and "Error calling from signal" in errors[0] and "argument" in errors[0].lower()
+                # Old Godot logs an additional method-name lookup error while
+                # formatting a failed opaque-lambda invocation. It is part of
+                # the native error path, not an Estragon reflection call.
+                invocation = errors[-1] if errors else ""
+                expected_count = 2 if mode == "lambda_required" else 1
+                correct = (len(errors) == expected_count and "Error calling from signal" in invocation
+                           and "argument" in invocation.lower()
+                           and (expected_count == 1 or ("Can't get method on CallableCustom" in errors[0]
+                                                        and "lambda" in errors[0])))
             if not correct:
                 stages[name]["status"] = "FAIL"
                 stages[name]["reason"] = "Unexpected callback diagnostic sequence: " + repr(errors)
