@@ -72,6 +72,7 @@ def unavailable(reason, status="BLOCKED"):
 
 
 def audit(engine, output, editor):
+    from callback_metadata_evidence import validate_metadata
     label, executable = engine.split("=", 1)
     target = output / label
     target.mkdir(parents=True, exist_ok=True)
@@ -141,6 +142,18 @@ def audit(engine, output, editor):
             shutil.copytree(ROOT / "tests" / name, project / "tests" / name)
         shutil.copy2(ROOT / "tests/compatibility/numeric_literals.gd", project / "numeric_literals.gd")
         run("numeric_literals", ["--script", "res://numeric_literals.gd"], "C01_NUMERIC_OK")
+        shutil.copy2(ROOT / "tests/compatibility/callback_metadata.gd", project / "callback_metadata.gd")
+        run("callback_metadata_probe", ["--script", "res://callback_metadata.gd"],
+            "C01_CALLBACK_METADATA_OK", expected_errors=True)
+        try:
+            result["callback_metadata"] = validate_metadata(
+                (target / "callback_metadata_probe.log").read_text(), int(known["minor"].split(".")[1]))
+        except (ValueError, KeyError, TypeError) as error:
+            stages["callback_metadata_probe"]["status"] = "FAIL"
+            stages["callback_metadata_probe"]["reason"] = str(error)
+        stages["callback_arity_api"] = ({"status": "PASS", "reason": "Native arity query available; generated-signals behavior is tested separately"}
+            if int(known["minor"].split(".")[1]) >= 3 else unavailable(
+                "C01-C: complete safe arity validation of opaque Callables needs an owner-approved boundary; see callback_metadata"))
         run("frontend", ["--script", "res://tests/godot/native_frontend.gd",
                          "--", "--require-no-bun"], "ESTRAGON_NATIVE_FRONTEND_OK")
         # Remove checked generated code before emission: the runtime must consume

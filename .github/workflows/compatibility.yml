@@ -61,6 +61,7 @@ jobs:
           assert "infrastructure" not in stages
           assert stages["engine_identity"]["status"] == "PASS"
           assert stages["api_dump"]["status"] == "PASS"
+          assert stages["callback_metadata_probe"]["status"] == "PASS"
           PY
       - name: Require C01-B component sizing and input compatibility
         env:
