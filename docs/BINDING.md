@@ -51,6 +51,10 @@ T09 must define the binding-expression contract precisely. **Current braced expr
 
 Bindings should update **all supported typed component properties**, including text, color, enabled state, width/height, gap/fill flags and eventually position x/y, using correct layout vs paint invalidation. Current components do **not** expose x/y; design their semantics against parent-managed HBox/VBox layout, nested geometry and hit-testing before adding them. No per-frame polling, full-tree rebuild for every property change, duplicated signal hookups, or hand-disposed UI components.
 
+### Future unit-to-pixel helpers (deferred)
+
+The core layout/spacing API accepts **numeric pixels**, not percentages or unit strings. Later, an ordinary helper such as `to_pixels(parent, child, 50, "%", "height")` (conceptual API, not implemented) may compute pixels from parent/child geometry and an explicit reference dimension; the preferred shorter `to_pixels(parent, child, 50, "%")` form requires unambiguous axis context. Standard Gogo property bindings will use the returned pixel number and react to observed geometry changes through the **normal dependency system**, with no special unit-binding subsystem. Optional markup syntactic sugar may be designed afterward; `height="50%"` remains unsupported now. The full owner-approved direction and unresolved measurement/axis/cycle requirements are recorded in [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md#deferred-pixel-conversion-helpers-and-possible-syntactic-sugar-owner-decision-2026-10-30) and [#54](https://github.com/resistdesign/Estragon/issues/54).
+
 ## Engineering contracts and explicit boundaries
 
 - Generate deterministic, valid GDScript and source maps from the bundled native Godot-only Gogo compiler. Invalid declarations fail closed in the editor before F5/F6.
