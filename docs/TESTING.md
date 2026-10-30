@@ -569,3 +569,17 @@ tests/compatibility/results.json` (repeat `--report` for split runs). It require
 all pinned manifest versions, preserves every stage and per-file parse outcome,
 and fingerprints the raw reports/logs. CI artifacts retain the full commands and
 logs. Local and CI fingerprints differ when temporary paths or script IDs differ.
+
+
+## C01-B sizing and lifecycle regression gates
+
+[Runtime evidence](C01_B_RUNTIME.md) describes the scalar maxima, fractional/zero
+geometry, incoming-signal cleanup and all-engine matrix checks. The existing
+collector now runs five invalid-sizing and two invalid-text probes in separate
+cold processes and requires exactly one expected diagnostic plus completion.
+An extra parser/compile error fails the probe, even if the expected marker appears.
+The matrix CI requires scoped component/layout/input, sizing rejections and both
+affected script parses to pass. Other red compiler/editor stages remain visible.
+Cold Text-first invalid-text failures are tracked in #48/#41 and retained as FAIL;
+they are not silently waived by successful collection or warmed by fixture loads.
+The C01-A baseline snapshot is preserved; C01-B results are stored separately.

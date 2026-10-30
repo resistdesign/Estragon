@@ -1,0 +1,1836 @@
+{
+  "schema_version": 1,
+  "work_id": "C01-B",
+  "baseline": "tests/compatibility/results.json (C01-A, unchanged)",
+  "scope": "Runtime sizing and lifecycle; not full addon compatibility certification",
+  "ci_run": "https://github.com/resistdesign/Estragon/actions/runs/41093176494",
+  "evidence_selection": "Eight latest-patch macOS CI runs plus local required 4.7.0 baseline; independent local matrix also runs every pinned engine",
+  "reports": [
+    {
+      "date": "2026-10-30T16:49:53.714382+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "406c0114d54e3d783390e87c107640382b1fba0be20ae70ef80c291fb62cc7ec"
+    },
+    {
+      "date": "2026-10-30T16:52:06.660081+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "59ff0762fc257e44199e5d2d1fe4a863010d7249bb0853bd2ad995ca82575a1c"
+    },
+    {
+      "date": "2026-10-30T16:49:44.430505+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "14e4b138b3bf1886523483cfd6d54efaa26cc1365658d8ee106726dd674f8256"
+    },
+    {
+      "date": "2026-10-30T16:50:27.789741+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "701de619d936abd10b081634d97711de12ee8025e5c995854a7a051d689c726b"
+    },
+    {
+      "date": "2026-10-30T16:49:57.549614+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "c8bf6a6288bd75a38e2ad888b2c2d5d5f21ac850ac77eeecac8f018a0de09eeb"
+    },
+    {
+      "date": "2026-10-30T16:51:54.296147+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "f503045484bc5bae4fa6cac46bba30916a0078b6ec9e0e9ac98df0e3c29b6d28"
+    },
+    {
+      "date": "2026-10-30T16:50:58.104909+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "f43c5050033cbdfdd12087a3460693946d789adc323f7b875ce17ed5bcf951b6"
+    },
+    {
+      "date": "2026-10-30T16:51:28.416990+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "331063c7c4d1ce80bd98922208352047782677bb",
+      "source_dirty": false,
+      "report_sha256": "d7a320bbb0f7532bc3f876d88481726d6e5f3fcda250acf73b3ca7cb1bc0a216"
+    },
+    {
+      "date": "2026-10-30T16:47:38.869151+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_commit": "8cbe070e4bab9d30e1638011c0e2d695fcb9352c",
+      "source_dirty": false,
+      "report_sha256": "0ae49a521fcb16f49dd435089055f04b114485019e4f3728f74f1622e37d087a"
+    }
+  ],
+  "engines": [
+    {
+      "label": "4.0.4",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "input_binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "FAIL",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "FAIL"
+        },
+        "numeric_literals": {
+          "status": "FAIL",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "FAIL",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "ccfce596d36dbfdf0d4a854e92fb7fb6a4ed3953f700fef6a1e469e7eb319aaf",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "efb370fcab7ba98769472c1ffdec0476276f3cb191455e8daa01444891b82b2c",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "b92c37863fbdb1a6ee3aef82e9e3ae40321069ab3ffb0ff179e75f0eff269b03",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "974fc5ea63852f7d8e69f498ab178149b0a35c99d5f4e223f42c4467851e21b5"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "ab7f9d4dd12306b35bbb5d7948877d4a7d78a0a14a05e577a413fd97e439f0a8"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "c5adda033bf3e6f762933b066672108436c9baefa595ac40cda679dd39663c56"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "8bc5895a9790bbefc3b92c7f71c9b135ff038fe782a62cb898e9c2e3ffad3fbb"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "361b4053daac3937d6f9a1d3e5ce7c7f653317c65ce330e31582546305aafb22"
+        },
+        "reject_null_font": {
+          "status": "FAIL",
+          "reason": "Expected exactly one runtime rejection: Estragon: font must not be null",
+          "log": "reject_null_font.log",
+          "log_sha256": "3385e74eefea9c3215e9ee6fd2e405378ab0782e4ba35a8cfe590df32266e537",
+          "diagnostic_excerpt": [
+            "2026-10-30 16:50:52.715 godot[1722:9983] *** +[NSString stringWithUTF8String:]: NULL cString",
+            "Godot Engine v4.0.4.stable.official.fc0b241c9 - https://godotengine.org",
+            " ",
+            "SCRIPT ERROR: Compile Error: Identifier not found: _disposed",
+            "          at: GDScript::reload (res://addons/estragon/runtime/button.gd:17)",
+            "ERROR: Estragon: font must not be null",
+            "   at: push_error (core/variant/variant_utility.cpp:903)",
+            "ESTRAGON_INVALID_TEXT_REJECTED"
+          ]
+        },
+        "reject_font_size": {
+          "status": "FAIL",
+          "reason": "Expected exactly one runtime rejection: Estragon: font_size must be positive",
+          "log": "reject_font_size.log",
+          "log_sha256": "32869d476516b2d6889f0a9893bc71a87a18b151cd6d5e96b43778b2d4e68ea9",
+          "diagnostic_excerpt": [
+            "2026-10-30 16:50:57.784 godot[1732:10082] *** +[NSString stringWithUTF8String:]: NULL cString",
+            "Godot Engine v4.0.4.stable.official.fc0b241c9 - https://godotengine.org",
+            " ",
+            "SCRIPT ERROR: Compile Error: Identifier not found: _disposed",
+            "          at: GDScript::reload (res://addons/estragon/runtime/button.gd:17)",
+            "ERROR: Estragon: font_size must be positive",
+            "   at: push_error (core/variant/variant_utility.cpp:903)",
+            "ESTRAGON_INVALID_TEXT_REJECTED"
+          ]
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "FAIL",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "FAIL",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "FAIL",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "FAIL",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "FAIL",
+          "reason": "See editor.log: full addon failed startup"
+        },
+        "editor_play_recovery": {
+          "status": "BLOCKED",
+          "reason": "Startup failed"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "85283f0f6159bc46414a9458a7df8032704aaae1649072668f3554a5fb959bf0"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "016cb3b50d86883e913b776866d4c3632fbe3f176ebaebec2127bb4ca665b879"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "f03ba1aeec40547db579172c7bf9c97dfdaea1f75b5b0ab485b5e31960a90c5e"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "3d89ced8803803cfbbaca2afdc77a9fbc6d792b3e69a14dab01fd8431c8ff592"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "1ca7a059f37f12984e696222fd1149ae1650ec39a463afdad988279238867c1a"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "76c1232a737ffd0c12f796a98d30c318126b4e8e6ae18c0300c163002c21715e"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "9260e652bd8c12b03e40b1975dcc05fabbdaf6a5f9daf42459c1e603a08d173a"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "8a1dbe73dd26eb192a7eac6686df788e06a44784f1a5bb38a4741c3fbaaa1142"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "7842df36b329ffe7325fa08d1e2c8490be02f2f76565478c98b355aedfea07be"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "9da4b52203543416f4ec54c253edb453eae4ae8c026e7e86b063cc56f6484399"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "41efff3eba2aebc026b32f40e3f72573c000a58f5a47c3fe4baf28bc2a57fd8d"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "FAIL",
+          "log_sha256": "722e36f5050c68248992d0f7fa8d76ad29f319adf7c6fb9c132991d47bf05df0"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "4de812b480e28b3a7c5fa642a35ec224c5c2fcc8886730762a4106d742fb21f8"
+        }
+      }
+    },
+    {
+      "label": "4.1.4",
+      "version": "4.1.4.stable.official.fe0e8e557",
+      "input_binary_sha256": "87f5ba3e8e4ffcbd49c615b01825cc92a01aad0c974b75dceabe71b873ab8e28",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "FAIL",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "FAIL"
+        },
+        "numeric_literals": {
+          "status": "FAIL",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "FAIL",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "2c705ab00f68b8a9cd42dffa00fc5da63bcdd90526d170d08de931e499570eec",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "a6a294d453dff1e326ef7cc2e970eb82dcf856e4e732f97ef8300c31bd525e8d",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "47db10159466f0afc7e31928d44ebbaa5371fcb8ce1a6cd0f55ea0e8e8b8f688",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "b568055267e21bc3a14f9b0e659ebc2a5793ee188b55e839176287d7887da938"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "dbfeebaf41a06b277c2185f58dd7b6930db466cc0bcb6b8c1b260da94c36acd6"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "006209f0e335c12156ac49ca7db0f1e575233c17f837804cd8c4559a96ba8c3c"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "5ae0ee5ac52811c99594c591e6474af3f483f6f8882cc3cc5e2ee25aa0ed82f6"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "2a08beacf991c23b3c5f2bae7d6a5f11d244b69ce1b4fcec5a5eff8d1ac7f9c7"
+        },
+        "reject_null_font": {
+          "status": "FAIL",
+          "reason": "Expected exactly one runtime rejection: Estragon: font must not be null",
+          "log": "reject_null_font.log",
+          "log_sha256": "c224268dcd1a9e8e5fef3571f614b030f46688adfad3d9161d863e73608aeac0",
+          "diagnostic_excerpt": [
+            "2026-10-30 16:53:03.930 godot[1664:9388] *** +[NSString stringWithUTF8String:]: NULL cString",
+            "Godot Engine v4.1.4.stable.official.fe0e8e557 - https://godotengine.org",
+            " ",
+            "SCRIPT ERROR: Compile Error: Identifier not found: _disposed",
+            "          at: GDScript::reload (res://addons/estragon/runtime/button.gd:17)",
+            "ERROR: Estragon: font must not be null",
+            "   at: push_error (./core/variant/variant_utility.cpp:905)",
+            "ESTRAGON_INVALID_TEXT_REJECTED"
+          ]
+        },
+        "reject_font_size": {
+          "status": "FAIL",
+          "reason": "Expected exactly one runtime rejection: Estragon: font_size must be positive",
+          "log": "reject_font_size.log",
+          "log_sha256": "cae84ffcb3b1d9004dc48f6b03a44da2fcd751422584d1193b6a4ec3ebb92bb3",
+          "diagnostic_excerpt": [
+            "2026-10-30 16:53:04.523 godot[1669:9423] *** +[NSString stringWithUTF8String:]: NULL cString",
+            "Godot Engine v4.1.4.stable.official.fe0e8e557 - https://godotengine.org",
+            " ",
+            "SCRIPT ERROR: Compile Error: Identifier not found: _disposed",
+            "          at: GDScript::reload (res://addons/estragon/runtime/button.gd:17)",
+            "ERROR: Estragon: font_size must be positive",
+            "   at: push_error (./core/variant/variant_utility.cpp:905)",
+            "ESTRAGON_INVALID_TEXT_REJECTED"
+          ]
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "FAIL",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "FAIL",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "FAIL",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "FAIL",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "FAIL",
+          "reason": "See editor.log: full addon failed startup"
+        },
+        "editor_play_recovery": {
+          "status": "BLOCKED",
+          "reason": "Startup failed"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "3d2312e1c6fbf7bca7452ce11581df71e7d846ba67ebda13684d18013adfe98c"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "36ed62704e63c1fcda99b8217840dffabcc5f450ce9088783eb6a834015e9e9d"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "79110d5dd384fd51a9d64af10ecf0bc7eecb074bd3a864313b7d8c2191ea167f"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "7a898dedf503fc6186f7f7ac393515fa43d5f7063f4b9486a2cf6089e8aae86b"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "b33bf323c6877967c684c01043c51ad028b310554d4fb1ec954ce04242be2682"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "6c76e315e3e57a92a9718b32415a0a01503e0565c308057e196506ab1f86fcec"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "db856acbf8b5b8ebce4079506862f4272969e5f771dc52a266e52156d0a0d4ce"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "6e2c39235d0cd899bddfd06015930e0e34e537065e36aa347b98d0b3054261c0"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "8def70924354d324e0b7894f27f9ddd4d37b1918a443196ef95bbd6ee8da606d"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "0e6b6dc35ee1bc81cf06b52004c85d9c04cd2cfb6461ba44544f9b5b7fc2a7ab"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "063ac2b123fcdeda0b9c57c375f84d88c226b62a648f7649fa183af6d1019be1"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "FAIL",
+          "log_sha256": "cd1f3fd29874998150b6a754b508241f47da71db28c4b09f350c41ca34072ad0"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "9aa02c2ed61ef10d34dc014bced65abc17ee1d642ddd72953d293d4391287208"
+        }
+      }
+    },
+    {
+      "label": "4.2.2",
+      "version": "4.2.2.stable.official.15073afe3",
+      "input_binary_sha256": "138076355d9d42517d5d7c48c95648267d7c9d8f23189163aabed82b28b34d2e",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "FAIL",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "FAIL"
+        },
+        "numeric_literals": {
+          "status": "FAIL",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "FAIL",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "e4d4937dc07468ec5683277a1b5233b9a4a3219c22b2a45cfb3a11dfd80323d0",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "e9434a952e75b3228a6af3f23041dea1a55f257a7a692966058f3bf64aca1a7b",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "ec9e3a4e0075e87c9225700985ca871cc19b5c483dc1f840987b7f3be3df9ab9",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "ba3c03650a49cd542eaeef08f14ce7ba146cb2938ca32cda61f49cb28edeee16"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "a6acc84a3fbb083e0897022901fafbf7682d86d0de9a7380a7dd385ffac21b6d"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "ba3c03650a49cd542eaeef08f14ce7ba146cb2938ca32cda61f49cb28edeee16"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "5a6f0fdc940298a3ea91c6ee219df2ee3cbf956604e8d5f7968e06c5904bd4d2"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "efd058f93e130f23d639aefb7bfa51ca0835c0ca063d5b5eb2b79f2016e41049"
+        },
+        "reject_null_font": {
+          "status": "PASS",
+          "log": "reject_null_font.log",
+          "log_sha256": "c168a5d82bded4499449215b33254df0ffe321624cceaf20027af9b6da09dba9"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log": "reject_font_size.log",
+          "log_sha256": "77855dfe7a898e06c44b7a1d5fbefcd33706fac7bc9ec2f2b3789aaf532eac28"
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "FAIL",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "FAIL",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "FAIL",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "FAIL",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "FAIL",
+          "reason": "See editor.log: full addon failed startup"
+        },
+        "editor_play_recovery": {
+          "status": "BLOCKED",
+          "reason": "Startup failed"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "79c137231ed21201de438e8e9e6d82dde7cceb7dd4b81a93846ad6f3d5a4c1d3"
+        }
+      }
+    },
+    {
+      "label": "4.3",
+      "version": "4.3.stable.official.77dcf97d8",
+      "input_binary_sha256": "cd5dee52f4baa3bb3ca19d0087d55cea084acb4838a2465bc9aa52d776dc462a",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "FAIL",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "FAIL"
+        },
+        "numeric_literals": {
+          "status": "FAIL",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "FAIL",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "44a8190f061660cd272156bd8dd3269e0e78d963e4224a5881b722fd0d2f1b84",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "4e10df56ac4c33559dccdd11190935c02d796836e44d7ff462aca0430983d6c4",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "e7a4091641a205d0aa28bf80b2254091f8bd7d76e27431392a5a6b88ac929020",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "f29ad4357453def4fceb06ef5cf4bf7891c5c2f9510474e9c5d29e610ef1d474"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "ca6970c697aa66bf9fe4390f630692b79fc46c7b7d681e92b247fcd4249644c4"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "f29ad4357453def4fceb06ef5cf4bf7891c5c2f9510474e9c5d29e610ef1d474"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "c4508719f27b97fabf27aff25ad8eb399d70e20c31bcfaff319197775b6f243b"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "bd73df6db752f0a58d6a7b5782da261ca26369b92c54a46b8812881e802ba0c4"
+        },
+        "reject_null_font": {
+          "status": "PASS",
+          "log": "reject_null_font.log",
+          "log_sha256": "663adad23f70b2193746cb52f2522217b53ae7bc76f1200f3ad03d5450f275ef"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log": "reject_font_size.log",
+          "log_sha256": "afffe5b93af73423208d2a563f77a358a45eafed386f55c1eeaf6979e96cc0e7"
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "PASS",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "PASS",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "FAIL",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "FAIL",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "FAIL",
+          "reason": "See editor.log: full addon failed startup"
+        },
+        "editor_play_recovery": {
+          "status": "BLOCKED",
+          "reason": "Startup failed"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        }
+      }
+    },
+    {
+      "label": "4.4.1",
+      "version": "4.4.1.stable.official.49a5bc7b6",
+      "input_binary_sha256": "8d402715e0b74db2d69ceeb86e78b8c6b270f1d9c16be1546958c8648d8e2e47",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "FAIL",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "FAIL"
+        },
+        "numeric_literals": {
+          "status": "FAIL",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "FAIL",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "3e91997d0097129806bc7428342974cf5ae3ab0f37896d704fa045f23eb8e777",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "59f712ef8c54c93d44414a9393fa04a09f50c634b05dd26afbce581eb5ed0d67",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "e045f28ce0d7a4b536ee8069c964efaf32521e42ad416bdfa82671002cca9584",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "07ba2fcfa555b70eb8c49e6411497e1b137684fb17c43dec9d0bef15039e58b9"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "7ff706128907afaef2e0db64b6656dad0cfc739df3eab3e525fcf28dd3ce4abc"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "07ba2fcfa555b70eb8c49e6411497e1b137684fb17c43dec9d0bef15039e58b9"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "2d28cdabad79a9e1314e7e5cff8bc75d47f89a4a878147fabd1a47e6c56e1407"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "b808471abd3df016a63ca0ee0aa249a756097c0c458b161e557a2c3aca1fe208"
+        },
+        "reject_null_font": {
+          "status": "PASS",
+          "log": "reject_null_font.log",
+          "log_sha256": "87bcc142f616c47a87b105972973986884c7df07b531be0ad029a085ad592fd4"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log": "reject_font_size.log",
+          "log_sha256": "e2d060025d6cf5e0d37e499306fbfd7d76af5352b46156dd539cbd891be9c739"
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "PASS",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "PASS",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "FAIL",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "FAIL",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "FAIL",
+          "reason": "See editor.log: full addon failed startup"
+        },
+        "editor_play_recovery": {
+          "status": "BLOCKED",
+          "reason": "Startup failed"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "bd606640878e2e7b90e611c5ca07a7623116da70734a85dd628e2b46bbd908be"
+        }
+      }
+    },
+    {
+      "label": "4.5.2",
+      "version": "4.5.2.stable.official.6ce3de25a",
+      "input_binary_sha256": "2de5730194e9b9050f61407814597cafbdbc77341ca6c7ccf9235b2e15a424fb",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "PASS",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "PASS"
+        },
+        "numeric_literals": {
+          "status": "FAIL",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "PASS",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "52202bec4a13bf2bc9df08ffd160a21422ee90dbef259849b0865a57eebeb8d6",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "3a6cf2991d96ef4cd32424e104beea30247e8fcc8465dc02ddff89de014cc4ae",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "2fb7a78719063b20cb30befd748699fad40f866ef13eaf31c9f68a1144052c53",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "846a9988edeac68d71fd023f43d3b3d6bd00add87b7f0e8ab63c45df4c210de3"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "ece338e93631f1ab64bb63ab16eb27e3fd44ad18509fa327ad379b4c1ee7666d"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "da0aef14692d630456427a59284b9f894ece7da13b97b4a0e02d7e8db9b3a3b7"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "12fa3e31f12a4b8960be95d34e424e85f1e015b864875cc8ae808cbf90a030a6"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "bc0e8c5093b27e2c3954b4481729e12f96ccfdf924f78912fa3410153bc9114b"
+        },
+        "reject_null_font": {
+          "status": "PASS",
+          "log": "reject_null_font.log",
+          "log_sha256": "bee494c452a2ac3c015d3c32ece00c6c1a63d34bab3b5e1b4577e5b85dfb636f"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log": "reject_font_size.log",
+          "log_sha256": "c39b068709ebf6aabc705322580a8019167723fe539f6b2bcd15b7247cfbd567"
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "PASS",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "PASS",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "PASS",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "FAIL",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "FAIL",
+          "reason": "See editor.log: full addon failed startup"
+        },
+        "editor_play_recovery": {
+          "status": "BLOCKED",
+          "reason": "Startup failed"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "68c0df36651eeeedbbcffd96dd7918289aebc4495149c2f8605bf1e83fe506b3"
+        }
+      }
+    },
+    {
+      "label": "4.6.3",
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "input_binary_sha256": "40fb1c588438ed98efbdd4aeb71b90aec6e269b1abb5f18419755340ef8e1514",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "PASS",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "PASS"
+        },
+        "numeric_literals": {
+          "status": "PASS",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "PASS",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "91ec3974b3220bad33aad800c3cc00f1376f78f53c7213e56bdff30614f60d95",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "ec221db11fcc7aa19e4d1363b9155c85360d7e4ab110f78ebda08b5338d21922",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "7d1ba107ab0d5a72d4e4c8d07616dd4083759600060cd84353d61470534552ab",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "eaf813688295a34b29c08c6820a3ac50ee6e9bf4bba430b71c9a5447e281686c"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "d82d08abc3f678947694f6684a99aa1f1e66e6c652e39501bc11c622bb764045"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "60582ac7f80dded7679cabc54f5a366259282bcf7a5772f5da5fd858ce174d70"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "a67df8ca4972cbbfef732b8151bafc2139f93106939c35ce19f1acb9824f7691"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "3404745b92148a380209b6c898621cf73ab42a50146ee92f7ce030437bdc8309"
+        },
+        "reject_null_font": {
+          "status": "PASS",
+          "log": "reject_null_font.log",
+          "log_sha256": "c029a2a2c190565427516886b32789a2611ca4de4ff9ed7ac859e1eae3c58c3f"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log": "reject_font_size.log",
+          "log_sha256": "3f6e7c427c40184ec9e906729c652d2be3959f72117ad093811017b12e998621"
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "PASS",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "PASS",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "PASS",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "PASS",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "FAIL",
+          "reason": "See editor.log: full addon failed startup"
+        },
+        "editor_play_recovery": {
+          "status": "BLOCKED",
+          "reason": "Startup failed"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "a9912b85473f126d3f4f63ec824170c828df3473a292f866dde86cafda5b66da"
+        }
+      }
+    },
+    {
+      "label": "4.7",
+      "version": "4.7.stable.official.5b4e0cb0f",
+      "input_binary_sha256": "445c6f95030e2ca767dd921be1e91bd99e50c3703f91d22a22cd31216c93a80f",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "PASS",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "PASS"
+        },
+        "numeric_literals": {
+          "status": "PASS",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "PASS",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "6baaf6a23d4864350db18b82a4fc95ac2c8f7caca3911a7df501679e1302753a",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "44fdc8e71db556e61e23236ad4adc71fd944d44b7740f3078a7ddc6965e29542",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "a95f891e2260647616ea113ad9b9df5fe5b6f7a06446368a363fbd4005d142e3",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "9b9383ce2394c8884d7c2549d8c5b66d831345faad4edd17c0448fc8cb3edd0b"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "662ed2de2dc053a402d2cb8e6f0edd8c46873d28b275c756df37a3c2e8766a86"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "7d7284033fe4129e04114c2365db5dab39d30b069a444bdadfc247d26f6143ba"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "2a3ae65233c431347a65bc94dac860be89f9758cb202ee26996d335fc5d2fd84"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "c811e63072cb1a22532a67f809fdbb563ff17d1e4404b0744809150169116c17"
+        },
+        "reject_null_font": {
+          "status": "PASS",
+          "log": "reject_null_font.log",
+          "log_sha256": "5d40f9a0e4ccf7fca7947c440b1d96deec65eaa9da77c8e5346119850414e13c"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log": "reject_font_size.log",
+          "log_sha256": "ca999a1983cc68267697fdc1ded4ffeb5802be17ce6efa1424c914ea8a326db1"
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "PASS",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "PASS",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "PASS",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "PASS",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "PASS"
+        },
+        "editor_play_recovery": {
+          "status": "PASS",
+          "log": "editor_play_recovery.log"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "037dd8b42ca7058b62b5555724cff76b748c651cb2252ee73dac52a938d0ecd2"
+        }
+      }
+    },
+    {
+      "label": "4.7.2",
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "input_binary_sha256": "c7cccbf8fb143e34e02fd6521e09be2c2b974f0d5db080b19071c9c570718ccf",
+      "stages": {
+        "engine_identity": {
+          "status": "PASS"
+        },
+        "import": {
+          "status": "PASS",
+          "log": "import.log"
+        },
+        "shipped_scripts": {
+          "status": "PASS"
+        },
+        "numeric_literals": {
+          "status": "PASS",
+          "log": "numeric_literals.log"
+        },
+        "frontend": {
+          "status": "PASS",
+          "log": "frontend.log"
+        },
+        "emission_maps": {
+          "status": "PASS",
+          "log": "emission_maps.log"
+        },
+        "generated_import": {
+          "status": "PASS",
+          "log": "generated_import.log"
+        },
+        "legacy_scene": {
+          "status": "PASS",
+          "log": "legacy_scene.log"
+        },
+        "components": {
+          "status": "PASS",
+          "log": "components.log",
+          "log_sha256": "fb1d0d51bb249e90724dfd68068b3ed30cdcbf6b87a695ce7d8d9b6dde762cd6",
+          "assertions": 63
+        },
+        "layout": {
+          "status": "PASS",
+          "log": "layout.log",
+          "log_sha256": "9232372f0ba282019b95281b0a580835111f09cf1bacd42f497a8f1449546be3",
+          "assertions": 72
+        },
+        "input_text": {
+          "status": "PASS",
+          "log": "input_text.log",
+          "log_sha256": "b246b041ae634786faf4376c9e65ade89de951bc4e7c2b22d25a5387ebcc9e5d",
+          "assertions": 96
+        },
+        "reject_width": {
+          "status": "PASS",
+          "log": "reject_width.log",
+          "log_sha256": "7b6626c66de25c171c6b08e8348a1d8b1f4e7f6e147993209dc0c1021a940ba9"
+        },
+        "reject_height": {
+          "status": "PASS",
+          "log": "reject_height.log",
+          "log_sha256": "bf6d2ac551efdfc29314680c5bfde2659547982f8d1b07043621e6ca8a17383f"
+        },
+        "reject_negative_width": {
+          "status": "PASS",
+          "log": "reject_negative_width.log",
+          "log_sha256": "a86c61e8c9a108a6e4d931040a43ea092897f77de7d146dc553616183f75c8b9"
+        },
+        "reject_gap": {
+          "status": "PASS",
+          "log": "reject_gap.log",
+          "log_sha256": "c7389743d989522bf0f64e6217a9336055e0e7595109e431a0ecba584ce4124f"
+        },
+        "reject_geometry": {
+          "status": "PASS",
+          "log": "reject_geometry.log",
+          "log_sha256": "603e3ec29a7ad99ea61320e21a256aa04867e99cccfedca61a17f02681b6aba6"
+        },
+        "reject_null_font": {
+          "status": "PASS",
+          "log": "reject_null_font.log",
+          "log_sha256": "b0a71100e49bf4ff452a12dbc6109b861d02c3eeac5314d3df4f59639a6a15de"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log": "reject_font_size.log",
+          "log_sha256": "b00448d85dbc727644e3c3ad9edd83ac2315efbc3bd809f1774010d3871c4659"
+        },
+        "generated_layout": {
+          "status": "PASS",
+          "log": "generated_layout.log"
+        },
+        "hybrid_runtime": {
+          "status": "PASS",
+          "log": "hybrid_runtime.log"
+        },
+        "generated_signals": {
+          "status": "PASS",
+          "log": "generated_signals.log"
+        },
+        "native_counter": {
+          "status": "PASS",
+          "log": "native_counter.log"
+        },
+        "semantic_identity": {
+          "status": "PASS",
+          "log": "semantic_identity.log"
+        },
+        "api_dump": {
+          "status": "PASS",
+          "log": "api_dump.log"
+        },
+        "graphics_physical_keys": {
+          "status": "UNTESTED",
+          "reason": "Headless evidence does not certify pixels or physical F5/F6"
+        },
+        "editor_fixture": {
+          "status": "PASS",
+          "log": "editor.log"
+        },
+        "normal_highlighting": {
+          "status": "PASS"
+        },
+        "filtered_highlighting": {
+          "status": "FAIL",
+          "reason": "#44: never-associated filtered tab"
+        },
+        "addon_startup": {
+          "status": "PASS"
+        },
+        "editor_play_recovery": {
+          "status": "PASS",
+          "log": "editor_play_recovery.log"
+        }
+      },
+      "runtime_script_parsing": {
+        "addons/estragon/runtime/button.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/canvas_renderer.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/container.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/display_object.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/gogo_view.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/hbox.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/paint_list.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/pointer_dispatcher.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/rect.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/stack.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/surface.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/text.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        },
+        "addons/estragon/runtime/vbox.gd": {
+          "status": "PASS",
+          "log_sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+        }
+      }
+    }
+  ]
+}

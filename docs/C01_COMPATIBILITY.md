@@ -7,6 +7,9 @@ No addon production fixes or T09 features are included. E01 PR #40 merged at
 `41b43b4`; its normal isolated highlighting evidence remains valid and its
 filtered-tab exception remains [#44](https://github.com/resistdesign/Estragon/issues/44).
 
+C01-A PR #52 is merged. Subsequent [C01-B runtime evidence](C01_B_RUNTIME.md)
+is recorded separately; the table and snapshot below retain the audit baseline.
+
 ## Reproduction and evidence
 
 Use Python 3.9+ as optional contributor orchestration, the standard system shell,
