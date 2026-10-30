@@ -1,0 +1,70 @@
+name: C01 compatibility evidence (not release certification)
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  compatibility-audit:
+    runs-on: macos-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["4.0.4", "4.1.4", "4.2.2", "4.3", "4.4.1", "4.5.2", "4.6.3", "4.7.2"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify collector rejects false success and hung processes
+        run: python3 -m unittest discover -s tests/compatibility -p 'test_*.py'
+      - name: Download and verify pinned official engine
+        env:
+          TASK_GODOT_VERSION: ${{ matrix.version }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, urllib.request, zipfile
+          version = os.environ["TASK_GODOT_VERSION"]
+          manifest = json.loads(pathlib.Path("tests/compatibility/engines.json").read_text())
+          engine = next(item for item in manifest if item["version"].startswith(version + ".stable."))
+          archive = pathlib.Path(os.environ["RUNNER_TEMP"]) / "godot.zip"
+          urllib.request.urlretrieve(engine["official_archive_url"], archive)
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == engine["archive_sha256"]
+          binary = pathlib.Path(os.environ["RUNNER_TEMP"]) / "official-godot"
+          with zipfile.ZipFile(archive) as source:
+              binary.write_bytes(source.read("Godot.app/Contents/MacOS/Godot"))
+          assert hashlib.sha256(binary.read_bytes()).hexdigest() == engine["binary_sha256"]
+          binary.chmod(0o755)
+          with open(os.environ["GITHUB_ENV"], "a") as stream:
+              stream.write("GODOT_BIN=" + str(binary) + "\n")
+          PY
+      - name: Collect actual addon/compiler/runtime/editor evidence
+        # Audit-only exit mode. FAIL/BLOCKED/UNTESTED stay red in JSON. Existing
+        # required 4.7 CI remains unchanged; C01 finalization adds a release gate.
+        run: >-
+          python3 tools/check-compatibility.py
+          --engine '${{ matrix.version }}=${{ env.GODOT_BIN }}'
+          --output '${{ runner.temp }}/compatibility'
+          --editor --collect-only
+      - name: Reject collection infrastructure failures
+        if: always()
+        env:
+          TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json
+        run: |
+          python3 - <<'PY'
+          import json, os
+          report = json.load(open(os.environ["TASK_RESULTS"]))
+          assert len(report["engines"]) == 1
+          stages = report["engines"][0]["stages"]
+          assert "infrastructure" not in stages
+          assert stages["engine_identity"]["status"] == "PASS"
+          assert stages["api_dump"]["status"] == "PASS"
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c01-macos-${{ matrix.version }}
+          path: ${{ runner.temp }}/compatibility
+          if-no-files-found: error

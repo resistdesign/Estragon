@@ -15,3 +15,6 @@ coverage/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Python contributor audit tooling
+__pycache__/

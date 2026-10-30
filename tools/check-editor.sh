@@ -17,7 +17,10 @@ if [ "${ESTRAGON_EDITOR_NATIVE:-0}" = 1 ]; then
     mkdir -p "$workspace/editor_data"
     printf '[gd_resource type="EditorSettings" format=3]\n\n[resource]\nrun/window_placement/game_embed_mode = -1\n' > "$workspace/editor_data/editor_settings-4.7.tres"
 fi
-[ "$("$workspace/godot" --headless --version)" = '4.7.stable.official.5b4e0cb0f' ] || { echo 'Expected pinned Godot 4.7.' >&2; exit 1; }
+# Default CI pin remains strict. C01 may explicitly select a verified newer
+# 4.7 patch without weakening or skipping any editor/Play assertions.
+expected_version=${ESTRAGON_TEST_GODOT_VERSION:-4.7.stable.official.5b4e0cb0f}
+[ "$("$workspace/godot" --headless --version)" = "$expected_version" ] || { echo "Expected Godot $expected_version." >&2; exit 1; }
 cp -R "$root/addons/estragon" "$project/addons/"
 cp "$root/examples/counter/Counter.gogo" "$root/examples/counter/Counter.tscn" "$project/examples/counter/"
 cp "$root/examples/counter/Counter.gogo" "$project/examples/counter/Background.gogo"
