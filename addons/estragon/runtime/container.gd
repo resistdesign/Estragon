@@ -88,7 +88,8 @@ func _detach_child(child: EstragonDisplayObject) -> void:
 func _measure_content() -> Vector2:
 	var result := Vector2.ZERO
 	for child in _children:
-		result = result.max(child.measure())
+		var size := child.measure()
+		result = Vector2(maxf(result.x, size.x), maxf(result.y, size.y))
 	return result
 
 

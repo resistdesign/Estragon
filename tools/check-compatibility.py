@@ -161,6 +161,24 @@ def audit(engine, output, editor):
             ("input_text", "interaction", "ESTRAGON_INTERACTION_OK"),
         ]:
             run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker)
+        # Runtime rejection is part of the supported sizing/text contract, even
+        # where unrelated compiler/editor stages still fail. Count diagnostics
+        # so an arbitrary parse error cannot satisfy an expected-error probe.
+        for name, script, probe, marker, expected in [
+            ("reject_width", "invalid_sizing", "width", "ESTRAGON_INVALID_SIZE_REJECTED", "width must be -1"),
+            ("reject_height", "invalid_sizing", "height", "ESTRAGON_INVALID_SIZE_REJECTED", "height must be -1"),
+            ("reject_negative_width", "invalid_sizing", "negative", "ESTRAGON_INVALID_SIZE_REJECTED", "width must be -1"),
+            ("reject_gap", "invalid_sizing", "gap", "ESTRAGON_INVALID_SIZE_REJECTED", "gap must be finite"),
+            ("reject_geometry", "invalid_sizing", "geometry", "ESTRAGON_INVALID_SIZE_REJECTED", "arranged geometry must be finite"),
+            ("reject_null_font", "invalid_text", "font", "ESTRAGON_INVALID_TEXT_REJECTED", "font must not be null"),
+            ("reject_font_size", "invalid_text", "font_size", "ESTRAGON_INVALID_TEXT_REJECTED", "font_size must be positive"),
+        ]:
+            run(name, ["--script", "res://tests/godot/" + script + ".gd", "--", probe],
+                marker, expected_errors=True)
+            errors = [line for line in (target / (name + ".log")).read_text().splitlines() if ERROR.search(line)]
+            if len(errors) != 1 or "ERROR: Estragon: " + expected not in errors[0]:
+                stages[name]["status"] = "FAIL"
+                stages[name]["reason"] = "Expected exactly one runtime rejection: Estragon: " + expected
         for name, script, marker in [
             ("generated_layout", "generated_gogo", "ESTRAGON_GENERATED_GOGO_OK"),
             ("hybrid_runtime", "hybrid_gogo", "ESTRAGON_HYBRID_GOGO_OK"),

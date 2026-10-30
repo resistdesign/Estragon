@@ -99,6 +99,38 @@ func _test_text() -> void:
 	_check(list.commands[2] is EstragonPaintList.FillRect, "later rectangle remains above earlier text")
 
 
+func _test_button_center_clamp() -> void:
+	var button := _button("Clamp")
+	var label_size := button.measure() - EstragonButton.PADDING * 2
+	var position := Vector2(7.25, 9.5)
+	var origin := Vector2(13.5, 19.25)
+	var cases := [
+		[Vector2(10.5, -2.5), Vector2(5.25, 0)],
+		[Vector2(-2.5, 6.5), Vector2(0, 3.25)],
+		[Vector2.ZERO, Vector2.ZERO],
+		[Vector2(3.5, 5.5), Vector2(1.75, 2.75)],
+		[Vector2(-2.5, -2.5), Vector2.ZERO],
+	]
+	for item in cases:
+		var size: Vector2 = label_size + item[0]
+		button.arrange(Rect2(position, size))
+		var list := EstragonPaintList.new()
+		button.append_paint(list, origin)
+		_check(list.commands.size() == 2, "clamped button retains background and label for surplus %s" % item[0])
+		if list.commands.size() != 2: continue
+		var expected: Vector2 = origin + position + item[1] + Vector2(0, button.font.get_ascent(button.font_size))
+		_check(list.commands[1].position.is_equal_approx(expected), "button centers positive surplus and clamps negative surplus independently: %s" % item[0])
+		_check(list.rectangles[0].rect == Rect2(origin + position, size), "label clamping preserves fractional button background: %s" % item[0])
+	for size in [Vector2(0, 20), Vector2(20, 0), Vector2.ZERO]:
+		button.arrange(Rect2(position, size))
+		var list := EstragonPaintList.new()
+		button.append_paint(list, origin)
+		_check(list.commands.is_empty(), "zero-area button paints neither background nor label: %s" % size)
+	var surface := EstragonSurface.new()
+	surface.set_root(button)
+	surface.free()
+
+
 func _test_transfers_and_exit() -> void:
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(300, 200)
@@ -142,6 +174,7 @@ func _test_transfers_and_exit() -> void:
 
 func _run() -> void:
 	_test_text()
+	_test_button_center_clamp()
 	_test_transfers_and_exit()
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(400, 260)

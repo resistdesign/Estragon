@@ -157,8 +157,36 @@ func _test_automatic_cleanup() -> void:
 	competitor.free()
 
 
+func _test_overlay_maxima() -> void:
+	var overlay := EstragonContainer.new()
+	_check(overlay.measure() == Vector2.ZERO, "empty overlay measures zero")
+	var wide := _rect(10.75, 2.25)
+	var tall := _rect(3.5, 20.125)
+	var zero := _rect(0, 0)
+	overlay.add_child(wide)
+	overlay.add_child(tall)
+	overlay.add_child(zero)
+	_check(overlay.measure() == Vector2(10.75, 20.125), "overlay takes fractional maxima independently from different children")
+	overlay.arrange(Rect2(4.5, 9.25, 40, 30))
+	_check(wide.get_layout_rect() == Rect2(0, 0, 10.75, 2.25) and tall.get_layout_rect() == Rect2(0, 0, 3.5, 20.125), "overlay preserves fractional child sizes at the local origin")
+	overlay.clear_invalidations()
+	wide.width = 1.25
+	tall.height = 0
+	_check(overlay.get_dirty_flags() == (EstragonDisplayObject.DIRTY_LAYOUT | EstragonDisplayObject.DIRTY_PAINT), "child size changes still invalidate overlay layout and paint")
+	_check(overlay.measure() == Vector2(3.5, 2.25), "overlay maxima shrink when children shrink")
+	overlay.remove_child(tall)
+	_check(tall.is_disposed() and overlay.measure() == Vector2(1.25, 2.25), "unmount cleans child and updates remaining maxima")
+	overlay.remove_child(wide)
+	_check(overlay.measure() == Vector2.ZERO, "zero-size content contributes no phantom extent")
+	var surface := EstragonSurface.new()
+	surface.set_root(overlay)
+	surface.free()
+	_check(overlay.is_disposed() and zero.is_disposed(), "surface owner cleans fractional overlay and remaining content")
+
+
 func _run() -> void:
 	_test_geometry()
+	_test_overlay_maxima()
 	_test_automatic_cleanup()
 	var viewport := SubViewport.new()
 	viewport.size = Vector2i(300, 200)
