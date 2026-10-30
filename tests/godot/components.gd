@@ -20,11 +20,23 @@ class DisposalProbe extends EstragonDisplayObject:
 			adoption_result = destination.add_child(sibling_to_adopt)
 
 
+class SignalSource extends RefCounted:
+	signal changed
+
+
+class SignalTarget extends EstragonDisplayObject:
+	var calls: int = 0
+
+	func receive() -> void:
+		calls += 1
+
+
 func _initialize() -> void:
 	_test_membership()
 	_test_invalid_operations()
 	_test_invalidation()
 	_test_disposal()
+	_test_incoming_cleanup()
 	_test_reference_ownership()
 	print("Component checks: %d" % _checks)
 	if _failed:
@@ -177,6 +189,26 @@ func _test_disposal() -> void:
 	destination._dispose()
 	owned.invalidate()
 	_check(root.get_dirty_flags() == 0 and owned.get_dirty_flags() == 0, "disposed objects stay clean")
+
+
+func _test_incoming_cleanup() -> void:
+	var source := SignalSource.new()
+	var target := SignalTarget.new()
+	var owner := ComponentContainer.new()
+	var destination := ComponentContainer.new()
+	owner.add_child(target)
+	source.changed.connect(target.receive)
+	source.changed.emit()
+	_check(target.calls == 1, "incoming signal invokes live component target")
+	var identity := target.get_instance_id()
+	destination.add_child(target)
+	_check(target.get_instance_id() == identity and not target.is_disposed(), "transfer preserves incoming target identity")
+	source.changed.emit()
+	_check(target.calls == 2 and source.changed.is_connected(target.receive), "transfer preserves incoming connection")
+	destination.remove_child(target)
+	_check(target.is_disposed() and not source.changed.is_connected(target.receive), "owner unmount disconnects incoming native signal")
+	source.changed.emit()
+	_check(target.calls == 2, "live source cannot invoke disposed target")
 
 
 func _test_reference_ownership() -> void:
