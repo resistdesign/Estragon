@@ -53,7 +53,8 @@ func append_paint(list: EstragonPaintList, origin: Vector2 = Vector2.ZERO) -> vo
 	if not is_disposed() and _layout_rect.has_area():
 		list.add_rect(Rect2(origin + _layout_rect.position, _layout_rect.size), get_background_color())
 		var label_size := super._measure_content()
-		var offset := ((_layout_rect.size - label_size) / 2).max(Vector2.ZERO)
+		var offset := (_layout_rect.size - label_size) / 2
+		offset = Vector2(maxf(offset.x, 0.0), maxf(offset.y, 0.0))
 		_append_text(list, origin + _layout_rect.position + offset, color * Color(1, 1, 1, 0.5) if disabled else color)
 	clear_invalidations(DIRTY_TREE | DIRTY_PAINT)
 

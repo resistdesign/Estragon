@@ -202,7 +202,7 @@ This is the sequential delivery order, not a request to implement everything in 
 
 ### C01-B…H — Proposed focused compatibility implementation queue
 
-This ordering is based on C01-A's actual failures and is proposed for review in its PR. All follow-ups are **Queued issues only**, not implementation started in C01-A.
+C01-A PR #52 merged `46bc752`. C01-B #45 now supplies the [focused runtime correction](C01_B_RUNTIME.md); subsequent issues remain queued. The additional explicit incoming-signal dictionary key is required for 4.0 runtime parsing and preserves cleanup semantics. Cold Text-first inherited-field compile failures remain recorded under #48/#41, not suppressed by C01-B.
 
 | Work ID / issue | Scope / observed failure | Prerequisites |
 | --- | --- | --- |

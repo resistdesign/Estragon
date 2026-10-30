@@ -138,7 +138,8 @@ func _dispose_owned_resources() -> void:
 	# Callables now, including closures capturing application objects.
 	# A live source may reference a retained terminal component's method.
 	for connection in get_incoming_connections():
-		var source_signal: Signal = connection.signal
+		# Explicit key access avoids a Godot 4.0 runtime class-resolution failure.
+		var source_signal: Signal = connection["signal"]
 		if source_signal.is_connected(connection.callable):
 			source_signal.disconnect(connection.callable)
 	for entry in get_signal_list():
