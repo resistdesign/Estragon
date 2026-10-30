@@ -52,6 +52,23 @@ and generated-signals results retain their real failures on those versions.
 `--collect-only` never promotes them to success. Unexpected errors, missing
 observations, changed metadata conclusions or unexpected counts fail the probe.
 
+## Recorded matrix
+
+[Structured results](../tests/compatibility/c01-c-results.json) record all nine
+pinned engines, binary hashes, 21 observations per engine and individual stages.
+The eight latest patches ran in [CI](https://github.com/resistdesign/Estragon/actions/runs/41138213341);
+the pinned 4.7.0 baseline ran locally from the same clean source commit `9387a32`.
+
+| Engines | Metadata experiment | Arity API | Counter parse / generated signals |
+| --- | --- | --- | --- |
+| 4.0.4, 4.1.4, 4.2.2 | PASS | BLOCKED | FAIL / FAIL |
+| 4.3, 4.4.1, 4.5.2, 4.6.3, 4.7.0, 4.7.2 | PASS | PASS | PASS / PASS |
+
+These API and signal results do not certify full-addon compatibility. Other
+recorded failures remain visible, including #48 cold Text-first loading on
+4.0/4.1 and #44 filtered highlighting. No new manual graphical smoke test was
+performed for this evidence-only change.
+
 ## Findings
 
 - Named method metadata exposes declared argument arrays; Script metadata also
