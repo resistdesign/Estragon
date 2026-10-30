@@ -62,6 +62,22 @@ jobs:
           assert stages["engine_identity"]["status"] == "PASS"
           assert stages["api_dump"]["status"] == "PASS"
           PY
+      - name: Require C01-B component sizing and input compatibility
+        env:
+          TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json
+        run: |
+          python3 - <<'PY'
+          import json, os
+          engine = json.load(open(os.environ["TASK_RESULTS"]))["engines"][0]
+          stages = engine["stages"]
+          for name in ["components", "layout", "input_text", "reject_width",
+                       "reject_height", "reject_negative_width", "reject_gap", "reject_geometry"]:
+              assert stages[name]["status"] == "PASS", (engine["version"], name, stages[name])
+          scripts = {item["source"]: item for item in stages["shipped_scripts"]["scripts"]}
+          for name in ["container", "button"]:
+              script = scripts["addons/estragon/runtime/" + name + ".gd"]
+              assert script["status"] == "PASS", (engine["version"], script)
+          PY
       - name: Publish actual stage outcomes
         if: always()
         env:
