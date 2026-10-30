@@ -4,6 +4,11 @@
 
 **Compiler migration:** N01/N02 implement bundled GDScript-native parsing, typed validation, generation and source maps. N03 integrates that compiler directly into the editor under ADR-0012, with no external compiler or executable setup. Supported Gogo syntax, generated signals and source maps must not change as a side effect. Bun remains optional developer/test reference tooling.
 
+**Engine compatibility:** Godot 4.0+ is required, but current older-engine
+runtime/validation/editor defects remain. [C01-A evidence](C01_COMPATIBILITY.md)
+separates frontend/emission success from numeric semantics, generated-code,
+script-identity and Play failures. The working full-workflow reference is 4.7.
+
 ## Native frontend (N01)
 
 `addons/estragon/compiler/frontend.gd` exposes a synchronous, scene-independent API:
@@ -124,8 +129,8 @@ remain visible in Godot's log; the frontend/emitter themselves do not log errors
 The Godot-only harness compiles and runs Layout, Mixed, Counter and both edge
 fixtures, exercises native semantic/callback failures, and compares checked reference
 output/map digests. See TESTING for exact commands and a direct Counter visual test.
-No known compatibility gap remains within the tested T04–T07 subset; this is not
-a full GDScript frontend, incremental compiler or new grammar.
+The 4.7 tests cover the current T04–T07 subset; this is not a full GDScript frontend,
+incremental compiler, new grammar or certification of earlier engine versions.
 
 ## Standalone markup-to-GDScript subset (T04, extended in T07)
 

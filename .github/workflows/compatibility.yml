@@ -62,6 +62,22 @@ jobs:
           assert stages["engine_identity"]["status"] == "PASS"
           assert stages["api_dump"]["status"] == "PASS"
           PY
+      - name: Publish actual stage outcomes
+        if: always()
+        env:
+          TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json
+        run: |
+          python3 - <<'PY'
+          import json, os
+          report = json.load(open(os.environ["TASK_RESULTS"]))
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write("**Evidence collection only: green job does not certify compatibility.**\n\n")
+              for engine in report["engines"]:
+                  summary.write("Engine: " + engine.get("version", engine["label"]) + "\n\n")
+                  summary.write("| Stage | Actual outcome |\n| --- | --- |\n")
+                  for name, stage in engine["stages"].items():
+                      summary.write("| " + name + " | **" + stage["status"] + "** |\n")
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:

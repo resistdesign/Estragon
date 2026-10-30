@@ -46,7 +46,7 @@ The legacy host still reads **temporary JSON IR** and renders fixed rectangles d
 
 **Owner decision, 2026-10-28, ADR-0012:** Estragon users must compile and run Gogo with **Godot and the bundled addon alone**. No Bun, Node, TypeScript, external compiler processes, shell setup, separate language server or GDExtension binary may be required for normal editing or Play. The former T08 Bun bridge has been replaced by direct native compilation/validation in N03.
 
-**N01/N02/N03 are merged.** R01 research is in [PR #38](https://github.com/resistdesign/Estragon/pull/38) pending review; its unsupported ordinary-`.gd` requirement is superseded by ADR-0013. **E01 #37 is the next scoped editor fix** (auto Gogo highlighter selection); afterward deliver T09 incrementally per [REACTIVITY_PLAN.md](docs/REACTIVITY_PLAN.md). The native compiler/editor must stay independent of Bun/Node.
+**N01/N02/N03, R01 PR #38 and the narrow E01 PR #40 fix are merged.** R01's unsupported ordinary-`.gd` requirement is superseded by ADR-0013. **C01-A #42** establishes the [measured compatibility baseline](docs/C01_COMPATIBILITY.md); focused C01-B…H issues #45–51 and the remaining filtered-tab issue #44 precede cross-version release acceptance and T09 work. Check the live issue/PR before resuming. The native compiler/editor must stay independent of Bun/Node.
 
 - **N01:** GDScript-native lexer/parser/typed component and event validation, original source spans and diagnostics, with native Godot tests. Never implement mixed syntax with regex substitutions.
 - **N02:** GDScript-native emitter, source maps, full current Gogo semantic parity and an interactive native-generated Counter; use Bun/TypeScript only for optional reference checks.

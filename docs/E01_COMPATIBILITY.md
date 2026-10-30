@@ -1,6 +1,6 @@
 # E01 compatibility evidence and review gate
 
-E01 #37 / PR #40, 2026-10-29. **Not a Godot 4.0+ release certification.**
+E01 #37 / PR #40, 2026-10-29. **Historical review evidence: #40 has since merged at `41b43b4`.** The owner merge did not resolve the C01 release gate or filtered-tab #44. See the broader [C01-A audit](C01_COMPATIBILITY.md) for current matrix/queue. **Not a Godot 4.0+ release certification.**
 ADR-0014 remains mandatory. R01 #38 and architecture #39 are merged; ADR-0013's
 lowercase Gogo-only `@bindable` and the T09 roadmap are unchanged.
 
@@ -110,14 +110,11 @@ The filtered, never-associated case exposes the remaining identity gap. The
 addon must not clear the user's filter, alter authored text or choose a language
 from content to conceal it. That case remains explicitly unmet across this matrix.
 
-## Owner decision; no merge performed
+## Current disposition
 
-#40 is conflict-free and reviewable, with 4.7 regressions/CI preserved. **Cross-version
-end-to-end acceptance remains blocked.** Owner choices are to keep #40 on hold
-until the required compatibility work is available, or explicitly approve merging
-the narrowly verified E01 fix while C01 remains an **unmet release gate**, including
-the filtered identity limitation. Neither choice is made by the agent.
-
-Only #40 may remain open. After owner merge/closure, C01-A #42 inventories and
-prioritizes focused sequential fixes. T09-A #43 follows blocking compiler/runtime
-compatibility fixes; T09-B/C/D stay in #5. No new PR bypasses this review gate.
+The owner merged #40 at `41b43b4` on 2026-10-29. The narrow normal-highlighting
+fix is delivered; full cross-version acceptance remains an unmet C01 release
+gate and filtered identity remains #44. [C01-A #42](C01_COMPATIBILITY.md) records
+the broader matrix and proposed sequential issues #45–51. T09-A #43 follows
+blocking compatibility foundations. No second PR or automatic merge bypasses
+that queue.
