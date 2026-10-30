@@ -520,3 +520,52 @@ Run `GODOT_BIN=/absolute/path/to/Godot sh tools/check-bindable.sh` with the pinn
 Run `GODOT_BIN=/path/to/official/godot ESTRAGON_KEEP_COMPAT_TEST=1 sh tools/check-highlighting-compat.sh` on a supplied engine. It executes two real isolated editor processes with only E01 modules, 46 assertions including an explicit negative filtered-identity probe, then a separate complete-addon startup diagnostic. Empty executable PATH, no Bun/Node or owner setting/cache changes. `E01_FILTERED_UNASSOCIATED_UNMET` and `E01_FULL_ADDON_BLOCKED` are unmet/failed acceptance results even if the evidence-collection script exits zero; do not interpret that as older-version certification. Unexpected isolated script errors or missing markers fail the harness.
 
 See [exact 4.0–4.7 versions, checksums, results and limits](E01_COMPATIBILITY.md). Existing required compiler/runtime/editor/graphics checks still target 4.7. C01-A #42 owns the broader compatibility inventory/matrix after #40 merges or closes; this E01 fixture does not implement it.
+
+
+## C01-A reusable compatibility matrix
+
+See [C01_COMPATIBILITY.md](C01_COMPATIBILITY.md) for exact engine provenance,
+source-located failures, stage meanings and follow-up ordering. The E01 fixture
+above is historical focused evidence, not the full audit.
+
+```sh
+python3 -m unittest discover -s tests/compatibility -p 'test_*.py'
+python3 tools/check-compatibility.py \
+  --engine 4.0.4=/absolute/official/godot-4.0.4 \
+  --engine 4.7.2=/absolute/official/godot-4.7.2 \
+  --output /new/result-directory --editor
+```
+
+Python 3.9+ is contributor orchestration only; actual Godot processes have empty
+PATH and isolated self-contained settings/projects. No Bun/Node is used. Supply
+verified executables matching `tests/compatibility/engines.json`; macOS hashes refer to
+verified pre-signing bytes; only the copied test binary is signed. Repeat `--engine` for each
+minor. Results/logs are written incrementally; output directories cannot already
+exist. Engine errors, nonzero exits, deadlines and missing markers are failures,
+including errors printed before an exit-zero success marker.
+
+The default command exits nonzero for any FAIL/BLOCKED/UNTESTED stage, including
+unproved graphics/manual interaction. **`--collect-only` is an informational
+collection mode**, preserving all red JSON results. Its zero exit is never a
+compatibility pass. `.github/workflows/compatibility.yml` runs official latest
+selected patches for each minor on macOS, checks archive/executable checksums,
+rejects infrastructure failures and uploads every stage log/result. The existing
+required 4.7 Linux job remains required; C01-H will establish the final supported
+release gate after defects are fixed and remaining evidence is supplied.
+
+The matrix checks clean product import, every shipped script, native frontend,
+code/maps, isolated numeric semantics, legacy/runtime/generated examples,
+semantic diagnostics/cache/relative-load/class identity, real headless editor
+startup and E01 restoration. Full unsaved Play/recovery runs on 4.7.0 and 4.7.2;
+older startup failures block that acceptance. `ESTRAGON_TEST_GODOT_VERSION` permits
+an explicitly verified newer patch in the unchanged full editor harness, while
+its default stays pinned to 4.7.0. This override is test-only; it is not a product
+version fallback. Physical F5/F6, other-platform older engines, export and older
+GPU pixels remain separately UNTESTED. Preserve #44's explicit filtered-tab FAIL.
+
+For a compact committed snapshot, pass the complete nonoverlapping raw reports
+to `python3 tools/summarize-compatibility.py --report /run/results.json --output
+tests/compatibility/results.json` (repeat `--report` for split runs). It requires
+all pinned manifest versions, preserves every stage and per-file parse outcome,
+and fingerprints the raw reports/logs. CI artifacts retain the full commands and
+logs. Local and CI fingerprints differ when temporary paths or script IDs differ.

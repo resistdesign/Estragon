@@ -9,6 +9,8 @@ Completion, debugger remapping, live preview and bindings remain future work.
 **Compatibility:** ADR-0014 requires Godot 4.0+. The complete workflow below is
 verified on 4.7; older addon startup is currently blocked. Isolated E01 results,
 remaining filtered-tab limits and exact failures are in [E01_COMPATIBILITY](E01_COMPATIBILITY.md).
+The broader [C01-A matrix and implementation queue](C01_COMPATIBILITY.md) include
+actual compiler/runtime/semantic/startup results for every 4.0–4.7 minor.
 
 ## Getting started
 

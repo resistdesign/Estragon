@@ -1,6 +1,6 @@
 # Estragon execution plan — Codex-sized delivery
 
-**Plan version:** 5, 2026-10-29. **Status:** N01–N03 and T01–T08 are merged; Godot-only Gogo compilation/editor Play is shipped. **R01 #38 and architecture PR #39 are merged**, documenting why ordinary authored `.gd` custom annotations are not supported. **The owner chose Gogo-only lowercase `@bindable` on 2026-10-29 (ADR-0013).** E01 #37 automatic Gogo highlighting is in review (PR #40, 4.7 tested); **C01 #41 now establishes required Godot 4.0+ compatibility and is a release/support gate**; T09-A through T09-D are planned incremental slices for observable Gogo models, bindings/layout, collections/repeaters and two-way/cycle hardening. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md), [T09 issue #5](https://github.com/resistdesign/Estragon/issues/5) and [WORK_STATUS.md](WORK_STATUS.md) for accepted scope and live handoffs.
+**Plan version:** 6, 2026-10-29. **Status:** N01–N03 and T01–T08 are merged; Godot-only Gogo compilation/editor Play is shipped. **R01 #38 and architecture PR #39 are merged**, documenting why ordinary authored `.gd` custom annotations are not supported. **The owner chose Gogo-only lowercase `@bindable` on 2026-10-29 (ADR-0013).** E01 automatic Gogo highlighting's narrow fix is merged (PR #40); filtered-tab acceptance stays in #44. C01-A #42 establishes the measured audit and issue-only follow-up sequence; **C01 #41 now establishes required Godot 4.0+ compatibility and is a release/support gate**; T09-A through T09-D are planned incremental slices for observable Gogo models, bindings/layout, collections/repeaters and two-way/cycle hardening. See [REACTIVITY_PLAN.md](REACTIVITY_PLAN.md), [T09 issue #5](https://github.com/resistdesign/Estragon/issues/5) and [WORK_STATUS.md](WORK_STATUS.md) for accepted scope and live handoffs.
 
 ## Outcome: an actual Gogo UI in Godot
 
@@ -56,7 +56,7 @@ T01 → T02 → T03 → T04 → T05 → T06 → T07 (merged)
                                       │
                        N03 native editor cutover (no Bun)
                               ├───────┴────────┐
-                       E01 #37 → C01-A #42 audit → C01 fixes → T09-A #43 models → T09-B UI/layout → T09-C collections → T09-D two-way
+                       E01 #40 merged → C01-A #42 audit → C01-B…H #45–51 (+ #44) → T09-A #43 models → T09-B UI/layout → T09-C collections → T09-D two-way
                         T10 legacy JSON retirement (independent)
 R01 #38 research: merged; historical evidence, no longer a T09 syntax blocker
 R02 graphics research: deferred
@@ -184,20 +184,46 @@ This is the sequential delivery order, not a request to implement everything in 
 
 ### C01 — Godot 4.0+ compatibility (owner baseline requirement; project-wide)
 
-**Tracking:** [C01 #41](https://github.com/resistdesign/Estragon/issues/41). **Owner decision:** ADR-0014. **Target:** Godot 4.0 through all later 4.x minors, not just 4.7. **Status:** unverified/required; Godot 4.7 test success does not establish compatibility.
+**Tracking:** [C01 #41](https://github.com/resistdesign/Estragon/issues/41). **Owner decision:** ADR-0014. **Target:** Godot 4.0 through all later 4.x minors, not just 4.7. **Status:** measured failures remain a release gate; [C01-A evidence](C01_COMPATIBILITY.md) separates actual passes from failures, blocked Play and untested graphics/platforms.
 
 - Audit GDScript syntax, plugin lifecycle, all compiler/emitter/validation methods, editor APIs, generated resource/UID/scene formats, and runtime component/graphics APIs using **Godot 4.0 as the minimum**. Known gaps: `ScriptEditor.save_all_scripts()`, `get_unsaved_files()` and `Resource.set_path_cache()` are documented in 4.7 but not 4.0; the E01 4.7 editor association adapter reaches undocumented UI internals; `project.godot` advertises a 4.7 feature.
 - Implement public-API 4.0-compatible paths where possible; version-gate any unavoidable private adapter with real-engine proof. Never compromise source freshness, F5/F6 fail-closed behavior, generated-script/class identity, startup/restart highlighting, component lifecycle or user configuration.
 - Run native Gogo + editor + runtime tests on actual latest patches of Godot 4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6 and 4.7. Maintain an automated multi-version matrix when feasible; report GUI/manual checks separately. Verify fresh install with only Godot/addon, no Bun/Node.
-- The compatibility evidence is a **review gate for E01 PR #40's claim of universal highlighting** and a shipping gate for T09/Estragon releases; do not silently raise the minimum engine. Keep C01 as separate scoped work as needed, with issue/PR and durable handoff.
+- E01 PR #40 merged with its narrow measured scope; remaining compatibility evidence is a shipping gate for T09/Estragon releases; do not silently raise the minimum engine. Keep C01 as separate scoped work as needed, with issue/PR and durable handoff.
+
+### C01-A — Compatibility audit and reusable test matrix
+
+**Tracking:** [#42](https://github.com/resistdesign/Estragon/issues/42). **Predecessor:** E01 PR #40 merged `41b43b4`. **Scope:** audit, isolated test infrastructure and planning; no addon compatibility rewrite. [Measured report](C01_COMPATIBILITY.md), `tests/compatibility/{engines,results}.json`, selectable `tools/check-compatibility.py`, and informational macOS CI provide durable evidence. Actual latest patches 4.0–4.7 are tested, plus the required 4.7.0 regression pin.
+
+- Native frontend/emission/maps pass on all tested minors; downstream generated validity, runtime, semantic identity and editor startup are independent stages with honest FAIL/BLOCKED/UNTESTED results.
+- Test clean product import before adding test fixtures, all 33 shipped scripts, existing runtime/compiler suites and actual isolated editor behavior with empty tool PATH. Existing required 4.7 Linux suites remain intact; graphics/manual/platform evidence is separate.
+- Default collector exit rejects any unmet stage. `--collect-only` is audit-only and retains red JSON/artifacts; it is not release certification.
+- Complete delivery requires one reviewed PR, exact engine provenance/commands/results, queued follow-ups and durable issue/PR handoff. No automatic merge or next implementation before closure.
+
+### C01-B…H — Proposed focused compatibility implementation queue
+
+This ordering is based on C01-A's actual failures and is proposed for review in its PR. All follow-ups are **Queued issues only**, not implementation started in C01-A.
+
+| Work ID / issue | Scope / observed failure | Prerequisites |
+| --- | --- | --- |
+| C01-B [#45](https://github.com/resistdesign/Estragon/issues/45) | Vector2.max in container/button blocks 4.0–4.2 runtime | C01-A merged |
+| C01-C [#46](https://github.com/resistdesign/Estragon/issues/46) | Generated Callable argument-count guards unavailable through 4.2 | C01-B |
+| C01-D [#47](https://github.com/resistdesign/Estragon/issues/47) | Numeric literal semantic mismatch, including measured 4.5 small double | C01-C |
+| C01-E [#48](https://github.com/resistdesign/Estragon/issues/48) | Logger/path APIs, real relative loads and script/class/cache identity | C01-D |
+| C01-F [#49](https://github.com/resistdesign/Estragon/issues/49) | EditorInterface instance APIs, import lifecycle, actual plugin startup | C01-E |
+| C01-G [#50](https://github.com/resistdesign/Estragon/issues/50) | Unsaved/unsavable buffers, native fail-closed F5/F6 and recovery | C01-F |
+| E01-F [#44](https://github.com/resistdesign/Estragon/issues/44) | True positive filtered never-associated highlighter proof or owner disposition | Compatible editor foundation; coordinate after C01-G |
+| C01-H [#51](https://github.com/resistdesign/Estragon/issues/51) | 4.0 distribution features/resources, full integration/platform/graphics evidence, required matrix gate | C01-G and #44 disposition |
+
+Each issue contains measurable acceptance and exact evidence. Preserve semantic diagnostics, callback order, native no-tools workflow and framework-owned runtime. Do not replace unavailable APIs with unchecked no-ops. T09-A #43 remains queued behind blocking compatibility foundations; the lowercase Gogo-only annotation/model/Box/collection/two-way destination is unchanged.
 
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
-**Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **Schedule:** next focused implementation (E01), before T09 binding work's final editor authoring proof; do not mix E01 into T09.
+**Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **State:** narrow fix merged in PR #40; remaining filtered-tab acceptance is #44, and older full-addon support remains C01. Do not mix E01 into T09.
 
 - Reproduce the owner-confirmed restored-tab activation bug; prove automatic selection for new, existing and restored Gogo tabs, disable/re-enable and restart. Preserve unrelated user settings.
-- Extend the real isolated editor tests to inspect actual highlighter attachment/colors without manual selection. The existing #40 remains the sole PR; no replacement or stacked delivery.
-- [Measured E01 matrix](E01_COMPATIBILITY.md): isolated 4.0–4.7 normal/restart behavior verified; filtered unassociated identity and older full-addon startup remain unmet/blocked. Owner must choose hold versus explicit limited merge; C01 remains a release gate. After #40 closes, C01-A #42 is next.
+- Extend the real isolated editor tests to inspect actual highlighter attachment/colors without manual selection. PR #40 merged; future #44 delivery follows the one-open-PR rule.
+- [Measured E01 matrix](E01_COMPATIBILITY.md): isolated 4.0–4.7 normal/restart behavior verified; filtered unassociated identity and older full-addon startup remain unmet/blocked. PR #40 merged on 2026-10-29 with these limitations retained. C01-A #42 now records the broader matrix; C01 remains a release gate.
 
 ### R01 — Research: `@Bindable` in ordinary authored `.gd`
 
@@ -228,4 +254,4 @@ A task begins by checking the *latest* main branch, its tracking issue, open PRs
 - GitHub issues/PRs hold **live execution state and session handoffs**; [WORK_STATUS.md](WORK_STATUS.md) is the concise, reviewed snapshot updated when plan/task completions land on `main`.
 - Completing a task requires its acceptance tests and human-approved merged PR, not merely a Codex message that it is finished.
 
-**Delivery queue:** one open PR total, including drafts/docs/research. E01 #40 → C01-A #42 → measured C01 fixes → T09-A #43 → T09-B/C/D #5. Future tasks remain issues until the current PR merges or closes; a blocked PR requires an owner decision, never a bypass PR.
+**Delivery queue:** one open PR total, including drafts/docs/research. C01-A #42 → C01-B…H #45–51 with E01-F #44 → T09-A #43 → T09-B/C/D #5. E01 #40 is merged. Future tasks remain issues until the current PR merges or closes; a blocked PR requires an owner decision, never a bypass PR.
