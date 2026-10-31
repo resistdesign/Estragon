@@ -147,7 +147,7 @@ func _component(node: Model.Component, indentation: String) -> String:
 			_line("var %s: Variant = %s" % [callback, argument], value.span, indentation)
 			_line("if not %s.is_valid() or (Engine.get_version_info()[\"minor\"] >= 3 and %s.get_argument_count() != 0):" % [argument, callback], value.span, indentation)
 			_line(indentation + "push_error(" + error + ")", value.span, indentation)
-			_line("elif %s.get_object() is EstragonDisplayObject and (%s.get_object() as EstragonDisplayObject).is_disposed():" % [argument, argument], value.span, indentation)
+			_line("elif %s.get_object() is EstragonDisplayObject and (%s.get_object() as EstragonDisplayObject).is_disposed():" % [callback, callback], value.span, indentation)
 			_line(indentation + "push_error(" + error + ")", value.span, indentation)
 			_line("elif %s.pressed.connect(%s) != OK:" % [variable, argument], value.span, indentation)
 			_line(indentation + "push_error(" + error + ")", value.span, indentation)

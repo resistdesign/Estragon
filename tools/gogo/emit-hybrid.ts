@@ -78,7 +78,7 @@ export function emitHybrid(module: HybridModule, file: SourceFile) {
                     line(`var ${callback}: Variant = ${argument}`, value.span);
                     line(`if not ${argument}.is_valid() or (Engine.get_version_info()["minor"] >= 3 and ${callback}.get_argument_count() != 0):`, value.span);
                     line(`${module.indentation}push_error(${error})`, value.span);
-                    line(`elif ${argument}.get_object() is EstragonDisplayObject and (${argument}.get_object() as EstragonDisplayObject).is_disposed():`, value.span);
+                    line(`elif ${callback}.get_object() is EstragonDisplayObject and (${callback}.get_object() as EstragonDisplayObject).is_disposed():`, value.span);
                     line(`${module.indentation}push_error(${error})`, value.span);
                     line(`elif ${variable}.pressed.connect(${argument}) != OK:`, value.span);
                     line(`${module.indentation}push_error(${error})`, value.span);

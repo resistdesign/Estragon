@@ -23,6 +23,12 @@ func _check(condition: bool, message: String) -> void:
 		push_error("Generated signals test: " + message)
 
 
+# Godot 4.0 retains the get_ref() expression temporary until its function
+# returns. Keep observation in its own frame so the test cannot retain payload.
+func _weak_alive(reference: WeakRef) -> bool:
+	return reference.get_ref() != null
+
+
 func _event(position: Vector2, down: bool) -> InputEventMouseButton:
 	var event := InputEventMouseButton.new()
 	event.position = position
@@ -147,10 +153,10 @@ func _run() -> void:
 	var payload_ref: WeakRef = weakref(payload)
 	var capturing_button: EstragonButton = module.build_capture(payload)
 	payload = null
-	_check(payload_ref.get_ref() != null, "generated lambda retains its captured payload while mounted")
+	_check(_weak_alive(payload_ref), "generated lambda retains its captured payload while mounted")
 	surface.set_root(capturing_button)
 	surface.set_root(null)
-	_check(capturing_button.pressed.get_connections().is_empty() and payload_ref.get_ref() == null, "unmount releases generated lambda and captured resources")
+	_check(capturing_button.pressed.get_connections().is_empty() and not _weak_alive(payload_ref), "unmount releases generated lambda and captured resources")
 	surface.free()
 	_check(receiver_button.is_disposed() and static_button.pressed.get_connections().is_empty(), "host destruction cleans all remaining wiring")
 	# Standalone markup still works for literal-only primitive properties.

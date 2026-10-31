@@ -2223,7 +2223,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:6681",
+    "id": "tests/signal-gogo.test.ts:6829",
     "source": "extends RefCounted\nfunc build():\n    return <Text pressed={handler}/>\n",
     "ok": false,
     "position": {
@@ -2233,7 +2233,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:6744",
+    "id": "tests/signal-gogo.test.ts:6892",
     "source": "extends RefCounted\nfunc build():\n    return <VBox pressed={handler}/>\n",
     "ok": false,
     "position": {
@@ -2243,7 +2243,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:6807",
+    "id": "tests/signal-gogo.test.ts:6955",
     "source": "extends RefCounted\nfunc build():\n    return <Button clicked={handler}/>\n",
     "ok": false,
     "position": {
@@ -2253,7 +2253,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:6872",
+    "id": "tests/signal-gogo.test.ts:7020",
     "source": "extends RefCounted\nfunc build():\n    return <Button released={handler}/>\n",
     "ok": false,
     "position": {
@@ -2263,7 +2263,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:6938",
+    "id": "tests/signal-gogo.test.ts:7086",
     "source": "extends RefCounted\nfunc build():\n    return <Button pressed=\"handler\"/>\n",
     "ok": false,
     "position": {
@@ -2273,7 +2273,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:7002",
+    "id": "tests/signal-gogo.test.ts:7150",
     "source": "extends RefCounted\nfunc build():\n    return <Button pressed={one} pressed={two}/>\n",
     "ok": false,
     "position": {
@@ -2283,7 +2283,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:7093",
+    "id": "tests/signal-gogo.test.ts:7241",
     "source": "<Button text=\"a\" text=\"b\"/>",
     "ok": false,
     "position": {
@@ -2293,7 +2293,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:7156",
+    "id": "tests/signal-gogo.test.ts:7304",
     "source": "extends RefCounted\nfunc build():\n    return <Button pressed={}/>\n",
     "ok": false,
     "position": {
@@ -2303,7 +2303,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:7238",
+    "id": "tests/signal-gogo.test.ts:7386",
     "source": "<Button><Rect/></Button>",
     "ok": false,
     "position": {
@@ -2313,7 +2313,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:7296",
+    "id": "tests/signal-gogo.test.ts:7444",
     "source": "<Text>{child}</Text>",
     "ok": false,
     "position": {
@@ -2323,7 +2323,7 @@
     }
   },
   {
-    "id": "tests/signal-gogo.test.ts:7348",
+    "id": "tests/signal-gogo.test.ts:7496",
     "source": "extends RefCounted\nfunc build():\n    return <fx:Button pressed={handler}/>\n",
     "ok": false,
     "position": {

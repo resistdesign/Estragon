@@ -19,7 +19,16 @@ Variant, then short-circuits the native `get_argument_count()` query behind
 parser from statically resolving the missing Callable API; the version guard
 prevents its execution there. Authored expressions still evaluate once in their
 original order, and every emitted line maps to the event expression's source span.
-Existing invalid/disposed-target and connection checks remain unchanged.
+The same Variant alias supplies target lookup: typed Callable.get_object()
+returns a boolean instead of its object in the measured 4.0.4 path; dynamic
+dispatch returns the actual target. This small bridge preserves direct disposed-
+target rejection. Connection and lifecycle behavior remain unchanged.
+
+The captured-payload test observes WeakRef through a separate helper frame.
+Godot 4.0 retains an inline get_ref() expression temporary until the calling
+function returns; the test's own earlier liveness observation otherwise keeps
+the payload alive. Both mounted retention and immediate unmount release remain
+asserted; no warmup, delay or engine-version exemption is used.
 
 On older engines, an incompatible required/unbound callback connects and reports
 the normal signal-invocation error when activated. Old Godot also logs a
