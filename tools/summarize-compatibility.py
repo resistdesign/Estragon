@@ -14,8 +14,9 @@ ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--report", type=Path, action="append", required=True)
 parser.add_argument("--output", type=Path, required=True)
+parser.add_argument("--scope", default="C01-A audit; not release certification")
 args = parser.parse_args()
-snapshot = {"schema_version": 1, "scope": "C01-A audit; not release certification",
+snapshot = {"schema_version": 1, "scope": args.scope,
             "raw_reports": [], "engines": []}
 versions = set()
 for path in args.report:
@@ -29,6 +30,8 @@ for path in args.report:
         assert version not in versions, "duplicate engine: " + version
         versions.add(version)
         row = {key: engine[key] for key in ["label", "version", "input_binary_sha256", "api"]}
+        if "numeric_evidence" in engine:
+            row["numeric_evidence"] = engine["numeric_evidence"]
         row["stages"] = {}
         for name, stage in engine["stages"].items():
             assert stage["status"] in ["PASS", "FAIL", "BLOCKED", "UNTESTED"]

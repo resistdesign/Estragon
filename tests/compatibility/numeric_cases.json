@@ -1,0 +1,140 @@
+{
+  "oracle": "IEEE-754 binary64, little-endian bytes from Python struct.pack(<d, float(decimal)); signed zero normalized to positive zero per Gogo policy",
+  "cases": [
+    {
+      "source": "0",
+      "expected_bits": "0000000000000000"
+    },
+    {
+      "source": "-0",
+      "expected_bits": "0000000000000000"
+    },
+    {
+      "source": "-0.0",
+      "expected_bits": "0000000000000000"
+    },
+    {
+      "source": "-0e-20",
+      "expected_bits": "0000000000000000"
+    },
+    {
+      "source": "+0.0",
+      "expected_bits": "0000000000000000"
+    },
+    {
+      "source": ".5",
+      "expected_bits": "000000000000e03f"
+    },
+    {
+      "source": "5.",
+      "expected_bits": "0000000000001440"
+    },
+    {
+      "source": "+1.25",
+      "expected_bits": "000000000000f43f"
+    },
+    {
+      "source": "1e-20",
+      "expected_bits": "2342920ca19cc73b"
+    },
+    {
+      "source": "0.00000000000000000001",
+      "expected_bits": "2342920ca19cc73b"
+    },
+    {
+      "source": "1.2345678901234567e-20",
+      "expected_bits": "f9ff2a478126cd3b"
+    },
+    {
+      "source": "0.000000000000000000012345678901234567",
+      "expected_bits": "f9ff2a478126cd3b"
+    },
+    {
+      "source": "1e20",
+      "expected_bits": "408cb5781daf1544"
+    },
+    {
+      "source": "1.0000000000000002",
+      "expected_bits": "010000000000f03f"
+    },
+    {
+      "source": "3.141592653589793",
+      "expected_bits": "182d4454fb210940"
+    },
+    {
+      "source": "16777215",
+      "expected_bits": "000000e0ffff6f41"
+    },
+    {
+      "source": "16777216",
+      "expected_bits": "0000000000007041"
+    },
+    {
+      "source": "16777217",
+      "expected_bits": "0000001000007041"
+    },
+    {
+      "source": "3.4028234e38",
+      "expected_bits": "34b886d5ffffef47"
+    },
+    {
+      "source": "1.17549435e-38",
+      "expected_bits": "a8db9fffffff0f38"
+    },
+    {
+      "source": "1.401298464324817e-45",
+      "expected_bits": "000000000000a036"
+    },
+    {
+      "source": "1e-40",
+      "expected_bits": "9c577727266ca137"
+    },
+    {
+      "source": "1e-300",
+      "expected_bits": "59f3f8c21f6ea501"
+    },
+    {
+      "source": "000000000000000000000012.5",
+      "expected_bits": "0000000000002940"
+    },
+    {
+      "source": "0.00000000000000000001e+000003",
+      "expected_bits": "97d44646f50e673c"
+    },
+    {
+      "source": "1.1754943508222875e-38",
+      "expected_bits": "0000000000001038"
+    },
+    {
+      "source": "1e-4294967296",
+      "expected_bits": "0000000000000000"
+    }
+  ],
+  "native_parser_limits": [
+    {
+      "source": "2.2250738585072014e-308",
+      "expected_bits": "0000000000001000"
+    },
+    {
+      "source": "4.9406564584124654e-324",
+      "expected_bits": "0100000000000000"
+    },
+    {
+      "source": "3.4028234663852886e38",
+      "expected_bits": "000000e0ffffef47"
+    }
+  ],
+  "policy": "Owner decision 2026-10-31: preserve native Godot numeric conversion semantics. Native parser limits retain independent IEEE oracles as BLOCKED and must preserve the actual native parsed value through emission. No custom decimal parser.",
+  "rejected_cases": [
+    "1e39",
+    "1e400",
+    "1e4294967296",
+    "1e2147483648",
+    "0.00000000000000000001e4294967296",
+    "1e999999999999999999999",
+    "NaN",
+    "-1",
+    "2px",
+    "1e"
+  ]
+}

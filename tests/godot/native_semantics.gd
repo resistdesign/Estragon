@@ -73,11 +73,21 @@ func _run() -> void:
 	quit(1 if _failed else 0)
 
 func _literal_values() -> void:
-	for number in ["0", "-0", "1e20", "1e-20", "3.141592653589793", "1.0000000000000002", "16777217", "3.4028234e38"]:
+	var fixture = JSON.parse_string(FileAccess.get_file_as_string("res://numeric_cases.json"))
+	for item in fixture.cases + fixture.native_parser_limits:
+		var number: String = item.source
 		var result := Validation.validate(Compiler.compile('<Rect width="' + number + '"/>'))
 		_check(result.ok, "float token compiles " + number)
 		var surface: EstragonSurface = result.generated_script.new()
-		_check(surface.get_root().width == number.to_float(), "double precision preserved " + number)
+		var bytes := PackedByteArray()
+		bytes.resize(8)
+		bytes.encode_double(0, surface.get_root().width)
+		if fixture.cases.has(item):
+			_check(bytes.hex_encode() == item.expected_bits, "independent double precision preserved " + number)
+		else:
+			# Owner-approved native parsing semantics; the isolated probe retains
+			# the separate IEEE mismatch as BLOCKED, not a conversion success.
+			_check(surface.get_root().width == number.to_float(), "native parsed value preserved " + number)
 		surface.free()
 	var text := 'café 🦎 "quote"\t\r\n\u0001\u001b'
 	var result := Validation.validate(Compiler.compile("<Text text='" + text + "'/>"))

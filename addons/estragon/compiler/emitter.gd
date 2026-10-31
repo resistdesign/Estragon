@@ -66,11 +66,7 @@ static func literal(value: Model.Literal) -> String:
 		"integer-literal": return str(value.value)
 		"boolean-literal": return "true" if value.value else "false"
 		"color-literal": return "Color(%s)" % _string(value.value)
-		"number-literal":
-			# JSON's full-precision double formatting avoids String(float)'s
-			# display rounding, and a float token avoids integer overflow.
-			var number := JSON.stringify(value.value, "", false, true)
-			return number if "." in number or "e" in number or "E" in number else number + ".0"
+		"number-literal": return value.number_token
 	return "" # Only validated literals reach the emitter.
 
 func _argument(expression: Model.GdExpression, type_name: String, factory: Factory) -> void:

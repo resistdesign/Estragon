@@ -7,12 +7,7 @@ export function emitLiteral(literal: Literal): string {
         case "integer-literal": return String(literal.value);
         case "boolean-literal": return literal.value ? "true" : "false";
         case "color-literal": return `Color("${literal.value}")`;
-        case "number-literal": {
-            const value = String(literal.value);
-            // Always a float: a large decimal must not become an overflowing
-            // Godot integer token before assignment to a float property.
-            return /[.e]/i.test(value) ? value : `${value}.0`;
-        }
+        case "number-literal": return literal.numberToken;
     }
 }
 

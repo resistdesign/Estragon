@@ -95,6 +95,18 @@ jobs:
           scripts = {item["source"]: item for item in stages["shipped_scripts"]["scripts"]}
           assert scripts["examples/counter/generated/Counter.gd"]["status"] == "PASS"
           PYCODE
+      - name: Require C01-D numeric value preservation
+        env:
+          TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json
+        run: |
+          python3 - <<'PY'
+          import json, os
+          engine = json.load(open(os.environ["TASK_RESULTS"]))["engines"][0]
+          for name in ["numeric_literals", "numeric_native_preservation"]:
+              assert engine["stages"][name]["status"] == "PASS", (engine["version"], name)
+          # Native IEEE conversion limitations remain explicitly BLOCKED in
+          # results; owner-approved semantics require no further emission loss.
+          PY
       - name: Publish actual stage outcomes
         if: always()
         env:

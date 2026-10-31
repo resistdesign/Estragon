@@ -113,8 +113,10 @@ Position, or null for an unmapped line. Copied ranges retain exact UTF-16 positi
 generated ranges map to their owning authored span. Hybrid code/maps match the
 checked reference examples. Standalone code uses source-ordered literal assignments
 and per-statement mappings instead of sorted assignments and one whole-document
-range; resulting component behavior is equivalent. Float literals use full-precision
-native formatting and explicit float tokens, so spelling can differ from TypeScript.
+range; resulting component behavior is equivalent. Float literals carry canonical validated decimal tokens through the typed model
+and emission, avoiding a float-to-JSON formatting round trip. Native Godot still
+owns conversion/rounding; measured source-parser limits and the owner-approved
+native semantics are documented in [C01_D_NUMBERS.md](C01_D_NUMBERS.md).
 
 Semantic validation uses Godot 4.7's [Logger](https://docs.godotengine.org/en/4.7/classes/class_logger.html)
 only around synchronous `GDScript.reload()`, removes it afterward, and maps
