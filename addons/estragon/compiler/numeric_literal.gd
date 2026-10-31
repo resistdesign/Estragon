@@ -17,14 +17,21 @@ static func normalize(text: String) -> String:
 		var raw := parts[1]
 		var negative := raw.begins_with("-")
 		if raw.begins_with("-") or raw.begins_with("+"): raw = raw.substr(1)
-		while raw.length() > 1 and raw.begins_with("0"): raw = raw.substr(1)
+		var exponent_start: int = 0
+		while exponent_start + 1 < raw.length() and raw[exponent_start] == "0": exponent_start += 1
+		raw = raw.substr(exponent_start)
 		# Exponents beyond this cannot be offset by any Godot String's length.
 		# Bound integer conversion, preserving native overflow/underflow behavior.
 		exponent = 10000000000 if raw.length() > 10 else raw.to_int()
 		if negative: exponent = -exponent
 	exponent += point - first - 1
-	digits = digits.substr(first)
-	while digits.length() > 1 and digits.ends_with("0"): digits = digits.substr(0, digits.length() - 1)
+	# Bound after applying the decimal-point offset. This prevents the native
+	# converter's 32-bit exponent accumulator wrapping and bypassing finiteness.
+	if exponent > 400: exponent = 400
+	elif exponent < -400: exponent = -400
+	var last := digits.length() - 1
+	while last > first and digits[last] == "0": last -= 1
+	digits = digits.substr(first, last - first + 1)
 	# Keep ordinary readable fixed tokens, but never let leading zeros consume
 	# native conversion's 18-digit mantissa budget. Small/large values use e.
 	var fixed_point := exponent + 1

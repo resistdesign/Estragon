@@ -608,7 +608,7 @@ See [C01_C_CALLBACKS.md](C01_C_CALLBACKS.md) and the structured C01-C snapshot.
 
 [Numeric contract/evidence](C01_D_NUMBERS.md) records the owner-approved native
 semantics. The isolated probe executes canonical tokens and checks model/runtime
-bytes against 26 independent binary64 oracles, deterministic maps and binary
+bytes against 27 independent binary64 oracles, deterministic maps and binary
 storage controls. Three additional native parser discrepancies retain their IEEE
 oracles as BLOCKED and must preserve source-native values through emission.
 CI requires `numeric_literals` and `numeric_native_preservation` PASS; the separate

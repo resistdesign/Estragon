@@ -26,4 +26,10 @@ def validate_numeric(output, fixture):
                     raise ValueError("Emission changed the native parsed value: " + item["source"])
             if row["status"] != wanted:
                 raise ValueError("Numeric value mismatch: " + item["source"])
-    return {"cases": cases, "native_parser_limits": limits}
+    rejections = rows("C01_NUMERIC_REJECTION ")
+    if len(rejections) != len(fixture["rejected_cases"]) or {row["source"] for row in rejections} != set(fixture["rejected_cases"]):
+        raise ValueError("Missing, duplicated or unexpected numeric rejection observations")
+    for row in rejections:
+        if not all(row.get(key) is True for key in ["rejected", "no_output", "source_located", "finite_domain_diagnostic"]):
+            raise ValueError("Invalid numeric value was not rejected with its source diagnostic: " + row["source"])
+    return {"cases": cases, "native_parser_limits": limits, "rejected_cases": rejections}

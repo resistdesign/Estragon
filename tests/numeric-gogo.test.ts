@@ -7,6 +7,7 @@ import { emitLiteral } from "../tools/gogo/emit-gdscript.ts";
 
 const fixture = JSON.parse(readFileSync(new URL("./compatibility/numeric_cases.json", import.meta.url), "utf8")) as {
     cases: { source: string; expected_bits: string }[];
+    rejected_cases: string[];
 };
 for (const item of fixture.cases) {
     test(`numeric model and deterministic mapped emission: ${item.source}`, () => {
@@ -33,7 +34,7 @@ test("canonicalizes equivalent decimal spellings before conversion", () => {
     }
 });
 test("rejects malformed and overflowing values without allocating exponent-sized tokens", () => {
-    for (const value of ["1e39", "1e999999999999999999999", "0.00000000000000000001e999999999999999999", "1;pass", "1e", "-1"]) {
+    for (const value of fixture.rejected_cases) {
         expect(() => compileGogo(`<Rect width="${value}"/>`)).toThrow();
     }
 });

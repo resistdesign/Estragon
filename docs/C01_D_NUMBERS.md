@@ -52,7 +52,13 @@ exponents, keeps ordinary fixed spellings readable, and uses scientific spelling
 when leading zeros would consume the mantissa budget. It preserves all authored
 significant digits. Extremely long exponents are bounded only beyond the range
 that any Godot String's length could offset; no exponent-sized output allocation
-or arbitrary-precision subsystem is introduced.
+or arbitrary-precision subsystem is introduced. After decimal-point adjustment,
+exponents outside binary64's range are bounded before conversion: otherwise a
+32-bit native exponent accumulator can wrap `1e4294967296` into the finite value
+1 and bypass geometry validation. The probe requires ten malformed/overflowing
+inputs to fail with source-located finite-domain diagnostics and no output.
+Large negative exponents correctly underflow to normalized zero. Bounds and
+normalization are common to all engine versions.
 
 Validation converts the canonical token, retains the numeric value for type and
 finite/float32-geometry checks, and carries the token in the internal typed IR.
@@ -100,7 +106,7 @@ from Godot at these native-conversion limits; equivalence is not claimed there.
 
 ## Reproduction and acceptance
 
-`tests/compatibility/numeric_cases.json` contains 26 ordinary independent byte
+`tests/compatibility/numeric_cases.json` contains 27 ordinary independent byte
 oracles and the three separate limitation controls. `numeric_literals.gd` checks
 native typed model and actual reloaded GDScript values, binary storage, repeatable
 code/maps and original literal spans. Limits additionally require source parsing,
@@ -108,13 +114,13 @@ model and generated runtime to agree under the approved native semantics.
 `numeric_evidence.py` rejects missing/duplicate observations, poisoned oracles,
 map/storage mismatches, false PASS claims and additional emission loss.
 
-- `numeric_literals=PASS`: all 26 ordinary cases match independent bytes, plus
+- `numeric_literals=PASS`: all 27 ordinary cases match independent bytes, plus
   all three native-limit values survive emission without additional loss.
 - `numeric_native_preservation=PASS`: native-limit preservation is verified.
 - `numeric_native_conversion=BLOCKED`: the native IEEE conversion discrepancies
   above remain; this is not silently promoted to conversion success.
 
-The full semantic suite also executes all 29 cases through real component
+The full semantic suite also executes all 30 value cases through real component
 properties where its existing validation dependencies are available. Older
 missing Logger/path APIs still fail that suite under #48; the isolated probe
 has no such dependency. C01-B runtime and C01-C callback gates remain required.

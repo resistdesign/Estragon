@@ -63,6 +63,13 @@ func _initialize() -> void:
 			row.status = "FAIL"
 		elif row.status == "FAIL": row.status = "BLOCKED"
 		print("C01_NUMERIC_NATIVE_LIMIT ", JSON.stringify(row))
+	for text in fixture.rejected_cases:
+		var result := Compiler.compile('<Rect width="' + text + '"/>', "NumericInvalid.gogo")
+		var located := not result.diagnostics.is_empty() and result.diagnostics[0].source_name == "NumericInvalid.gogo" and result.diagnostics[0].span.start.line == 1
+		var diagnostic: String = result.diagnostics[0].message if not result.diagnostics.is_empty() else ""
+		var row := {"source": text, "rejected": not result.ok, "no_output": result.code.is_empty(), "source_located": located, "finite_domain_diagnostic": diagnostic.contains("finite"), "diagnostic": diagnostic}
+		print("C01_NUMERIC_REJECTION ", JSON.stringify(row))
+		if not row.rejected or not row.no_output or not row.source_located or not row.finite_domain_diagnostic: failed = true
 	if failed: push_error("C01 numeric literal differs from the independent binary64 oracle")
 	else: print("C01_NUMERIC_OK")
 	quit(1 if failed else 0)

@@ -22,9 +22,13 @@ class NumericEvidenceTests(unittest.TestCase):
                 storage_bits=item["expected_bits"], deterministic_and_mapped=True,
                 native_value_preserved=True, status="PASS") for item in self.fixture[group]]
 
+        self.rows["rejected_cases"] = [dict(source=text, rejected=True, no_output=True, source_located=True,
+            finite_domain_diagnostic=True) for text in self.fixture["rejected_cases"]]
+
     def output(self):
         return "\n".join(prefix + json.dumps(row) for group, prefix in [
-            ("cases", "C01_NUMERIC_CASE "), ("native_parser_limits", "C01_NUMERIC_NATIVE_LIMIT ")]
+            ("cases", "C01_NUMERIC_CASE "), ("native_parser_limits", "C01_NUMERIC_NATIVE_LIMIT "),
+            ("rejected_cases", "C01_NUMERIC_REJECTION ")]
             for row in self.rows[group])
 
     def test_checked_oracles_match_independent_binary64_conversion(self):
@@ -35,7 +39,7 @@ class NumericEvidenceTests(unittest.TestCase):
 
     def test_complete_correctly_rounded_engine_profile(self):
         result = evidence.validate_numeric(self.output(), self.fixture)
-        self.assertEqual(len(result["cases"]), 26)
+        self.assertEqual(len(result["cases"]), 27)
 
     def test_missing_and_duplicate_observations_rejected(self):
         original = copy.deepcopy(self.rows)
@@ -68,3 +72,8 @@ class NumericEvidenceTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 evidence.validate_numeric(self.output(), self.fixture)
             self.rows["cases"][0][field] = original
+
+    def test_invalid_numeric_value_cannot_pass_as_rejected(self):
+        self.rows["rejected_cases"][0]["rejected"] = False
+        with self.assertRaises(ValueError):
+            evidence.validate_numeric(self.output(), self.fixture)

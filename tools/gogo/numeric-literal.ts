@@ -11,8 +11,10 @@ export function normalizeNumber(text: string): string {
     const raw = (rawExponent ?? "0").replace(/^[+-]/, "").replace(/^0+(?=\d)/, "");
     let exponent = raw.length > 10 ? 10000000000 : Number(raw);
     if (negative) exponent = -exponent;
-    exponent += point - first - 1;
-    digits = digits.slice(first).replace(/0+$/, "");
+    exponent = Math.max(-400, Math.min(400, exponent + point - first - 1));
+    let last = digits.length - 1;
+    while (last > first && digits[last] === "0") last--;
+    digits = digits.slice(first, last + 1);
     const fixedPoint = exponent + 1;
     if (exponent >= -6 && exponent <= 20 && (fixedPoint > 0 || 1 - fixedPoint + digits.length <= 18)) {
         if (fixedPoint >= digits.length) return sign + digits + "0".repeat(fixedPoint - digits.length) + ".0";

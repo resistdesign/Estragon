@@ -1820,5 +1820,218 @@
         }
       ]
     }
-  ]
+  ],
+  "exponent_accumulator_reproduction": {
+    "source_commit": "df68f4ccea361c667a97c91bb2413ba546587543",
+    "scope": "Before final exponent bound; preserve concrete accepted-value evidence for integer-accumulator wrapping. Positive huge exponents must fail finite-domain validation; negative huge exponent should underflow to zero.",
+    "engines": [
+      {
+        "label": "4.0.4",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.1.4",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.2.2",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.3",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.4.1",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.5.2",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.6.3",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.7",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      },
+      {
+        "label": "4.7.2",
+        "observations": [
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e4294967296",
+            "token": "1e4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "000000000000f03f",
+            "source": "1e-4294967296",
+            "token": "1e-4294967296"
+          },
+          {
+            "accepted": true,
+            "model_bits": "2342920ca19cc73b",
+            "source": "0.00000000000000000001e4294967296",
+            "token": "1e4294967276"
+          }
+        ]
+      }
+    ]
+  }
 }
