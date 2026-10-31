@@ -137,6 +137,26 @@ Repeat `--engine` for every pinned minor plus 4.7.0. Official provenance is in
 [engines.json](../tests/compatibility/engines.json); all engine processes use
 isolated projects/settings and empty executable PATH. Successful audit collection
 is not compatibility certification: inspect individual stages and known limits.
-Full current evidence/CI and handoff are linked in #47/its sole PR. C01-E,
+[Final nine-engine snapshot](../tests/compatibility/c01-d-results.json) records
+27 ordinary cases, three native-limit controls and ten rejection cases per engine,
+alongside every existing stage and report/log hash. Source `dc4fea8` was tested
+cleanly on all eight latest patches in [CI](https://github.com/resistdesign/Estragon/actions/runs/41204271467)
+and the pinned 4.7.0 baseline locally. [Required 4.7 CI](https://github.com/resistdesign/Estragon/actions/runs/41204275600)
+also passes, including fresh native editor Play/transactions/restart.
+
+| Versions | Numeric values / native preservation | Correctly-rounded native conversion | C01-B/C gates |
+| --- | --- | --- | --- |
+| 4.0.4, 4.1.4, 4.2.2, 4.3, 4.4.1, 4.5.2, 4.6.3, 4.7.0, 4.7.2 | PASS | BLOCKED (documented native limits) | PASS |
+
+Bun check passes 180 tests / 663 expectations; collector/evidence tests pass 17.
+Pinned native generation has 3632 assertions, real-component semantics 127 and
+generated signals 49. Both reference transcripts and checked examples/maps
+remain unchanged and fresh. Native graphics were also run without Bun/Node:
+[visual evidence/hashes](../tests/compatibility/c01-d-visual.json) record inspected
+Count 0/disabled Reset, Count 1/enabled Reset and resized Count 0 captures at
+640×360 then 800×400. These used synthesized pointer input on pinned 4.7.0
+Vulkan; physical editor F5/F6, physical mouse and older GPU pixels were not tested.
+The final exponent guard does not change those ordinary Counter values.
+Full CI/handoff is linked from #47 and [PR #59](https://github.com/resistdesign/Estragon/pull/59). C01-E,
 editor fixes, reactive/Box/padding and `to_pixels()` are untouched. No successor
 implementation begins until this PR merges or closes; never auto-merge.

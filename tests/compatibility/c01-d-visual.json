@@ -1,0 +1,37 @@
+{
+  "source_commit": "df68f4ccea361c667a97c91bb2413ba546587543",
+  "engine_version": "4.7.stable.official.5b4e0cb0f",
+  "input_binary_sha256": "445c6f95030e2ca767dd921be1e91bd99e50c3703f91d22a22cd31216c93a80f",
+  "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+  "renderer": "Vulkan 1.2.334 Forward+; AMD Radeon Pro 5300M",
+  "status": "PASS",
+  "method": "Isolated native Counter --visual, synthesized primary-pointer input; all three captures viewed and inspected",
+  "captures": {
+    "native-counter-zero.png": {
+      "sha256": "4ab54f6b107448c6ecbc927664d9d21f048b4d44be5a323129a70ac4953f84c8",
+      "size": [
+        640,
+        360
+      ],
+      "observed": "Count 0, Reset disabled"
+    },
+    "native-counter-one.png": {
+      "sha256": "7305ad7af3802fe0fba55d9fcc56aa36b6352abf31408ceb091974f6097b359a",
+      "size": [
+        640,
+        360
+      ],
+      "observed": "Count 1, Reset enabled"
+    },
+    "native-counter-reset-resized.png": {
+      "sha256": "3ea50b65a2c90c01f6ce20fbdab10be567ef276d36f0758859b43c6968f687d2",
+      "size": [
+        800,
+        400
+      ],
+      "observed": "Count 0, Reset disabled, widened row"
+    }
+  },
+  "physical_editor_keyboard_and_mouse": "UNTESTED",
+  "older_engine_gpu_pixels": "UNTESTED"
+}
