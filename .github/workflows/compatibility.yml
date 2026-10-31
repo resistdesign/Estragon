@@ -89,6 +89,18 @@ jobs:
           for name in ["cold_text", "reject_null_font", "reject_font_size"]:
               assert engine["stages"][name]["status"] == "PASS", (engine["version"], name)
           PY
+      - name: Require C01-E baseline semantic rejection
+        env:
+          TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json
+        run: |
+          python3 - <<'PY'
+          import json, os
+          engine = json.load(open(os.environ["TASK_RESULTS"]))["engines"][0]
+          for mode in ["valid", "invalid"]:
+              assert engine["stages"]["semantic_baseline_" + mode]["status"] == "PASS", (engine["version"], mode)
+          # Isolated path capability remains an explicit separate outcome.
+          # Do not turn the pending legacy contract into a certification gate.
+          PY
       - name: Require C01-C generated callback compatibility
         env:
           TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json

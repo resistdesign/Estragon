@@ -193,6 +193,22 @@ def audit(engine, output, editor):
             ("cold_text", "cold_text", "ESTRAGON_COLD_TEXT_OK"),
         ]:
             run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker)
+        # Baseline native reload correctness is independent of optional Logger.
+        # An unavailable isolated path must remain BLOCKED, never a green test.
+        for mode in ["valid", "invalid", "isolated"]:
+            name = "semantic_baseline_" + mode
+            run(name, ["--script", "res://tests/godot/semantic_baseline.gd",
+                       "--quit-after", "120", "--", mode],
+                "ESTRAGON_SEMANTIC_BASELINE_OK", expected_errors=(mode == "invalid"))
+            log = (target / (name + ".log")).read_text()
+            if mode == "invalid":
+                errors = [line for line in log.splitlines()
+                          if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+                if len(errors) != 1 or "missing_semantic_value" not in errors[0]:
+                    stages[name]["status"] = "FAIL"
+            if stages[name]["status"] == "PASS" and "SEMANTIC_ISOLATED_CONTEXT_BLOCKED" in log:
+                stages[name]["status"] = "BLOCKED"
+                stages[name]["reason"] = "Exact isolated cached-path contract pending owner decision"
         # Runtime rejection is part of the supported sizing/text contract, even
         # where unrelated compiler/editor stages still fail. Count diagnostics
         # so an arbitrary parse error cannot satisfy an expected-error probe.

@@ -1,0 +1,1975 @@
+{
+  "schema_version": 1,
+  "scope": "C01-E public path/cache API research; not compatibility certification",
+  "fixture_commit": "2eb013e",
+  "raw_report_sha256": "3e6e2657f282ff1aaa93bfb63495dd8c39984d8805ddfdc90c9cd6c7c7b3c598",
+  "engines": [
+    {
+      "label": "4.0.4",
+      "stages": {
+        "import": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 1,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 10.39,
+          "log": "import.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)"
+          ],
+          "log_sha256": "1c0b918c4242aa6b50478f8acd901c3dc4c6e76edbaf9db92098917b6136131a"
+        },
+        "cache": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.74,
+          "log": "cache.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "cache",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.0.4-stable (official)"
+          },
+          "log_sha256": "df87bebc932f2e8db8dbc7d32352af0ee8871d9345435f6bf869340975ef794d"
+        },
+        "paired": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.74,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "paired",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.0.4-stable (official)"
+          },
+          "log_sha256": "e442cb95abc1f44a84c000f8f039929f7bbdd3235cfc5dfaeac72b59053ccc0f"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.74,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:75)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.0.4-stable (official)"
+          },
+          "log_sha256": "52260ffa40053f495ab729263cdc68d01ac3654b43dd902d160befdd22e4e873"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.74,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.0.4-stable (official)"
+          },
+          "log_sha256": "8580031001b758f6c9fed808e8ba953de9d735925e0fd43fee9dc9e588798daf"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.74,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.0.4-stable (official)"
+          },
+          "log_sha256": "e5b8d665d85e06bd94e5dcbe27e5fb7f8b30c019314c225e17a11fc61f3e2f49"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-badeu955/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.75,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.0.4-stable (official)"
+          },
+          "log_sha256": "f9caed7601cf15c02b65a5465b27762a32eccd1a9c7ae0327dd3603eed0fce9e"
+        }
+      },
+      "input_binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "version": "4.0.4.stable.official.fc0b241c9"
+    },
+    {
+      "label": "4.1.4",
+      "stages": {
+        "import": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 1,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 10.46,
+          "log": "import.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:73)"
+          ],
+          "log_sha256": "75881ad12f8d7a1d5f3ab35609f46c210722698aa5c31bf5704005b9630040f7"
+        },
+        "cache": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.98,
+          "log": "cache.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "cache",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.1.4-stable (official)"
+          },
+          "log_sha256": "4c30cf2f4c0767caaa1a97c26f22f9a3cb6930f2190716102d695830a9ec952b"
+        },
+        "paired": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.96,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "paired",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.1.4-stable (official)"
+          },
+          "log_sha256": "34a270597e2c2dc3615baa4790e426d97f5ec1a983d5aadd29117a14729bccf4"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.01,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:75)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.1.4-stable (official)"
+          },
+          "log_sha256": "696ba0b2388a9181b04fa6f478097334da21709a403d0c3314f87059da507753"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.97,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.1.4-stable (official)"
+          },
+          "log_sha256": "9afdfe42a350902fa8b9ab8ea493fa31a4ab183dafe8f225e713409fed436506"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.99,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.1.4-stable (official)"
+          },
+          "log_sha256": "de19ac650cd4679cd533ff9060f6c3fe044e1c655f3d5599ef053ce869a46d40"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ivlp2lix/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 5.66,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.1.4-stable (official)"
+          },
+          "log_sha256": "d71a0bd7207b7b18358e2318c33ef6b996a132eaa9df37966c7f2cd483e3907d"
+        }
+      },
+      "input_binary_sha256": "87f5ba3e8e4ffcbd49c615b01825cc92a01aad0c974b75dceabe71b873ab8e28",
+      "version": "4.1.4.stable.official.fe0e8e557"
+    },
+    {
+      "label": "4.2.2",
+      "stages": {
+        "import": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 1,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 11.02,
+          "log": "import.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:63)"
+          ],
+          "log_sha256": "731831590f9fea56dbbc685e38cc3a270fb9e4d1eb953244357ef81c804d27f0"
+        },
+        "cache": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.38,
+          "log": "cache.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "cache",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.2.2-stable (official)"
+          },
+          "log_sha256": "48eba6bc575b38bf1dcc860dca785efd3f0a8a37156c36ad1e0e08707f844a8f"
+        },
+        "paired": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.58,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "paired",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.2.2-stable (official)"
+          },
+          "log_sha256": "09931d8689d0d1f9a10b61ff36fee177e999bb9074173a3427a5e59df05d2d6e"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.42,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:75)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.2.2-stable (official)"
+          },
+          "log_sha256": "99415bd3ea7f6f020ec06783d872f941b6052ecd3a9a171f4e9589d58042f637"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 5.94,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.2.2-stable (official)"
+          },
+          "log_sha256": "593ccfdb5fd628aa5a54e0119b700e0ac84da04d7af9a72339ecc421dfdba68e"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.56,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.2.2-stable (official)"
+          },
+          "log_sha256": "71d90ead942c4d3b382cb93c293f9b1f98fe3c39f55324a73ac5e22c8c1f225a"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-eh2qje9y/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.35,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.2.2-stable (official)"
+          },
+          "log_sha256": "c7ea7e9d74dcabdc7fdb094c3f9a474776935118c29a7e99c93bfa4560704971"
+        }
+      },
+      "input_binary_sha256": "138076355d9d42517d5d7c48c95648267d7c9d8f23189163aabed82b28b34d2e",
+      "version": "4.2.2.stable.official.15073afe3"
+    },
+    {
+      "label": "4.3",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 10.99,
+          "log": "import.log",
+          "diagnostics": [],
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "cache": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.36,
+          "log": "cache.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "cache",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.3-stable (official)"
+          },
+          "log_sha256": "03d944bdb7d4a958c4a03197ed3e97bbf9bae271155f2896d4a0e8383bc0259e"
+        },
+        "paired": {
+          "status": "BLOCKED",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.29,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "mode": "paired",
+            "reason": "Resource.set_path_cache unavailable",
+            "status": "BLOCKED",
+            "version": "4.3-stable (official)"
+          },
+          "log_sha256": "939288808e286088a0ca281b1892fb9339a1b63ce40b2ccb40f0bbda3e87ceab"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.31,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:79)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.3-stable (official)"
+          },
+          "log_sha256": "afc3d3350e69ef69a2082c046a74e4557f99b7f92a52dd00d066a4976d3fbcb1"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 6.03,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.3-stable (official)"
+          },
+          "log_sha256": "24b8c19723b49ecebcd889074ec3bf713a8c83e0b1567f59112185841a80ad9b"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.22,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.3-stable (official)"
+          },
+          "log_sha256": "1b126a595bf3bdea28747ab29e7a18d9eec9597bcc9998a24d7f82a829223474"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ymthn8p6/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.08,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.3-stable (official)"
+          },
+          "log_sha256": "86cb894e546d5e35488418888ca7b949e7a5481a13221c3fe2124c16ba53b7cc"
+        }
+      },
+      "input_binary_sha256": "cd5dee52f4baa3bb3ca19d0087d55cea084acb4838a2465bc9aa52d776dc462a",
+      "version": "4.3.stable.official.77dcf97d8"
+    },
+    {
+      "label": "4.4.1",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 10.72,
+          "log": "import.log",
+          "diagnostics": [],
+          "log_sha256": "9e0bd849b1e4eca9bd7653900c95c11ee3ae7cf50ca93d88d3cf9ce49af106bd"
+        },
+        "cache": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.06,
+          "log": "cache.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (gdscript://-9223372009910565495.gd:1)",
+            "SCRIPT ERROR: Parse Error: Preload file \"gdscript://../Dependency.gd\" does not exist.",
+            "          at: GDScript::reload (gdscript://-9223372009910565495.gd:3)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "cache",
+            "path": "res://nested/Named.gd",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.4.1-stable (official)"
+          },
+          "log_sha256": "cc514bcdf1e3bee26260dc8ab7a32db2a6ed57bed86cc108bc6c27f48e4e58b3"
+        },
+        "paired": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.08,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "paired",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.4.1-stable (official)"
+          },
+          "log_sha256": "4663c6e8c525bf1d78736fb752704ec1d48400113045743cb7f4e98ac4995378"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.04,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:75)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.4.1-stable (official)"
+          },
+          "log_sha256": "4d95e6098948c95e4da9c04c9abbadb0a5f2127d3eedda836f18d177867d32ff"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.04,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.4.1-stable (official)"
+          },
+          "log_sha256": "187905348939701add6b8676bd593fe7c35b7f16b2f8614a7c793a307d555dc0"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 5.78,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.4.1-stable (official)"
+          },
+          "log_sha256": "a944ba0b19c690923273c869608a956c8ac726b4ddae4f331e4dd5f60e3110cc"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-tp0z8abb/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 1.28,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.4.1-stable (official)"
+          },
+          "log_sha256": "bb0269fb6fa3d608ff40fa770e9a9476e7a323151d62e69df473e7fd46b9578e"
+        }
+      },
+      "input_binary_sha256": "8d402715e0b74db2d69ceeb86e78b8c6b270f1d9c16be1546958c8648d8e2e47",
+      "version": "4.4.1.stable.official.49a5bc7b6"
+    },
+    {
+      "label": "4.5.2",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 6.76,
+          "log": "import.log",
+          "diagnostics": [],
+          "log_sha256": "de22d491ebcc17cb9dde9d8eaefed8ce9d985c6ef7c669f31ef2c9b8be46b57c"
+        },
+        "cache": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.78,
+          "log": "cache.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (gdscript://-9223372011756059285.gd:1)",
+            "SCRIPT ERROR: Parse Error: Preload file \"gdscript://../Dependency.gd\" does not exist.",
+            "          at: GDScript::reload (gdscript://-9223372011756059285.gd:3)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "cache",
+            "path": "res://nested/Named.gd",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.5.2-stable (official)"
+          },
+          "log_sha256": "7ddf650d3e53f8752195b44019c9e546db49a70fce26379619d20b779bb1a3f3"
+        },
+        "paired": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.77,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "paired",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.5.2-stable (official)"
+          },
+          "log_sha256": "005a1f630f6303e052e92c1f2629fd42fb63d9e5dc1d11360e279bcdb4f552c8"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.78,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:95)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.5.2-stable (official)"
+          },
+          "log_sha256": "65b2cf3947b8dd06e26dd72982a9c73f3deaad4a4a8963b7260d279efcc52de3"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.78,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.5.2-stable (official)"
+          },
+          "log_sha256": "a78b3e150f82df773d06dd46f46d4551afbb316a22be33752b78fdea6bae377c"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.81,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.5.2-stable (official)"
+          },
+          "log_sha256": "29169c20286a7b717771280a8485b144ffc9b6c2ffa2fbb7d6c16582a4f8f215"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-imx3pm2m/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.88,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.5.2-stable (official)"
+          },
+          "log_sha256": "08cc48cbebe6b0e43ec4dd06834a2f30a480e9cf0b46b35ddd0d70ead321f0cc"
+        }
+      },
+      "input_binary_sha256": "2de5730194e9b9050f61407814597cafbdbc77341ca6c7ccf9235b2e15a424fb",
+      "version": "4.5.2.stable.official.6ce3de25a"
+    },
+    {
+      "label": "4.6.3",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 5.93,
+          "log": "import.log",
+          "diagnostics": [],
+          "log_sha256": "46ec458347349a2a47546dbd5d3ce7aa4d39d93c02e0058b438d30983a98a2eb"
+        },
+        "cache": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.83,
+          "log": "cache.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "cache",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.6.3-stable (official)"
+          },
+          "log_sha256": "39262623696b5233bf905f062f3d6e3f890205d8c459efea57c39c52bc187f0c"
+        },
+        "paired": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.79,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "paired",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.6.3-stable (official)"
+          },
+          "log_sha256": "5f0497ae3188381615f06345fa4b49f1b0714c476e7eb6c76c551667912e7d97"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.78,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:95)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.6.3-stable (official)"
+          },
+          "log_sha256": "32488afccd41f7839dcbcbab2901ded4c7487e5522938b87decf453d276f10e7"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.78,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: Class \"EstragonContextProbe\" hides a global script class.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.6.3-stable (official)"
+          },
+          "log_sha256": "f4f76cbe99118ce37d645254bcfc27f05c7caf5edd99d34ac0806e3405a434b6"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.79,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.6.3-stable (official)"
+          },
+          "log_sha256": "d85dd9c5380aaaf5ac06392b87cf9d73d484ca5eace7af68f97ee45f11dcf5c1"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-lg13u7cn/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.82,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.6.3-stable (official)"
+          },
+          "log_sha256": "0060ffa1da22d03bf47a48647a9b58596c7bd8b142eaaafd6cea1a46f0eb1379"
+        }
+      },
+      "input_binary_sha256": "40fb1c588438ed98efbdd4aeb71b90aec6e269b1abb5f18419755340ef8e1514",
+      "version": "4.6.3.stable.official.7d41c59c4"
+    },
+    {
+      "label": "4.7",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 6.85,
+          "log": "import.log",
+          "diagnostics": [],
+          "log_sha256": "5f21780f072fe316a8f30fde967ae93ad633cbd705e3e060baa7e8c798a5c83e"
+        },
+        "cache": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.44,
+          "log": "cache.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "cache",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7-stable (official)"
+          },
+          "log_sha256": "0d3723d4ab5c5c37043772965e2db1a9f149dd8df6d925cbccafbc8655fb70ac"
+        },
+        "paired": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.44,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "paired",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7-stable (official)"
+          },
+          "log_sha256": "c330f5847f2d6f2d762783b18ebd40bf8bb061606556a290fc711762a73ef9dd"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.44,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:104)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7-stable (official)"
+          },
+          "log_sha256": "49a35314f37d93ecf03b226ef4eb30486d5674bfd3ece01db9256b029810d051"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.44,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: \"class_name\" isn't allowed in built-in scripts.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.7-stable (official)"
+          },
+          "log_sha256": "848f39b3e3a494896ba4a02ae22acf3429a5239006a0cf5f833eef6589ab3fe6"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.43,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.7-stable (official)"
+          },
+          "log_sha256": "f6324ea61f27228c29b54414af489da227f9b504c6aa02fcf5e4eb4ae287a16f"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-730at6iq/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.45,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7-stable (official)"
+          },
+          "log_sha256": "47c9affc51abb54b69f7c239613d2ddee8a71f751d08803d8f514c3c512fb840"
+        }
+      },
+      "input_binary_sha256": "445c6f95030e2ca767dd921be1e91bd99e50c3703f91d22a22cd31216c93a80f",
+      "version": "4.7.stable.official.5b4e0cb0f"
+    },
+    {
+      "label": "4.7.2",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/project",
+            "--editor",
+            "--quit"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 6.99,
+          "log": "import.log",
+          "diagnostics": [],
+          "log_sha256": "9b8d904813da30b8eea9505edeecda3df90ba7cb12ca7d311751efa02dd9cd15"
+        },
+        "cache": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "cache"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.54,
+          "log": "cache.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "cache",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7.2-stable (official)"
+          },
+          "log_sha256": "402696b23f90c7352ae1c87e6f1b65a6f62fa4c4d38410e303e9fecd1c1388c9"
+        },
+        "paired": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "paired"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.53,
+          "log": "paired.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "paired",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7.2-stable (official)"
+          },
+          "log_sha256": "7eed34565af71600996c8786b152fbd988f1d869a7075ca3c40626ffef296326"
+        },
+        "collision": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "collision"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.53,
+          "log": "collision.log",
+          "diagnostics": [
+            "ERROR: Another resource is loaded from path 'res://nested/Named.gd' (possible cyclic resource inclusion).",
+            "   at: set_path (core/io/resource.cpp:104)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "collision",
+            "path": "",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7.2-stable (official)"
+          },
+          "log_sha256": "eec101083e8bf55c6462b62794b0e540106109c1c06d78dc00ab13afe632c934"
+        },
+        "alias": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "alias"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.43,
+          "log": "alias.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Parse Error: \"class_name\" isn't allowed in built-in scripts.",
+            "          at: GDScript::reload (res://nested/Named.gd::candidate:1)"
+          ],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "mode": "alias",
+            "path": "res://nested/Named.gd::candidate",
+            "reload_error": 43,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "FAIL",
+            "version": "4.7.2-stable (official)"
+          },
+          "log_sha256": "1ff5a5759f96315dd85017502ca4a4cc9489a28663dd12949c5dd35ba18163fa"
+        },
+        "ignore": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "ignore"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.43,
+          "log": "ignore.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 41,
+            "candidate_value": 41,
+            "mode": "ignore",
+            "path": "res://nested/Named.gd",
+            "reload_error": 0,
+            "separate_candidate": false,
+            "source_unchanged": false,
+            "status": "FAIL",
+            "version": "4.7.2-stable (official)"
+          },
+          "log_sha256": "b3233dcf926846f0b57f8ce7d795acb8b7520d94369c356a147ed97be7952131"
+        },
+        "fresh": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-context-ur4hulbc/project",
+            "--script",
+            "res://probe.gd",
+            "--",
+            "fresh"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.52,
+          "log": "fresh.log",
+          "diagnostics": [],
+          "evidence": {
+            "cache_identity_unchanged": true,
+            "cached_value": 1,
+            "candidate_value": 41,
+            "mode": "fresh",
+            "path": "res://nested/Fresh.gd",
+            "reload_error": 0,
+            "separate_candidate": true,
+            "source_unchanged": true,
+            "status": "PASS",
+            "version": "4.7.2-stable (official)"
+          },
+          "log_sha256": "302e06371adf1c313c285c0821b5e01f8a592910c0b61077a4fdb728ae237279"
+        }
+      },
+      "input_binary_sha256": "c7cccbf8fb143e34e02fd6521e09be2c2b974f0d5db080b19071c9c570718ccf",
+      "version": "4.7.2.stable.official.ed1daf0bf"
+    }
+  ]
+}

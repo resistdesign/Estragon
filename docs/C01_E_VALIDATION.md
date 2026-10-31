@@ -78,6 +78,22 @@ Neither option is implemented or accepted by this document. Better diagnostic
 capture is optional under progressive enhancement; actual validity, freshness,
 dependency resolution and identity are correctness requirements.
 
+The draft now isolates the bundled Logger/ScriptBacktrace adapter as trusted
+text, compiled only when those native classes and OS logger methods exist.
+Older engines still perform real native reload and expose native errors; a
+generic diagnostic explicitly states that an exact authored location is
+unavailable. On 4.4+ the proved paired path assignment restores relative paths
+and registered-class candidate context. On 4.0–4.3 `validate()` currently returns
+an explicit unsupported-path diagnostic with no executable or cache mutation;
+it does **not** bypass the pending correctness requirement. Explicit publication
+`reload_script()` remains separately testable on all versions. No editor routing
+or legacy transactional fallback has been introduced.
+
+`semantic_baseline.gd` checks a real valid native reload, an unknown-identifier
+rejection (exactly one native error; mapped authored line 3 on Logger engines),
+and separate candidate identity with relative preload and relative/absolute
+inheritance. Unavailable legacy isolation is a BLOCKED stage, never PASS.
+
 ## Cold Text-first cycle
 
 A runtime-only project reproduces the extra `_disposed` compile error in Button
@@ -97,3 +113,22 @@ other C01 failures.
 
 Full semantic, transactional/editor and graphical acceptance remain outstanding
 at this checkpoint. See issue #48 for actual commands, results and next action.
+
+Recorded checkpoint evidence: [path API matrix](../tests/compatibility/c01-e-context.json)
+and [runtime cold-load sweep](../tests/compatibility/c01-e-cold.json). The runtime
+sweep passes component (63), layout (72), interaction (96), cold-positive and
+both strict font rejections on all nine engines. Its minimal-project editor
+import exits nonzero on 4.0–4.2 despite producing only warnings; those import
+outcomes remain FAIL. They are not silently converted into successful addon
+imports. The full collector is rerun from frozen source snapshots; an earlier
+in-progress run that read changing source between engines is excluded from
+before/after certification.
+
+Pinned 4.7 local verification: Bun 180 tests / 663 expectations, Python 17,
+native generation 3632, semantics 127, signals 49, full Godot runtime/negative
+harness and fresh native editor build/Play/rollback/restart suite PASS at the
+cold-cycle checkpoint. Three native Counter captures (0, 1, reset/resized) were
+inspected: label centering, disabled Reset, responsive layout and rendering are
+preserved. This is scripted native graphics, not physical F5/F6 or mouse proof.
+Adapter changes have a separate native suite run; final-head CI and complete
+semantic/publication acceptance remain pending.
