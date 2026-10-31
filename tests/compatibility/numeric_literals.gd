@@ -20,7 +20,12 @@ func inspect_case(item: Dictionary) -> Dictionary:
 	var text: String = item.source
 	var source := '<Rect width="' + text + '"/>'
 	var front := Frontend.analyze(source, "Numeric.gogo")
+	var octets: Array[String] = []
+	for index in range(0, item.expected_bits.length(), 2):
+		octets.append("0x" + item.expected_bits.substr(index, 2))
+	var storage := evaluate("PackedByteArray([" + ",".join(octets) + "]).decode_double(0)")
 	var row := {"source": text, "expected_bits": item.expected_bits,
+		"storage_bits": storage,
 		"raw_conversion_bits": bits(text.to_float()), "direct_literal_bits": evaluate(text)}
 	if not front.ok:
 		row["status"] = "FAIL"

@@ -15,7 +15,8 @@ def validate_numeric(output, fixture):
             raise ValueError("Missing, duplicated or unexpected numeric observations")
         for item in expected:
             row = by_source[item["source"]]
-            if row["expected_bits"] != item["expected_bits"] or not row.get("deterministic_and_mapped"):
+            if (row["expected_bits"] != item["expected_bits"] or row["storage_bits"] != item["expected_bits"]
+                    or not row.get("deterministic_and_mapped")):
                 raise ValueError("Invalid numeric oracle or source-map evidence: " + item["source"])
             equal = row["model_bits"] == row["runtime_bits"] == item["expected_bits"]
             wanted = "PASS" if equal else "BLOCKED" if limitation else "FAIL"
