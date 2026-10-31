@@ -151,6 +151,7 @@ def audit(engine, output, editor):
                 stages["numeric_literals"]["status"] = "FAIL"
                 stages["numeric_literals"]["reason"] = "Independent numeric oracle mismatch; see numeric_evidence.cases"
             limitations = result["numeric_evidence"]["native_parser_limits"]
+            stages["numeric_native_preservation"] = {"status": "PASS" if all(row["native_value_preserved"] for row in limitations) else "FAIL"}
             stages["numeric_native_conversion"] = unavailable(
                 "Native decimal conversion loses representable binary64 values; see numeric_evidence.native_parser_limits",
                 "BLOCKED" if any(row["status"] == "BLOCKED" for row in limitations) else "PASS")
@@ -158,6 +159,7 @@ def audit(engine, output, editor):
             stages["numeric_literals"]["status"] = "FAIL"
             stages["numeric_literals"]["reason"] = str(error)
             stages["numeric_native_conversion"] = unavailable("Numeric evidence invalid")
+            stages["numeric_native_preservation"] = unavailable("Numeric evidence invalid", "FAIL")
         shutil.copy2(ROOT / "tests/compatibility/callback_metadata.gd", project / "callback_metadata.gd")
         run("callback_metadata_probe", ["--script", "res://callback_metadata.gd"],
             "C01_CALLBACK_METADATA_OK", expected_errors=True)

@@ -37,3 +37,10 @@ test("rejects malformed and overflowing values without allocating exponent-sized
         expect(() => compileGogo(`<Rect width="${value}"/>`)).toThrow();
     }
 });
+
+ test("leaves authored GDScript numeric expressions untouched", () => {
+    const source = 'extends RefCounted\nfunc build():\n    var amount: float = 0.00000000000000000001\n    return <Rect width={amount}/>\n';
+    const output = compileGogo(source);
+    expect(output.code).toContain('var amount: float = 0.00000000000000000001');
+    expect(output.code).toContain('(amount)');
+ });

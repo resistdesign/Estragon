@@ -230,6 +230,20 @@ adapter or external-Callable restriction is authorized or needed. Full-addon
 compatibility remains gated by later C01 tasks; no successor starts before merge.
 Unit helpers, Box/padding and reactivity remain outside this milestone.
 
+### C01-D numeric contract and focused correction
+
+C01-C #57 merged at `68f1ec4`. C01-D #47 follows the owner's 2026-10-31 decision:
+**preserve native Godot numeric parsing semantics; fix avoidable loss; document
+and test inherent limitations; do not build a full custom decimal parser.**
+[Root cause and contract](C01_D_NUMBERS.md): normalize validated decimal text before
+native conversion and retain its token through typed IR/emission, eliminating
+lossy JSON formatting. Require exact independent bytes for ordinary cases and no
+additional emission loss for separately reported native parser limitations.
+The correctly-rounded conversion capability remains BLOCKED where measured;
+that diagnostic is distinct from approved native-value preservation acceptance.
+Preserve zero policy, float32 finite validation, maps, callbacks and Godot-only
+workflow. No C01-E or other implementation starts before this PR merges/closes.
+
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
 **Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **State:** narrow fix merged in PR #40; remaining filtered-tab acceptance is #44, and older full-addon support remains C01. Do not mix E01 into T09.

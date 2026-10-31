@@ -57,7 +57,11 @@ func _initialize() -> void:
 	# by comparing two uses of the same broken conversion as an oracle.
 	for item in fixture.native_parser_limits:
 		var row := inspect_case(item)
-		if row.status == "FAIL": row.status = "BLOCKED"
+		row["native_value_preserved"] = row.model_bits == row.runtime_bits and row.model_bits == row.raw_conversion_bits and row.model_bits == row.direct_literal_bits
+		if not row.native_value_preserved:
+			failed = true
+			row.status = "FAIL"
+		elif row.status == "FAIL": row.status = "BLOCKED"
 		print("C01_NUMERIC_NATIVE_LIMIT ", JSON.stringify(row))
 	if failed: push_error("C01 numeric literal differs from the independent binary64 oracle")
 	else: print("C01_NUMERIC_OK")

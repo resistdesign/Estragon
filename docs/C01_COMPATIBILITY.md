@@ -14,6 +14,10 @@ C01-C's [callback investigation and fix](C01_C_CALLBACKS.md) records the owner-a
 progressive arity diagnostics. Its separate snapshot does not alter this original
 audit baseline or certify full-addon compatibility.
 
+C01-D's [numeric investigation and correction](C01_D_NUMBERS.md) separately
+records avoidable formatting/leading-zero loss and the owner-approved native
+conversion limits. The original audit baseline below is preserved.
+
 ## Reproduction and evidence
 
 Use Python 3.9+ as optional contributor orchestration, the standard system shell,

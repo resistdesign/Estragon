@@ -20,6 +20,10 @@ def validate_numeric(output, fixture):
                 raise ValueError("Invalid numeric oracle or source-map evidence: " + item["source"])
             equal = row["model_bits"] == row["runtime_bits"] == item["expected_bits"]
             wanted = "PASS" if equal else "BLOCKED" if limitation else "FAIL"
+            if limitation:
+                preserved = row["model_bits"] == row["runtime_bits"] == row["raw_conversion_bits"] == row["direct_literal_bits"]
+                if not preserved or row.get("native_value_preserved") is not True:
+                    raise ValueError("Emission changed the native parsed value: " + item["source"])
             if row["status"] != wanted:
                 raise ValueError("Numeric value mismatch: " + item["source"])
     return {"cases": cases, "native_parser_limits": limits}

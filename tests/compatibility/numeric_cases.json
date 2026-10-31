@@ -102,10 +102,6 @@
       "expected_bits": "97d44646f50e673c"
     },
     {
-      "source": "3.4028234663852886e38",
-      "expected_bits": "000000e0ffffef47"
-    },
-    {
       "source": "1.1754943508222875e-38",
       "expected_bits": "0000000000001038"
     }
@@ -118,6 +114,11 @@
     {
       "source": "4.9406564584124654e-324",
       "expected_bits": "0100000000000000"
+    },
+    {
+      "source": "3.4028234663852886e38",
+      "expected_bits": "000000e0ffffef47"
     }
-  ]
+  ],
+  "policy": "Owner decision 2026-10-31: preserve native Godot numeric conversion semantics. Native parser limits retain independent IEEE oracles as BLOCKED and must preserve the actual native parsed value through emission. No custom decimal parser."
 }
