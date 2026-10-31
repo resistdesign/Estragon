@@ -88,7 +88,23 @@ observations, changed metadata conclusions or unexpected counts fail the probe.
 
 [Structured results](../tests/compatibility/c01-c-results.json) record exact
 versions, binary hashes, 21 observations per engine and individual stages.
-The initial investigation snapshot is superseded by implementation verification.
+All nine pinned engines pass generated Counter parsing, all 49 generated-signal
+checks and every callback guard probe. The eight latest patches ran in
+[compatibility CI](https://github.com/resistdesign/Estragon/actions/runs/41164241882);
+the pinned 4.7.0 baseline ran locally from the same clean implementation commit
+`325da8d`. CI checked GitHub's test merge `81c1d056`; both commits have
+identical tree `e1a515fc`, verified against the GitHub Git API. [Required 4.7 CI](https://github.com/resistdesign/Estragon/actions/runs/41164241881)
+also passes, including native generation, semantic negatives, runtime, harness
+failure detection and isolated editor checks.
+
+| Engines | Native arity API | Counter parse / generated signals / guard probes |
+| --- | --- | --- |
+| 4.0.4, 4.1.4, 4.2.2 | BLOCKED (absent API) | PASS / PASS / PASS; normal invocation fallback |
+| 4.3, 4.4.1, 4.5.2, 4.6.3, 4.7.0, 4.7.2 | PASS | PASS / PASS / PASS; proactive arity checks |
+
+The snapshot retains all other actual stage statuses, binary hashes, source
+commit/report hashes, and exact callback diagnostic/log hashes. It replaces
+the initial investigation snapshot, which remains in Git history.
 `callback_guard_*` processes independently check empty, missing, freed and disposed
 targets, required/optional methods and lambdas, and unbound callbacks. Expected
 engine errors are counted exactly and matched to authored source or normal
