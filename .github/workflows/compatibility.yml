@@ -79,6 +79,16 @@ jobs:
               script = scripts["addons/estragon/runtime/" + name + ".gd"]
               assert script["status"] == "PASS", (engine["version"], script)
           PY
+      - name: Require C01-E cold Text-first loading
+        env:
+          TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json
+        run: |
+          python3 - <<'PY'
+          import json, os
+          engine = json.load(open(os.environ["TASK_RESULTS"]))["engines"][0]
+          for name in ["cold_text", "reject_null_font", "reject_font_size"]:
+              assert engine["stages"][name]["status"] == "PASS", (engine["version"], name)
+          PY
       - name: Require C01-C generated callback compatibility
         env:
           TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json

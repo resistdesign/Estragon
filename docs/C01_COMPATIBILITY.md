@@ -224,3 +224,10 @@ Primary API references: [4.0 EditorInterface](https://docs.godotengine.org/en/4.
 [4.0 Vector2](https://docs.godotengine.org/en/4.0/classes/class_vector2.html).
 Version conclusions above use actual executable metadata and executions, rather
 than assuming today's stable documentation describes older engines.
+
+## C01-E active investigation
+
+C01-D #59 is merged. [C01-E path/cache evidence](C01_E_VALIDATION.md) records
+independent official-engine probes, unsafe alternatives and the scoped cold
+Text-first correction. This is an active checkpoint, not full-addon acceptance;
+semantic/transactional acceptance and the older cached-path contract remain open.

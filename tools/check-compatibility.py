@@ -190,6 +190,7 @@ def audit(engine, output, editor):
             ("components", "components", "ESTRAGON_COMPONENTS_OK"),
             ("layout", "layout", "ESTRAGON_LAYOUT_OK"),
             ("input_text", "interaction", "ESTRAGON_INTERACTION_OK"),
+            ("cold_text", "cold_text", "ESTRAGON_COLD_TEXT_OK"),
         ]:
             run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker)
         # Runtime rejection is part of the supported sizing/text contract, even

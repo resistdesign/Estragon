@@ -622,3 +622,21 @@ To preserve numeric details in a committed nine-engine snapshot, use
  tests/compatibility/c01-d-results.json --scope "C01-D native numeric semantics;
  not full-addon certification"` (repeat `--report` for split runs). All pinned
 engines are required, every stage remains intact and logs/reports are hashed.
+
+## C01-E isolated path/cache research
+
+`python3 tools/check-script-context.py --engine label=/absolute/official/godot
+--output /new/results` runs independent native projects with verified engine
+provenance and isolated settings. Repeat `--engine` to select multiple pinned
+versions. See [C01_E_VALIDATION.md](C01_E_VALIDATION.md) for strategies and exact
+limitations. This research collector deliberately exercises unsafe alternatives;
+its zero exit records collection, **not compatibility success**. Inspect every
+stage's PASS/FAIL/BLOCKED outcome and raw log. Any engine error makes that
+strategy FAIL even if native reload returns OK.
+
+`tests/godot/cold_text.gd` starts with a dynamic Text load rather than preloading
+Button or a generated component hierarchy. The normal runtime matrix runs it in
+a fresh process and also counts the two existing cold invalid-font diagnostics.
+All three are required gates; component-first interaction coverage remains
+separate. The pinned-current-engine `bun run check:godot` also runs the new
+positive cold-load test.

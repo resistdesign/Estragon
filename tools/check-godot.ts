@@ -89,6 +89,7 @@ async function validate(project: string): Promise<void> {
   requireSuccess("native Gogo frontend", await run(project, ["--script", "res://tests/godot/native_frontend.gd", "--quit-after", "120"]), "ESTRAGON_NATIVE_FRONTEND_OK");
   requireSuccess("runtime smoke", await run(project, ["--script", SMOKE, "--quit-after", "120"]), COMPLETE);
   requireSuccess("component foundations", await run(project, ["--script", "res://tests/godot/components.gd", "--quit-after", "120"]), "ESTRAGON_COMPONENTS_OK");
+  requireSuccess("cold Text-first dependencies", await run(project, ["--script", "res://tests/godot/cold_text.gd", "--quit-after", "120"]), "ESTRAGON_COLD_TEXT_OK");
   requireSuccess("layout, rendering and lifecycle", await run(project, ["--script", "res://tests/godot/layout.gd", "--quit-after", "120"]), "ESTRAGON_LAYOUT_OK");
   requireSuccess("fresh Gogo-generated GDScript", await run(project, ["--script", "res://tests/godot/generated_gogo.gd", "--quit-after", "120"]), "ESTRAGON_GENERATED_GOGO_OK");
   requireSuccess("hybrid Gogo runtime", await run(project, ["--script", "res://tests/godot/hybrid_gogo.gd", "--quit-after", "120"]), "ESTRAGON_HYBRID_GOGO_OK");

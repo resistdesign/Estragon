@@ -79,6 +79,11 @@ available safeguards, document the precise diagnostic difference and test both
 paths. C01-C applies this to proactive Callable arity checks only; validity,
 disposal, connection and automatic lifecycle checks remain mandatory.
 
+C01-D #59 is merged; C01-E #48 is the active validation/identity task. Consult
+[its path/cache investigation](docs/C01_E_VALIDATION.md) and live issue before
+selecting a legacy fallback. Optional diagnostic degradation does not authorize
+cache takeover, stale source, or silently weaker class/dependency validation.
+
 ## Non-negotiable architecture
 
 1. **Own the UI.** Never implement Gogo by generating Godot `Control`, `Container`, `Label`, `Button`, or `.tscn` widget trees. Do not delegate Estragon's application layout, styling, hit testing, focus, or visual semantics to Godot's GUI system.

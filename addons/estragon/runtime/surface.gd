@@ -2,7 +2,10 @@ class_name EstragonSurface
 extends Node
 ## Single host: automatic root lifecycle, viewport layout and backend ownership.
 
-var _pointer := EstragonPointerDispatcher.new()
+# Resolve the private input adapter at construction, not while compiling the
+# component hierarchy. A static Surface -> Dispatcher -> Button -> Text edge
+# re-enters DisplayObject compilation on Godot 4.0/4.1 (cold Text-first loads).
+var _pointer = load("res://addons/estragon/runtime/pointer_dispatcher.gd").new()
 var _root: EstragonDisplayObject
 var _renderer := EstragonCanvasRenderer.new()
 var _viewport: Viewport
@@ -119,7 +122,7 @@ func _layout_if_needed() -> void:
 
 ## Public input adapter, also usable by integrations/tests with viewport events.
 func dispatch_pointer(event: InputEvent) -> bool:
-	if not EstragonPointerDispatcher.accepts(event):
+	if not _pointer.accepts(event):
 		return false
 	if _closing or not is_inside_tree() or is_queued_for_deletion() or _root == null:
 		_pointer.cancel()
