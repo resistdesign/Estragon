@@ -4,7 +4,13 @@
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** C01-A PR #52 merged at `46bc752`; its [audit baseline](C01_COMPATIBILITY.md) remains historical evidence. **C01-B #45** now delivers [baseline runtime sizing fixes and focused evidence](C01_B_RUNTIME.md), including the additional 4.0 incoming-signal dictionary-key parser fix. Check #45's live PR/CI/handoff before resuming. Cold Text-first negative probes still expose an older dependency-loading defect recorded in #48/#41; later compiler/editor failures remain red. C01-C #46 follows only after the current PR merges/closes. T09's accepted Gogo-only lowercase `@bindable` contract is unchanged and remains queued.
+**Start here:** C01-B #53 (`29fc202`) and docs #56 (`005ce53`) are merged.
+C01-C #46 / PR #57 implements the owner-approved progressive callback checks:
+all guards remain available across versions, while proactive arity checks run
+only on 4.3+. See [evidence and diagnostic differences](C01_C_CALLBACKS.md).
+Check live CI/handoff before continuing; C01-D cannot start before this PR merges.
+Cold Text-first remains #48. The pixel-only core and deferred unit-helper
+specification remain approved; reactivity, Box/padding and `to_pixels()` are untouched.
 
 ## Current plan register
 
@@ -27,8 +33,9 @@
 | **E01** | **Done (narrow merged fix); remaining acceptance tracked separately** | Normal automatic highlighting; filtered identity remains #44 | [#37](https://github.com/resistdesign/Estragon/issues/37), merged [PR #40](https://github.com/resistdesign/Estragon/pull/40) | [E01 evidence](E01_COMPATIBILITY.md), merge `41b43b4`; no universal full-addon support claim. |
 | **C01** | **Required release gate; incomplete** | Godot 4.0+ native editor/compiler/runtime support | [#41](https://github.com/resistdesign/Estragon/issues/41) | [Measured baseline](C01_COMPATIBILITY.md); red older-engine stages remain. |
 | **C01-A** | **Done (merged PR #52)** | Selectable official-engine matrix, source inventory and prioritized issues | [#42](https://github.com/resistdesign/Estragon/issues/42) | 4.0–4.7 actual engine evidence, latest 4.7.2 plus 4.7.0 pin, collector failure tests and informational CI; merge `46bc752`, exact final CI/handoff in #42/#52. |
-| **C01-B** | **In review; completion contingent on its PR merging** | Scalar component maxima, button label clamp and 4.0 incoming-signal key parsing | [#45](https://github.com/resistdesign/Estragon/issues/45) | [Runtime evidence](C01_B_RUNTIME.md); individual scoped stages are required by CI. Remaining cold Text-first negatives retained as FAIL under #48. |
-| C01-C…H | Queued; one PR at a time | Callbacks → precision → validation/identity → editor startup → unsaved Play → integration/release | [#46](https://github.com/resistdesign/Estragon/issues/46), [#47](https://github.com/resistdesign/Estragon/issues/47), [#48](https://github.com/resistdesign/Estragon/issues/48), [#49](https://github.com/resistdesign/Estragon/issues/49), [#50](https://github.com/resistdesign/Estragon/issues/50), [#51](https://github.com/resistdesign/Estragon/issues/51) | Reviewed sequence in EXECUTION_PLAN; no later implementation started. E01-F #44 remains separate and precedes final release disposition. |
+| **C01-B** | **Done (scoped fix merged PR #53)** | Scalar component maxima, button label clamp and 4.0 incoming-signal key parsing | [#45](https://github.com/resistdesign/Estragon/issues/45) | [Runtime evidence](C01_B_RUNTIME.md); merge `29fc202`, individual scoped stages are required by CI. Remaining cold Text-first negatives retained as FAIL under #48. |
+| **C01-C** | **In review (not merged)** | Version-gated proactive arity checks; preserve valid callbacks and lifecycle | [#46](https://github.com/resistdesign/Estragon/issues/46) | [Nine-engine evidence](C01_C_CALLBACKS.md): Counter/signals/guard probes pass on 4.0–4.7.2; owner-approved diagnostic timing. Required CI passes; PR #57 awaits review/merge. |
+| C01-D…H | Queued; one PR at a time | Precision → validation/identity → editor startup → unsaved Play → integration/release | [#47](https://github.com/resistdesign/Estragon/issues/47), [#48](https://github.com/resistdesign/Estragon/issues/48), [#49](https://github.com/resistdesign/Estragon/issues/49), [#50](https://github.com/resistdesign/Estragon/issues/50), [#51](https://github.com/resistdesign/Estragon/issues/51) | Reviewed sequence in EXECUTION_PLAN; no later implementation started. E01-F #44 remains separate and precedes final release disposition. |
 | R02 | Deferred | Renderer-backend research | [#2](https://github.com/resistdesign/Estragon/issues/2) | Pending |
 
 **Statuses:** `Queued` = waiting on planned predecessor(s); `Ready` = actionable and unclaimed; `Active` = owned issue + branch with work underway; `Blocked` = evidence and decision/unblock step required; `In review` = PR open and awaiting approval/checks; `Done` = verified, approved and merged; `Deferred` = explicitly outside the current milestone. Never mark `Done` on an unmerged branch. A research task may complete with a well-evidenced negative feasibility finding.
@@ -43,7 +50,7 @@
 - Future work belongs in issues while the current PR is active. A blocked PR
   needs documented evidence and an owner decision, not another PR. No automatic
   merges. Every task has a durable issue, checkpoints, verification and handoff.
-- Queue: C01-B #45 → C01-C…H #46–51 with E01-F #44 → T09-A #43 →
+- Queue: C01-C #46 (review) → C01-D…H #47–51 with E01-F #44 → T09-A #43 →
   T09-B/C/D #5. #40 merged. Check live issues before advancing.
 
 - **One work ID per focused implementation PR.** A planning/ADR/process-only PR may be unassigned if it is explicitly labeled as such and includes no implementation work. The task issue is the durable conversation: scope, current owner/session or branch, plan/checklist, evidence, blockers, handoffs and linked PR.

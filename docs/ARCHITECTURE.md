@@ -4,6 +4,25 @@
 
 **No Estragon visual component maps by default to a Godot `Control` or `Node`.** The Godot scene tree may contain a single Estragon host, multiple UI surfaces or optional integration adapters. The UI component tree is an independent data structure managed by Estragon.
 
+## Compatibility principle: pragmatic progressive enhancement
+
+Preserve functionality across Godot 4.0 and later supported engines; enhance
+validation, diagnostics and performance when newer APIs permit. Bridge missing
+capabilities with simple, reliable public APIs when maintainable. Prefer
+capability detection where available; isolate any necessary version gate.
+Avoid brittle reflection, elaborate adapters and extensive backports merely to
+recreate optional diagnostics. When no practical equivalent exists, omit only
+the optional enhancement and allow normal engine compile/runtime errors to
+report incompatible operations. Never hide errors or reject otherwise valid
+inputs because optional introspection is absent. Keep other semantic, ownership
+and lifecycle guarantees intact; test both paths and document their difference.
+See the [accepted owner refinement](DECISIONS.md#compatibility-engineering-amendment--progressive-enhancement-2026-10-30).
+
+C01-C uses a small 4.3+ version gate because Callable is a value type without
+Object.has_method-style capability detection. Only the proactive arity query is
+gated; typed inputs, validity/disposal/connection checks and cleanup are shared.
+The compiler remains independent of rendering and editor APIs.
+
 ## Godot-native compiler migration (ADR-0012; native compiler and editor implemented)
 
 N03 replaces the former T08 external build with the **bundled GDScript-native compiler**: Gogo source → native lexer/parser/typed model (N01) → native GDScript emission/source maps (N02) → direct EditorPlugin build/validation on F5/F6 (N03) → generated ordinary `.gd` → Estragon's independent runtime.

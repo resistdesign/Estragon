@@ -82,7 +82,8 @@ describe("T07 typed signals and scope", () => {
         expect(code).toContain('_gogo_value_4: bool');
         expect(code).toContain('component_0.pressed.connect(_gogo_value_0)');
         expect(code).toContain('not _gogo_value_0.is_valid()');
-        expect(code).toContain('_gogo_value_0.get_argument_count() != 0');
+        expect(code).toContain('var _gogo_callback_component_0: Variant = _gogo_value_0');
+        expect(code).toContain('Engine.get_version_info()["minor"] >= 3 and _gogo_callback_component_0.get_argument_count() != 0');
         expect(code).toContain('is_disposed()');
         expect(code).not.toContain('connect("');
         expect(code).not.toMatch(/eval\(|new Function|JSON\.parse/);

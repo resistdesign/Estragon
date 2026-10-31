@@ -583,3 +583,22 @@ affected script parses to pass. Other red compiler/editor stages remain visible.
 Cold Text-first invalid-text failures are tracked in #48/#41 and retained as FAIL;
 they are not silently waived by successful collection or warmed by fixture loads.
 The C01-A baseline snapshot is preserved; C01-B results are stored separately.
+
+
+## C01-C callback checks
+
+The C01 collector runs `callback_metadata.gd`: 21 observations without candidate
+invocation. Exact expected metadata errors are counted; unexpected diagnostics
+or missing observations fail. `callback_metadata_probe=PASS` means evidence
+integrity, not callback portability. `callback_arity_api=BLOCKED` on 4.0–4.2
+records an absent API, not failure of the approved normal-invocation fallback.
+
+`generated_signals` checks real native-generated Counter behavior, callback order,
+bound/lambda/static inputs, duplicate prevention and automatic cleanup.
+`callback_guard_*` runs nine isolated expected-diagnostic processes: empty,
+missing, freed, disposed, required/optional methods and lambdas, and unbound.
+Every version rejects invalid/disposed targets before connection. 4.3+ rejects
+nonzero arity early; 4.0–4.2 invokes optional callbacks normally and reports required
+argument errors at activation. Exact error count/content plus completion and
+connection/cleanup assertions prevent arbitrary failures from passing.
+See [C01_C_CALLBACKS.md](C01_C_CALLBACKS.md) and the structured C01-C snapshot.

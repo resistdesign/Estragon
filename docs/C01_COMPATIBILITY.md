@@ -10,6 +10,10 @@ filtered-tab exception remains [#44](https://github.com/resistdesign/Estragon/is
 C01-A PR #52 is merged. Subsequent [C01-B runtime evidence](C01_B_RUNTIME.md)
 is recorded separately; the table and snapshot below retain the audit baseline.
 
+C01-C's [callback investigation and fix](C01_C_CALLBACKS.md) records the owner-approved
+progressive arity diagnostics. Its separate snapshot does not alter this original
+audit baseline or certify full-addon compatibility.
+
 ## Reproduction and evidence
 
 Use Python 3.9+ as optional contributor orchestration, the standard system shell,

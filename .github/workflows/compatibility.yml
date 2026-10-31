@@ -61,6 +61,7 @@ jobs:
           assert "infrastructure" not in stages
           assert stages["engine_identity"]["status"] == "PASS"
           assert stages["api_dump"]["status"] == "PASS"
+          assert stages["callback_metadata_probe"]["status"] == "PASS"
           PY
       - name: Require C01-B component sizing and input compatibility
         env:
@@ -78,6 +79,22 @@ jobs:
               script = scripts["addons/estragon/runtime/" + name + ".gd"]
               assert script["status"] == "PASS", (engine["version"], script)
           PY
+      - name: Require C01-C generated callback compatibility
+        env:
+          TASK_RESULTS: ${{ runner.temp }}/compatibility/results.json
+        run: |
+          python3 - <<'PYCODE'
+          import json, os
+          engine = json.load(open(os.environ["TASK_RESULTS"]))["engines"][0]
+          stages = engine["stages"]
+          names = ["generated_signals"] + ["callback_guard_" + mode for mode in
+              ["empty", "missing", "freed", "disposed", "required", "optional",
+               "lambda_required", "lambda_optional", "unbound"]]
+          for name in names:
+              assert stages[name]["status"] == "PASS", (engine["version"], name, stages[name])
+          scripts = {item["source"]: item for item in stages["shipped_scripts"]["scripts"]}
+          assert scripts["examples/counter/generated/Counter.gd"]["status"] == "PASS"
+          PYCODE
       - name: Publish actual stage outcomes
         if: always()
         env:

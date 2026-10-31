@@ -3,6 +3,13 @@ extends SceneTree
 
 var _checks: int = 0
 var _failed: bool = false
+var _callback_values: Array = []
+
+func _optional(value: String = "default") -> void:
+	_callback_values.append(value)
+
+static func _static_record(values: Array) -> void:
+	values.append("static")
 
 
 func _initialize() -> void:
@@ -14,6 +21,12 @@ func _check(condition: bool, message: String) -> void:
 	if not condition:
 		_failed = true
 		push_error("Generated signals test: " + message)
+
+
+# Godot 4.0 retains the get_ref() expression temporary until its function
+# returns. Keep observation in its own frame so the test cannot retain payload.
+func _weak_alive(reference: WeakRef) -> bool:
+	return reference.get_ref() != null
 
 
 func _event(position: Vector2, down: bool) -> InputEventMouseButton:
@@ -109,6 +122,16 @@ func _run() -> void:
 	_click(viewport, static_button)
 	_check(module.events[-1] == "static", "static authored factory accepts native callable")
 	_check(children[0].pressed.get_connections().is_empty(), "lambda/bound/local connections removed with old tree")
+	# Optional parameters remain rejected unbound on modern engines; binding
+	# every parameter is valid on every engine, including static methods.
+	for callback in [_optional.bind("bound optional"), _static_record.bind(_callback_values)]:
+		var bound_button: EstragonButton = module.build_static(callback)
+		_check(bound_button.pressed.get_connections().size() == 1, "bound callback connects once")
+		bound_button.pressed.emit()
+		surface.set_root(bound_button)
+		surface.set_root(null)
+		_check(bound_button.pressed.get_connections().is_empty(), "bound callback owner cleanup")
+	_check(_callback_values == ["bound optional", "static"], "optional bound and static callbacks execute once")
 	# A direct callback target is a logical component, separate from its source.
 	var owner := EstragonContainer.new()
 	var destination := EstragonContainer.new()
@@ -130,10 +153,10 @@ func _run() -> void:
 	var payload_ref: WeakRef = weakref(payload)
 	var capturing_button: EstragonButton = module.build_capture(payload)
 	payload = null
-	_check(payload_ref.get_ref() != null, "generated lambda retains its captured payload while mounted")
+	_check(_weak_alive(payload_ref), "generated lambda retains its captured payload while mounted")
 	surface.set_root(capturing_button)
 	surface.set_root(null)
-	_check(capturing_button.pressed.get_connections().is_empty() and payload_ref.get_ref() == null, "unmount releases generated lambda and captured resources")
+	_check(capturing_button.pressed.get_connections().is_empty() and not _weak_alive(payload_ref), "unmount releases generated lambda and captured resources")
 	surface.free()
 	_check(receiver_button.is_disposed() and static_button.pressed.get_connections().is_empty(), "host destruction cleans all remaining wiring")
 	# Standalone markup still works for literal-only primitive properties.

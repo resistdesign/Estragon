@@ -384,12 +384,19 @@ semantic checker. Native conversions and Variant-dependent errors remain native
 Godot behavior. Literal font sizes must be positive 32-bit integers; expression
 font sizes use a typed `int` argument and the runtime's positive-size check.
 
-Generated guards require `Callable.is_valid()` and **exactly zero remaining
-arguments** according to `get_argument_count()`. Godot counts optional arguments
-and subtracts bound arguments. Thus a method with optional parameters must be
-wrapped in a zero-argument lambda or have those parameters bound explicitly.
-Empty/invalid callables, incompatible arity and direct disposed component targets
-produce source-located engine errors before connecting; no silent fallback occurs.
+Generated guards require `Callable.is_valid()` and a live direct component target
+on every supported engine. Empty/invalid Callables and direct disposed targets
+produce source-located errors before connecting. Connection failures are checked.
+On Godot 4.3+, `get_argument_count()` additionally requires **exactly zero remaining
+arguments**, counting optional parameters and subtracting bound arguments; bind
+all parameters or use a zero-argument lambda to satisfy that early check.
+On 4.0–4.2, that optional introspection API is unavailable and no reliable public
+reflection equivalent covers opaque lambdas. Under the approved progressive-
+enhancement policy, only this proactive check is skipped: otherwise valid native
+Callables connect normally. Optional parameters use defaults; incompatible required
+or unbound arguments produce the engine's normal error when the signal invokes
+the callback. Validation never invokes callbacks to inspect them. This explicit
+diagnostic-timing difference does not relax validity, disposal or cleanup.
 Return values are ignored. Godot checks bound argument types when invoked, not
 through the arity guard. Arbitrary closure effects/captured object lifetimes are
 not statically proven. See the [Godot Callable API](https://docs.godotengine.org/en/4.7/classes/class_callable.html).

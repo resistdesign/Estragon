@@ -217,6 +217,19 @@ C01-A PR #52 merged `46bc752`. C01-B #45 now supplies the [focused runtime corre
 
 Each issue contains measurable acceptance and exact evidence. Preserve semantic diagnostics, callback order, native no-tools workflow and framework-owned runtime. Do not replace unavailable APIs with unchecked no-ops. T09-A #43 remains queued behind blocking compatibility foundations; the lowercase Gogo-only annotation/model/Box/collection/two-way destination is unchanged.
 
+### C01-C progressive diagnostics
+
+C01-B #53 and documentation #56 are merged. The [C01-C investigation](C01_C_CALLBACKS.md)
+proved public 4.0 reflection cannot recover opaque lambda arity. The owner
+[approved pragmatic compatibility bridges and progressive enhancement](https://github.com/resistdesign/Estragon/issues/46#issuecomment-6534935109):
+skip only unsupported proactive arity introspection on 4.0–4.2; preserve valid
+Callables, other available safeguards and normal invocation errors. 4.3+ retains
+early required/optional rejection. Test both paths with actual engines, source
+maps, invalid/disposed targets, connection ownership and lifecycle. No elaborate
+adapter or external-Callable restriction is authorized or needed. Full-addon
+compatibility remains gated by later C01 tasks; no successor starts before merge.
+Unit helpers, Box/padding and reactivity remain outside this milestone.
+
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
 **Tracking:** [issue #37](https://github.com/resistdesign/Estragon/issues/37). **Prerequisite:** N03 merged. **State:** narrow fix merged in PR #40; remaining filtered-tab acceptance is #44, and older full-addon support remains C01. Do not mix E01 into T09.

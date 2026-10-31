@@ -72,6 +72,7 @@ def unavailable(reason, status="BLOCKED"):
 
 
 def audit(engine, output, editor):
+    from callback_metadata_evidence import validate_metadata
     label, executable = engine.split("=", 1)
     target = output / label
     target.mkdir(parents=True, exist_ok=True)
@@ -141,6 +142,18 @@ def audit(engine, output, editor):
             shutil.copytree(ROOT / "tests" / name, project / "tests" / name)
         shutil.copy2(ROOT / "tests/compatibility/numeric_literals.gd", project / "numeric_literals.gd")
         run("numeric_literals", ["--script", "res://numeric_literals.gd"], "C01_NUMERIC_OK")
+        shutil.copy2(ROOT / "tests/compatibility/callback_metadata.gd", project / "callback_metadata.gd")
+        run("callback_metadata_probe", ["--script", "res://callback_metadata.gd"],
+            "C01_CALLBACK_METADATA_OK", expected_errors=True)
+        try:
+            result["callback_metadata"] = validate_metadata(
+                (target / "callback_metadata_probe.log").read_text(), int(known["minor"].split(".")[1]))
+        except (ValueError, KeyError, TypeError) as error:
+            stages["callback_metadata_probe"]["status"] = "FAIL"
+            stages["callback_metadata_probe"]["reason"] = str(error)
+        stages["callback_arity_api"] = ({"status": "PASS", "reason": "Native arity query available; generated-signals behavior is tested separately"}
+            if int(known["minor"].split(".")[1]) >= 3 else unavailable(
+                "Native proactive arity query unavailable; owner-approved normal invocation fallback, tested separately"))
         run("frontend", ["--script", "res://tests/godot/native_frontend.gd",
                          "--", "--require-no-bun"], "ESTRAGON_NATIVE_FRONTEND_OK")
         # Remove checked generated code before emission: the runtime must consume
@@ -191,6 +204,36 @@ def audit(engine, output, editor):
             else:
                 run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker,
                     expected_errors=(name == "semantic_identity"))
+        # Expected callback diagnostics differ only in proactive arity support.
+        # Invalid/disposed targets are always rejected before connection.
+        for mode in ["empty", "missing", "freed", "disposed", "required", "optional",
+                     "lambda_required", "lambda_optional", "unbound"]:
+            name = "callback_guard_" + mode
+            if not emitted:
+                stages[name] = unavailable("Native emission failed")
+                continue
+            run(name, ["--script", "res://tests/godot/callback_guards.gd", "--", mode],
+                "C01_CALLBACK_GUARD_OK " + mode, expected_errors=True)
+            errors = [line for line in (target / (name + ".log")).read_text().splitlines() if ERROR.search(line)]
+            early = int(known["minor"].split(".")[1]) >= 3
+            invalid = mode in ["empty", "missing", "freed", "disposed"]
+            if early or invalid:
+                correct = len(errors) == 1 and "signal-edges.gogo:34:" in errors[0] and "valid zero-argument Callable" in errors[0]
+            elif mode in ["optional", "lambda_optional"]:
+                correct = not errors
+            else:
+                # Old Godot logs an additional method-name lookup error while
+                # formatting a failed opaque-lambda invocation. It is part of
+                # the native error path, not an Estragon reflection call.
+                invocation = errors[-1] if errors else ""
+                expected_count = 2 if mode == "lambda_required" else 1
+                correct = (len(errors) == expected_count and "Error calling from signal" in invocation
+                           and "argument" in invocation.lower()
+                           and (expected_count == 1 or ("Can't get method on CallableCustom" in errors[0]
+                                                        and "lambda" in errors[0])))
+            if not correct:
+                stages[name]["status"] = "FAIL"
+                stages[name]["reason"] = "Unexpected callback diagnostic sequence: " + repr(errors)
         # Export engine API metadata as additional audit evidence. This does not
         # execute unavailable methods or substitute capability presence for use.
         run("api_dump", ["--dump-extension-api"])

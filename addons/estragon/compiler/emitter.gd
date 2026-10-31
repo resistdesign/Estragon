@@ -142,9 +142,12 @@ func _component(node: Model.Component, indentation: String) -> String:
 		if attribute.kind == "property": _line(variable + "." + attribute.name + " = " + argument, value.span, indentation)
 		else:
 			var error := _string("%s:%d:%d: Button.pressed requires a valid zero-argument Callable with a live target" % [_file.name, value.span.start.line, value.span.start.column])
-			_line("if not %s.is_valid() or %s.get_argument_count() != 0:" % [argument, argument], value.span, indentation)
+			# Variant dispatch avoids resolving a post-4.2 API during old-engine parsing.
+			var callback := "_gogo_callback_" + variable
+			_line("var %s: Variant = %s" % [callback, argument], value.span, indentation)
+			_line("if not %s.is_valid() or (Engine.get_version_info()[\"minor\"] >= 3 and %s.get_argument_count() != 0):" % [argument, callback], value.span, indentation)
 			_line(indentation + "push_error(" + error + ")", value.span, indentation)
-			_line("elif %s.get_object() is EstragonDisplayObject and (%s.get_object() as EstragonDisplayObject).is_disposed():" % [argument, argument], value.span, indentation)
+			_line("elif %s.get_object() is EstragonDisplayObject and (%s.get_object() as EstragonDisplayObject).is_disposed():" % [callback, callback], value.span, indentation)
 			_line(indentation + "push_error(" + error + ")", value.span, indentation)
 			_line("elif %s.pressed.connect(%s) != OK:" % [variable, argument], value.span, indentation)
 			_line(indentation + "push_error(" + error + ")", value.span, indentation)
