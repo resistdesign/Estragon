@@ -1,23 +1,59 @@
 extends SceneTree
-## Isolate the shipped emitter from unavailable runtime/Logger APIs. Ordinary
-## native reload executes the emitted number; no Gogo syntax is rewritten.
-const Model = preload("res://addons/estragon/compiler/model.gd")
+## Expected bytes are checked-in independent binary64 oracles, not to_float().
+const Frontend = preload("res://addons/estragon/compiler/frontend.gd")
+const Compiler = preload("res://addons/estragon/compiler/compiler.gd")
 const Emitter = preload("res://addons/estragon/compiler/emitter.gd")
 
+func bits(value: float) -> String:
+	var bytes := PackedByteArray()
+	bytes.resize(8)
+	bytes.encode_double(0, value)
+	return bytes.hex_encode()
+
+func evaluate(token: String) -> String:
+	var script := GDScript.new()
+	script.source_code = "extends RefCounted\nvar amount: float = " + token + "\n"
+	if script.reload() != OK: return "RELOAD_FAILED"
+	return bits(script.new().amount)
+
+func inspect_case(item: Dictionary) -> Dictionary:
+	var text: String = item.source
+	var source := '<Rect width="' + text + '"/>'
+	var front := Frontend.analyze(source, "Numeric.gogo")
+	var row := {"source": text, "expected_bits": item.expected_bits,
+		"raw_conversion_bits": bits(text.to_float()), "direct_literal_bits": evaluate(text)}
+	if not front.ok:
+		row["status"] = "FAIL"
+		return row
+	var value = front.module.parts[0].attributes[0].value
+	row["model_bits"] = bits(value.value)
+	row["token"] = Emitter.literal(value)
+	row["runtime_bits"] = evaluate(row.token)
+	var compilation := Compiler.compile(source, "Numeric.gogo")
+	var repeated := Compiler.compile(source, "Numeric.gogo")
+	var mapped := false
+	for segment in compilation.source_map.segments:
+		var generated: String = compilation.code.substr(segment.generated.start.index, segment.generated.end.index - segment.generated.start.index)
+		if generated.contains(".width = " + row.token):
+			mapped = segment.original.start.offset == value.span.start.offset and segment.original.end.offset == value.span.end.offset
+	row["deterministic_and_mapped"] = compilation.ok and compilation.code == repeated.code and compilation.source_map.serialize() == repeated.source_map.serialize() and mapped
+	row["status"] = "PASS" if row.model_bits == item.expected_bits and row.runtime_bits == item.expected_bits and row.deterministic_and_mapped else "FAIL"
+	return row
+
 func _initialize() -> void:
+	var fixture = JSON.parse_string(FileAccess.get_file_as_string("res://numeric_cases.json"))
 	var failed := false
-	for text in ["0", "-0", "1e20", "1e-20", "3.141592653589793", "1.0000000000000002", "16777217", "3.4028234e38"]:
-		var value := Model.Literal.new()
-		value.kind = "number-literal"
-		value.value = text.to_float()
-		var token := Emitter.literal(value)
-		var candidate := GDScript.new()
-		candidate.source_code = "extends RefCounted\nvar amount: float = " + token + "\n"
-		var valid := candidate.reload() == OK
-		var equal: bool = valid and candidate.new().amount == text.to_float()
-		print("C01_NUMERIC_CASE ", JSON.stringify({"source": text, "token": token, "equal": equal}))
-		if not equal:
+	for item in fixture.cases:
+		var row := inspect_case(item)
+		print("C01_NUMERIC_CASE ", JSON.stringify(row))
+		if row.status != "PASS":
 			failed = true
-			push_error("C01 numeric literal changed value: " + text + " -> " + token)
-	if not failed: print("C01_NUMERIC_OK")
+	# Existing native parsing limitations are reported separately, never greened
+	# by comparing two uses of the same broken conversion as an oracle.
+	for item in fixture.native_parser_limits:
+		var row := inspect_case(item)
+		if row.status == "FAIL": row.status = "BLOCKED"
+		print("C01_NUMERIC_NATIVE_LIMIT ", JSON.stringify(row))
+	if failed: push_error("C01 numeric literal differs from the independent binary64 oracle")
+	else: print("C01_NUMERIC_OK")
 	quit(1 if failed else 0)

@@ -39,6 +39,7 @@ class GdExpression extends SyntaxNode:
 		kind = "gdscript-expression"
 
 class Literal extends SyntaxNode:
+	var number_token: String # Validated decimal spelling, independent of float formatting.
 	var value: Variant
 	var type_name: String
 	func _init() -> void:

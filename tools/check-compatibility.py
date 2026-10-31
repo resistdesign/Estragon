@@ -73,6 +73,7 @@ def unavailable(reason, status="BLOCKED"):
 
 def audit(engine, output, editor):
     from callback_metadata_evidence import validate_metadata
+    from numeric_evidence import validate_numeric
     label, executable = engine.split("=", 1)
     target = output / label
     target.mkdir(parents=True, exist_ok=True)
@@ -141,7 +142,22 @@ def audit(engine, output, editor):
         for name in ["godot", "fixtures"]:
             shutil.copytree(ROOT / "tests" / name, project / "tests" / name)
         shutil.copy2(ROOT / "tests/compatibility/numeric_literals.gd", project / "numeric_literals.gd")
+        shutil.copy2(ROOT / "tests/compatibility/numeric_cases.json", project / "numeric_cases.json")
         run("numeric_literals", ["--script", "res://numeric_literals.gd"], "C01_NUMERIC_OK")
+        try:
+            result["numeric_evidence"] = validate_numeric((target / "numeric_literals.log").read_text(),
+                json.loads((project / "numeric_cases.json").read_text()))
+            if any(row["status"] != "PASS" for row in result["numeric_evidence"]["cases"]):
+                stages["numeric_literals"]["status"] = "FAIL"
+                stages["numeric_literals"]["reason"] = "Independent numeric oracle mismatch; see numeric_evidence.cases"
+            limitations = result["numeric_evidence"]["native_parser_limits"]
+            stages["numeric_native_conversion"] = unavailable(
+                "Native decimal conversion loses representable binary64 values; see numeric_evidence.native_parser_limits",
+                "BLOCKED" if any(row["status"] == "BLOCKED" for row in limitations) else "PASS")
+        except (ValueError, KeyError, TypeError) as error:
+            stages["numeric_literals"]["status"] = "FAIL"
+            stages["numeric_literals"]["reason"] = str(error)
+            stages["numeric_native_conversion"] = unavailable("Numeric evidence invalid")
         shutil.copy2(ROOT / "tests/compatibility/callback_metadata.gd", project / "callback_metadata.gd")
         run("callback_metadata_probe", ["--script", "res://callback_metadata.gd"],
             "C01_CALLBACK_METADATA_OK", expected_errors=True)

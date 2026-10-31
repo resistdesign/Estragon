@@ -1,6 +1,7 @@
 @tool
 extends RefCounted
 ## Explicit built-in contracts. GDScript syntax/types remain Godot's authority.
+const NumericLiteral = preload("res://addons/estragon/compiler/numeric_literal.gd")
 const Model = preload("res://addons/estragon/compiler/model.gd")
 const Source = preload("res://addons/estragon/compiler/source.gd")
 const CLASSES := {"VBox": "EstragonVBox", "HBox": "EstragonHBox", "Rect": "EstragonRect", "Text": "EstragonText", "Button": "EstragonButton"}
@@ -74,8 +75,11 @@ func _literal(name: String, literal: Model.Literal) -> void:
 		literal.kind = "string-literal"
 		return
 	if name == "font_size":
-		var number := value.to_float()
-		if not _number(value) or not is_finite(number) or number != floor(number) or number <= 0 or number > 2147483647:
+		if not _number(value):
+			_error("font_size requires a positive 32-bit integer", literal.span)
+			return
+		var number := NumericLiteral.normalize(value).to_float()
+		if not is_finite(number) or number != floor(number) or number <= 0 or number > 2147483647:
 			_error("font_size requires a positive 32-bit integer", literal.span)
 			return
 		literal.kind = "integer-literal"
@@ -101,15 +105,17 @@ func _literal(name: String, literal: Model.Literal) -> void:
 	literal.kind = "number-literal"
 	if name in ["width", "height"] and value == "auto":
 		literal.value = -1.0
+		literal.number_token = "-1.0"
 		return
 	if not _number(value):
 		_error(name + " requires a finite nonnegative number" + ("" if name == "gap" else " or auto"), literal.span)
 		return
-	var number := value.to_float()
+	var number := NumericLiteral.normalize(value).to_float()
 	if not is_finite(number) or not is_finite(PackedFloat32Array([number])[0]) or number < 0:
 		_error(name + " must be nonnegative and finite in runtime geometry" + ("" if name == "gap" else "; use auto for intrinsic sizing"), literal.span)
 		return
 	literal.value = number if number != 0 else 0.0
+	literal.number_token = NumericLiteral.normalize(value) if number != 0 else "0.0"
 
 ## Decimal grammar, not Godot's more permissive numeric-string conversions.
 func _number(value: String) -> bool:

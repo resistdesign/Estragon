@@ -87,7 +87,7 @@ jobs:
           import json, os
           engine = json.load(open(os.environ["TASK_RESULTS"]))["engines"][0]
           stages = engine["stages"]
-          names = ["generated_signals"] + ["callback_guard_" + mode for mode in
+          names = ["numeric_literals", "generated_signals"] + ["callback_guard_" + mode for mode in
               ["empty", "missing", "freed", "disposed", "required", "optional",
                "lambda_required", "lambda_optional", "unbound"]]
           for name in names:
