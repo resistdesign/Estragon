@@ -13,6 +13,8 @@ mkdir -p "$project/no-tools" "$project/addons/estragon" "$project/tests/godot" "
 cp -R "$root/addons/estragon/compiler" "$root/addons/estragon/runtime" "$project/addons/estragon/"
 cp "$root/tests/fixtures/"*.gogo "$root/tests/fixtures/native-frontend.json" "$root/tests/fixtures/native-generation.json" "$project/tests/fixtures/"
 cp "$root/tests/godot/native_counter.gd" "$root/tests/godot/native_semantics.gd" "$root/tests/godot/native_generation.gd" "$root/tests/godot/generated_gogo.gd" "$root/tests/godot/hybrid_gogo.gd" "$root/tests/godot/generated_signals.gd" "$project/tests/godot/"
+cp "$root/tests/compatibility/numeric_literals.gd" "$project/tests/godot/numeric_literals.gd"
+cp "$root/tests/compatibility/numeric_cases.json" "$project/numeric_cases.json"
 printf 'config_version=5\n' > "$project/project.godot"
 run() {
     marker=$1
@@ -42,3 +44,4 @@ grep -qx 'ESTRAGON_NATIVE_SEMANTICS_OK' "$project/negative.log"
 [ "$(grep -c '^EXPECTED_NATIVE_DIAGNOSTIC ' "$project/negative.log")" = 9 ]
 [ "$(grep -c '^EXPECTED_NATIVE_CALLBACK_REJECTION ' "$project/negative.log")" = 4 ]
 printf 'ESTRAGON_NATIVE_RUNTIME_OK\n'
+run C01_NUMERIC_OK --script res://tests/godot/numeric_literals.gd --quit-after 120

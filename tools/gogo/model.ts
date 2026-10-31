@@ -29,7 +29,7 @@ export interface ComponentSyntax {
 export type Literal =
     | { readonly kind: "string-literal"; readonly value: string; readonly span: Span }
     | { readonly kind: "integer-literal"; readonly value: number; readonly span: Span }
-    | { readonly kind: "number-literal"; readonly value: number; readonly span: Span }
+    | { readonly kind: "number-literal"; readonly value: number; readonly numberToken: string; readonly span: Span }
     | { readonly kind: "boolean-literal"; readonly value: boolean; readonly span: Span }
     | { readonly kind: "color-literal"; readonly value: string; readonly span: Span };
 

@@ -1,3 +1,4 @@
+import { normalizeNumber } from "./numeric-literal.ts";
 import { GogoCompileError, type AttributeSyntax, type ComponentExpression, type ComponentName, type ComponentSyntax, type Literal, type PropertyName, type HybridComponentSyntax, type HybridComponentExpression, type GdscriptExpressionSyntax, type GdscriptExpression, type HybridModuleSyntax, type HybridModule, type Span, type HybridAttribute } from "./model.ts";
 
 /** Explicit built-ins, not an extensible import/reflection system. */
@@ -31,14 +32,14 @@ function literal(attribute: AttributeSyntax, sourceName: string): Literal {
         return { kind: "color-literal", value: value.toLowerCase() + (value.length === 7 ? "ff" : ""), span };
     }
     if ((name === "width" || name === "height") && value === "auto") {
-        return { kind: "number-literal", value: -1, span };
+        return { kind: "number-literal", value: -1, numberToken: "-1.0", span };
     }
     if (NUMBER.exec(value)?.[0] !== value) fail(`${name} requires a finite nonnegative number${name === "gap" ? "" : " or auto"}`);
     const number = Number(value);
     if (!Number.isFinite(number) || !Number.isFinite(Math.fround(number)) || number < 0) {
         fail(`${name} must be nonnegative and finite in runtime geometry${name === "gap" ? "" : "; use auto for intrinsic sizing"}`);
     }
-    return { kind: "number-literal", value: number === 0 ? 0 : number, span };
+    return { kind: "number-literal", value: number === 0 ? 0 : number, numberToken: number === 0 ? "0.0" : normalizeNumber(value), span };
 }
 
 function componentName(name: string, nameSpan: Span, sourceName: string): ComponentName {

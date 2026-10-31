@@ -212,6 +212,19 @@ optional-argument invocation and report required-argument errors at invocation.
 This does not waive editor freshness, fail-closed Play or other required semantic
 behavior, and does not approve unit-helper, Box or reactive implementation.
 
+## Numeric compatibility amendment — native parsing semantics (2026-10-31)
+
+**Accepted owner decision, C01-D #47:** Keep native Godot numeric parsing
+semantics. Fix avoidable precision loss, document and test inherent limitations,
+and do not implement a full custom decimal parser. Compiler-owned quoted numeric
+literals may be normalized into equivalent decimal spellings before conversion;
+authored GDScript is copied unchanged. Preserve the native typed value through
+emission without an additional lossy formatting round trip. Independent IEEE
+oracles remain visible for measured parser discrepancies; native preservation
+must not be mislabeled as universally correctly-rounded conversion.
+See [C01_D_NUMBERS.md](C01_D_NUMBERS.md). This does not raise the minimum engine,
+introduce a runtime numeric adapter, or authorize C01-E/reactive/unit-helper work.
+
 ## Unresolved, intentionally not invented
 
 - **Final rendering implementation:** RenderingServer vs RenderingDevice/native backend, multi-platform strategy.

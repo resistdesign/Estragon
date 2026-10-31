@@ -602,3 +602,23 @@ nonzero arity early; 4.0–4.2 invokes optional callbacks normally and reports r
 argument errors at activation. Exact error count/content plus completion and
 connection/cleanup assertions prevent arbitrary failures from passing.
 See [C01_C_CALLBACKS.md](C01_C_CALLBACKS.md) and the structured C01-C snapshot.
+
+
+## C01-D numeric value and native-limit checks
+
+[Numeric contract/evidence](C01_D_NUMBERS.md) records the owner-approved native
+semantics. The isolated probe executes canonical tokens and checks model/runtime
+bytes against 27 independent binary64 oracles, deterministic maps and binary
+storage controls. Three additional native parser discrepancies retain their IEEE
+oracles as BLOCKED and must preserve source-native values through emission.
+CI requires `numeric_literals` and `numeric_native_preservation` PASS; the separate
+`numeric_native_conversion` BLOCKED capability is never presented as IEEE success.
+The native generation harness also runs this probe with Bun/Node unavailable;
+its semantic suite checks real component properties. Collector unit tests detect
+missing records, corrupted oracles, false PASS claims and extra emission loss.
+
+To preserve numeric details in a committed nine-engine snapshot, use
+`python3 tools/summarize-compatibility.py --report /run/results.json --output
+ tests/compatibility/c01-d-results.json --scope "C01-D native numeric semantics;
+ not full-addon certification"` (repeat `--report` for split runs). All pinned
+engines are required, every stage remains intact and logs/reports are hashed.
