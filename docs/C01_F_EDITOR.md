@@ -1,0 +1,83 @@
+# C01-F native editor startup and lifecycle
+
+C01-F [#49](https://github.com/resistdesign/Estragon/issues/49) is in review in
+[PR #62](https://github.com/resistdesign/Estragon/pull/62), based on C01-E merge
+`c17902a`. This is a scoped editor fix, not full Godot 4.0+ certification.
+
+## Cause and correction
+
+Merged-main startup reproduces two distinct API failures: Godot 4.0/4.1 reject
+static EditorInterface calls; later pre-4.7 engines can produce a valid build
+report while still emitting an error for the unavailable
+`EditorFileSystem.is_importing()`. A successful report alone is insufficient.
+
+The plugin now uses its owning EditorPlugin's EditorInterface instance, public
+filesystem scanning and native class metadata, and capability checks for optional
+import-status/settings-change APIs. Cold old editors must register the runtime
+before validating generated inheritance. Newer editors already load class names
+before plugins, so their first native build remains synchronous: unconditionally
+deferring it lets the editor restore a scene before its generated Script exists.
+Saved-disk changes wait for scanning/import readiness and share the existing
+coalescing timer. No compiler, generated-code, runtime or renderer changes.
+
+Disable disconnects filesystem/resource hooks, stops/frees pending work, releases
+the diagnostics panel and unregisters/stops highlighting. Re-enable creates a
+fresh integration and rebuilds current disk sources. Existing extension settings
+are preserved, including after disable and restart. Native builds retain C01-E
+transactional validation, rollback, source freshness and cached Script identity.
+
+## Reproduce
+
+```sh
+python3 tools/check-editor-lifecycle.py \
+  --engine 4.0.4=/absolute/path/to/official/godot \
+  --engine 4.7=/absolute/path/to/pinned/godot \
+  --output /tmp/estragon-c01-f-new
+```
+
+Use all nine versions in `tests/compatibility/engines.json`, including pinned
+4.7.0 and latest tested 4.7.2. The harness verifies exact native versions and
+pristine macOS executable hashes before signing only its temporary copies.
+Isolated projects/settings and an empty executable PATH prove no external
+compiler is used. Python is contributor orchestration, not an addon dependency.
+Every required stage must PASS and unexpected native errors fail the command.
+
+Two actual editor processes test cold build and restart. The scene fixture
+starts with a deliberately stale valid generated Counter (count -1); startup must
+replace it with the current authored default (0), then subsequent edits reach 4.
+This models the versioned sample's generated-resource contract. The collector
+separately tests source-only startup with no generated output or main scene. The first exercises
+saved-resource notification bursts, external filesystem scanning, real PNG import,
+new Gogo discovery, invalid-source diagnostics/last-valid-output retention,
+repair, cached Script identity, pending-work cancellation and repeated
+plugin enable/disable. Both check unique hooks/timers, panel cleanup, preference
+preservation, no idle rebuild loop and normal automatic highlighting. Separate
+fresh headless runtimes instantiate the published Counter, check current saved
+state, invoke its callback and check independent component ownership.
+
+The saved-resource test emits the plugin's notification signal after writing
+current disk bytes. It tests that integration contract; it does not claim a
+native text buffer was saved on an older editor. The existing 4.7 suite separately
+covers actual buffer saves, F5/F6, negative native diagnostics and recovery.
+
+## Evidence and remaining boundaries
+
+Final structured results and exact regression commands are recorded with the
+review handoff in #49/#62. The compatibility collector's `--collect-only` exit
+remains informational; inspect each stage. CI separately requires lifecycle
+success on every pinned engine, alongside existing scoped C01-B…E gates.
+
+C01-G #50 owns older-engine unsaved/unsavable buffer and fail-closed Play bridges.
+The plugin's existing save/get-unsaved calls are unchanged here. Filtered,
+never-associated tabs remain #44; generated raw/lambda grammar remains #61;
+owner-approved native numeric and isolated-preflight limitations remain explicit.
+An additional [missing-scene probe](../tests/compatibility/c01-f-missing-scene.json)
+retains a real FAIL on 4.0.4: when a configured scene references a generated
+Script that does not exist, the native editor attempts to open it before cold
+class registration permits validation/build. The plugin subsequently supports
+source-only builds; it cannot make that early missing-resource diagnostic a
+compatibility PASS. Keep this distinction for C01-H disposition; do not remove
+native validation or publish unchecked code to suppress the error.
+
+No physical keyboard/interactive manual validation is implied by automated
+editor/native-window tests. C01-H retains final release certification.

@@ -120,6 +120,7 @@ func _run() -> void:
 		await _quiet(_plugin())
 		_finish(2)
 		return
+	_check(_count_is(0), "cold startup replaces stale generated default")
 	var source := FileAccess.get_file_as_string(SOURCE)
 	var cached = load(OUTPUT)
 	var before: int = plugin.build_count

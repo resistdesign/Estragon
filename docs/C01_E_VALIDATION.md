@@ -1,10 +1,9 @@
 # C01-E semantic validation investigation
 
-C01-E [#48](https://github.com/resistdesign/Estragon/issues/48) is active on
-`codex/c01-e-semantic-validation`, based on C01-D merge `bf2c426`.
-The scoped implementation and verification are ready for owner review in PR #60;
-**the PR is unmerged and this is not full-addon compatibility certification**.
-No semantic-validation requirement has been weakened.
+C01-E [#48](https://github.com/resistdesign/Estragon/issues/48) merged in
+PR #60 at `c17902a`. The evidence below records its scoped validation delivery;
+it is not full-addon compatibility certification. No semantic-validation
+requirement has been weakened.
 
 ## Reproduced path and cache constraints
 

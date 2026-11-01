@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "source_commit": "366191448120bde154ad732b1db41ce4d601c036",
+  "source_dirty": true,
+  "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+  "collected_at": "2026-11-01T16:49:22.321430+00:00",
+  "engines": [
+    {
+      "label": "4.0.4",
+      "stages": {
+        "lifecycle_1": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-ucuhxbn5/godot",
+            "--headless",
+            "--editor",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-ucuhxbn5/project"
+          ],
+          "exit_code": -9,
+          "timeout": false,
+          "aborted_on_error": true,
+          "seconds": 5.49,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)",
+            "ERROR: Attempt to open script 'res://ui/generated/Counter.gd' resulted in error 'File not found'.",
+            "   at: load_source_code (modules/gdscript/gdscript.cpp:1045)"
+          ],
+          "log_excerpt": "ERROR: Attempt to open script 'res://ui/generated/Counter.gd' resulted in error 'File not found'."
+        },
+        "lifecycle_2": {
+          "status": "BLOCKED",
+          "reason": "First lifecycle phase failed"
+        }
+      },
+      "input_binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "version": "4.0.4.stable.official.fc0b241c9"
+    }
+  ],
+  "purpose": "Additional cold scene probe: main_scene references absent generated Script before initial native class registration. This is not the versioned sample startup fixture; source-only native build remains separately tested."
+}

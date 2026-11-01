@@ -285,7 +285,7 @@ A task begins by checking the *latest* main branch, its tracking issue, open PRs
 
 ### C01-E delivery and accepted compatibility contract
 
-C01-D #59 merged at `bf2c426`; C01-E #48 is in review in unmerged PR #60. The focused scope includes
+C01-D #59 merged at `bf2c426`; C01-E #48 merged in PR #60 at `c17902a`. The focused scope includes
 semantic validation, relative paths and script/cache identity, plus the measured
 cold Text-first dependency cycle. [Investigation evidence](C01_E_VALIDATION.md)
 separates optional diagnostics from mandatory correctness. The owner explicitly distinguishes unavailable isolated preflight on 4.0–4.3
@@ -298,4 +298,9 @@ registered/cached publication, dependency/inheritance updates, no-op freshness,
 rollback/recovery and cold Text loading. Keep optional capability observations
 and unrelated red editor/grammar stages separate. #61 is an issue-only generated
 lambda-helper follow-up for C01-H disposition, not authorization to start another
-implementation. C01-F #49 remains next after #60 is reviewed and merged/closed.
+implementation. C01-F #49 is active in PR #62, based on `c17902a`. Its scoped acceptance is
+actual native editor startup, saved-disk builds, filesystem/import recovery,
+coalescing, clean enable/disable/re-enable and restart on every pinned engine.
+See [C01_F_EDITOR.md](C01_F_EDITOR.md). C01-G owns old-engine unsaved-buffer/Play
+bridges; #44 filtered tabs and #61 grammar remain separate. C01-G/H and T09
+must wait for sequential review/merge; no automatic merge.

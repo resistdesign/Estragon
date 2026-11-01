@@ -49,6 +49,15 @@ def audit(selection, output):
         shutil.copytree(ROOT / "addons/estragon", project / "addons/estragon")
         (project / "ui").mkdir()
         shutil.copy2(ROOT / "examples/counter/Counter.gogo", project / "ui/Counter.gogo")
+        (project / "ui/Counter.tscn").write_text((ROOT / "examples/counter/Counter.tscn").read_text().replace(
+            "res://examples/counter/generated/Counter.gd", "res://ui/generated/Counter.gd"))
+        # The sample's scene references a versioned generated Script. Seed an
+        # intentionally stale valid default, and require startup to replace it.
+        # Source-only/no-output startup is separately covered by the collector.
+        (project / "ui/generated").mkdir()
+        (project / "ui/generated/Counter.gd").write_text(
+            (ROOT / "examples/counter/generated/Counter.gd").read_text().replace(
+                "var count: int = 0", "var count: int = -1"))
         driver = project / "tests/lifecycle"
         driver.mkdir(parents=True)
         shutil.copy2(ROOT / "tests/editor/lifecycle/driver.gd", driver / "driver.gd")
@@ -59,6 +68,7 @@ def audit(selection, output):
         (project / "gogo.config.json").write_text('{"version":1,"source_roots":["ui"]}\n')
         (project / "project.godot").write_text(
             'config_version=5\n[application]\nconfig/name="C01-F isolated lifecycle"\n'
+            'run/main_scene="res://ui/Counter.tscn"\n'
             'config/features=PackedStringArray("4.0", "GL Compatibility")\n'
             '[rendering]\nrenderer/rendering_method="gl_compatibility"\n'
             '[editor_plugins]\nenabled=PackedStringArray('

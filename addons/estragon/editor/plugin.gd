@@ -53,17 +53,23 @@ func _enter_tree() -> void:
 	_interface.get_resource_filesystem().filesystem_changed.connect(_schedule)
 	_interface.get_resource_filesystem().sources_changed.connect(_sources_changed)
 	resource_saved.connect(_resource_saved)
-	# Initial class registration/import can still be running as plugins enter.
-	# Use the same readiness/coalescing path as later filesystem notifications.
-	_compile_saved()
+	# Newer editors load class names before plugins but may still be scanning.
+	# Publish before they restore scenes referring to generated scripts. Older
+	# cold editors need the initial class registration before native validation.
+	if _runtime_registered(): _compile()
+	if last_report.is_empty() or not _apply_extension_setting(): _schedule()
+
+
+func _runtime_registered() -> bool:
+	for entry in ProjectSettings.get_global_class_list():
+		if entry["class"] == "EstragonSurface" and entry.path == "res://addons/estragon/runtime/surface.gd":
+			return true
+	return false
 
 
 func _filesystem_busy() -> bool:
 	var filesystem := _interface.get_resource_filesystem()
-	if filesystem.is_scanning(): return true
-	# On cold/restarted older projects the initial scan may not have started
-	# yet. Do not compile against the previous session's incomplete class index.
-	if filesystem.get_filesystem_path("res://addons/estragon/runtime") == null: return true
+	if filesystem.is_scanning() or not _runtime_registered(): return true
 	# Older editors expose scanning but not a separate import-status query.
 	return filesystem.has_method("is_importing") and filesystem.call("is_importing")
 

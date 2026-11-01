@@ -79,7 +79,7 @@ available safeguards, document the precise diagnostic difference and test both
 paths. C01-C applies this to proactive Callable arity checks only; validity,
 disposal, connection and automatic lifecycle checks remain mandatory.
 
-C01-D #59 is merged; C01-E #48 is the active validation/identity task. Consult
+C01-D #59 and C01-E #60 are merged; C01-F #49 is the editor startup/lifecycle task. Consult
 [its path/cache investigation](docs/C01_E_VALIDATION.md) and live issue before
 resuming the owner-approved legacy preflight/publication split. Isolated checks
 may be unavailable, but actual-path native validation and rollback remain
