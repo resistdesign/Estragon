@@ -83,6 +83,18 @@ Unavailable legacy isolation remains BLOCKED, never PASS. The dedicated
 and live state, dependency-type rejection, rollback, no-op byte/UID/timestamps,
 fresh failure cache cleanup, repair and inherited member updates.
 
+An additional experiment reproduced an inherent native live-reload limit on
+4.0.4 and 4.7.2: after adding inherited `second: int = 2`, a previously existing
+derived instance retains `first = 17` but its new `second` slot is null; fresh
+instances correctly receive `second = 2`. This is recorded separately as
+`native_live_added_defaults` BLOCKED, with actual values. The publication gate
+still requires unchanged Script identity, preserved existing state, correct
+fresh defaults, and **current bytecode on the live instance** (setting second to
+5 must produce 22). It does not fabricate successful live default initialization.
+Estragon already requires stopping/re-running applications after edits; running
+application hot reload is not implemented. No instance registry, custom default
+initializer or architecture change is introduced to backport this engine feature.
+
 The publication path also exposed two old-engine gaps: `entry.class` must use
 `entry["class"]` on 4.0, and public `DirAccess.is_link()` is absent through 4.2.
 The former is corrected without changing dependency semantics. Link inspection

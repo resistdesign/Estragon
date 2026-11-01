@@ -253,6 +253,16 @@ def audit(engine, output, editor):
                              (mode == "fresh_failure" and "missing_publication_value" not in errors[0]) or
                              (mode == "rollback" and 'return type is "int"' not in errors[0])):
                 stages[name]["status"] = "FAIL"
+            if mode == "positive":
+                lines = (target / (name + ".log")).read_text().splitlines()
+                evidence = [json.loads(line.removeprefix("NATIVE_INHERITED_DEFAULTS_EVIDENCE "))
+                            for line in lines if line.startswith("NATIVE_INHERITED_DEFAULTS_EVIDENCE ")]
+                if len(evidence) != 1:
+                    stages["native_live_added_defaults"] = unavailable("Missing native reload observation", "FAIL")
+                else:
+                    stages["native_live_added_defaults"] = {
+                        "status": evidence[0]["status"], "evidence": evidence[0],
+                        "reason": "Native keep_state reload does not initialize new inherited defaults on existing instances; running application hot reload is not implemented"}
         # Runtime rejection is part of the supported sizing/text contract, even
         # where unrelated compiler/editor stages still fail. Count diagnostics
         # so an arbitrary parse error cannot satisfy an expected-error probe.

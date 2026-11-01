@@ -36,7 +36,7 @@ for path in args.report:
         for name, stage in engine["stages"].items():
             assert stage["status"] in ["PASS", "FAIL", "BLOCKED", "UNTESTED"]
             compact = {key: stage[key] for key in ["status", "reason", "exit_code", "timeout",
-                       "aborted_on_error", "log"] if key in stage}
+                       "aborted_on_error", "log", "evidence"] if key in stage}
             if "log" in stage:
                 log = path.parent / engine["label"] / stage["log"]
                 compact["log_sha256"] = hashlib.sha256(log.read_bytes()).hexdigest()
