@@ -10,6 +10,7 @@ var _interface: EditorInterface
 var _failed := false
 var _checks := 0
 var _imported_image := false
+var _output_path: String = OUTPUT
 
 func _enter_tree() -> void:
 	_interface = get_editor_interface()
@@ -57,7 +58,7 @@ func _saved_notice(plugin: EditorPlugin) -> void:
 
 func _hooks(plugin: EditorPlugin) -> void:
 	var fs := _interface.get_resource_filesystem()
-	for item in [[fs.filesystem_changed, "_schedule"], [fs.sources_changed, "_sources_changed"], [plugin.resource_saved, "_resource_saved"]]:
+	for item in [[fs.filesystem_changed, "_schedule"], [fs.sources_changed, "_sources_changed"], [plugin.resource_saved, "_resource_saved"], [_interface.get_script_editor().editor_script_changed, "_script_changed"]]:
 		var count := 0
 		for connection in item[0].get_connections():
 			var callback = connection["callable"]
@@ -67,14 +68,26 @@ func _hooks(plugin: EditorPlugin) -> void:
 	_check(plugin.get_children().filter(func(child): return child is Timer).size() == 1, "one coalescing timer")
 
 func _quiet(plugin: EditorPlugin) -> void:
-	await _wait(1.2)
+	# Initial imports/class indexing may finish after the first valid build.
+	# Require bounded quiescence, then prove notifications do not loop at idle.
+	var stable := 0
 	var count: int = plugin.build_count
+	for _attempt in range(150):
+		await _wait()
+		if plugin.build_count == count and plugin._timer.is_stopped() and not plugin._filesystem_busy():
+			stable += 1
+		else:
+			count = plugin.build_count
+			stable = 0
+		if stable == 12: break
+	_check(stable == 12, "filesystem/build notifications settle within 15 seconds")
+	count = plugin.build_count
 	await _wait(1.2)
 	_check(plugin.build_count == count, "no idle build loop")
 
 func _count_is(value: int) -> bool:
 	if not _ready_plugin(): return false
-	var script = load(OUTPUT)
+	var script = load(_output_path)
 	# Non-tool application scripts cannot instantiate in an editor process.
 	# The runner separately executes these published bytes in a fresh runtime.
 	return script != null and script.source_code == FileAccess.get_file_as_string(OUTPUT) and script.source_code.contains("var count: int = " + str(value))
@@ -120,9 +133,10 @@ func _run() -> void:
 		await _quiet(_plugin())
 		_finish(2)
 		return
+
 	_check(_count_is(0), "cold startup replaces stale generated default")
 	var source := FileAccess.get_file_as_string(SOURCE)
-	var cached = load(OUTPUT)
+	var cached = load(_output_path)
 	var before: int = plugin.build_count
 	for _index in range(8): plugin._schedule()
 	await _wait(1.2)
@@ -130,11 +144,11 @@ func _run() -> void:
 	_write(SOURCE, source.replace("var count: int = 0", "var count: int = 1"))
 	for _index in range(8): _saved_notice(plugin)
 	await _until(func(): return _count_is(1), "saved-source signal compiles current disk bytes")
-	_check(load(OUTPUT) == cached, "saved update preserves cached Script identity")
+	_check(load(_output_path) == cached, "saved update preserves cached Script identity")
 	_write(SOURCE, source.replace("var count: int = 0", "var count: int = 2"))
 	fs.scan()
 	await _until(func(): return _count_is(2), "external rescan compiles current source")
-	_check(load(OUTPUT) == cached, "external update preserves Script identity")
+	_check(load(_output_path) == cached, "external update preserves Script identity")
 	await _quiet(plugin)
 	var previous := FileAccess.get_file_as_string(OUTPUT)
 	_write(SOURCE, "<Unknown/>")

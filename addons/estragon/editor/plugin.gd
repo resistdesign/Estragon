@@ -15,6 +15,8 @@ var _diagnostics: RichTextLabel
 var _building: bool = false
 var _active: bool = false
 var _extensions_pending: bool = true
+var _rescan_pending: bool = false
+var _generated_editors: Dictionary = {}
 var last_report: Dictionary = {}
 var build_count: int = 0
 
@@ -53,6 +55,7 @@ func _enter_tree() -> void:
 	_interface.get_resource_filesystem().filesystem_changed.connect(_schedule)
 	_interface.get_resource_filesystem().sources_changed.connect(_sources_changed)
 	resource_saved.connect(_resource_saved)
+	_interface.get_script_editor().editor_script_changed.connect(_script_changed)
 	# Newer editors load class names before plugins but may still be scanning.
 	# Publish before they restore scenes referring to generated scripts. Older
 	# cold editors need the initial class registration before native validation.
@@ -90,6 +93,47 @@ func _apply_extension_setting() -> bool:
 func _schedule() -> void:
 	if _active and not _building:
 		_timer.start()
+
+
+func _script_changed(script: Script) -> void:
+	var scripts := _interface.get_script_editor()
+	if script == null or scripts.get_current_script() != script: return
+	var editor := scripts.get_current_editor()
+	if editor == null: return
+	_generated_editors[script.resource_path] = {"editor": weakref(editor), "script": weakref(script)}
+	_schedule()
+
+
+func _refresh_generated_editors() -> void:
+	# Native ScriptEditor buffers otherwise write pre-build text back into the
+	# Script cache and even disk on shutdown. Match only public signal/current
+	# editor associations and paths this successful build owns. Never edit Gogo.
+	var scripts := _interface.get_script_editor()
+	var current := scripts.get_current_script()
+	if current != null and scripts.get_current_editor() != null:
+		_generated_editors[current.resource_path] = {"editor": weakref(scripts.get_current_editor()), "script": weakref(current)}
+	for output in last_report.get("outputs", []):
+		var path := "res://" + str(output)
+		if not _generated_editors.has(path): continue
+		var editor = _generated_editors[path].editor.get_ref()
+		var script = _generated_editors[path].script.get_ref()
+		if editor == null or script == null or script.resource_path != path:
+			_generated_editors.erase(path)
+			continue
+		var code = editor.get_base_editor()
+		if not code is CodeEdit: continue
+		var text := FileAccess.get_file_as_string(path)
+		if code.text != text:
+			var line: int = code.get_caret_line()
+			var column: int = code.get_caret_column()
+			var vertical: float = code.scroll_vertical
+			var horizontal: int = code.scroll_horizontal
+			code.text = text
+			code.set_caret_line(line)
+			code.set_caret_column(column)
+			code.scroll_vertical = vertical
+			code.scroll_horizontal = horizontal
+			code.tag_saved_version()
 
 
 func _sources_changed(_changed: bool) -> void:
@@ -136,15 +180,14 @@ func _compile() -> bool:
 	build_count += 1
 	last_report = BuildService.run_build()
 	_show_report()
+	if last_report.ok: _refresh_generated_editors()
 	# Refresh paths without reimporting authored source. The child game's fresh
 	# process reads these exact bytes; editor resources are synchronized as well.
 	var filesystem := _interface.get_resource_filesystem()
-	var needs_scan := false
-	for path in last_report.get("changed", []):
-		var resource_path := "res://" + str(path)
-		if filesystem.get_filesystem_path(resource_path.get_base_dir()) == null: needs_scan = true
-		filesystem.update_file(resource_path)
-	if needs_scan and not _filesystem_busy(): filesystem.scan()
+	_rescan_pending = _rescan_pending or not last_report.get("changed", []).is_empty()
+	if _rescan_pending and not _filesystem_busy():
+		_rescan_pending = false
+		filesystem.scan()
 	_building = false
 	return last_report.ok
 
@@ -159,12 +202,18 @@ func _show_report() -> void:
 func _exit_tree() -> void:
 	_active = false
 	_building = false
+	_rescan_pending = false
 	if is_instance_valid(_interface):
 		var filesystem := _interface.get_resource_filesystem()
 		if filesystem.filesystem_changed.is_connected(_schedule):
 			filesystem.filesystem_changed.disconnect(_schedule)
 		if filesystem.sources_changed.is_connected(_sources_changed):
 			filesystem.sources_changed.disconnect(_sources_changed)
+	if is_instance_valid(_interface):
+		var scripts := _interface.get_script_editor()
+		if scripts.editor_script_changed.is_connected(_script_changed):
+			scripts.editor_script_changed.disconnect(_script_changed)
+	_generated_editors.clear()
 	if resource_saved.is_connected(_resource_saved):
 		resource_saved.disconnect(_resource_saved)
 	if _timer != null:

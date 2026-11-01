@@ -18,7 +18,19 @@ before validating generated inheritance. Newer editors already load class names
 before plugins, so their first native build remains synchronous: unconditionally
 deferring it lets the editor restore a scene before its generated Script exists.
 Saved-disk changes wait for scanning/import readiness and share the existing
-coalescing timer. No compiler, generated-code, runtime or renderer changes.
+coalescing timer. Generated files' native CodeEdit buffers are refreshed after
+successful validation using public `editor_script_changed`/current-editor
+associations. Otherwise old native buffers overwrite current cached source and
+can save stale bytes on shutdown. Only build-owned output paths are eligible;
+weak editor/Script references are released on disable, cursor/scroll positions
+are retained, and authored buffers are untouched. No UI hierarchy/path heuristic,
+compiler, generated-code, runtime or renderer changes.
+
+Committed-output filesystem refresh uses a pending idle scan rather than
+reentrant per-file `update_file()` calls: the latter reproduced duplicate native
+`update_script_paths_documentation` tasks in a graphical editor. Import/class
+notifications must settle within the test's explicit 15-second bound, then idle
+build count must remain unchanged.
 
 Disable disconnects filesystem/resource hooks, stops/frees pending work, releases
 the diagnostics panel and unregisters/stops highlighting. Re-enable creates a

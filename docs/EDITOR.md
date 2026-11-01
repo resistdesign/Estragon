@@ -173,7 +173,9 @@ Relevant Godot contracts:
 The plugin uses its owning EditorPlugin's EditorInterface instance. Native class
 metadata and filesystem scanning gate initial/saved builds; optional import-status
 and settings-change methods are called only when exposed. Filesystem/resource
-notifications coalesce through one timer. Disable disconnects hooks, stops and
+notifications coalesce through one timer and idle filesystem scans. Successful builds refresh
+observed native buffers for their generated outputs through public Script Editor
+signals, preserving caret/scroll state; authored buffers are untouched. Disable disconnects hooks, stops and
 frees that timer, removes the diagnostics panel and unregisters highlighting;
 re-enable reconstructs the integration and rebuilds saved sources. Existing
 editor extension preferences are retained. [Scoped tests](C01_F_EDITOR.md)

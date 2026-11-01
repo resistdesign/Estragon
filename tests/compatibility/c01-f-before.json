@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "source_commit": "c17902a1dfc1f2a8b72f5cfa1d49fe2ccdf8966e",
+  "purpose": "Unmodified merged-main reproduction before C01-F; isolated highlighting collector exit is not compatibility certification",
+  "engines": [
+    {
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.0.4-stable/Godot_v4.0.4-stable_macos.universal.zip",
+      "addon_startup": "FAIL",
+      "report_valid": false,
+      "errors": [
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_editor_settings()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_editor_settings()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_editor_settings()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_editor_settings()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
+        "\u001b[1;35mSCRIPT ERROR:\u001b[0;95m Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead."
+      ]
+    },
+    {
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "binary_sha256": "40fb1c588438ed98efbdd4aeb71b90aec6e269b1abb5f18419755340ef8e1514",
+      "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/Godot_v4.6.3-stable_macos.universal.zip",
+      "addon_startup": "FAIL",
+      "report_valid": true,
+      "errors": [
+        "SCRIPT ERROR: Invalid call. Nonexistent function 'is_importing' in base 'EditorFileSystem'."
+      ]
+    },
+    {
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "binary_sha256": "c7cccbf8fb143e34e02fd6521e09be2c2b974f0d5db080b19071c9c570718ccf",
+      "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_macos.universal.zip",
+      "addon_startup": "PASS",
+      "report_valid": true,
+      "errors": []
+    }
+  ]
+}

@@ -39,12 +39,13 @@ def audit(selection, output):
             folder.mkdir()
             env[key] = str(folder)
         record["version"] = subprocess.check_output(
-            [str(binary), "--headless", "--version"], env=env, text=True).strip()
+            [str(binary), "--headless", "--version"], env=env, text=True, timeout=60).strip()
         manifest = json.loads((ROOT / "tests/compatibility/engines.json").read_text())
         known = next((item for item in manifest if item["version"] == record["version"]), None)
         if not known or (platform.system() == "Darwin" and
                          known["binary_sha256"] != record["input_binary_sha256"]):
             raise ValueError("Engine differs from pinned official provenance")
+        record["official_archive_url"] = known["official_archive_url"]
         project = workspace / "project"
         shutil.copytree(ROOT / "addons/estragon", project / "addons/estragon")
         (project / "ui").mkdir()
@@ -104,9 +105,14 @@ def main():
     args.output.mkdir(parents=True, exist_ok=False)
     source_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     source_status = subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True)
+    source_files = [ROOT / "addons/estragon/editor/plugin.gd", Path(__file__),
+                    ROOT / "tests/editor/lifecycle/driver.gd", ROOT / "tests/editor/lifecycle/runtime.gd"]
+    source_hashes = {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
+                     for path in source_files}
     records = [audit(selection, args.output) for selection in args.engine]
     result = {"schema_version": 1, "source_commit": source_commit,
-              "source_dirty": bool(source_status), "platform": platform.platform(),
+              "source_dirty": bool(source_status), "source_hashes": source_hashes,
+              "platform": platform.platform(),
               "collected_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
               "engines": records}
     (args.output / "results.json").write_text(json.dumps(result, indent=2) + "\n")
