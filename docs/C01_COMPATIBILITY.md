@@ -18,6 +18,10 @@ C01-D's [numeric investigation and correction](C01_D_NUMBERS.md) separately
 records avoidable formatting/leading-zero loss and the owner-approved native
 conversion limits. The original audit baseline below is preserved.
 
+C01-E [semantic/path/identity evidence](C01_E_VALIDATION.md) is merged in #60.
+C01-F [editor startup/lifecycle evidence](C01_F_EDITOR.md) is scoped to #49/#62;
+its separate snapshots preserve this original audit and remaining red stages.
+
 ## Reproduction and evidence
 
 Use Python 3.9+ as optional contributor orchestration, the standard system shell,

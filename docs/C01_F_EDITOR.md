@@ -79,8 +79,35 @@ covers actual buffer saves, F5/F6, negative native diagnostics and recovery.
 
 ## Evidence and remaining boundaries
 
-Final structured results and exact regression commands are recorded with the
-review handoff in #49/#62. The compatibility collector's `--collect-only` exit
+The [strict lifecycle snapshot](../tests/compatibility/c01-f-lifecycle.json)
+records all 36 required stages PASS on the nine official engines. It was collected
+from clean `026ddcf` with hashes of the plugin, harness and native test scripts.
+Production code is unchanged from `7a97255`; the later commit fixes the test
+runner's installed-baseline provenance field and records earlier failure evidence.
+The [full audit](../tests/compatibility/c01-f-results.json) uses clean
+`7a97255`, and [native visual evidence](../tests/compatibility/c01-f-visual.json)
+records the same production revision. Raw report/log hashes are retained; CI
+artifacts contain full logs. Exact regression commands accompany the handoff.
+
+| Official engine | Addon startup | Lifecycle + fresh runtimes | Existing Play/recovery |
+| --- | --- | --- | --- |
+| 4.0.4 | PASS | 4/4 PASS | UNTESTED (#50) |
+| 4.1.4 | PASS | 4/4 PASS | UNTESTED (#50) |
+| 4.2.2 | PASS | 4/4 PASS | UNTESTED (#50) |
+| 4.3 | PASS | 4/4 PASS | UNTESTED (#50) |
+| 4.4.1 | PASS | 4/4 PASS | UNTESTED (#50) |
+| 4.5.2 | PASS | 4/4 PASS | UNTESTED (#50) |
+| 4.6.3 | PASS | 4/4 PASS | UNTESTED (#50) |
+| 4.7.0 baseline | PASS | 4/4 PASS | PASS |
+| 4.7.2 | PASS | 4/4 PASS | PASS |
+
+The full collector also retains unrelated red test-context stages: the older
+`native_build.gd` fixture directly extends unavailable Logger on 4.0–4.4
+(`generated_import` FAIL); editor-only highlighter construction in a non-editor
+parse process fails on 4.0–4.2 (`shipped_scripts` FAIL). These are separate from
+actual editor loading/native builds and C01-E's passing baseline/publication
+probes. Preserve and port their test contexts in C01-H; do not silence the errors.
+HybridEdges raw/lambda execution remains FAIL on 4.0–4.2 (#61). The compatibility collector's `--collect-only` exit
 remains informational; inspect each stage. CI separately requires lifecycle
 success on every pinned engine, alongside existing scoped C01-B…E gates.
 
@@ -98,3 +125,30 @@ native validation or publish unchecked code to suppress the error.
 
 No physical keyboard/interactive manual validation is implied by automated
 editor/native-window tests. C01-H retains final release certification.
+
+## Regression commands
+
+The pinned 4.7 frontend/generation scripts were run with the verified copied,
+self-contained engine, not against the owner's project/settings:
+
+```sh
+GODOT_BIN=/absolute/isolated/godot sh tools/check-native-frontend.sh
+GODOT_BIN=/absolute/isolated/godot sh tools/check-native-generation.sh
+GODOT_BIN=/absolute/isolated/godot bun run check:godot
+bun run test:godot-harness
+bun install --frozen-lockfile
+bun run check
+python3 -m unittest discover -s tests/compatibility
+GODOT_BIN=/absolute/isolated/godot sh tools/check-editor.sh
+ESTRAGON_EDITOR_NATIVE=1 ESTRAGON_KEEP_EDITOR_TEST=1 \
+  GODOT_BIN=/absolute/isolated/godot sh tools/check-editor.sh
+```
+
+Results: frontend 103 cases/558 assertions; generation 3632 assertions; native
+semantics 149 assertions; 180 reference tests/663 expectations; 18 Python
+collector tests; runtime positive/negative checks and deliberate harness
+failure-detection cases PASS. Both headless and native graphical editor suites
+print `ESTRAGON_EDITOR_OK`, including actual buffer saves, F5/F6 negative/recovery,
+transactional builds and restart. The native window captures show ordinary Gogo
+highlighting and expected Counter increment/reset/resizing. Physical keyboard
+and subjective owner interaction remain UNTESTED. No renderer/layout changes.

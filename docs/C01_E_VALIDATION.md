@@ -235,7 +235,8 @@ processes remain cold. Existing enabled plugins are preserved; project bytes
 are restored and the observer removed even if the editor fails (unit-tested).
 Original parser errors still make import FAIL even with an index-ready marker
 and exit 0. The C01-B container/button parse gates remain unchanged and strict.
-No production editor-startup code is changed; C01-F remains queued. The corrected
+At the C01-E handoff, production editor startup was unchanged; subsequent
+C01-F delivery is tracked in [C01_F_EDITOR.md](C01_F_EDITOR.md). The corrected
 setup passes both original container/button parse gates on all nine engines,
 and dedicated publication import now passes on every engine. Genuine old-addon
 parser/startup errors remain FAIL. The earlier import failures are preserved in
