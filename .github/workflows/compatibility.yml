@@ -152,6 +152,17 @@ jobs:
           name: c01-f-lifecycle-${{ matrix.version }}
           path: ${{ runner.temp }}/editor-lifecycle
           if-no-files-found: error
+      - name: Require C01-G unsaved-buffer Play and recovery
+        run: >-
+          python3 tools/check-editor-play.py
+          --engine '${{ matrix.version }}=${{ env.GODOT_BIN }}'
+          --output '${{ runner.temp }}/editor-play'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c01-g-play-${{ matrix.version }}
+          path: ${{ runner.temp }}/editor-play
+          if-no-files-found: error
       - name: Publish actual stage outcomes
         if: always()
         env:

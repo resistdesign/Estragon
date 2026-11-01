@@ -57,7 +57,7 @@ func _refresh() -> void:
 		# or rewrite the per-file cache; normal editor persistence handles state.
 		code.syntax_highlighter = Highlighter.new()
 
-func _path(editor: ScriptEditorBase, code: TextEdit) -> String:
+func _path(editor: ScriptEditorBase, code: TextEdit, allow_cached: bool = true) -> String:
 	if code.syntax_highlighter is EditorSyntaxHighlighter and code.syntax_highlighter.has_method("_get_edited_resource"):
 		# Capability-check the bound getter; it is not a published API contract.
 		var resource: Resource = code.syntax_highlighter.call("_get_edited_resource") as Resource
@@ -67,7 +67,7 @@ func _path(editor: ScriptEditorBase, code: TextEdit) -> String:
 	# supplies exact path tooltips and tab indices (not filtered-list indices).
 	# Validate both against the tab's actual parent; never guess from contents
 	# or a basename. Pinned-engine adapter covered by real editor regressions.
-	if not _tested_adapter: return str(code.get_meta(PATH_META, ""))
+	if not _tested_adapter: return str(code.get_meta(PATH_META, "")) if allow_cached else ""
 	var tabs := editor.get_parent() as TabContainer
 	if tabs == null: return ""
 	for list in _scripts.find_children("*", "ItemList", true, false):
@@ -77,4 +77,4 @@ func _path(editor: ScriptEditorBase, code: TextEdit) -> String:
 			if tabs.get_tab_control(index) != editor: continue
 			var path: String = list.get_item_tooltip(item)
 			if path.begins_with("res://"): return path
-	return str(code.get_meta(PATH_META, ""))
+	return str(code.get_meta(PATH_META, "")) if allow_cached else ""

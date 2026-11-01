@@ -1,0 +1,10 @@
+
+func _ready() -> void:
+    _c01_g_proof.call_deferred()
+
+func _c01_g_proof() -> void:
+    await get_tree().process_frame
+    var background = load("res://ui/generated/Background.gd").new()
+    var file := FileAccess.open("res://.godot/estragon/play-proof.json", FileAccess.WRITE)
+    file.store_string(JSON.stringify({"count": count, "background": background.value(), "label": get_root().get_children()[1].text, "independent": get_child_count() == 0}))
+    file.close()
