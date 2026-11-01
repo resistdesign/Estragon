@@ -408,7 +408,7 @@ def audit(engine, output, editor):
         else:
             stages["api_dump"] = unavailable("Engine did not produce extension_api.json", "FAIL")
         stages["graphics_physical_keys"] = unavailable(
-            "Headless evidence does not certify pixels or physical F5/F6", "UNTESTED")
+            "Headless evidence does not certify pixels; native visual evidence is separate. Physical/manual keypress tests are not required.", "UNTESTED")
         if editor:
             # E01 shell launches its own copied, self-contained engine with empty
             # PATH. It deliberately exits zero after some failed capability probes.
@@ -434,7 +434,7 @@ def audit(engine, output, editor):
             else:
                 stages["editor_play_recovery"] = unavailable(
                     "Startup failed" if stages["addon_startup"]["status"] == "FAIL" else
-                    "C01-G #50: older-engine unsaved-buffer/Play gates remain unverified; full Play harness supports 4.7 only",
+                    "Legacy full editor regression supports 4.7 only; run check-editor-play.py for C01-G unsaved Play on every pinned version",
                     "BLOCKED" if stages["addon_startup"]["status"] == "FAIL" else "UNTESTED")
         else:
             for name in ["normal_highlighting", "filtered_highlighting", "addon_startup", "editor_play_recovery"]:

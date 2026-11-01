@@ -92,6 +92,9 @@ def audit(selection, output):
                 "C01_G_PLAY_PHASE_" + str(phase) + "_OK", timeout=240,
                 expected_errors=True)
             text = (target / (name + ".log")).read_text()
+            checks = re.findall(r"^C01_G_CHECK (.*): (true|false)$", text, re.MULTILINE)
+            record["stages"][name]["checks_total"] = len(checks)
+            record["stages"][name]["failed_checks"] = [name for name, value in checks if value != "true"]
             unexpected = unexpected_errors(text)
             record["stages"][name]["unexpected_errors"] = unexpected
             if unexpected: record["stages"][name]["status"] = "FAIL"

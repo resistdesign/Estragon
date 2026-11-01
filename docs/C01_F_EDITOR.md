@@ -1,8 +1,8 @@
 # C01-F native editor startup and lifecycle
 
-C01-F [#49](https://github.com/resistdesign/Estragon/issues/49) is in review in
-[PR #62](https://github.com/resistdesign/Estragon/pull/62), based on C01-E merge
-`c17902a`. This is a scoped editor fix, not full Godot 4.0+ certification.
+C01-F [#49](https://github.com/resistdesign/Estragon/issues/49) merged in
+[PR #62](https://github.com/resistdesign/Estragon/pull/62) at `95efa45`, based
+on C01-E merge `c17902a`. This is a scoped editor fix, not full Godot 4.0+ certification.
 
 ## Cause and correction
 

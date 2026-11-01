@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source_commit": "393e91c",
+  "scope": "Unmodified main native editor _build API reproduction; startup success is not unsaved Play acceptance",
+  "engine": {
+    "minor": "4.0",
+    "version": "4.0.4.stable.official.fc0b241c9",
+    "official_archive_url": "https://github.com/godotengine/godot-builds/releases/download/4.0.4-stable/Godot_v4.0.4-stable_macos.universal.zip",
+    "archive_sha256": "a345a0777652323b24497b19c34bfea363cf1ed496dd2eb86befbdab287ab747",
+    "binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+    "patch_selection": "Latest stable patch in official godot-builds releases API, 2026-10-29"
+  },
+  "status": "FAIL",
+  "save_all_scripts": false,
+  "get_unsaved_files": false,
+  "log_sha256": "4a9982351b440a7fdfcfde3128729b3010954a88ee5dada4512bde7ee481fb6d",
+  "diagnostics": [
+    "C01_G_BASELINE_SAVE_API false",
+    "C01_G_BASELINE_UNSAVED_API false",
+    "SCRIPT ERROR: Invalid call. Nonexistent function 'save_all_scripts' in base 'ScriptEditor'.",
+    "C01_G_BASELINE_PROBE_COMPLETE"
+  ]
+}
