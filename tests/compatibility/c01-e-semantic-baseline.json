@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "scope": "C01-E native semantic baseline and isolated-path capability; pending legacy contract, not full certification",
+  "engines": [
+    {
+      "label": "4.0.4",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "8124860317385863264e997f2e3d2899d944b1cfd2805c532ef0cba5e50a49d2"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "b5105d3d42ae452d17ae7ee17704de900c14a62148fa96dccc52136909f1abb4"
+        },
+        "isolated": {
+          "status": "BLOCKED",
+          "log_sha256": "3f9cee0939c02061dff7bbefa7f45164129934ce27ba558a884f51213df79b42"
+        }
+      }
+    },
+    {
+      "label": "4.1.4",
+      "version": "4.1.4.stable.official.fe0e8e557",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "a63cf428141e63bc6dcdbb2b66a8a1e1b7c2e744349ec13dcae6a28972fddc2a"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "6a73bcc9e3ea900abceb4eb99ac0c75e1d947b218e8796937a68c86edf3f6c2f"
+        },
+        "isolated": {
+          "status": "BLOCKED",
+          "log_sha256": "45358552e3fdb59972aac0f0afeaa7a5d8d5ce1bda3471411f708e932f6ed4b2"
+        }
+      }
+    },
+    {
+      "label": "4.2.2",
+      "version": "4.2.2.stable.official.15073afe3",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "db16421bda7ba42bd02521a13222c96c3779703fb3f375bbfd5ebf27a9adf69a"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "a099b8c22af2a9da58596961be9cb036935808238691cee0cab9adf38ae3b843"
+        },
+        "isolated": {
+          "status": "BLOCKED",
+          "log_sha256": "33f936ba525630dd9ce5ee367e5713ce63f2665cd834c562d1d8d57c4657d712"
+        }
+      }
+    },
+    {
+      "label": "4.3",
+      "version": "4.3.stable.official.77dcf97d8",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "cc5d10249bbaff42d3363c3399a30f9e773a4f6bff153678f5c8da2351716e35"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "20188a28c48acefac50fd3e496f1a17b02785fb37c10de9ff6bf04156c51d9da"
+        },
+        "isolated": {
+          "status": "BLOCKED",
+          "log_sha256": "5264f8d4302702fd2d2e5e76fed8105fa13ad996542a055a3e0b7e5c3faebd7d"
+        }
+      }
+    },
+    {
+      "label": "4.4.1",
+      "version": "4.4.1.stable.official.49a5bc7b6",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "f06a6910d983b68f018fa48c67ed179db7227caa376ed3891a2cfbd1494ce8e9"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "fb81f80530cb55d6c32e57d6d04bfeb682f6d69757a6001f2a4c5eff53985c58"
+        },
+        "isolated": {
+          "status": "PASS",
+          "log_sha256": "f06a6910d983b68f018fa48c67ed179db7227caa376ed3891a2cfbd1494ce8e9"
+        }
+      }
+    },
+    {
+      "label": "4.5.2",
+      "version": "4.5.2.stable.official.6ce3de25a",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "fa4c162b935a245303f3bb19683977ed8df5b223eaf001bc9808a38c20f4ee85"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "f6c8d65944ae77422ebb0782b986f1503c040073836ae32b1bd3967904d5582c"
+        },
+        "isolated": {
+          "status": "PASS",
+          "log_sha256": "fa4c162b935a245303f3bb19683977ed8df5b223eaf001bc9808a38c20f4ee85"
+        }
+      }
+    },
+    {
+      "label": "4.6.3",
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "4eea8577e5458b2a51c31c2ef739994ceea28b711754bf0fdb05c0b3e80cb1a2"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "c0cd9976087450aac8dd0ce1df04ad3d53700598e7d00b556148a43b0826644c"
+        },
+        "isolated": {
+          "status": "PASS",
+          "log_sha256": "4eea8577e5458b2a51c31c2ef739994ceea28b711754bf0fdb05c0b3e80cb1a2"
+        }
+      }
+    },
+    {
+      "label": "4.7",
+      "version": "4.7.stable.official.5b4e0cb0f",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "7bd8ce7750c0af1ed6d0d7a5e287a87b0676f76754bf7d58d77dc450875ae958"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "a2869a27e54a300e0736865ae87a17ab51049bb6780430990e30b070d1b06807"
+        },
+        "isolated": {
+          "status": "PASS",
+          "log_sha256": "7bd8ce7750c0af1ed6d0d7a5e287a87b0676f76754bf7d58d77dc450875ae958"
+        }
+      }
+    },
+    {
+      "label": "4.7.2",
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "stages": {
+        "valid": {
+          "status": "PASS",
+          "log_sha256": "18f5aa5085103ecd76b4bdfb92e4c83bf4dc2f6707a5955aff860c5941d032a1"
+        },
+        "invalid": {
+          "status": "PASS",
+          "log_sha256": "ccff58d4a0fa81637bbe5cce17c76275807b7a7872f8154314efd1ec26c72f39"
+        },
+        "isolated": {
+          "status": "PASS",
+          "log_sha256": "18f5aa5085103ecd76b4bdfb92e4c83bf4dc2f6707a5955aff860c5941d032a1"
+        }
+      }
+    }
+  ]
+}

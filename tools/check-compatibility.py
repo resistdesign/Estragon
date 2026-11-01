@@ -71,6 +71,57 @@ def unavailable(reason, status="BLOCKED"):
     return {"status": status, "reason": reason}
 
 
+def index_project(binary, project, workspace, env, log):
+    # --quit means the FIRST iteration on 4.0/4.1; neither exposes --import.
+    # Wait for real filesystem/class metadata, not a runtime-script warm-up.
+    config = project / "project.godot"
+    original = config.read_bytes()
+    text = original.decode()
+    section = re.search(r"(?ms)^\[editor_plugins\]\s*\n(.*?)(?=^\[|\Z)", text)
+    enabled = ""
+    if section:
+        match = re.search(r"(?m)^enabled\s*=\s*PackedStringArray\((.*?)\)\s*$", section[1])
+        if match:
+            enabled = match[1].strip()
+    driver = project / "tests/c01_index"
+    driver.mkdir(parents=True, exist_ok=False)
+    expected = {}
+    for path in project.rglob("*.gd"):
+        if ".godot" in path.parts:
+            continue
+        match = re.search(r"(?m)^class_name\s+(\w+)", path.read_text())
+        if match:
+            expected[match[1]] = "res://" + path.relative_to(project).as_posix()
+    (driver / "expected.json").write_text(json.dumps(expected))
+    shutil.copy2(ROOT / "tests/compatibility/index_project.gd.txt", driver / "driver.gd")
+    (driver / "plugin.cfg").write_text(
+        '[plugin]\nname="C01 index observer"\ndescription="Test only"\n'
+        'author="Estragon"\nversion="1"\nscript="driver.gd"\n')
+    plugins = (enabled + ", " if enabled else "") + '"res://tests/c01_index/plugin.cfg"'
+    try:
+        config.write_bytes(original + ('\n[editor_plugins]\nenabled=PackedStringArray('
+                                      + plugins + ')\n').encode())
+        result = execute([str(binary), "--headless", "--path", str(project), "--editor"],
+                         workspace, env, log, "C01_PROJECT_INDEX_READY")
+        registry = driver / "classes.json"
+        if registry.exists():
+            destination = log.with_suffix(".classes.json")
+            shutil.copy2(registry, destination)
+            result["evidence"] = {"class_registry_sha256": hashlib.sha256(registry.read_bytes()).hexdigest(),
+                                  "class_registry_log": destination.name}
+            classes = json.loads(registry.read_text())
+            if any(classes.get(name) != path for name, path in expected.items()):
+                result["status"] = "FAIL"
+                result["reason"] = "Initial class registry is incomplete or has incorrect paths"
+        else:
+            result["status"] = "FAIL"
+            result["reason"] = "Index observer produced no class-registry evidence"
+        return result
+    finally:
+        config.write_bytes(original)
+        shutil.rmtree(driver)
+
+
 def audit(engine, output, editor):
     from callback_metadata_evidence import validate_metadata
     from numeric_evidence import validate_numeric
@@ -122,7 +173,7 @@ def audit(engine, output, editor):
                                    marker, abort_on_error=(marker is not None and not kwargs.get("expected_errors")), **kwargs)
             return stages[name]["status"] == "PASS"
 
-        run("import", ["--editor", "--quit"])
+        stages["import"] = index_project(binary, project, workspace, env, target / "import.log")
         # Parse each shipped addon/generated/example script independently. Do not
         # infer dependency validity from plugin.can_instantiate() or exit zero.
         parses = []
@@ -181,7 +232,8 @@ def audit(engine, output, editor):
         emitted = run("emission_maps", ["--script", "res://tests/godot/native_generation.gd",
                                        "--", "--require-no-bun"], "ESTRAGON_NATIVE_GENERATION_OK")
         if emitted:
-            run("generated_import", ["--editor", "--quit"])
+            stages["generated_import"] = index_project(binary, project, workspace, env,
+                                                       target / "generated_import.log")
         else:
             stages["generated_import"] = unavailable("Native emission failed")
         # Independent legacy/component/runtime processes still run on red import.
@@ -190,8 +242,78 @@ def audit(engine, output, editor):
             ("components", "components", "ESTRAGON_COMPONENTS_OK"),
             ("layout", "layout", "ESTRAGON_LAYOUT_OK"),
             ("input_text", "interaction", "ESTRAGON_INTERACTION_OK"),
+            ("cold_text", "cold_text", "ESTRAGON_COLD_TEXT_OK"),
         ]:
             run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker)
+        # Baseline native reload correctness is independent of optional Logger.
+        # An unavailable isolated path must remain BLOCKED, never a green test.
+        for mode in ["valid", "invalid", "isolated", "isolated_failure"]:
+            name = "semantic_baseline_" + mode
+            run(name, ["--script", "res://tests/godot/semantic_baseline.gd",
+                       "--quit-after", "120", "--", mode],
+                "ESTRAGON_SEMANTIC_BASELINE_OK", expected_errors=(mode in ["invalid", "isolated_failure"]))
+            log = (target / (name + ".log")).read_text()
+            if mode == "invalid":
+                errors = [line for line in log.splitlines()
+                          if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+                if len(errors) != 1 or "missing_semantic_value" not in errors[0]:
+                    stages[name]["status"] = "FAIL"
+            if mode == "isolated_failure":
+                errors = [line for line in log.splitlines()
+                          if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+                blocked = "SEMANTIC_ISOLATED_CONTEXT_BLOCKED" in log
+                if len(errors) != (0 if blocked else 1) or (errors and "missing_candidate_value" not in errors[0]):
+                    stages[name]["status"] = "FAIL"
+            if stages[name]["status"] == "PASS" and "SEMANTIC_ISOLATED_CONTEXT_BLOCKED" in log:
+                stages[name]["status"] = "BLOCKED"
+                stages[name]["reason"] = "Unavailable isolated path API; publication must validate actual-path native code transactionally"
+        # A separate project tests publication without changing the app test's
+        # configuration, class registry, generated files or editor lifecycle.
+        publication = workspace / "publication-template"
+        for folder in ["compiler", "runtime"]:
+            shutil.copytree(ROOT / "addons/estragon" / folder,
+                            publication / "addons/estragon" / folder)
+        (publication / "addons/estragon/editor").mkdir()
+        for filename in ["build_service.gd", "script_dependencies.gd"]:
+            shutil.copy2(ROOT / "addons/estragon/editor" / filename,
+                         publication / "addons/estragon/editor" / filename)
+        (publication / "tests/godot").mkdir(parents=True)
+        shutil.copy2(ROOT / "tests/godot/native_publication.gd",
+                     publication / "tests/godot/native_publication.gd")
+        (publication / "ui/generated").mkdir(parents=True)
+        shutil.copy2(ROOT / "tests/compatibility/publication/Registered.gd",
+                     publication / "ui/generated/Registered.gd")
+        (publication / "project.godot").write_text(
+            'config_version=5\n[application]\nconfig/name="C01-E native publication"\n'
+            '[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+        stages["publication_import"] = index_project(binary, publication, workspace, env,
+                                                     target / "publication_import.log")
+        for mode in ["registered", "positive", "rollback", "fresh_failure"]:
+            candidate = workspace / ("publication-" + mode)
+            shutil.copytree(publication, candidate)
+            name = "native_publication_" + mode
+            expected = mode in ["rollback", "fresh_failure"]
+            stages[name] = execute(
+                [str(binary), "--headless", "--path", str(candidate), "--script",
+                 "res://tests/godot/native_publication.gd", "--quit-after", "120", "--", mode],
+                workspace, env, target / (name + ".log"), "ESTRAGON_NATIVE_PUBLICATION_OK",
+                expected_errors=expected)
+            errors = [line for line in (target / (name + ".log")).read_text().splitlines()
+                      if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+            if expected and (len(errors) != 1 or
+                             (mode == "fresh_failure" and "missing_publication_value" not in errors[0]) or
+                             (mode == "rollback" and 'return type is "int"' not in errors[0])):
+                stages[name]["status"] = "FAIL"
+            if mode == "positive":
+                lines = (target / (name + ".log")).read_text().splitlines()
+                evidence = [json.loads(line.removeprefix("NATIVE_INHERITED_DEFAULTS_EVIDENCE "))
+                            for line in lines if line.startswith("NATIVE_INHERITED_DEFAULTS_EVIDENCE ")]
+                if len(evidence) != 1:
+                    stages["native_live_added_defaults"] = unavailable("Missing native reload observation", "FAIL")
+                else:
+                    stages["native_live_added_defaults"] = {
+                        "status": evidence[0]["status"], "evidence": evidence[0],
+                        "reason": "Native keep_state reload does not initialize new inherited defaults on existing instances; running application hot reload is not implemented"}
         # Runtime rejection is part of the supported sizing/text contract, even
         # where unrelated compiler/editor stages still fail. Count diagnostics
         # so an arbitrary parse error cannot satisfy an expected-error probe.
@@ -222,6 +344,14 @@ def audit(engine, output, editor):
             else:
                 run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker,
                     expected_errors=(name == "semantic_identity"))
+                if name == "semantic_identity":
+                    log = (target / (name + ".log")).read_text()
+                    errors = [line for line in log.splitlines()
+                              if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+                    expected = 18 if known["minor"] in ["4.0", "4.1", "4.2"] else 20
+                    if len(errors) != expected or ("EXPECTED_NATIVE_ERROR_COUNT " + str(expected)) not in log.splitlines():
+                        stages[name]["status"] = "FAIL"
+                        stages[name]["reason"] = "Native semantic transcript must contain only the exact expected errors"
         # Expected callback diagnostics differ only in proactive arity support.
         # Invalid/disposed targets are always rejected before connection.
         for mode in ["empty", "missing", "freed", "disposed", "required", "optional",

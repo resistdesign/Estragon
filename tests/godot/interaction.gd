@@ -156,7 +156,7 @@ func _test_transfers_and_exit() -> void:
 	_check(count[0] == 1 and button.pressed.get_connections().size() == 1, "transferred button keeps exactly one handler")
 	second.dispatch_pointer(_event(Vector2(10, 10), true))
 	var window := second._window
-	var pointer := second._pointer
+	var pointer: EstragonPointerDispatcher = second._pointer
 	viewport.remove_child(second)
 	_check(button.is_disposed() and not button._held and not button._hovered, "surface exit clears active component state")
 	_check(pointer._capture == null and pointer._hover == null, "surface exit releases pointer weak targets")

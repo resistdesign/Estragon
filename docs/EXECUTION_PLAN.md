@@ -282,3 +282,20 @@ A task begins by checking the *latest* main branch, its tracking issue, open PRs
 - Completing a task requires its acceptance tests and human-approved merged PR, not merely a Codex message that it is finished.
 
 **Delivery queue:** one open PR total, including drafts/docs/research. C01-A #42 → C01-B…H #45–51 with E01-F #44 → T09-A #43 → T09-B/C/D #5. E01 #40 is merged. Future tasks remain issues until the current PR merges or closes; a blocked PR requires an owner decision, never a bypass PR.
+
+### C01-E delivery and accepted compatibility contract
+
+C01-D #59 merged at `bf2c426`; C01-E #48 is in review in unmerged PR #60. The focused scope includes
+semantic validation, relative paths and script/cache identity, plus the measured
+cold Text-first dependency cycle. [Investigation evidence](C01_E_VALIDATION.md)
+separates optional diagnostics from mandatory correctness. The owner explicitly distinguishes unavailable isolated preflight on 4.0–4.3
+from mandatory actual-path transactional publication validation. Reports retain
+BLOCKED isolated capability; no build may succeed without native validation and
+rollback/recovery guarantees. See the live #48 decision and DECISIONS amendment.
+
+C01-E's final nine-engine snapshot verifies native semantics, Counter, actual
+registered/cached publication, dependency/inheritance updates, no-op freshness,
+rollback/recovery and cold Text loading. Keep optional capability observations
+and unrelated red editor/grammar stages separate. #61 is an issue-only generated
+lambda-helper follow-up for C01-H disposition, not authorization to start another
+implementation. C01-F #49 remains next after #60 is reviewed and merged/closed.

@@ -224,3 +224,12 @@ Primary API references: [4.0 EditorInterface](https://docs.godotengine.org/en/4.
 [4.0 Vector2](https://docs.godotengine.org/en/4.0/classes/class_vector2.html).
 Version conclusions above use actual executable metadata and executions, rather
 than assuming today's stable documentation describes older engines.
+
+## C01-E scoped delivery (PR #60, awaiting owner review)
+
+C01-D #59 is merged. [C01-E path/cache evidence](C01_E_VALIDATION.md) records
+independent official-engine probes, the accepted legacy preflight/publication
+contract and final nine-engine semantic/transactional/cold-loading results. All
+required scoped gates pass; unavailable isolated preflight, native live defaults,
+raw/lambda grammar, older startup/Play and filtered tabs remain explicit. This
+is not full-addon certification; see the linked final snapshots and #60 CI.

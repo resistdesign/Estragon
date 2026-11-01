@@ -1,16 +1,15 @@
 # Estragon work status and session handoff
 
-**Snapshot:** 2026-10-31. T01–T08 and native planning PR #31 are merged. N01 is merged in PR #32 (`efaad96`). N02 is merged in PR #34 (`8a864a2`). N03 is merged in PR #36 (`a87c33b`). R01 research PR #38 is merged; its negative native `.gd` annotation result is documented. The owner **has made the authoring decision**: lowercase `@bindable` in authored Gogo only (ADR-0013). T09 will cover bindable model objects, reactive layout and observable collections, not just UI text. Normal addon editing/Play uses only Godot; TypeScript/Bun is optional reference tooling. **Owner amendment:** ADR-0014 requires Godot 4.0+; until C01 is verified, shipped compatibility is not certified by the 4.7 suite.
+**Snapshot:** 2026-11-01. T01–T08 and native planning PR #31 are merged. N01 is merged in PR #32 (`efaad96`). N02 is merged in PR #34 (`8a864a2`). N03 is merged in PR #36 (`a87c33b`). R01 research PR #38 is merged; its negative native `.gd` annotation result is documented. The owner **has made the authoring decision**: lowercase `@bindable` in authored Gogo only (ADR-0013). T09 will cover bindable model objects, reactive layout and observable collections, not just UI text. Normal addon editing/Play uses only Godot; TypeScript/Bun is optional reference tooling. **Owner amendment:** ADR-0014 requires Godot 4.0+; until C01 is verified, shipped compatibility is not certified by the 4.7 suite.
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** C01-C #57 merged at `68f1ec4`; C01-B #53 and specification #56
-are also merged. C01-D #47 is the active focused numeric correction. The owner
-selected native Godot parsing semantics, practical normalization/emission fixes
-and explicit native limitations, without a full custom decimal parser. See
-[C01_D_NUMBERS.md](C01_D_NUMBERS.md) and the live issue/PR/CI handoff. C01-E
-cannot start before C01-D merges. Cold Text-first remains #48; the pixel-only
-core/deferred unit helpers, reactive/Box/padding and `to_pixels()` are untouched.
+**Start here:** C01-D #59 merged at `bf2c426` after the owner selected native
+Godot numeric parsing semantics and practical emission fixes. C01-E #48 is in review in **unmerged PR #60** on
+`codex/c01-e-semantic-validation` in its dedicated worktree. See
+[C01_E_VALIDATION.md](C01_E_VALIDATION.md) and the live issue/PR for path/cache
+the accepted contract, final verification and remaining compatibility work.
+C01-F/G, reactive/Box/padding and `to_pixels()` remain queued and untouched.
 
 ## Current plan register
 
@@ -35,8 +34,9 @@ core/deferred unit helpers, reactive/Box/padding and `to_pixels()` are untouched
 | **C01-A** | **Done (merged PR #52)** | Selectable official-engine matrix, source inventory and prioritized issues | [#42](https://github.com/resistdesign/Estragon/issues/42) | 4.0–4.7 actual engine evidence, latest 4.7.2 plus 4.7.0 pin, collector failure tests and informational CI; merge `46bc752`, exact final CI/handoff in #42/#52. |
 | **C01-B** | **Done (scoped fix merged PR #53)** | Scalar component maxima, button label clamp and 4.0 incoming-signal key parsing | [#45](https://github.com/resistdesign/Estragon/issues/45) | [Runtime evidence](C01_B_RUNTIME.md); merge `29fc202`, individual scoped stages are required by CI. Remaining cold Text-first negatives retained as FAIL under #48. |
 | **C01-C** | **Done (merged PR #57)** | Version-gated proactive arity checks; preserve valid callbacks and lifecycle | [#46](https://github.com/resistdesign/Estragon/issues/46) | [Nine-engine evidence](C01_C_CALLBACKS.md): Counter/signals/guard probes pass on 4.0–4.7.2; owner-approved diagnostic timing. Required CI passes; merged `68f1ec4`. |
-| **C01-D** | **In review (PR #59; not merged)** | Canonical numeric tokens and native-value preservation | [#47](https://github.com/resistdesign/Estragon/issues/47) | [Nine-engine evidence](C01_D_NUMBERS.md): numeric/native-preservation and C01-B/C gates pass; native conversion limits stay explicit. Required CI and native graphics pass. |
-| C01-E…H | Queued; one PR at a time | Precision → validation/identity → editor startup → unsaved Play → integration/release | [#48](https://github.com/resistdesign/Estragon/issues/48), [#49](https://github.com/resistdesign/Estragon/issues/49), [#50](https://github.com/resistdesign/Estragon/issues/50), [#51](https://github.com/resistdesign/Estragon/issues/51) | Reviewed sequence in EXECUTION_PLAN; no later implementation started. E01-F #44 remains separate and precedes final release disposition. |
+| **C01-D** | **Done (merged PR #59)** | Canonical numeric tokens and native-value preservation | [#47](https://github.com/resistdesign/Estragon/issues/47) | [Nine-engine evidence](C01_D_NUMBERS.md): numeric/native-preservation and C01-B/C gates pass; native conversion limits stay explicit. Required CI and native graphics pass. |
+| C01-E | In review (PR #60; unmerged) | Native semantic validation, resource paths and script identity | [#48](https://github.com/resistdesign/Estragon/issues/48) | [Nine-engine evidence](C01_E_VALIDATION.md): native semantics, Counter, registered/cached identity, transactional rollback/recovery and cold runtime gates PASS; owner-approved preflight availability differs by engine. Other editor/grammar limits remain explicit. |
+| C01-F…H | Queued; one PR at a time | Editor startup → unsaved Play → integration/release | [#49](https://github.com/resistdesign/Estragon/issues/49), [#50](https://github.com/resistdesign/Estragon/issues/50), [#51](https://github.com/resistdesign/Estragon/issues/51) | Reviewed sequence in EXECUTION_PLAN; no later implementation started. E01-F #44 remains separate and precedes final release disposition. |
 | R02 | Deferred | Renderer-backend research | [#2](https://github.com/resistdesign/Estragon/issues/2) | Pending |
 
 **Statuses:** `Queued` = waiting on planned predecessor(s); `Ready` = actionable and unclaimed; `Active` = owned issue + branch with work underway; `Blocked` = evidence and decision/unblock step required; `In review` = PR open and awaiting approval/checks; `Done` = verified, approved and merged; `Deferred` = explicitly outside the current milestone. Never mark `Done` on an unmerged branch. A research task may complete with a well-evidenced negative feasibility finding.
@@ -51,7 +51,7 @@ core/deferred unit helpers, reactive/Box/padding and `to_pixels()` are untouched
 - Future work belongs in issues while the current PR is active. A blocked PR
   needs documented evidence and an owner decision, not another PR. No automatic
   merges. Every task has a durable issue, checkpoints, verification and handoff.
-- Queue: C01-D #47 → C01-E…H #48–51 with E01-F #44 → T09-A #43 →
+- Queue: current C01-E #48/#60 → C01-F…H #49–51 with E01-F #44 → T09-A #43 →
   T09-B/C/D #5. #40 merged. Check live issues before advancing.
 
 - **One work ID per focused implementation PR.** A planning/ADR/process-only PR may be unassigned if it is explicitly labeled as such and includes no implementation work. The task issue is the durable conversation: scope, current owner/session or branch, plan/checklist, evidence, blockers, handoffs and linked PR.

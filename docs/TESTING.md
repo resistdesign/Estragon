@@ -622,3 +622,37 @@ To preserve numeric details in a committed nine-engine snapshot, use
  tests/compatibility/c01-d-results.json --scope "C01-D native numeric semantics;
  not full-addon certification"` (repeat `--report` for split runs). All pinned
 engines are required, every stage remains intact and logs/reports are hashed.
+
+## C01-E isolated path/cache research
+
+`python3 tools/check-script-context.py --engine label=/absolute/official/godot
+--output /new/results` runs independent native projects with verified engine
+provenance and isolated settings. Repeat `--engine` to select multiple pinned
+versions. See [C01_E_VALIDATION.md](C01_E_VALIDATION.md) for strategies and exact
+limitations. This research collector deliberately exercises unsafe alternatives;
+its zero exit records collection, **not compatibility success**. Inspect every
+stage's PASS/FAIL/BLOCKED outcome and raw log. Any engine error makes that
+strategy FAIL even if native reload returns OK.
+
+`tests/godot/cold_text.gd` starts with a dynamic Text load rather than preloading
+Button or a generated component hierarchy. The normal runtime matrix runs it in
+a fresh process and also counts the two existing cold invalid-font diagnostics.
+All three are required gates; component-first interaction coverage remains
+separate. The pinned-current-engine `bun run check:godot` also runs the new
+positive cold-load test.
+
+C01-E's collector also creates a separate native publication project and tests
+registered identity/live state, no-op stale bytecode, dependency and inheritance
+updates, failure rollback/cleanup and repair. Native semantic tests no longer
+require Logger on old engines; the harness requires exactly 18 expected errors
+on 4.0–4.2 and 20 on 4.3+ and rejects any extra/missing error. Isolated preflight
+is BLOCKED where unavailable, while actual publication is a required PASS.
+The separate native_live_added_defaults observation retains the engine's live
+default-initialization limit; it does not weaken fresh-default or current-bytecode
+checks. See [C01-E final evidence](C01_E_VALIDATION.md).
+
+Initial/generation/publication imports now use a test-only filesystem/class-index
+observer rather than first-iteration --quit. This avoids an old-engine registry
+race without warming runtime scripts. Per-stage class registries/hashes are kept
+as artifacts, and copied project settings/plugins are restored on failure.
+All engine errors still fail import; index completion is not addon certification.

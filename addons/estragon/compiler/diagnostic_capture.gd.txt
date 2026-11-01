@@ -1,0 +1,18 @@
+@tool
+extends Logger
+## Loaded only when this engine exposes the native diagnostic API.
+var path: String
+var messages: Array[Dictionary] = []
+var _mutex := Mutex.new()
+
+func _log_error(_function: String, file: String, line: int, code: String, rationale: String, _notify: bool, error_type: int, _backtraces: Array[ScriptBacktrace]) -> void:
+	if file != path or error_type != ERROR_TYPE_SCRIPT: return
+	_mutex.lock()
+	messages.append({"line": line, "message": rationale if not rationale.is_empty() else code})
+	_mutex.unlock()
+
+func snapshot() -> Array[Dictionary]:
+	_mutex.lock()
+	var copy: Array[Dictionary] = messages.duplicate()
+	_mutex.unlock()
+	return copy

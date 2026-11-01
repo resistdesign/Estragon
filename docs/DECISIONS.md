@@ -237,3 +237,17 @@ introduce a runtime numeric adapter, or authorize C01-E/reactive/unit-helper wor
 - **Mixed-authoring implementation:** reliable source mapping, parsing GDScript expressions alongside markup, and optional code-behind.
 
 When any of these is decided, record the rationale and tradeoffs here before implementation.
+
+## Semantic compatibility amendment — preflight versus publication (2026-10-31)
+
+**Accepted owner decision, C01-E #48 / PR #60:** Distinguish legacy preflight
+from publication. On engines lacking safe isolated script-path assignment
+(verified 4.0–4.3), report isolated cached-path checks unavailable/BLOCKED and
+return no candidate executable. Require actual-path native semantic validation
+inside the file/cache rollback transaction before any build succeeds, including
+no-op builds. Do not return a cached application Script as an isolated candidate,
+take over its path, hide compile errors or accept stale dependencies/bytecode.
+Preserve identity, live state, failure rollback and recovery. 4.4+ retains proved
+isolated path validation; Logger engines retain richer mapped diagnostics.
+See [C01_E_VALIDATION.md](C01_E_VALIDATION.md) and the live issue for evidence.
+This does not authorize C01-F/G startup/Play redesign or reactive/layout work.

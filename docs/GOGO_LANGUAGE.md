@@ -63,6 +63,14 @@ it against the reference, and `--write` refreshes it intentionally.
 
 ## Native compilation and validation (N02)
 
+The isolated candidate API below is supported on the tested 4.4+ engines.
+`Validation.supports_isolated_path()` reports its availability. On 4.0–4.3,
+`validate()` returns an explicit unavailable diagnostic and no executable; use
+the native build service/editor's transactional publication workflow instead.
+That workflow requires actual-path native validation and rollback before success
+and reports isolated preflight separately as BLOCKED. See
+[the accepted compatibility contract](C01_E_VALIDATION.md).
+
 ```gdscript
 const Compiler = preload("res://addons/estragon/compiler/compiler.gd")
 const Validation = preload("res://addons/estragon/compiler/script_validation.gd")
@@ -84,7 +92,8 @@ else:
 `compile()` is synchronous and deterministic: `Compilation` contains `mode`,
 `code`, `source_map` and frontend `diagnostics`. Invalid frontend input exposes
 no code/map. Successful emission **does not assert GDScript semantic validity**;
-use `Validation.validate()` before execution. Validation returns an executable
+require native validation before execution, through isolated `validate()` where
+available or the mandatory transactional publication workflow. Isolated validation returns an executable
 `generated_script` only on success. It does not construct application instances.
 The caller owns mounting/Node lifetime as in ordinary Godot; component cleanup
 remains automatic through EstragonSurface.

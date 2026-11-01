@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "scope": "C01-E cold Text-first fix; runtime-only standalone sweep, not full addon import certification",
+  "source_commit": "2eb013e",
+  "engines": [
+    {
+      "label": "4.0.4",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "stages": {
+        "import": {
+          "status": "FAIL",
+          "log_sha256": "16f54263909c03fa339847cf196bcf187654b0f913de8250d5225ef17860a3ae"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "9e677dc25976ad5e2bf90b94d3f26f810be2fcf77636a8b100ca4ad96bc083d2"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "60701597096d1b89af405b141ebeab1cd1e73f134492237cd31d083548c1e72c"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "e44395b4fee2f789d256cf27c6a3731c936b7c259d422b8d656380910efe82a2"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "ad995bead167a99dd7fcae0cfdd3e1f74c18d42162fe230eb06f2370b8d840c1"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "020140d376f6a5ec7ed78431cbce9053f72925292238df5fc9a2da9e79f5bf08"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "1865b4796264b72465e18f551f3e77b7b78e22d693a7047491b96f54ae0c5436"
+        }
+      }
+    },
+    {
+      "label": "4.1.4",
+      "version": "4.1.4.stable.official.fe0e8e557",
+      "stages": {
+        "import": {
+          "status": "FAIL",
+          "log_sha256": "d469d83f64d3c959e12683f12c3383861a51212c4fcb3e83f0a9df01536e3935"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "10bfd10d65a0580187788fe8d1b1cf25172d1eb32ef1aefc7ab51bb893ec28e2"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "e0f5c23c86e9d100ab8220a16052743295d7e93daf51363acb77a3c3499956af"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "95e4bca175a1a92f10612803780f8166feb3e564e3ae4bcd6ca04334668dae98"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "54940d47c619a6c635e92b13924f62aaa162277a7a1b4573ccf0549c467a4237"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "811e9fe82900fabce6f6662e5c1d80251989edcf83496d1cc799b4ebb9c38585"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "6ff76bacc8201d824676621d3108e7bb03a483e3f4a6c5428a23c7c7f2005ffa"
+        }
+      }
+    },
+    {
+      "label": "4.2.2",
+      "version": "4.2.2.stable.official.15073afe3",
+      "stages": {
+        "import": {
+          "status": "FAIL",
+          "log_sha256": "bc17809927efb432f74f6f6431fdcd4c346566d3d01ec1a8514abe08452832d6"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "e4d4937dc07468ec5683277a1b5233b9a4a3219c22b2a45cfb3a11dfd80323d0"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "e9434a952e75b3228a6af3f23041dea1a55f257a7a692966058f3bf64aca1a7b"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "ec9e3a4e0075e87c9225700985ca871cc19b5c483dc1f840987b7f3be3df9ab9"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "f3f0eeac5b3b4e920f3661636cb563771ef6ffade5d5f897cbca71c5a2c3cf1d"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "85898537eef2b171309d4a38e2bb10c83c96436d5ba904353557219280c83862"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "6e37a717b52c94e57ca91449cbe778dbc17ffb1dade1b04992b1c81edd8acbe6"
+        }
+      }
+    },
+    {
+      "label": "4.3",
+      "version": "4.3.stable.official.77dcf97d8",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "44a8190f061660cd272156bd8dd3269e0e78d963e4224a5881b722fd0d2f1b84"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "4e10df56ac4c33559dccdd11190935c02d796836e44d7ff462aca0430983d6c4"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "e7a4091641a205d0aa28bf80b2254091f8bd7d76e27431392a5a6b88ac929020"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "e13df3edd492c2f124b1b9fdb27507239afd4cc00258bedfd01c4a623fd9893f"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "511098f5a0138c46cb6b7efb8833175faf4028a62d563496fcab3d07747134d7"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "b2d2475f426e621adbb28bcdc4a0a1edd1edbc353ba24326f0441e53bb813c45"
+        }
+      }
+    },
+    {
+      "label": "4.4.1",
+      "version": "4.4.1.stable.official.49a5bc7b6",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "log_sha256": "e82325dc2cc24e01a526eea5a64dd6acde158d739eb111ddd67562bfd6d7727c"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "3e91997d0097129806bc7428342974cf5ae3ab0f37896d704fa045f23eb8e777"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "59f712ef8c54c93d44414a9393fa04a09f50c634b05dd26afbce581eb5ed0d67"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "e045f28ce0d7a4b536ee8069c964efaf32521e42ad416bdfa82671002cca9584"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "45ca79f315ad05b99f27a6cf19a9a38afa0439e821a346da2354252720373422"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "fea30a74003b4e4a1c07bfbcd476590f3c749ffdf94f7a66d12222078990febd"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "8f5fb96d324a1803c601cf2cca21a0adf5f38a1e1697f5e6b2c80766c1b37328"
+        }
+      }
+    },
+    {
+      "label": "4.5.2",
+      "version": "4.5.2.stable.official.6ce3de25a",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "log_sha256": "1376b675d812fca821ac2a7e0e6d1757f7463cb03c832a2b9d5d2ba683542fb0"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "52202bec4a13bf2bc9df08ffd160a21422ee90dbef259849b0865a57eebeb8d6"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "3a6cf2991d96ef4cd32424e104beea30247e8fcc8465dc02ddff89de014cc4ae"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "2fb7a78719063b20cb30befd748699fad40f866ef13eaf31c9f68a1144052c53"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "dab8bf32707b00284b7692beba470f4a118ba06037db15ab910a753304af2716"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "bee494c452a2ac3c015d3c32ece00c6c1a63d34bab3b5e1b4577e5b85dfb636f"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "c39b068709ebf6aabc705322580a8019167723fe539f6b2bcd15b7247cfbd567"
+        }
+      }
+    },
+    {
+      "label": "4.6.3",
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "log_sha256": "59ccf21ab36603930425f0e4fa1e47a5b4ac5216b3d2cb79e4542276742352e3"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "91ec3974b3220bad33aad800c3cc00f1376f78f53c7213e56bdff30614f60d95"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "ec221db11fcc7aa19e4d1363b9155c85360d7e4ab110f78ebda08b5338d21922"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "7d1ba107ab0d5a72d4e4c8d07616dd4083759600060cd84353d61470534552ab"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "40d7e98cbde613990db97cdb52a930ed24c56c155bd81dd18b847ae7c594c99c"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "c029a2a2c190565427516886b32789a2611ca4de4ff9ed7ac859e1eae3c58c3f"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "3f6e7c427c40184ec9e906729c652d2be3959f72117ad093811017b12e998621"
+        }
+      }
+    },
+    {
+      "label": "4.7",
+      "version": "4.7.stable.official.5b4e0cb0f",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "log_sha256": "5d6416840c77f2be7bb5ef60881ae3dc68fd8210f82c085b04cb7c17f19d7bd9"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "6baaf6a23d4864350db18b82a4fc95ac2c8f7caca3911a7df501679e1302753a"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "44fdc8e71db556e61e23236ad4adc71fd944d44b7740f3078a7ddc6965e29542"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "a95f891e2260647616ea113ad9b9df5fe5b6f7a06446368a363fbd4005d142e3"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "232d83a81cc39c59200a05c04d3eaa5b3acba3b893805b7f0257c1dd300bc2eb"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "5d40f9a0e4ccf7fca7947c440b1d96deec65eaa9da77c8e5346119850414e13c"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "ca999a1983cc68267697fdc1ded4ffeb5802be17ce6efa1424c914ea8a326db1"
+        }
+      }
+    },
+    {
+      "label": "4.7.2",
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "stages": {
+        "import": {
+          "status": "PASS",
+          "log_sha256": "051498b452b38957e7eb1f152d2c5bad68516f8e75030410d1e597939650fdb8"
+        },
+        "components": {
+          "status": "PASS",
+          "log_sha256": "fb1d0d51bb249e90724dfd68068b3ed30cdcbf6b87a695ce7d8d9b6dde762cd6"
+        },
+        "layout": {
+          "status": "PASS",
+          "log_sha256": "9232372f0ba282019b95281b0a580835111f09cf1bacd42f497a8f1449546be3"
+        },
+        "interaction": {
+          "status": "PASS",
+          "log_sha256": "b246b041ae634786faf4376c9e65ade89de951bc4e7c2b22d25a5387ebcc9e5d"
+        },
+        "cold_text": {
+          "status": "PASS",
+          "log_sha256": "55915fc5e5fae3030bc4257f9d356f74854a55fee739300aaf9bb95646b72663"
+        },
+        "reject_font": {
+          "status": "PASS",
+          "log_sha256": "b0a71100e49bf4ff452a12dbc6109b861d02c3eeac5314d3df4f59639a6a15de"
+        },
+        "reject_font_size": {
+          "status": "PASS",
+          "log_sha256": "b00448d85dbc727644e3c3ad9edd83ac2315efbc3bd809f1774010d3871c4659"
+        }
+      }
+    }
+  ]
+}
