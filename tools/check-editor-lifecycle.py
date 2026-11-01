@@ -45,7 +45,7 @@ def audit(selection, output):
         if not known or (platform.system() == "Darwin" and
                          known["binary_sha256"] != record["input_binary_sha256"]):
             raise ValueError("Engine differs from pinned official provenance")
-        record["official_archive_url"] = known["official_archive_url"]
+        record["provenance"] = known.get("official_archive_url", known.get("provenance"))
         project = workspace / "project"
         shutil.copytree(ROOT / "addons/estragon", project / "addons/estragon")
         (project / "ui").mkdir()

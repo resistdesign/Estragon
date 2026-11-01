@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "source_commit": "cff538c1458ed90b39105614a9f11145440c7d39",
+  "source_dirty": true,
+  "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+  "collected_at": "2026-11-01T17:04:00.582183+00:00",
+  "engines": [
+    {
+      "label": "4.0.4",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/godot",
+            "--headless",
+            "--editor",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/project"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 27.76,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)"
+          ]
+        },
+        "runtime_after_1": {
+          "status": "FAIL",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/project",
+            "--script",
+            "res://tests/lifecycle/runtime.gd"
+          ],
+          "exit_code": -9,
+          "timeout": false,
+          "aborted_on_error": true,
+          "seconds": 0.82,
+          "log": "runtime_after_1.log",
+          "diagnostics": [
+            "SCRIPT ERROR: Assertion failed.",
+            "          at: _initialize (res://tests/lifecycle/runtime.gd:7)"
+          ]
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/godot",
+            "--headless",
+            "--editor",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/project"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 14.31,
+          "log": "lifecycle_2.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)"
+          ]
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "command": [
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/godot",
+            "--headless",
+            "--path",
+            "/var/folders/wd/9964gmj11p77sx25mlfv3r2r0000gn/T/estragon-lifecycle-jnbq63pb/project",
+            "--script",
+            "res://tests/lifecycle/runtime.gd"
+          ],
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "seconds": 0.87,
+          "log": "runtime_after_2.log",
+          "diagnostics": []
+        }
+      },
+      "input_binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "native_trace": [
+        "TRACE_PRE load: [\"extends EstragonSurface\", \"\", \"var count: int = -1\", \"\"] count=2",
+        "TRACE_POST load: [\"extends EstragonSurface\", \"\", \"var count: int = 0\", \"\"]",
+        "TRACE_FINAL disk=[\"extends EstragonSurface\", \"\", \"var count: int = 4\", \"\"] cache=[\"extends EstragonSurface\", \"\", \"var count: int = 4\", \"\"]"
+      ],
+      "shutdown_output_prefix": [
+        "extends EstragonSurface",
+        "",
+        "var count: int = -1",
+        ""
+      ]
+    }
+  ],
+  "purpose": "Pre-fix native generated CodeEdit writes stale source back into Script cache and disk. Driver explicitly rebuilds once to isolate later shutdown overwrite; not acceptance evidence."
+}

@@ -24,7 +24,12 @@ associations. Otherwise old native buffers overwrite current cached source and
 can save stale bytes on shutdown. Only build-owned output paths are eligible;
 weak editor/Script references are released on disable, cursor/scroll positions
 are retained, and authored buffers are untouched. No UI hierarchy/path heuristic,
-compiler, generated-code, runtime or renderer changes.
+compiler, generated-code, runtime or renderer changes. The
+[pre-fix trace](../tests/compatibility/c01-f-buffer-before.json) retains the
+stale cache/shutdown failure. Godot's own 4.0
+[ScriptTextEditor implementation](https://github.com/godotengine/godot/blob/4.0.4-stable/editor/plugins/script_text_editor.cpp)
+explains why: both ordinary code application and validation assign the buffer's
+text to the Script; refreshing the resource alone does not refresh that buffer.
 
 Committed-output filesystem refresh uses a pending idle scan rather than
 reentrant per-file `update_file()` calls: the latter reproduced duplicate native

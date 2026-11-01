@@ -242,7 +242,8 @@ additional emission loss for separately reported native parser limitations.
 The correctly-rounded conversion capability remains BLOCKED where measured;
 that diagnostic is distinct from approved native-value preservation acceptance.
 Preserve zero policy, float32 finite validation, maps, callbacks and Godot-only
-workflow. No C01-E or other implementation starts before this PR merges/closes.
+workflow. C01-D is merged in #59; C01-E subsequently merged in #60.
+C01-F is the sole active delivery; later milestones remain issue-only.
 
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
