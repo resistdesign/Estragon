@@ -243,7 +243,7 @@ The correctly-rounded conversion capability remains BLOCKED where measured;
 that diagnostic is distinct from approved native-value preservation acceptance.
 Preserve zero policy, float32 finite validation, maps, callbacks and Godot-only
 workflow. C01-D is merged in #59; C01-E subsequently merged in #60.
-C01-F is the sole active delivery; later milestones remain issue-only.
+C01-F #62 merged; C01-G #50/#63 is the sole active delivery. Later milestones remain issue-only.
 
 ### E01 — Automatic Gogo highlighting activation (separate editor fix)
 
@@ -299,9 +299,21 @@ registered/cached publication, dependency/inheritance updates, no-op freshness,
 rollback/recovery and cold Text loading. Keep optional capability observations
 and unrelated red editor/grammar stages separate. #61 is an issue-only generated
 lambda-helper follow-up for C01-H disposition, not authorization to start another
-implementation. C01-F #49 is active in PR #62, based on `c17902a`. Its scoped acceptance is
+implementation. C01-F #49 merged in PR #62 at `95efa45`. Its scoped acceptance is
 actual native editor startup, saved-disk builds, filesystem/import recovery,
 coalescing, clean enable/disable/re-enable and restart on every pinned engine.
 See [C01_F_EDITOR.md](C01_F_EDITOR.md). C01-G owns old-engine unsaved-buffer/Play
 bridges; #44 filtered tabs and #61 grammar remain separate. C01-G/H and T09
 must wait for sequential review/merge; no automatic merge.
+
+### C01-G unsaved-buffer delivery
+
+C01-G #50 is active in PR #63, base `393e91c`, after merged C01-F.
+Use a synchronous native buffer identity/save/verification boundary before both
+Play commands, preserving native semantic transactions and source/cache freshness.
+[C01_G_PLAY.md](C01_G_PLAY.md) records the minimal capability bridge and exact
+nine-engine editor/child-game evidence. Require actual newest unsaved foreground/
+background execution with autosave off, pathless/unsavable/markup/semantic/type
+failure blocking and repair, no-op outputs/maps/UIDs/timestamps and lifecycle
+regressions. C01-H/#44/#61/T09 remain excluded. No physical/manual keypress gate;
+no next implementation or automatic merge before owner review/merge or closure.

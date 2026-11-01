@@ -9,7 +9,7 @@ Completion, debugger remapping, live preview and bindings remain future work.
 **Compatibility:** ADR-0014 requires Godot 4.0+. C01-F / merged PR #62
 verified actual addon startup and saved-source lifecycle on nine official
 4.0–4.7 builds ([evidence](C01_F_EDITOR.md)). Unsaved F5/F6 Play on older
-versions is still pending C01-G #50; full cross-version release acceptance
+versions is tracked in [C01-G #50/#63](C01_G_PLAY.md); full cross-version release acceptance
 remains C01-H #51. Isolated highlighting and filtered-tab limitations are
 in [E01_COMPATIBILITY](E01_COMPATIBILITY.md); see the
 [C01 matrix and queue](C01_COMPATIBILITY.md) for scoped results.
@@ -94,7 +94,12 @@ use Scan Sources if necessary. Background builds use saved sources.
 Both Play modes use the same `_build()` gate. It saves native Script Editor
 buffers, including modified Gogo TextFile tabs, then compiles and semantically
 validates all current source. A Gogo buffer that cannot be saved blocks Play
-instead of using old disk content. Dirty edits need no manual Save before Play.
+instead of using old disk content. Dirty edits need no manual Save before Play. C01-G adds a synchronous
+[identity/save/verification boundary](C01_G_PLAY.md): older engines persist native
+Gogo TextEdit snapshots through core FileAccess; newer engines retain native save
+APIs. Unknown/pathless identities or saved-byte conflicts fail closed. The existing
+version-tested path adapter is queried without its highlighting metadata fallback;
+no source identity is guessed. Native compiler/transaction guarantees are retained.
 Invalid source appears in the **Gogo** diagnostics panel. Repair it and press
 Play again; no compiler restart or external tool recovery is needed.
 

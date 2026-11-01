@@ -59,7 +59,7 @@ def audit(selection, output):
         source = (ROOT / "examples/counter/Counter.gogo").read_text()
         proof = (ROOT / "tests/editor/play/proof.gd.txt").read_text()
         (project / "ui/Counter.gogo").write_text(source + proof)
-        (project / "ui/Background.gogo").write_text("extends RefCounted\nfunc value() -> int: return 0\n")
+        (project / "ui/Background.gogo").write_text("extends RefCounted\r\nfunc value() -> int: return 0\r\n")
         (project / "ui/Counter.tscn").write_text((ROOT / "examples/counter/Counter.tscn").read_text().replace(
             "res://examples/counter/generated/Counter.gd", "res://ui/generated/Counter.gd"))
         # The sample's scene references a versioned generated Script. Seed an

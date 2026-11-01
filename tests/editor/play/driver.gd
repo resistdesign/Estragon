@@ -106,6 +106,7 @@ func _run() -> void:
 	if _counter == null or _background == null:
 		_finish(1)
 		return
+	_check(_plugin._build(), "clean native CRLF buffer remains valid")
 	_source = FileAccess.get_file_as_string(SOURCE)
 	_background_source = FileAccess.get_file_as_string(BACKGROUND)
 	_interface.open_scene_from_path("res://ui/Counter.tscn")

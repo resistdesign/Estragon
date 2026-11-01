@@ -68,7 +68,12 @@ static func save_and_verify(scripts: ScriptEditor, resolve_path: Callable) -> Di
 		var bytes := file.get_buffer(file.get_length())
 		var error := file.get_error()
 		file.close()
-		if error != OK or bytes != str(buffer.text).to_utf8_buffer() or buffer.code.text != buffer.text:
+		# Native TextEdit canonicalizes CRLF to LF even in a clean buffer.
+		# Preserve clean on-disk line endings when that is the only difference.
+		var matches := bytes == str(buffer.text).to_utf8_buffer()
+		if not buffer.dirty and not matches:
+			matches = bytes.get_string_from_utf8().replace("\r\n", "\n") == buffer.text
+		if error != OK or not matches or buffer.code.text != buffer.text:
 			return _failure(buffer.path, "Saved source does not match the latest Gogo buffer; save/reload it before Play.")
 	# Mark only after every persisted snapshot has been independently verified.
 	for buffer in snapshot.buffers: buffer.code.tag_saved_version()

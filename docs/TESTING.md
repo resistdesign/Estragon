@@ -682,3 +682,20 @@ including baseline 4.7 and latest tested 4.7.2. See [C01_F_EDITOR.md](C01_F_EDIT
 Saved-resource signal tests exercise the plugin notification contract using
 current disk bytes; they do not emulate or certify native unsaved-buffer Play.
 The unchanged 4.7 editor/Play suite remains a separate regression gate.
+
+## C01-G real unsaved-buffer Play
+
+```sh
+python3 tools/check-editor-play.py \
+  --engine 4.0.4=/absolute/official/godot \
+  --output /tmp/estragon-play-new
+```
+
+Repeat `--engine` for all nine pinned engines. Both process phases must PASS;
+missing markers, unexpected engine errors or timeouts fail the command. The
+actual editor and child game run with no tools on PATH, isolated settings and
+pre-Play autosave disabled. [C01_G_PLAY.md](C01_G_PLAY.md) documents native dirty
+foreground/background source, pathless/new state, inaccessible saves, markup and
+native semantic/type failures, output/cache protection, repair and restart.
+CI requires this separately from the informational full collector and C01-F
+saved-disk lifecycle suite. Physical/manual keypress tests are not required.
