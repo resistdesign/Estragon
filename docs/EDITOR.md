@@ -72,6 +72,13 @@ extends/preload paths and Godot's literal semantics. Each validated dependency i
 refreshed in place before checking its dependents, so cached base fields/types
 cannot cause stale checks. Failed transactions restore prior cached code too.
 This retains resource/class identity and updates already-loaded dependencies.
+Unchanged source bytes also require actual Script reload: text equality is not
+proof of cached bytecode freshness. Failed first publications remove newly
+created cache entries as well as files. On 4.0–4.3, isolated path preflight is
+unavailable/BLOCKED in the build report; actual-path native transactional
+validation remains mandatory before success. On 4.4+ independent candidate
+validation is retained. This C01-E contract does not certify older plugin
+startup or unsaved Play, which remain C01-F/G work.
 Filesystem records are refreshed; newly generated directories request a scan.
 Running applications are not hot-reloaded: stop/re-run after editing.
 
@@ -111,6 +118,9 @@ The panel shows original file:line:column. Godot's reload API supplies lines,
 not exact error columns; generated spans map to their owning authored location.
 Engine diagnostics remain visible. No debugger breakpoint/source remapping or
 clickable diagnostic navigation is implemented.
+On engines without Logger (through 4.4), native semantic errors remain visible
+and the structured diagnostic explicitly states that the exact authored location
+is unavailable. Frontend source diagnostics and source maps remain intact.
 
 The global `docks/filesystem/textfile_extensions` preference is only appended
 with `gogo` when absent, preserving all existing values. It persists on disable.

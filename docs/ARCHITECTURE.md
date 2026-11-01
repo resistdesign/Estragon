@@ -39,13 +39,19 @@ resource-import or process dependency. GDScript strings/comments are scanned,
 not rewritten; Unicode regular expressions classify identifier characters only.
 N02 consumes this model in `emitter.gd` through `compiler.gd`; `source_map.gd`
 tracks copied/generated ranges. `script_validation.gd` uses synchronous native
-GDScript.reload() with a scoped, thread-safe Logger to capture generated-line
-errors, then maps them back to Gogo. Failed validation exposes no executable
-script. Validation uses Resource.set_path_cache() with the real output path to
-preserve relative resources and registered class_name identity without taking
-over cached application scripts. N03's native build service adds tool-mode loading, source discovery, transactional
+GDScript.reload(). On Logger engines a scoped, thread-safe adapter captures
+generated-line errors and maps them back to Gogo; older engines retain native
+errors and explicitly report unavailable authored locations. Failed validation
+exposes no executable. On 4.4+ a tested cache-only/ordinary path setter pair
+establishes relative resources and registered class identity without taking over
+application scripts. On 4.0–4.3 isolated path validation is explicitly unavailable;
+the owner-approved native build transaction instead requires actual-path native
+validation before success, with file/cache rollback on failure. N03's native build service adds tool-mode loading, source discovery, transactional
 publication and explicit state-preserving editor resource reload. The standalone
-validation API remains isolated from application caches; editor publication synchronizes cached generated Scripts transactionally. See [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md) for the API and measured parity.
+validation API never substitutes a cached application Script for an isolated
+candidate. Publication synchronizes cached Scripts even when source bytes match,
+because source equality alone cannot prove bytecode freshness. See
+[C01_E_VALIDATION.md](C01_E_VALIDATION.md) and [GOGO_LANGUAGE.md](GOGO_LANGUAGE.md).
 
 ## Mixed-source direction (T05 subset implemented; later services planned)
 

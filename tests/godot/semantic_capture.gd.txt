@@ -1,0 +1,8 @@
+extends Logger
+var messages: Array[String] = []
+var _mutex := Mutex.new()
+func _log_error(_function: String, _file: String, _line: int, code: String, rationale: String, _notify: bool, error_type: int, _backtraces: Array[ScriptBacktrace]) -> void:
+	if error_type == ERROR_TYPE_WARNING: return
+	_mutex.lock()
+	messages.append(code if rationale.is_empty() else rationale)
+	_mutex.unlock()

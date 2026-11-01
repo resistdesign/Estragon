@@ -29,10 +29,13 @@ func _initialize() -> void:
 		var original: String = cached.source_code
 		var source := FileAccess.get_file_as_string("res://tests/fixtures/native-named.gogo")
 		source += '\nconst Relative = preload("../../../addons/estragon/runtime/rect.gd")\nfunc candidate_value() -> int: return 7\n'
+		if mode == "isolated_failure": source = source.replace("return 7", "return missing_candidate_value")
 		var result := Validation.validate(Compiler.compile(source, "Named.gogo"), path)
 		if not Validation.supports_isolated_path():
 			assert(not result.ok and result.generated_script == null and not result.diagnostics.is_empty())
 			print("SEMANTIC_ISOLATED_CONTEXT_BLOCKED")
+		elif mode == "isolated_failure":
+			assert(not result.ok and result.generated_script == null and not result.diagnostics.is_empty())
 		else:
 			assert(result.ok and result.generated_script != cached)
 			assert(result.generated_script.new().candidate_value() == 7)

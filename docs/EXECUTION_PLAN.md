@@ -288,7 +288,7 @@ A task begins by checking the *latest* main branch, its tracking issue, open PRs
 C01-D #59 merged at `bf2c426`; C01-E #48 is active. The focused scope includes
 semantic validation, relative paths and script/cache identity, plus the measured
 cold Text-first dependency cycle. [Investigation evidence](C01_E_VALIDATION.md)
-separates optional diagnostics from mandatory correctness. The exact isolated
-cached-path candidate contract on 4.0–4.3 remains unresolved; no fallback may
-silently mutate cached scripts or weaken native validation. Check the live issue
-for the owner decision and acceptance before changing that contract.
+separates optional diagnostics from mandatory correctness. The owner explicitly distinguishes unavailable isolated preflight on 4.0–4.3
+from mandatory actual-path transactional publication validation. Reports retain
+BLOCKED isolated capability; no build may succeed without native validation and
+rollback/recovery guarantees. See the live #48 decision and DECISIONS amendment.

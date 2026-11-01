@@ -38,7 +38,7 @@ static func validate(compilation: Compiler.Compilation, generated_path: String =
 		var diagnostic := Model.Diagnostic.new()
 		diagnostic.source_name = compilation.source_map.source.name
 		diagnostic.span = compilation.source_map.source.span(0)
-		diagnostic.message = "This Godot lacks isolated script-path assignment; no candidate was validated or cached script modified (C01-E legacy contract pending)"
+		diagnostic.message = "Isolated script-path preflight is unavailable on this Godot; no executable was returned or cached script modified. Builds require transactional native publication validation."
 		result.diagnostics.append(diagnostic)
 		return result
 	# Resource's cache-only setter avoids ownership transfer. On 4.4/4.5 the

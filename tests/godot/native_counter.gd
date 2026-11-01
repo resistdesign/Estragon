@@ -33,12 +33,24 @@ func _run() -> void:
 	var source := FileAccess.get_file_as_string("res://examples/counter/Counter.gogo")
 	var compilation := Compiler.compile(source, "examples/counter/Counter.gogo")
 	_check(compilation.ok, "real authored source compiled")
-	var validated := Validation.validate(compilation, "res://examples/counter/generated/NativeCounter.gd")
-	_check(validated.ok, "generated GDScript validated by Godot")
-	if not validated.ok:
+	var generated: GDScript
+	if Validation.supports_isolated_path():
+		var validated := Validation.validate(compilation, "res://examples/counter/generated/NativeCounter.gd")
+		_check(validated.ok, "generated GDScript validated by Godot")
+		if validated.ok: generated = validated.generated_script
+	else:
+		# Legacy engines cannot supply an independent occupied-path candidate.
+		# Exercise the supported native publication workflow, not a skipped check.
+		var build = load("res://addons/estragon/editor/build_service.gd")
+		var report: Dictionary = build.run_build()
+		_check(report.ok and report.isolated_preflight.status == "BLOCKED", "native transactional Counter publication: " + str(report.diagnostics))
+		if report.ok:
+			generated = load("res://examples/counter/generated/Counter.gd")
+			_check(generated.source_code == compilation.code, "published Counter is current native output")
+	if generated == null:
 		quit(1)
 		return
-	var surface: EstragonSurface = validated.generated_script.new()
+	var surface: EstragonSurface = generated.new()
 	root.add_child(surface)
 	await process_frame
 	_check(surface.count == 0 and surface.get_root().get_children()[1].text == "Count: 0", "initial counter")

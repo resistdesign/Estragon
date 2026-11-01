@@ -7,7 +7,7 @@ const Dependencies = preload("res://addons/estragon/editor/script_dependencies.g
 const CONFIG := "gogo.config.json"
 const EXCLUDED := ["generated", "node_modules", "tests", "vendor"]
 var _project: String
-var _report := {"ok": false, "outputs": [], "changed": [], "diagnostics": []}
+var _report := {"ok": false, "outputs": [], "changed": [], "diagnostics": [], "isolated_preflight": {"status": "UNTESTED"}}
 var _sources: Dictionary = {}
 var _staging: String
 var _previous_code: Dictionary = {}
@@ -27,7 +27,7 @@ func _safe(path: String) -> bool:
 	var current := path
 	while current != _project:
 		var directory := DirAccess.open(current.get_base_dir())
-		if directory != null and directory.is_link(current.get_file()):
+		if directory != null and directory.has_method("is_link") and directory.call("is_link", current.get_file()):
 			_fail("Symlinks are not supported in Gogo source/output paths: " + path.trim_prefix(_project + "/"))
 			return false
 		current = current.get_base_dir()
@@ -79,6 +79,8 @@ static func output_for(source: String) -> String:
 	return source.get_base_dir().path_join("generated").path_join(source.get_file().trim_suffix(".gogo") + ".gd")
 
 func _run() -> Dictionary:
+	var directory := DirAccess.open(_project)
+	_report["symlink_checks"] = {"status": "PASS" if directory != null and directory.has_method("is_link") else "BLOCKED", "reason": "Symlink-free source/output paths are required; older engines cannot introspect links. Lexical path containment remains enforced."}
 	_discover()
 	if not _report.diagnostics.is_empty(): return _report
 	var sources := _sources.keys()
@@ -157,19 +159,27 @@ func _run() -> Dictionary:
 				break
 			operation.installed = true
 	var cache_state: Array[Dictionary] = []
-	var refresh_all := operations.any(func(item: Dictionary) -> bool: return item.path.ends_with(".gd"))
+	var isolated := Validation.supports_isolated_path()
+	_report.isolated_preflight = {"status": "UNTESTED" if isolated else "BLOCKED", "reason": "" if isolated else "Unavailable native path API; mandatory transactional actual-path validation used instead"}
 	if _report.diagnostics.is_empty():
 		compiled = _validation_order(compiled)
 		for item in compiled:
-			var checked := Validation.validate(item.result, _resource_path(item.output))
-			for diagnostic in checked.diagnostics: _fail(diagnostic.format())
-			if not checked.ok: break
-			_refresh_cache(item, refresh_all, cache_state)
+			if isolated:
+				var checked := Validation.validate(item.result, _resource_path(item.output))
+				for diagnostic in checked.diagnostics: _fail(diagnostic.format())
+				if not checked.ok:
+					_report.isolated_preflight.status = "FAIL"
+					break
+			# Owner-approved legacy contract: isolated validation is unavailable,
+			# never simulated with a cached Script. Native actual-path reload is
+			# mandatory, including no-op builds, before this transaction can commit.
+			_refresh_cache(item, cache_state)
 			if not _report.diagnostics.is_empty(): break
 	if not _report.diagnostics.is_empty():
 		_rollback(operations)
 		_restore_cache(cache_state)
 	else:
+		if isolated and not compiled.is_empty(): _report.isolated_preflight.status = "PASS"
 		for operation in operations: _report.changed.append(operation.path)
 		_report.ok = true
 	_cleanup(operations)
@@ -193,22 +203,36 @@ func _cleanup(operations: Array[Dictionary]) -> void:
 func _resource_path(output: String) -> String:
 	return "res://" + output if _project == ProjectSettings.globalize_path("res://").trim_suffix("/") else _project.path_join(output)
 
-func _refresh_cache(item: Dictionary, force: bool, state: Array[Dictionary]) -> void:
+func _refresh_cache(item: Dictionary, state: Array[Dictionary]) -> void:
 	# GDScript also has an internal cache not exposed by get_cached_ref().
 	# Loading the validated path retrieves its existing Script identity.
-	var script := ResourceLoader.load(_resource_path(item.output), "GDScript") as GDScript
+	var path := _resource_path(item.output)
+	var was_cached := ResourceLoader.has_cached(path)
+	var script: GDScript
+	if not Validation.supports_isolated_path() and not was_cached and not _previous_code.has(item.output):
+		# First publication has no previous resource to preserve. Establish the
+		# actual native path inside the transaction and compile exactly once.
+		script = GDScript.new()
+		script.resource_path = path
+	else:
+		script = ResourceLoader.load(path, "GDScript") as GDScript
 	if script == null:
 		_fail("Cannot load validated generated script: " + item.output)
 		return
-	if not force and script.source_code == item.result.code: return
-	state.append({"script": script, "previous": _previous_code.get(item.output, script.source_code), "output": item.output})
+	# Matching source bytes cannot prove which implementation is compiled.
+	# Reload the actual Script even on no-op builds; keep_state preserves owners.
+	state.append({"script": script, "previous": script.source_code if was_cached else _previous_code.get(item.output), "output": item.output})
 	var checked := Validation.reload_script(item.result, script, true)
 	for diagnostic in checked.diagnostics: _fail(diagnostic.format())
 
 func _restore_cache(state: Array[Dictionary]) -> void:
-	for item in state: item.script.source_code = item.previous
 	for item in state:
-		if item.script.reload(true) != OK: _fail("Cannot restore cached script: " + item.output)
+		if item.previous == null:
+			# Failed first publication must not leave an invalid cached resource.
+			item.script.resource_path = ""
+		else: item.script.source_code = item.previous
+	for item in state:
+		if item.previous != null and item.script.reload(true) != OK: _fail("Cannot restore cached script: " + item.output)
 
 func _validation_order(compiled: Array[Dictionary]) -> Array[Dictionary]:
 	var by_path: Dictionary = {}

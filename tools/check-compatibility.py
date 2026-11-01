@@ -195,20 +195,64 @@ def audit(engine, output, editor):
             run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker)
         # Baseline native reload correctness is independent of optional Logger.
         # An unavailable isolated path must remain BLOCKED, never a green test.
-        for mode in ["valid", "invalid", "isolated"]:
+        for mode in ["valid", "invalid", "isolated", "isolated_failure"]:
             name = "semantic_baseline_" + mode
             run(name, ["--script", "res://tests/godot/semantic_baseline.gd",
                        "--quit-after", "120", "--", mode],
-                "ESTRAGON_SEMANTIC_BASELINE_OK", expected_errors=(mode == "invalid"))
+                "ESTRAGON_SEMANTIC_BASELINE_OK", expected_errors=(mode in ["invalid", "isolated_failure"]))
             log = (target / (name + ".log")).read_text()
             if mode == "invalid":
                 errors = [line for line in log.splitlines()
                           if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
                 if len(errors) != 1 or "missing_semantic_value" not in errors[0]:
                     stages[name]["status"] = "FAIL"
+            if mode == "isolated_failure":
+                errors = [line for line in log.splitlines()
+                          if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+                blocked = "SEMANTIC_ISOLATED_CONTEXT_BLOCKED" in log
+                if len(errors) != (0 if blocked else 1) or (errors and "missing_candidate_value" not in errors[0]):
+                    stages[name]["status"] = "FAIL"
             if stages[name]["status"] == "PASS" and "SEMANTIC_ISOLATED_CONTEXT_BLOCKED" in log:
                 stages[name]["status"] = "BLOCKED"
-                stages[name]["reason"] = "Exact isolated cached-path contract pending owner decision"
+                stages[name]["reason"] = "Unavailable isolated path API; publication must validate actual-path native code transactionally"
+        # A separate project tests publication without changing the app test's
+        # configuration, class registry, generated files or editor lifecycle.
+        publication = workspace / "publication-template"
+        for folder in ["compiler", "runtime"]:
+            shutil.copytree(ROOT / "addons/estragon" / folder,
+                            publication / "addons/estragon" / folder)
+        (publication / "addons/estragon/editor").mkdir()
+        for filename in ["build_service.gd", "script_dependencies.gd"]:
+            shutil.copy2(ROOT / "addons/estragon/editor" / filename,
+                         publication / "addons/estragon/editor" / filename)
+        (publication / "tests/godot").mkdir(parents=True)
+        shutil.copy2(ROOT / "tests/godot/native_publication.gd",
+                     publication / "tests/godot/native_publication.gd")
+        (publication / "ui/generated").mkdir(parents=True)
+        shutil.copy2(ROOT / "tests/compatibility/publication/Registered.gd",
+                     publication / "ui/generated/Registered.gd")
+        (publication / "project.godot").write_text(
+            'config_version=5\n[application]\nconfig/name="C01-E native publication"\n'
+            '[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
+        stages["publication_import"] = execute(
+            [str(binary), "--headless", "--path", str(publication), "--editor", "--quit"],
+            workspace, env, target / "publication_import.log")
+        for mode in ["registered", "positive", "rollback", "fresh_failure"]:
+            candidate = workspace / ("publication-" + mode)
+            shutil.copytree(publication, candidate)
+            name = "native_publication_" + mode
+            expected = mode in ["rollback", "fresh_failure"]
+            stages[name] = execute(
+                [str(binary), "--headless", "--path", str(candidate), "--script",
+                 "res://tests/godot/native_publication.gd", "--quit-after", "120", "--", mode],
+                workspace, env, target / (name + ".log"), "ESTRAGON_NATIVE_PUBLICATION_OK",
+                expected_errors=expected)
+            errors = [line for line in (target / (name + ".log")).read_text().splitlines()
+                      if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+            if expected and (len(errors) != 1 or
+                             (mode == "fresh_failure" and "missing_publication_value" not in errors[0]) or
+                             (mode == "rollback" and 'return type is "int"' not in errors[0])):
+                stages[name]["status"] = "FAIL"
         # Runtime rejection is part of the supported sizing/text contract, even
         # where unrelated compiler/editor stages still fail. Count diagnostics
         # so an arbitrary parse error cannot satisfy an expected-error probe.
@@ -239,6 +283,14 @@ def audit(engine, output, editor):
             else:
                 run(name, ["--script", "res://tests/godot/" + script + ".gd"], marker,
                     expected_errors=(name == "semantic_identity"))
+                if name == "semantic_identity":
+                    log = (target / (name + ".log")).read_text()
+                    errors = [line for line in log.splitlines()
+                              if line.startswith(("SCRIPT ERROR:", "ERROR:"))]
+                    expected = 18 if known["minor"] in ["4.0", "4.1", "4.2"] else 20
+                    if len(errors) != expected or ("EXPECTED_NATIVE_ERROR_COUNT " + str(expected)) not in log.splitlines():
+                        stages[name]["status"] = "FAIL"
+                        stages[name]["reason"] = "Native semantic transcript must contain only the exact expected errors"
         # Expected callback diagnostics differ only in proactive arity support.
         # Invalid/disposed targets are always rejected before connection.
         for mode in ["empty", "missing", "freed", "disposed", "required", "optional",

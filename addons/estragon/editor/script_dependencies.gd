@@ -27,7 +27,7 @@ static func paths(code: String, output: String) -> PackedStringArray:
 		if next >= tokens.size(): continue
 		if tokens[next].kind == "identifier" and token.text == "extends":
 			for entry in ProjectSettings.get_global_class_list():
-				if str(entry.class) == tokens[next].text: result.append(entry.path)
+				if str(entry["class"]) == tokens[next].text: result.append(entry.path)
 		elif tokens[next].kind == "string":
 			# Only one lexer-proven literal is evaluated, never an authored
 			# expression, component or application. This handles Godot escapes,

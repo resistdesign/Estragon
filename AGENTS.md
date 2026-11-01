@@ -81,7 +81,9 @@ disposal, connection and automatic lifecycle checks remain mandatory.
 
 C01-D #59 is merged; C01-E #48 is the active validation/identity task. Consult
 [its path/cache investigation](docs/C01_E_VALIDATION.md) and live issue before
-selecting a legacy fallback. Optional diagnostic degradation does not authorize
+resuming the owner-approved legacy preflight/publication split. Isolated checks
+may be unavailable, but actual-path native validation and rollback remain
+mandatory before build success. Optional diagnostic degradation does not authorize
 cache takeover, stale source, or silently weaker class/dependency validation.
 
 ## Non-negotiable architecture

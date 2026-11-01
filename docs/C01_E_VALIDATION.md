@@ -53,46 +53,44 @@ returns `ScriptLanguage` with neither `validate` nor `_validate` callable.
 `ScriptLanguageExtension`'s extension hooks are not a public native GDScript
 parser service. No alternate public parser API has been established.
 
-## Decision needed before changing the older-engine contract
+## Accepted legacy preflight/publication contract
 
-The current requirement combines an unpublished independent candidate, an exact
-already-cached output/class path and no cache mutation. No safe public-API
-implementation for that combination has been demonstrated on 4.0–4.3.
-Do not replace it with cache takeover, ignored engine errors, stale cached code,
-a custom parser, external compiler, or silently removed `class_name`.
+The owner selected the second option in issue #48 / PR #60 on 2026-10-31:
+**distinguish legacy preflight from publication; report isolated cached-path
+checks as unavailable; require actual-path native validation and rollback before
+any build succeeds.** This explicitly replaces universal isolated-candidate
+acceptance; it does not waive native validity, freshness, dependencies or identity.
 
-Two possible directions require owner review:
+On 4.0–4.3 `validate()` returns a clear unsupported-preflight diagnostic with no
+executable or cache mutation. Build reports expose `isolated_preflight.status`
+as BLOCKED independently of success. The build service must perform actual-path
+native reload inside its file/cache rollback transaction, including no-op builds,
+before reporting success. It never presents a cached application Script as an
+isolated candidate. 4.4+ retains independent candidate validation with the proved
+paired path assignment.
 
-1. Keep the exact isolated-candidate contract and leave that older-engine case
-   blocked while pursuing an engine/API solution. Existing newer engines can
-   still receive the proven small path bridge and diagnostic isolation.
-2. Explicitly distinguish isolated preflight from transactional publication on
-   older engines. Preflight must report the exact cached-path capability as
-   unavailable; final native semantic validation at the real output path must
-   remain mandatory inside rollback/recovery before publication is committed.
-   This requires a reviewed contract/API change and tests of live instances,
-   dependent types, failure rollback and recovery. It does **not** authorize
-   returning a cached application Script as an isolated candidate.
+The bundled Logger/ScriptBacktrace adapter is trusted text compiled only when
+its native classes and OS logger methods exist. Older engines still perform real
+native reload and expose native errors; a generic diagnostic explicitly states
+that an exact authored location is unavailable. Native Logger engines retain
+mapped authored diagnostics. No errors are suppressed.
 
-Neither option is implemented or accepted by this document. Better diagnostic
-capture is optional under progressive enhancement; actual validity, freshness,
-dependency resolution and identity are correctness requirements.
+`semantic_baseline.gd` tests real valid reload, unknown-identifier rejection
+(exactly one native error; authored line 3 on Logger engines), and separate
+candidate identity with relative preload and relative/absolute inheritance.
+Unavailable legacy isolation remains BLOCKED, never PASS. The dedicated
+`native_publication.gd` suite tests final registered-class publication, cached
+and live state, dependency-type rejection, rollback, no-op byte/UID/timestamps,
+fresh failure cache cleanup, repair and inherited member updates.
 
-The draft now isolates the bundled Logger/ScriptBacktrace adapter as trusted
-text, compiled only when those native classes and OS logger methods exist.
-Older engines still perform real native reload and expose native errors; a
-generic diagnostic explicitly states that an exact authored location is
-unavailable. On 4.4+ the proved paired path assignment restores relative paths
-and registered-class candidate context. On 4.0–4.3 `validate()` currently returns
-an explicit unsupported-path diagnostic with no executable or cache mutation;
-it does **not** bypass the pending correctness requirement. Explicit publication
-`reload_script()` remains separately testable on all versions. No editor routing
-or legacy transactional fallback has been introduced.
-
-`semantic_baseline.gd` checks a real valid native reload, an unknown-identifier
-rejection (exactly one native error; mapped authored line 3 on Logger engines),
-and separate candidate identity with relative preload and relative/absolute
-inheritance. Unavailable legacy isolation is a BLOCKED stage, never PASS.
+The publication path also exposed two old-engine gaps: `entry.class` must use
+`entry["class"]` on 4.0, and public `DirAccess.is_link()` is absent through 4.2.
+The former is corrected without changing dependency semantics. Link inspection
+is an optional filesystem guard, reported separately as `symlink_checks` BLOCKED
+where unavailable. Symlink-free projects remain required; lexical path/root
+checks, transactional rename/rollback, native validity and cache identity remain
+mandatory. Newer engines retain explicit symlink rejection. No external tools or
+platform-specific filesystem adapter are introduced to reproduce that diagnostic.
 
 ## Cold Text-first cycle
 
