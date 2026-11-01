@@ -246,3 +246,13 @@ publication validation and C01-D native numeric policy remain unchanged.
 Saved-disk lifecycle success does not certify unsaved Play on older engines
 (C01-G #50), filtered never-associated tabs (#44), or generated lambda grammar
 (#61). Release certification remains C01-H.
+
+## C01-G unsaved-buffer Play
+
+[C01-G boundary and real-editor tests](C01_G_PLAY.md) track #50/#63. Its strict
+selectable `check-editor-play.py` harness runs actual dirty-buffer editor/child-game
+Play on all nine pinned engines, independently of C01-F saved-source lifecycle.
+The older `editor_play_recovery` collector stage remains the broader legacy suite
+pinned to 4.7; its UNTESTED label on older engines is not the C01-G harness outcome.
+Read the separate C01-G stage evidence; audit collection alone remains informational.
+Physical/manual keypress checks are not requirements under the owner policy.

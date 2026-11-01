@@ -2,6 +2,7 @@
 extends EditorPlugin
 ## Native ScriptEditor authoring and direct Godot compilation before every Play.
 
+const BufferGuard = preload("res://addons/estragon/editor/buffer_guard.gd")
 const BuildService = preload("res://addons/estragon/editor/build_service.gd")
 const HighlighterAssociation = preload("res://addons/estragon/editor/highlighter_association.gd")
 const Highlighter = preload("res://addons/estragon/editor/highlighter.gd")
@@ -16,6 +17,7 @@ var _building: bool = false
 var _active: bool = false
 var _extensions_pending: bool = true
 var _rescan_pending: bool = false
+var _play_save_failed: bool = false
 var _generated_editors: Dictionary = {}
 var last_report: Dictionary = {}
 var build_count: int = 0
@@ -91,7 +93,7 @@ func _apply_extension_setting() -> bool:
 
 
 func _schedule() -> void:
-	if _active and not _building:
+	if _active and not _building and not _play_save_failed:
 		_timer.start()
 
 
@@ -142,6 +144,7 @@ func _sources_changed(_changed: bool) -> void:
 
 func _resource_saved(resource: Resource) -> void:
 	if resource.resource_path.ends_with(".gogo"):
+		_play_save_failed = false
 		_schedule()
 
 
@@ -150,7 +153,7 @@ func _save_external_data() -> void:
 
 
 func _compile_saved() -> void:
-	if _active:
+	if _active and not _play_save_failed:
 		if _filesystem_busy() or not _apply_extension_setting():
 			_schedule()
 			return
@@ -161,16 +164,14 @@ func _compile_saved() -> void:
 func _build() -> bool:
 	if not _active or _building:
 		return false
-	# Includes native TextFile tabs, not only GDScript. Never compile old disk
-	# contents when the author's buffer is newer, even with autosave disabled.
-	var scripts := _interface.get_script_editor()
-	scripts.save_all_scripts()
 	_timer.stop()
-	for path in scripts.get_unsaved_files():
-		if path.ends_with(".gogo"):
-			last_report = {"ok": false, "changed": [], "outputs": [], "diagnostics": [path + ":1:1: Cannot save latest Gogo buffer; resolve the Save error before Play."]}
-			_show_report()
-			return false
+	var saved := BufferGuard.save_and_verify(_interface.get_script_editor(), _highlighter_association._path.bind(false))
+	_timer.stop()
+	_play_save_failed = not saved.ok
+	if not saved.ok:
+		last_report = {"ok": false, "changed": [], "outputs": [], "diagnostics": saved.diagnostics}
+		_show_report()
+		return false
 	return _compile()
 
 
@@ -203,6 +204,7 @@ func _exit_tree() -> void:
 	_active = false
 	_building = false
 	_rescan_pending = false
+	_play_save_failed = false
 	if is_instance_valid(_interface):
 		var filesystem := _interface.get_resource_filesystem()
 		if filesystem.filesystem_changed.is_connected(_schedule):

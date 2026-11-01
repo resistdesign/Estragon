@@ -4,16 +4,11 @@
 
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
-**Start here:** C01-F #49 / PR #62 merged at `95efa45` after
-C01-E #48 / PR #60 (`c17902a`). All nine official Godot 4.0–4.7
-editor startup/lifecycle stages are green; see
-[C01-F evidence](C01_F_EDITOR.md). **Next Ready task: C01-G #50**
-(unsaved/unsavable Gogo buffers and fail-closed F5/F6). Read its
-[task issue](https://github.com/resistdesign/Estragon/issues/50) at
-pickup; claim it only after verifying the live main branch and entire open-PR
-list. C01-H #51 and E01-F #44 remain queued. No T09, Box/padding, or
-`to_pixels()` implementation is authorized in C01-G. The owner's new
-no-physical-keypress-testing policy is in AGENTS.md.
+**Start here:** C01-F #49 / PR #62 merged at `95efa45`. C01-G #50 is
+in review in unmerged PR #63 on `codex/c01-g-unsaved-play`, based on latest main
+`393e91c`. Read the live issue/PR and [C01-G evidence](C01_G_PLAY.md) before
+resuming. C01-H #51, #44 disposition and T09 remain queued. The owner testing
+policy requires automated real-editor Play, not physical keyboard checks.
 
 ## Current plan register
 
@@ -41,7 +36,7 @@ no-physical-keypress-testing policy is in AGENTS.md.
 | **C01-D** | **Done (merged PR #59)** | Canonical numeric tokens and native-value preservation | [#47](https://github.com/resistdesign/Estragon/issues/47) | [Nine-engine evidence](C01_D_NUMBERS.md): numeric/native-preservation and C01-B/C gates pass; native conversion limits stay explicit. Required CI and native graphics pass. |
 | **C01-E** | **Done (merged PR #60, `c17902a`)** | Native semantic validation, resource paths and script identity | [#48](https://github.com/resistdesign/Estragon/issues/48) | [Nine-engine evidence](C01_E_VALIDATION.md): native semantics, Counter, registered/cached identity, transactional rollback/recovery and cold runtime gates PASS; owner-approved preflight availability differs by engine. Other editor/grammar limits remain explicit. |
 | **C01-F** | **Done (merged PR #62, `95efa45`)** | Native editor startup and plugin lifecycle | [#49](https://github.com/resistdesign/Estragon/issues/49) | [Nine-engine lifecycle evidence](C01_F_EDITOR.md): 36/36 required stages PASS, clean editor startup/refresh/restart, real saved-source builds. Older unsaved Play remains C01-G. |
-| **C01-G** | **Ready** | Unsaved/unsavable Gogo F5/F6 fail-closed Play and recovery | [#50](https://github.com/resistdesign/Estragon/issues/50) | Read #50 for current scope, required nine-engine real-editor validation and handoff; no implementation started. |
+| **C01-G** | **In review (PR #63; unmerged)** | Unsaved/unsavable Gogo F5/F6 fail-closed Play and recovery | [#50](https://github.com/resistdesign/Estragon/issues/50) | [Play evidence](C01_G_PLAY.md); 18/18 Play phases, 864 native assertions and 36/36 lifecycle stages PASS; final CI/handoff in #50/#63. |
 | C01-H | Queued after C01-G and E01-F disposition | Distribution, cross-version release gate | [#51](https://github.com/resistdesign/Estragon/issues/51), [#44](https://github.com/resistdesign/Estragon/issues/44) | Release evidence and remaining unrelated gaps to be handled separately; physical/manual keypress tests are not required per AGENTS.md. |
 | R02 | Deferred | Renderer-backend research | [#2](https://github.com/resistdesign/Estragon/issues/2) | Pending |
 
@@ -57,7 +52,7 @@ no-physical-keypress-testing policy is in AGENTS.md.
 - Future work belongs in issues while the current PR is active. A blocked PR
   needs documented evidence and an owner decision, not another PR. No automatic
   merges. Every task has a durable issue, checkpoints, verification and handoff.
-- Queue: C01-F #49/#62 merged → **C01-G #50 Ready** → E01-F #44 disposition → C01-H #51 → T09-A #43 →
+- Queue: C01-F #49/#62 merged → **C01-G #50/#63 active** → E01-F #44 disposition → C01-H #51 → T09-A #43 →
   T09-B/C/D #5. #40 merged. Check live issues before advancing.
 
 - **One work ID per focused implementation PR.** A planning/ADR/process-only PR may be unassigned if it is explicitly labeled as such and includes no implementation work. The task issue is the durable conversation: scope, current owner/session or branch, plan/checklist, evidence, blockers, handoffs and linked PR.

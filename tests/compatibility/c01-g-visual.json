@@ -1,0 +1,28 @@
+{
+  "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+  "engine": "4.7.stable.official.5b4e0cb0f",
+  "status": "PASS",
+  "command": "ESTRAGON_EDITOR_NATIVE=1 ESTRAGON_KEEP_EDITOR_TEST=1 GODOT_BIN=<isolated pinned 4.7> sh tools/check-editor.sh",
+  "log_sha256": "aeae17789833d551a3e3d118e9451648a687b5b26b13b5dd7fbd5ecc9efa4419",
+  "captures": [
+    {
+      "file": "editor-highlight.png",
+      "sha256": "081b4bc486c7e74b4d1123b7f42ec15075cdaf70724b3116f68e8742d15c3134",
+      "width": 3584,
+      "height": 2180
+    },
+    {
+      "file": "game-7-increment.png",
+      "sha256": "db3a5272cc9f6b0f8b8f2fa321f8cb8cee376a39d986df56c9c1beb5f71fb800",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "file": "game-7-reset-resized.png",
+      "sha256": "80cfbf0e5ee805ec90dc206111bb1997284c7373d5960c060d2f298df9d14659",
+      "width": 800,
+      "height": 400
+    }
+  ],
+  "scope": "Automated native graphical editor/child-game Play, transactions and restart; captures inspected; physical/manual keypresses not required."
+}

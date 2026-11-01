@@ -79,7 +79,7 @@ available safeguards, document the precise diagnostic difference and test both
 paths. C01-C applies this to proactive Callable arity checks only; validity,
 disposal, connection and automatic lifecycle checks remain mandatory.
 
-C01-D #59, C01-E #60 and C01-F #62 are merged. **Next: C01-G #50**,
+C01-D #59, C01-E #60 and C01-F #62 are merged. **Active: C01-G #50 / PR #63**,
 the unsaved-buffer and fail-closed F5/F6 editor task. Read its live issue,
 [C01-F lifecycle evidence](docs/C01_F_EDITOR.md) and
 [C01-E path/cache evidence](docs/C01_E_VALIDATION.md) at pickup.

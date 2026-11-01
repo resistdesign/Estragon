@@ -70,5 +70,16 @@ jobs:
           name: c01-f-lifecycle-pinned-4.7
           path: ${{ runner.temp }}/editor-lifecycle
           if-no-files-found: warn
+      - name: Verify C01-G unsaved-buffer Play on pinned 4.7
+        run: >-
+          python3 tools/check-editor-play.py
+          --engine '4.7=${{ env.GODOT_BIN }}'
+          --output '${{ runner.temp }}/editor-play'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c01-g-play-pinned-4.7
+          path: ${{ runner.temp }}/editor-play
+          if-no-files-found: warn
       - name: Verify fresh native editor Play, transactions and restart without Bun or Node
         run: sh tools/check-editor.sh

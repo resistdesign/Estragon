@@ -1,0 +1,568 @@
+{
+  "schema_version": 1,
+  "scope": "C01-G lifecycle; individual unrelated red stages retained; not full release certification",
+  "source_reports": [
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "1ede1c8c8a6269c34aa7580a2f74ab3df985dbf7ddc0c060d0189a99c97cdb72",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "date": "2026-11-01T22:18:35.401812+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "b364c0454388844fd28f26283416a64e9fc61caf809551aaa4df458dc3f4712f",
+      "version": "4.1.4.stable.official.fe0e8e557",
+      "date": "2026-11-01T22:18:37.117360+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "c74db5f18d2a35d551daf7a94a11987b0343dfca59a25f2a777d1941a304c035",
+      "version": "4.2.2.stable.official.15073afe3",
+      "date": "2026-11-01T22:18:47.221351+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "76d90d067f519543e96b5184311f73f22ad9669ba5a755e65efabcec1d3b10af",
+      "version": "4.3.stable.official.77dcf97d8",
+      "date": "2026-11-01T22:28:42.647518+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "0a7610870cb50e4b995104226794ff6a92d9ceec142a4e4e52ba1b07583723a4",
+      "version": "4.4.1.stable.official.49a5bc7b6",
+      "date": "2026-11-01T22:29:03.324494+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "d5a7349db6685617916e80f4e842a2c694a0afcd84476821a800bf2bacd2a8e9",
+      "version": "4.5.2.stable.official.6ce3de25a",
+      "date": "2026-11-01T22:29:06.795979+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "f9c3d80d645578e91c292faecca0833196982f3bafbd62c9da39a4038272d578",
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "date": "2026-11-01T22:33:19.087939+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "ac0ca85357ae108f23319050786073b2f44a75d641c6ec03cabbd01148c57642",
+      "version": "4.7.stable.official.5b4e0cb0f",
+      "date": "2026-11-01T22:34:24.196632+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "8246cd51c4597ef5821631e4c3d28a3531c3dfa7b947e363d81d3fa501616d11",
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "date": "2026-11-01T22:34:40.393378+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-lifecycle.py": "e6b0cdd4303bd82e9c11985052b0aeaf95c3a168a030e591116cc4cb79e52d39",
+        "tests/editor/lifecycle/driver.gd": "185622c33b4c30aeb7ab12c7169e488685c0fc94a46ad5fb423bebd645d9cacf",
+        "tests/editor/lifecycle/runtime.gd": "2ed57d47525ff708d6d1d7f2fa08488d326bc0e596d2310fa64bc5e9564ead49"
+      }
+    }
+  ],
+  "production_source_hashes": {
+    "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+    "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de",
+    "addons/estragon/editor/highlighter_association.gd": "f41645125b6102ed16f63bcfb6b2c34366e7c6576177bf714525ac8b46902e9f"
+  },
+  "engines": [
+    {
+      "label": "4.0.4",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)"
+          ],
+          "log_sha256": "432b1b91b829535b26aa4ea46428ea5a7aba1ba375e42185a5730a9feead6553"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "237dc995c7d92a392f51808387a31767cc5ac22580c01a3386fa4eda02442306"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)"
+          ],
+          "log_sha256": "5c2a594d20d9dbd6a47ac23db2f3c4f1836e9ace1c0905d4d9baa31b7eeb226a"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "237dc995c7d92a392f51808387a31767cc5ac22580c01a3386fa4eda02442306"
+        }
+      },
+      "input_binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.0.4-stable/Godot_v4.0.4-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.1.4",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:73)",
+            "     at: push_warning (./core/variant/variant_utility.cpp:925)"
+          ],
+          "log_sha256": "b74debeed63a428552842784a4c476260ca0175bf8f62361858bddef5f564010"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "925c768e7d12d3d3d5510ca6b244a8cd114b216feb921e86f86ad050dd181f8a"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:73)"
+          ],
+          "log_sha256": "f5f0da196eb6d45ca096275d179fb45815478e9336cf933d7681bd37371e7a0f"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "925c768e7d12d3d3d5510ca6b244a8cd114b216feb921e86f86ad050dd181f8a"
+        }
+      },
+      "input_binary_sha256": "87f5ba3e8e4ffcbd49c615b01825cc92a01aad0c974b75dceabe71b873ab8e28",
+      "version": "4.1.4.stable.official.fe0e8e557",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.1.4-stable/Godot_v4.1.4-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.2.2",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:63)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1111)"
+          ],
+          "log_sha256": "48ac8568622001e71c345b71823891fd4237bf0b911676f2dd36bfd40680dee4"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "b0eaa590c9b5574f4ff885e1279ca6d8a38fa92a2fb508c813c7712a47147e88"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:63)"
+          ],
+          "log_sha256": "fbbfe5e067a3d2db6205f53f41668c1e4c5a6ca27deb30df8086811d7853dab3"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "b0eaa590c9b5574f4ff885e1279ca6d8a38fa92a2fb508c813c7712a47147e88"
+        }
+      },
+      "input_binary_sha256": "138076355d9d42517d5d7c48c95648267d7c9d8f23189163aabed82b28b34d2e",
+      "version": "4.2.2.stable.official.15073afe3",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.2.2-stable/Godot_v4.2.2-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.3",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1112)"
+          ],
+          "log_sha256": "8337fd7893080545da4b1da752fabdf910e27b7a653f61d0d2647459a6121588"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "4360a7a00b050dd12c2e7538a3bd692ec20f51c1aef7b8df07c9669528bc2976"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [],
+          "log_sha256": "c86d204ef0dd57b95ef17a19c7f1c99d75029beeaed15383de0e9eb97cb85bcb"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "4360a7a00b050dd12c2e7538a3bd692ec20f51c1aef7b8df07c9669528bc2976"
+        }
+      },
+      "input_binary_sha256": "cd5dee52f4baa3bb3ca19d0087d55cea084acb4838a2465bc9aa52d776dc462a",
+      "version": "4.3.stable.official.77dcf97d8",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.4.1",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1118)"
+          ],
+          "log_sha256": "ec68fcfe4fa76fe6174a992e2bb3f718b5ed2b3d3f351bb8fefa943fd3dd03b1"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "9cbb141b72fcb671e3a63d35555039c6fbb1125b20540a0116a56e40ca62f7b2"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [],
+          "log_sha256": "8b7e6548b2241d078a14458692c25a689e9e8d16ca42c47321abd3c6ae13b541"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "9cbb141b72fcb671e3a63d35555039c6fbb1125b20540a0116a56e40ca62f7b2"
+        }
+      },
+      "input_binary_sha256": "8d402715e0b74db2d69ceeb86e78b8c6b270f1d9c16be1546958c8648d8e2e47",
+      "version": "4.4.1.stable.official.49a5bc7b6",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.5.2",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)"
+          ],
+          "log_sha256": "0cc7bec37f067bddd46eba92cc5ab71fb8c97df9c78d79bb593d7abcb8d28db7"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "f0140b41f8487b25f27a6fb401de591d8b5a3297f7a05b3bfbc058e398ab2b44"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [],
+          "log_sha256": "29c732b22cb0dbc685ad2fdc6ed839add8e9665ed399033a57a3f00e1d43d771"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "f0140b41f8487b25f27a6fb401de591d8b5a3297f7a05b3bfbc058e398ab2b44"
+        }
+      },
+      "input_binary_sha256": "2de5730194e9b9050f61407814597cafbdbc77341ca6c7ccf9235b2e15a424fb",
+      "version": "4.5.2.stable.official.6ce3de25a",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.5.2-stable/Godot_v4.5.2-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.6.3",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)"
+          ],
+          "log_sha256": "8f0a2b68ad90b7f40d951ab028a374bba13d2cbdc20a554589adc92dca7a5168"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "32c1bfb68b50a629ca0ae2fb808bc60f42be5edd6212c97e47b0f5e7e6e0f53b"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [],
+          "log_sha256": "c79304b72dd3eaafb38d832f7288d4bc0e256f1af7ed8132abded93d28829cff"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "32c1bfb68b50a629ca0ae2fb808bc60f42be5edd6212c97e47b0f5e7e6e0f53b"
+        }
+      },
+      "input_binary_sha256": "40fb1c588438ed98efbdd4aeb71b90aec6e269b1abb5f18419755340ef8e1514",
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/Godot_v4.6.3-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.7",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)"
+          ],
+          "log_sha256": "e4423195cd6107901951c2c2836f09393280aed7a8368b56afe668c6f8bc5bed"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "615bbec4a6ee07affd8841af493bb5fbcbc9c73e361b159f1d2eab6c75021bbf"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [],
+          "log_sha256": "01dc5f37bd6b123f5ba78e6063c2255e62fb67c0bc97252401a927133310b7cc"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "615bbec4a6ee07affd8841af493bb5fbcbc9c73e361b159f1d2eab6c75021bbf"
+        }
+      },
+      "input_binary_sha256": "445c6f95030e2ca767dd921be1e91bd99e50c3703f91d22a22cd31216c93a80f",
+      "version": "4.7.stable.official.5b4e0cb0f",
+      "provenance": "Installed official macOS Godot.app; CI separately pins the official Linux archive checksum in .github/workflows/ci.yml."
+    },
+    {
+      "label": "4.7.2",
+      "stages": {
+        "lifecycle_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)"
+          ],
+          "log_sha256": "b1ce1340d4e95609afae9da959c9f57b08cf98da62597c605b4aec3ac017167f"
+        },
+        "runtime_after_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_1.log",
+          "diagnostics": [],
+          "log_sha256": "fa99dbe54e8930ab7daf336d30dc002bce37566da23093d5c787af37bba4d4d3"
+        },
+        "lifecycle_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "lifecycle_2.log",
+          "diagnostics": [],
+          "log_sha256": "c47d7c8c14d1a0266ada8ffeb7767d7dcbacfe33f2e7edaf8f38a179e3b3770e"
+        },
+        "runtime_after_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "runtime_after_2.log",
+          "diagnostics": [],
+          "log_sha256": "fa99dbe54e8930ab7daf336d30dc002bce37566da23093d5c787af37bba4d4d3"
+        }
+      },
+      "input_binary_sha256": "c7cccbf8fb143e34e02fd6521e09be2c2b974f0d5db080b19071c9c570718ccf",
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_macos.universal.zip"
+    }
+  ]
+}
