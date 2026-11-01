@@ -79,12 +79,14 @@ available safeguards, document the precise diagnostic difference and test both
 paths. C01-C applies this to proactive Callable arity checks only; validity,
 disposal, connection and automatic lifecycle checks remain mandatory.
 
-C01-D #59 and C01-E #60 are merged; C01-F #49 is the editor startup/lifecycle task. Consult
-[its path/cache investigation](docs/C01_E_VALIDATION.md) and live issue before
-resuming the owner-approved legacy preflight/publication split. Isolated checks
-may be unavailable, but actual-path native validation and rollback remain
-mandatory before build success. Optional diagnostic degradation does not authorize
-cache takeover, stale source, or silently weaker class/dependency validation.
+C01-D #59, C01-E #60 and C01-F #62 are merged. **Next: C01-G #50**,
+the unsaved-buffer and fail-closed F5/F6 editor task. Read its live issue,
+[C01-F lifecycle evidence](docs/C01_F_EDITOR.md) and
+[C01-E path/cache evidence](docs/C01_E_VALIDATION.md) at pickup.
+The owner-approved legacy preflight/publication split remains binding:
+actual-path validation and rollback are mandatory before build success.
+Optional diagnostic degradation does not authorize cache takeover, stale source
+or weaker class/dependency validation.
 
 ## Non-negotiable architecture
 
@@ -196,6 +198,18 @@ fixes and T09-A #43 as verified dependencies permit.
 - Do not report “tests passed” without specifying which tests and evidence. Don't advance a dependent task just because code was drafted: check prerequisite merge/review/CI and end-to-end acceptance.
 - An **implementation PR** must include **one work ID**, linked issue, scope vs non-goals, test evidence, limitations and remaining follow-ups. A **planning/docs-only or ADR PR** may have no implementation ID, but must clearly identify itself as such and contain no disguised feature work. **Do not auto-merge without the user's explicit request**.
 - Update `docs/WORK_STATUS.md` in the PR completing a work item (the `Done` entry becomes part of `main` only upon merge). The **live issue/PR** records `Active`/`Blocked`/`In review` while work is not yet merged. Reconcile stale status snapshots instead of trusting them blindly.
+
+### Owner testing policy (2026-11-01)
+
+**Physical/manual keyboard-keypress tests, including pressing F5/F6 by hand,
+are not acceptance or release requirements.** Do not schedule them, ask the
+owner to perform them, or treat their absence as a blocker or outstanding
+verification task. Verify F5/F6 and other editor behavior through automated,
+isolated real-Godot editor/game tests instead; continue required native
+graphics/visual evidence and all other scoped tests. The owner will report
+real-world interaction bugs through GitHub issues if encountered. Preserve
+historical test records, but update future task criteria and verification
+gates so physical-key checks are not required.
 
 ### Mandatory handoff at session end or interruption
 
