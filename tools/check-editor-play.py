@@ -20,9 +20,21 @@ spec.loader.exec_module(compatibility)
 
 
 def unexpected_errors(text):
-    allowed = re.compile(r'(?:(?:SCRIPT ERROR: |ui/Counter\.gogo:\d+:\d+: )Parse Error: (?:Identifier "missing_handler" not declared|Cannot assign (?:a )?value of type)|^ERROR: An EditorPlugin build callback failed|^ERROR: Cannot save text file)')
-    return [line for line in text.splitlines()
-            if compatibility.ERROR.search(line) and not allowed.search(line)]
+    negative = r'Parse Error: (?:Identifier "missing_handler" not declared|Cannot assign (?:a )?value of type)'
+    native = re.compile(r'^SCRIPT ERROR: ' + negative)
+    mapped = re.compile(r'^ui/Counter\.gogo:\d+:\d+: ' + negative)
+    lines = text.splitlines()
+    unexpected = []
+    for index, line in enumerate(lines):
+        if not compatibility.ERROR.search(line):
+            continue
+        if native.search(line) and index + 1 < len(lines) and re.search(
+                r'at: GDScript::reload \(res://ui/generated/Counter\.gd:\d+\)', lines[index + 1]):
+            continue
+        if mapped.search(line) or line == 'ERROR: An EditorPlugin build callback failed.' or line == "ERROR: Cannot save text file 'res://ui/Counter.gogo'.":
+            continue
+        unexpected.append(line)
+    return unexpected
 
 
 def audit(selection, output):

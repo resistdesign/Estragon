@@ -1,0 +1,4237 @@
+{
+  "schema_version": 1,
+  "scope": "C01-G play; individual unrelated red stages retained; not full release certification",
+  "source_reports": [
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "774cc53526a8eac8d6d22b483b11c875923b738f42052bd23fa8557d283638c5",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "date": "2026-11-01T22:17:32.966290+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "a7afeeb5493680660e51ee2eaf71c757b00a1c0edacb00d41c0d099e19535f40",
+      "version": "4.1.4.stable.official.fe0e8e557",
+      "date": "2026-11-01T22:17:32.966279+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "e330d687889544a914c1a0f43428d77b652ab53faa24a7b5bbe219c034fa8a17",
+      "version": "4.2.2.stable.official.15073afe3",
+      "date": "2026-11-01T22:17:43.308842+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "fe57f6db230211ca225c3e910684b247fb31dba19bd162c56906bd06e817d600",
+      "version": "4.3.stable.official.77dcf97d8",
+      "date": "2026-11-01T22:27:39.430959+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "6956f318eda13370442c5ce4901cf582c7b05948e3bac03b19cdb9c9fb077307",
+      "version": "4.4.1.stable.official.49a5bc7b6",
+      "date": "2026-11-01T22:28:00.464217+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "6cb233c71ad51ece18a33bbc7794ce235196d797046d74502b027a158c0869fa",
+      "version": "4.5.2.stable.official.6ce3de25a",
+      "date": "2026-11-01T22:28:12.097594+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "31418e574487f6e096cb4174d34b0c747d4f7660a029a1e8e440c397780f0d60",
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "date": "2026-11-01T22:32:26.847656+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "127a998813cac94d370b8f2f4a78a12541251b1aadfb7c07368c0cdcbab7de9a",
+      "version": "4.7.stable.official.5b4e0cb0f",
+      "date": "2026-11-01T22:33:31.200777+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    },
+    {
+      "source_commit": "9f218b54a6f02c894ce191b2f19d8d5d73ad9f24",
+      "source_dirty": false,
+      "report_sha256": "84577cb286803c54e584a209064ff9c3257bda6a1cc307e7fe43d10d847f7adf",
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "date": "2026-11-01T22:33:51.682303+00:00",
+      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
+      "source_hashes": {
+        "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+        "tools/check-editor-play.py": "5a71a9774cfb8155b0b4451ebbb9a15499c090227aecd4e7b0dc39c78263ca0a",
+        "tests/editor/play/driver.gd": "1efee1d67c78788e1611e175a61b4022c1f4618594cecc0c2c15763f747fb25b",
+        "tests/editor/play/proof.gd.txt": "eaab6cddb90c045b608bca3ce048a14488b2616ae7eed668c43a5e1566bbd938",
+        "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de"
+      }
+    }
+  ],
+  "production_source_hashes": {
+    "addons/estragon/editor/plugin.gd": "ce541049b29391a1ece0138c9ae29573b96a8f3de47ce9a79bf9d0c2ba8dfa16",
+    "addons/estragon/editor/buffer_guard.gd": "951e8dae4f0612c227b44651ec2abd74499bbb1332afb038daf40a18e79383de",
+    "addons/estragon/editor/highlighter_association.gd": "f41645125b6102ed16f63bcfb6b2c34366e7c6576177bf714525ac8b46902e9f"
+  },
+  "engines": [
+    {
+      "label": "4.0.4",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6553)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6553)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6553)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6553)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6553)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:923)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6553)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "0ff32e31ea48d4d34263007ce02bd21010af30ee2e56c853cd967fbab7d90298",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:70)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "67bb2a16a441f50dff388f5099ee04dd619c5dff75783b3b78faee382f0b06cd",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.0.4-stable/Godot_v4.0.4-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.1.4",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:73)",
+            "     at: push_warning (./core/variant/variant_utility.cpp:925)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6515)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (./core/variant/variant_utility.cpp:925)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6515)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "     at: push_warning (./core/variant/variant_utility.cpp:925)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6515)",
+            "     at: push_warning (./core/variant/variant_utility.cpp:925)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6515)",
+            "     at: push_warning (./core/variant/variant_utility.cpp:925)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6515)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (./core/variant/variant_utility.cpp:925)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6515)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "f4f3e9c8928976897a7a4a5760f94d0636490ae5e9b3f7c7c3f26d3c31833795",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:73)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "3085ba9e9931403ba3af39022bead8785ee7c29ce92407a72ab21f91137059a5",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "87f5ba3e8e4ffcbd49c615b01825cc92a01aad0c974b75dceabe71b873ab8e28",
+      "version": "4.1.4.stable.official.fe0e8e557",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.1.4-stable/Godot_v4.1.4-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.2.2",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:63)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1111)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6502)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1111)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6502)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1111)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6502)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1111)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6502)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1111)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6502)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1111)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6502)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "53bd9ce748c784d1d3b2b98513ec6f9a2cdc10816a4bce0457fca5781009455d",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [
+            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
+            "     at: _editor_init (modules/gltf/register_types.cpp:63)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "d8af194b46a9e6abe56f2f6438b9f9bce12bb1eb5f012e1a7d531aa28412adb7",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "138076355d9d42517d5d7c48c95648267d7c9d8f23189163aabed82b28b34d2e",
+      "version": "4.2.2.stable.official.15073afe3",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.2.2-stable/Godot_v4.2.2-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.3",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1112)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6342)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1112)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6342)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1112)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6342)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1112)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6342)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1112)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6342)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1112)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6342)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "53569b06df89a9969c6854817eea1aa1bd4828131f7bcd4f3e27fc8601dc8631",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [],
+          "unexpected_errors": [],
+          "log_sha256": "4b2c86d5e4b029cb0495d4eb009cd6917ab998a2a6db2ec8a2937f12da0569a7",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "cd5dee52f4baa3bb3ca19d0087d55cea084acb4838a2465bc9aa52d776dc462a",
+      "version": "4.3.stable.official.77dcf97d8",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.4.1",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1118)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6600)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1118)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6600)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1118)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6600)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1118)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6600)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1118)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6600)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1118)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:6600)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "75f522ef594b21eaf454a78a30c074b0a3c2764e3be7e6a8ca5e73d63ba588a6",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [],
+          "unexpected_errors": [],
+          "log_sha256": "ff710bca0ca99c701c49eadca0fcb13b1e4e99d23b282adabe16ad5240ad8168",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "8d402715e0b74db2d69ceeb86e78b8c6b270f1d9c16be1546958c8648d8e2e47",
+      "version": "4.4.1.stable.official.49a5bc7b6",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.5.2",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7073)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:9: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7073)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7073)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7073)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7073)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:9: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7073)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "d6f7ab73920256a15643a1996bdff7881e70900085642c2be859f44e29808c60",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [],
+          "unexpected_errors": [],
+          "log_sha256": "3235485c7d8f7283a7889c0eb26f6c423540bcb7f502dc3160206f6bfc3bdd84",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "2de5730194e9b9050f61407814597cafbdbc77341ca6c7ccf9235b2e15a424fb",
+      "version": "4.5.2.stable.official.6ce3de25a",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.5.2-stable/Godot_v4.5.2-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.6.3",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7516)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:9: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7516)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7516)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7516)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7516)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:9: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1034)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7516)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "e0fb3c366504ece313a7d630326a610dffd5789f6b65b2379e5d374318c53d4e",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [],
+          "unexpected_errors": [],
+          "log_sha256": "93cbaf783d81616aaa639d5bdc4cac300021dca833b17cd62a91d9a29965ba68",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "40fb1c588438ed98efbdd4aeb71b90aec6e269b1abb5f18419755340ef8e1514",
+      "version": "4.6.3.stable.official.7d41c59c4",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/Godot_v4.6.3-stable_macos.universal.zip"
+    },
+    {
+      "label": "4.7",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7679)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:3: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7679)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:3: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7679)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "5a5b4c8a778a324863a5d5af0458532d525d7f2b0364e5b9a46a608744e0b769",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [],
+          "unexpected_errors": [],
+          "log_sha256": "7cdc151ee8f99af85b94d52a4f3ea511aa20b9dbfd093a379ac91f8886ee07b8",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "445c6f95030e2ca767dd921be1e91bd99e50c3703f91d22a22cd31216c93a80f",
+      "version": "4.7.stable.official.5b4e0cb0f",
+      "provenance": "Installed official macOS Godot.app; CI separately pins the official Linux archive checksum in .github/workflows/ci.yml."
+    },
+    {
+      "label": "4.7.2",
+      "stages": {
+        "play_1": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_1.log",
+          "diagnostics": [
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7678)",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:3: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7678)",
+            "SCRIPT ERROR: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:26)",
+            "ui/Counter.gogo:22:3: Parse Error: Identifier \"missing_handler\" not declared in the current scope.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)",
+            "ERROR: An EditorPlugin build callback failed.",
+            "   at: call_build (editor/editor_node.cpp:7678)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "SCRIPT ERROR: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "          at: GDScript::reload (res://ui/generated/Counter.gd:3)",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type \"String\" as \"int\".",
+            "ui/Counter.gogo:3:1: Parse Error: Cannot assign a value of type String to variable \"count\" with specified type int.",
+            "     at: push_warning (core/variant/variant_utility.cpp:1033)"
+          ],
+          "unexpected_errors": [],
+          "log_sha256": "fb6839f339544b5857e7788c4acec2edf081daa6432f94be602cca1106c2534a",
+          "checks_total": 87,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "authored edit remains unsaved before Play",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "Play persists both authored snapshots",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: Counter.gogo:",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "restore source for next mode",
+              "status": "PASS"
+            },
+            {
+              "name": "native TextFile resource available for pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "project blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "project reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "current blocks stale child execution: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "current reports useful failure: buffer",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves generated code/map/UID/timestamp",
+              "status": "PASS"
+            },
+            {
+              "name": "failed Play preserves Script identity/source",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "new/pathless repair persists source",
+              "status": "PASS"
+            },
+            {
+              "name": "restore native source identity after pathless probe",
+              "status": "PASS"
+            },
+            {
+              "name": "no-op preserves output/map/UID/timestamp/cache identity",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "prepare valid restart state",
+              "status": "PASS"
+            }
+          ]
+        },
+        "play_2": {
+          "status": "PASS",
+          "exit_code": 0,
+          "timeout": false,
+          "aborted_on_error": false,
+          "log": "play_2.log",
+          "diagnostics": [],
+          "unexpected_errors": [],
+          "log_sha256": "486d61c33079e90051e9c7b75d2ead181794925070e3ec2816c4aa446dc9d125",
+          "checks_total": 9,
+          "failed_checks": [],
+          "strict_reclassification": "PASS",
+          "checks": [
+            {
+              "name": "no Bun/Node/tool PATH",
+              "status": "PASS"
+            },
+            {
+              "name": "real native foreground/background Gogo editors",
+              "status": "PASS"
+            },
+            {
+              "name": "clean native CRLF buffer remains valid",
+              "status": "PASS"
+            },
+            {
+              "name": "project executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "project current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            },
+            {
+              "name": "current executes newest foreground/background buffers",
+              "status": "PASS"
+            },
+            {
+              "name": "current current text and independent components",
+              "status": "PASS"
+            },
+            {
+              "name": "native pre-Play autosave stays disabled",
+              "status": "PASS"
+            }
+          ]
+        }
+      },
+      "input_binary_sha256": "c7cccbf8fb143e34e02fd6521e09be2c2b974f0d5db080b19071c9c570718ccf",
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "provenance": "https://github.com/godotengine/godot-builds/releases/download/4.7.2-stable/Godot_v4.7.2-stable_macos.universal.zip"
+    }
+  ],
+  "classification": "Native expected errors require Counter reload locations; raw executed source 9f218b5 retained; report-only stricter matcher rechecked every log.",
+  "classifier_sha256": "99bfc15e003709f38a05cd61617218bd63a75d5dbfae82fb28a73de6846958b6",
+  "classifier_tests_sha256": "69b683881767e9f2cb41b5d27d5f425257e2c56fb0645a2d62f084ec59f8caa0"
+}

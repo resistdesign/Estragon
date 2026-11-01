@@ -3,7 +3,7 @@
 C01-G [#50](https://github.com/resistdesign/Estragon/issues/50) is active in
 [PR #63](https://github.com/resistdesign/Estragon/pull/63), from main `393e91c`
 after merged C01-F #62. Godot 4.0+ remains mandatory. This delivery addresses
-saved-source freshness before both native Play commands, not release certification.
+authored-buffer freshness before both native Play commands, not release certification.
 
 ## Cause and boundary
 
@@ -77,12 +77,70 @@ exit does not certify any failing/unavailable stage.
 
 ## Remaining boundaries
 
-Final nine-engine results, exact regression commands, CI links and the durable
-handoff are tracked in #50/#63. C01-F lifecycle/settings/refresh/restart gates and
-existing compiler/runtime/editor/graphics regressions remain required. Automated
-native Play proves both commands; physical/manual keypress tests are not required
-under the owner's policy. Visual evidence remains separate from headless results.
+[Strict Play evidence](../tests/compatibility/c01-g-play.json) records all
+**18/18 editor process phases PASS**, with **864 actual native assertions**.
+[Companion lifecycle evidence](../tests/compatibility/c01-g-lifecycle.json)
+records **36/36 C01-F editor/fresh-runtime stages PASS**. The
+[full audit](../tests/compatibility/c01-g-audit.json) retains each independent
+PASS/FAIL/BLOCKED/UNTESTED outcome; successful collection is not certification.
+[Native visual evidence](../tests/compatibility/c01-g-visual.json) records the
+inspected 4.7 editor and Counter increment/reset/resizing captures.
+
+| Official engine | Unsaved Play + recovery/restart | Startup | Companion lifecycle/runtime | Broader legacy editor regression |
+| --- | --- | --- | --- | --- |
+| 4.0.4 | 2/2 PASS | PASS | 4/4 PASS | UNTESTED (4.7-only fixture) |
+| 4.1.4 | 2/2 PASS | PASS | 4/4 PASS | UNTESTED (4.7-only fixture) |
+| 4.2.2 | 2/2 PASS | PASS | 4/4 PASS | UNTESTED (4.7-only fixture) |
+| 4.3 | 2/2 PASS | PASS | 4/4 PASS | UNTESTED (4.7-only fixture) |
+| 4.4.1 | 2/2 PASS | PASS | 4/4 PASS | UNTESTED (4.7-only fixture) |
+| 4.5.2 | 2/2 PASS | PASS | 4/4 PASS | UNTESTED (4.7-only fixture) |
+| 4.6.3 | 2/2 PASS | PASS | 4/4 PASS | UNTESTED (4.7-only fixture) |
+| 4.7.0 baseline | 2/2 PASS | PASS | 4/4 PASS | PASS |
+| 4.7.2 | 2/2 PASS | PASS | 4/4 PASS | PASS |
+
+All actual execution records use clean frozen `9f218b5`. Interrupted audit logs
+were retained separately; only complete reports were reused, and incomplete
+steps were rerun in new directories. The evidence records raw report/log hashes,
+exact engine/binary provenance and production/test hashes. Later commits only
+clarify labels and strengthen contributor error classification; every recorded
+Play log was independently reclassified with the stricter location-aware matcher.
+The final CI reruns use that strict matcher directly. No old run is relabeled as
+execution of a newer commit. Commands and final CI links are in #50/#63's handoff.
+
+Physical/manual keypress tests are not required under the owner's policy. The
+historical collector key `graphics_physical_keys` is retained with its source
+records; it is not an outstanding manual-keypress acceptance requirement.
 
 No C01-H release distribution/gates, #44 positive filtered-tab implementation,
 #61 grammar, T09, Box/padding or unit helpers are included. Owner-approved native
 numeric and isolated-preflight limits remain explicit in their separate stages.
+
+
+## Regression commands and results
+
+```sh
+GODOT_BIN=/absolute/isolated/godot sh tools/check-native-frontend.sh
+GODOT_BIN=/absolute/isolated/godot sh tools/check-native-generation.sh
+bun install --frozen-lockfile
+bun run check
+GODOT_BIN=/absolute/isolated/godot bun run check:godot
+bun run test:godot-harness
+python3 -m unittest discover -s tests/compatibility
+GODOT_BIN=/absolute/isolated/godot sh tools/check-editor.sh
+ESTRAGON_EDITOR_NATIVE=1 ESTRAGON_KEEP_EDITOR_TEST=1 \
+  GODOT_BIN=/absolute/isolated/godot sh tools/check-editor.sh
+```
+
+Results: native frontend 103 cases/558 assertions; generation 3632 assertions;
+native semantics 149 assertions; 180 reference tests/663 expectations; 20 Python
+tests; runtime positive/negative checks and intentional failure/timeout probes
+PASS. Headless and graphical native editor/Play/transaction/restart suites print
+`ESTRAGON_EDITOR_OK`; graphics captures were inspected. CI separately requires
+new strict Play stages on every pinned engine and preserves previous scoped gates.
+
+Unrelated full-audit outcomes remain visible: #44 filtered tabs FAIL, #61
+HybridEdges runtime FAIL on 4.0–4.2, old `native_build.gd` Logger fixture import
+FAIL on 4.0–4.4, non-editor parse-context failures for editor-only highlighting
+on 4.0–4.2, native numeric conversion/live added defaults and unavailable isolated
+preflight/arity capabilities BLOCKED where measured. These are not C01-G successes
+or silently removed release criteria. See C01-E/F evidence and C01-H #51.
