@@ -434,7 +434,7 @@ def audit(engine, output, editor):
             else:
                 stages["editor_play_recovery"] = unavailable(
                     "Startup failed" if stages["addon_startup"]["status"] == "FAIL" else
-                    "Existing full Play harness pins 4.7.0; port test in C01 editor milestone",
+                    "C01-G #50: older-engine unsaved-buffer/Play gates remain unverified; full Play harness supports 4.7 only",
                     "BLOCKED" if stages["addon_startup"]["status"] == "FAIL" else "UNTESTED")
         else:
             for name in ["normal_highlighting", "filtered_highlighting", "addon_startup", "editor_play_recovery"]:

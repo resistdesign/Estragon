@@ -132,6 +132,17 @@ jobs:
           # Native IEEE conversion limitations remain explicitly BLOCKED in
           # results; owner-approved semantics require no further emission loss.
           PY
+      - name: Require C01-F native editor lifecycle and restart
+        run: >-
+          python3 tools/check-editor-lifecycle.py
+          --engine '${{ matrix.version }}=${{ env.GODOT_BIN }}'
+          --output '${{ runner.temp }}/editor-lifecycle'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c01-f-lifecycle-${{ matrix.version }}
+          path: ${{ runner.temp }}/editor-lifecycle
+          if-no-files-found: error
       - name: Publish actual stage outcomes
         if: always()
         env:
