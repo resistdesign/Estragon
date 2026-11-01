@@ -397,7 +397,7 @@ The optional TypeScript `tests/editor-build.test.ts` coverage remains intact as
 reference tooling. It does not participate in native compilation. Authored
 examples and checked generated fixtures in the checkout are never modified.
 
-### Graphics evidence and manual Godot 4.7 procedure
+### Graphics evidence and optional historical manual Godot 4.7 procedure
 
 ```sh
 GODOT_BIN=/absolute/path/to/godot ESTRAGON_KEEP_EDITOR_TEST=1 \
@@ -413,8 +413,12 @@ use the Game bar's Stretch to Fit (or unembedded play) when manually checking
 responsive resize. The plugin never changes this user preference. See
 [Godot's game-embedding sizing contract](https://docs.godotengine.org/en/4.7/tutorials/editor/game_embedding.html).
 
-Automated run commands/graphics/pointer injection do not certify physical keys,
-mouse/window-manager behavior or every platform dialog. Manual procedure:
+Automated run commands/graphics/pointer injection do not certify every
+platform-specific interaction. **Owner policy, 2026-11-01: manually pressing
+physical keyboard keys (including F5/F6) is not a verification or release gate.**
+The procedure below is retained only as optional historical/diagnostic guidance.
+Use automated isolated real-editor/child-game tests to prove Play behavior; the
+owner will report real-world keypress issues if found. Optional manual procedure:
 
 1. Enable the addon in Godot 4.7, open Counter.gogo from FileSystem, and verify
    mixed highlighting. Also open it before enabling Estragon, then enable the
@@ -430,8 +434,9 @@ mouse/window-manager behavior or every platform dialog. Manual procedure:
 5. Inspect the remote tree: one host, independent components; restore local
    source/main scene settings if desired.
 
-Record whether this physical-key/manual procedure ran separately from automated
-native graphics captures. Compiler/semantic errors remain engine log entries;
+Do not require or track the physical-key portion as an outstanding test.
+Preserve historical evidence labels and report actual automated and native
+graphics checks. Compiler/semantic errors remain engine log entries;
 the Gogo panel presents the current authored-source report.
 
 ## Native frontend without Bun (N01)
@@ -544,8 +549,10 @@ minor. Results/logs are written incrementally; output directories cannot already
 exist. Engine errors, nonzero exits, deadlines and missing markers are failures,
 including errors printed before an exit-zero success marker.
 
-The default command exits nonzero for any FAIL/BLOCKED/UNTESTED stage, including
-unproved graphics/manual interaction. **`--collect-only` is an informational
+The default collector currently exits nonzero for any FAIL/BLOCKED/UNTESTED
+stage, including historical unproved graphics/manual-interaction results;
+**C01-H #51 must remove the obsolete physical-keypress-only release gate**
+without erasing past evidence. **`--collect-only` is an informational
 collection mode**, preserving all red JSON results. Its zero exit is never a
 compatibility pass. `.github/workflows/compatibility.yml` runs official latest
 selected patches for each minor on macOS, checks archive/executable checksums,
