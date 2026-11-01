@@ -1,0 +1,29 @@
+{
+  "source_commit": "7a97255440eca0d1d954c61e07a22edd202270be",
+  "engine": "4.7.stable.official.5b4e0cb0f",
+  "command": "ESTRAGON_EDITOR_NATIVE=1 ESTRAGON_KEEP_EDITOR_TEST=1 GODOT_BIN=<isolated pinned 4.7> sh tools/check-editor.sh",
+  "status": "PASS",
+  "log_sha256": "d19fa5a66600e06f4740a473d1e0123f6195b0fb16e50885b49583ad42f41c68",
+  "captures": [
+    {
+      "file": "editor-highlight.png",
+      "sha256": "05bc72d7f8e72dd1b2cc23b64e3986ed66bd5c463a17717138eb1d968e3c39be",
+      "width": 3584,
+      "height": 2180
+    },
+    {
+      "file": "game-7-increment.png",
+      "sha256": "db3a5272cc9f6b0f8b8f2fa321f8cb8cee376a39d986df56c9c1beb5f71fb800",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "file": "game-7-reset-resized.png",
+      "sha256": "80cfbf0e5ee805ec90dc206111bb1997284c7373d5960c060d2f298df9d14659",
+      "width": 800,
+      "height": 400
+    }
+  ],
+  "physical_manual_keyboard": "UNTESTED",
+  "scope": "Native graphical editor/Play/transactions/restart; captures inspected by Codex. Renderer/layout unchanged."
+}

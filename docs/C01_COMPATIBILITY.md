@@ -18,6 +18,10 @@ C01-D's [numeric investigation and correction](C01_D_NUMBERS.md) separately
 records avoidable formatting/leading-zero loss and the owner-approved native
 conversion limits. The original audit baseline below is preserved.
 
+C01-E [semantic/path/identity evidence](C01_E_VALIDATION.md) is merged in #60.
+C01-F [editor startup/lifecycle evidence](C01_F_EDITOR.md) is scoped to #49/#62;
+its separate snapshots preserve this original audit and remaining red stages.
+
 ## Reproduction and evidence
 
 Use Python 3.9+ as optional contributor orchestration, the standard system shell,
@@ -225,7 +229,7 @@ Primary API references: [4.0 EditorInterface](https://docs.godotengine.org/en/4.
 Version conclusions above use actual executable metadata and executions, rather
 than assuming today's stable documentation describes older engines.
 
-## C01-E scoped delivery (PR #60, awaiting owner review)
+## C01-E scoped delivery (merged PR #60)
 
 C01-D #59 is merged. [C01-E path/cache evidence](C01_E_VALIDATION.md) records
 independent official-engine probes, the accepted legacy preflight/publication
@@ -233,3 +237,12 @@ contract and final nine-engine semantic/transactional/cold-loading results. All
 required scoped gates pass; unavailable isolated preflight, native live defaults,
 raw/lambda grammar, older startup/Play and filtered tabs remain explicit. This
 is not full-addon certification; see the linked final snapshots and #60 CI.
+
+## C01-F editor startup and lifecycle
+
+[C01-F evidence and reproduction](C01_F_EDITOR.md) track the focused editor
+startup/lifecycle fix in PR #62. The native compiler/runtime, C01-E mandatory
+publication validation and C01-D native numeric policy remain unchanged.
+Saved-disk lifecycle success does not certify unsaved Play on older engines
+(C01-G #50), filtered never-associated tabs (#44), or generated lambda grammar
+(#61). Release certification remains C01-H.

@@ -1,10 +1,9 @@
 # C01-E semantic validation investigation
 
-C01-E [#48](https://github.com/resistdesign/Estragon/issues/48) is active on
-`codex/c01-e-semantic-validation`, based on C01-D merge `bf2c426`.
-The scoped implementation and verification are ready for owner review in PR #60;
-**the PR is unmerged and this is not full-addon compatibility certification**.
-No semantic-validation requirement has been weakened.
+C01-E [#48](https://github.com/resistdesign/Estragon/issues/48) merged in
+PR #60 at `c17902a`. The evidence below records its scoped validation delivery;
+it is not full-addon compatibility certification. No semantic-validation
+requirement has been weakened.
 
 ## Reproduced path and cache constraints
 
@@ -236,7 +235,8 @@ processes remain cold. Existing enabled plugins are preserved; project bytes
 are restored and the observer removed even if the editor fails (unit-tested).
 Original parser errors still make import FAIL even with an index-ready marker
 and exit 0. The C01-B container/button parse gates remain unchanged and strict.
-No production editor-startup code is changed; C01-F remains queued. The corrected
+At the C01-E handoff, production editor startup was unchanged; subsequent
+C01-F delivery is tracked in [C01_F_EDITOR.md](C01_F_EDITOR.md). The corrected
 setup passes both original container/button parse gates on all nine engines,
 and dedicated publication import now passes on every engine. Genuine old-addon
 parser/startup errors remain FAIL. The earlier import failures are preserved in

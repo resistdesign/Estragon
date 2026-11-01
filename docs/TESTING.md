@@ -656,3 +656,22 @@ observer rather than first-iteration --quit. This avoids an old-engine registry
 race without warming runtime scripts. Per-stage class registries/hashes are kept
 as artifacts, and copied project settings/plugins are restored on failure.
 All engine errors still fail import; index completion is not addon certification.
+
+### C01-F native editor lifecycle
+
+```sh
+python3 tools/check-editor-lifecycle.py \
+  --engine 4.0.4=/absolute/path/to/official/godot \
+  --output /tmp/estragon-lifecycle-new
+```
+
+Repeat `--engine` for more pinned versions; the output directory must be new.
+The harness verifies official version/provenance, copies/signs only its temporary
+binary, isolates projects/settings, removes tools from PATH, and runs two real
+editor processes plus fresh runtime checks. Every lifecycle/runtime stage must
+PASS; unlike the audit collector this command exits nonzero on failure. Raw logs
+and structured results retain errors. CI requires this on all pinned engines,
+including baseline 4.7 and latest tested 4.7.2. See [C01_F_EDITOR.md](C01_F_EDITOR.md).
+Saved-resource signal tests exercise the plugin notification contract using
+current disk bytes; they do not emulate or certify native unsaved-buffer Play.
+The unchanged 4.7 editor/Play suite remains a separate regression gate.

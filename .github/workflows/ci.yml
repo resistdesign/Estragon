@@ -59,5 +59,16 @@ jobs:
         run: bun run check:godot
       - name: Prove import, parse, and runtime failures are rejected
         run: bun run test:godot-harness
+      - name: Verify C01-F editor lifecycle on pinned 4.7
+        run: >-
+          python3 tools/check-editor-lifecycle.py
+          --engine '4.7=${{ env.GODOT_BIN }}'
+          --output '${{ runner.temp }}/editor-lifecycle'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c01-f-lifecycle-pinned-4.7
+          path: ${{ runner.temp }}/editor-lifecycle
+          if-no-files-found: warn
       - name: Verify fresh native editor Play, transactions and restart without Bun or Node
         run: sh tools/check-editor.sh

@@ -167,3 +167,16 @@ Relevant Godot contracts:
 - [Resource.set_path_cache](https://docs.godotengine.org/en/4.7/classes/class_resource.html#class-resource-method-set-path-cache)
   for isolated semantic validation; explicit Script reloads then synchronize the
   committed editor resources without replacing them.
+
+### Cross-version startup and lifecycle (C01-F)
+
+The plugin uses its owning EditorPlugin's EditorInterface instance. Native class
+metadata and filesystem scanning gate initial/saved builds; optional import-status
+and settings-change methods are called only when exposed. Filesystem/resource
+notifications coalesce through one timer and idle filesystem scans. Successful builds refresh
+observed native buffers for their generated outputs through public Script Editor
+signals, preserving caret/scroll state; authored buffers are untouched. Disable disconnects hooks, stops and
+frees that timer, removes the diagnostics panel and unregisters highlighting;
+re-enable reconstructs the integration and rebuilds saved sources. Existing
+editor extension preferences are retained. [Scoped tests](C01_F_EDITOR.md)
+separate this saved-disk lifecycle from older-engine unsaved Play (C01-G).
