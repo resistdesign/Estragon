@@ -71,6 +71,57 @@ def unavailable(reason, status="BLOCKED"):
     return {"status": status, "reason": reason}
 
 
+def index_project(binary, project, workspace, env, log):
+    # --quit means the FIRST iteration on 4.0/4.1; neither exposes --import.
+    # Wait for real filesystem/class metadata, not a runtime-script warm-up.
+    config = project / "project.godot"
+    original = config.read_bytes()
+    text = original.decode()
+    section = re.search(r"(?ms)^\[editor_plugins\]\s*\n(.*?)(?=^\[|\Z)", text)
+    enabled = ""
+    if section:
+        match = re.search(r"(?m)^enabled\s*=\s*PackedStringArray\((.*?)\)\s*$", section[1])
+        if match:
+            enabled = match[1].strip()
+    driver = project / "tests/c01_index"
+    driver.mkdir(parents=True, exist_ok=False)
+    expected = {}
+    for path in project.rglob("*.gd"):
+        if ".godot" in path.parts:
+            continue
+        match = re.search(r"(?m)^class_name\s+(\w+)", path.read_text())
+        if match:
+            expected[match[1]] = "res://" + path.relative_to(project).as_posix()
+    (driver / "expected.json").write_text(json.dumps(expected))
+    shutil.copy2(ROOT / "tests/compatibility/index_project.gd.txt", driver / "driver.gd")
+    (driver / "plugin.cfg").write_text(
+        '[plugin]\nname="C01 index observer"\ndescription="Test only"\n'
+        'author="Estragon"\nversion="1"\nscript="driver.gd"\n')
+    plugins = (enabled + ", " if enabled else "") + '"res://tests/c01_index/plugin.cfg"'
+    try:
+        config.write_bytes(original + ('\n[editor_plugins]\nenabled=PackedStringArray('
+                                      + plugins + ')\n').encode())
+        result = execute([str(binary), "--headless", "--path", str(project), "--editor"],
+                         workspace, env, log, "C01_PROJECT_INDEX_READY")
+        registry = driver / "classes.json"
+        if registry.exists():
+            destination = log.with_suffix(".classes.json")
+            shutil.copy2(registry, destination)
+            result["evidence"] = {"class_registry_sha256": hashlib.sha256(registry.read_bytes()).hexdigest(),
+                                  "class_registry_log": destination.name}
+            classes = json.loads(registry.read_text())
+            if any(classes.get(name) != path for name, path in expected.items()):
+                result["status"] = "FAIL"
+                result["reason"] = "Initial class registry is incomplete or has incorrect paths"
+        else:
+            result["status"] = "FAIL"
+            result["reason"] = "Index observer produced no class-registry evidence"
+        return result
+    finally:
+        config.write_bytes(original)
+        shutil.rmtree(driver)
+
+
 def audit(engine, output, editor):
     from callback_metadata_evidence import validate_metadata
     from numeric_evidence import validate_numeric
@@ -122,7 +173,7 @@ def audit(engine, output, editor):
                                    marker, abort_on_error=(marker is not None and not kwargs.get("expected_errors")), **kwargs)
             return stages[name]["status"] == "PASS"
 
-        run("import", ["--editor", "--quit"])
+        stages["import"] = index_project(binary, project, workspace, env, target / "import.log")
         # Parse each shipped addon/generated/example script independently. Do not
         # infer dependency validity from plugin.can_instantiate() or exit zero.
         parses = []
@@ -181,7 +232,8 @@ def audit(engine, output, editor):
         emitted = run("emission_maps", ["--script", "res://tests/godot/native_generation.gd",
                                        "--", "--require-no-bun"], "ESTRAGON_NATIVE_GENERATION_OK")
         if emitted:
-            run("generated_import", ["--editor", "--quit"])
+            stages["generated_import"] = index_project(binary, project, workspace, env,
+                                                       target / "generated_import.log")
         else:
             stages["generated_import"] = unavailable("Native emission failed")
         # Independent legacy/component/runtime processes still run on red import.
@@ -234,9 +286,8 @@ def audit(engine, output, editor):
         (publication / "project.godot").write_text(
             'config_version=5\n[application]\nconfig/name="C01-E native publication"\n'
             '[rendering]\nrenderer/rendering_method="gl_compatibility"\n')
-        stages["publication_import"] = execute(
-            [str(binary), "--headless", "--path", str(publication), "--editor", "--quit"],
-            workspace, env, target / "publication_import.log")
+        stages["publication_import"] = index_project(binary, publication, workspace, env,
+                                                     target / "publication_import.log")
         for mode in ["registered", "positive", "rollback", "fresh_failure"]:
             candidate = workspace / ("publication-" + mode)
             shutil.copytree(publication, candidate)

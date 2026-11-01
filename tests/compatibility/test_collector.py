@@ -15,6 +15,27 @@ spec.loader.exec_module(collector)
 
 
 class CollectorTests(unittest.TestCase):
+    def test_index_failure_restores_project_and_preserves_enabled_plugins(self):
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            project = directory / "project"
+            project.mkdir()
+            config = project / "project.godot"
+            original = (b'config_version=5\n[editor_plugins]\n'
+                        b'enabled=PackedStringArray("res://owner/plugin.cfg")\n')
+            config.write_bytes(original)
+
+            def failed_index(*args, **kwargs):
+                self.assertIn('"res://owner/plugin.cfg", "res://tests/c01_index/plugin.cfg"',
+                              config.read_text())
+                raise RuntimeError("failed editor")
+
+            with patch.object(collector, "execute", side_effect=failed_index):
+                with self.assertRaisesRegex(RuntimeError, "failed editor"):
+                    collector.index_project("godot", project, directory, {}, directory / "index.log")
+            self.assertEqual(config.read_bytes(), original)
+            self.assertFalse((project / "tests/c01_index").exists())
+
     def test_engine_error_beats_zero_exit_and_success_marker(self):
         for message in ["SCRIPT ERROR: bad", "ERROR: bad", "Parse Error: bad", "Assertion failed: bad"]:
             self.assertEqual(collector.classify(0, message + "\nOK\n", "OK"), "FAIL")

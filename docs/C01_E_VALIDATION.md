@@ -164,7 +164,7 @@ CI remains visible as the evidence revealing native live-default behavior.
 
 - `bun install --frozen-lockfile && bun run check`: 180 tests, 663 expectations,
   typecheck, canonical IR and generated examples/maps PASS.
-- `python3 -m unittest discover -s tests/compatibility -p 'test_*.py'`: 17 PASS.
+- `python3 -m unittest discover -s tests/compatibility -p 'test_*.py'`: 18 PASS.
 - `GODOT_BIN=<4.7.0> sh tools/check-native-generation.sh`: native generation
   3632, semantic 149, signals 49, Counter/lifecycle/numeric suites PASS.
 - `GODOT_BIN=<4.7.0> bun run check:godot`: every-script parsing, full runtime,
@@ -206,11 +206,29 @@ are published in #48 / #60, avoiding a self-referencing commit in this file.
 - Native IEEE parsing limits from C01-D and newly added inherited defaults on
   existing live Script instances remain separate BLOCKED observations. Fresh
   defaults/current bytecode are verified; application hot reload is not offered.
-- Minimal-project editor import exits nonzero through 4.2 despite warning-only
-  logs; these remain FAIL in research/publication-import stages, not hidden
-  successes. Native class registration and publication execute independently.
+- Earlier research import exits remain recorded unchanged. Final collection
+  uses the test-only class-index observer described below, so early CLI shutdown
+  is not confused with a failed component parse.
 - On 4.0–4.2, public link inspection is unavailable. Reports disclose this
   optional missing guard; symlink-free projects remain required.
 
 The next implementation after owner review/merge is C01-F #49. Do not merge
 this PR automatically or start that milestone, C01-G or T09 from this branch.
+
+## Import setup correction (final CI verification)
+
+A 4.1 CI run at `245132a` passed every native semantic/publication/runtime check
+but an earlier cold container parse failed because `EstragonDisplayObject` had
+not yet been registered. Actual 4.0/4.1 `--help` defines `--quit` as quitting
+after the **first iteration**, and neither exposes an `--import` flag. This made
+the original initial-import setup race filesystem/class indexing.
+
+The collector now temporarily adds a test-only EditorPlugin that waits for
+`EditorFileSystem.is_scanning()` to finish and for all controlled class_name
+metadata paths to match, then records that registry and quits gracefully. It
+never preloads/instantiates runtime scripts, so subsequent parse and Text-first
+processes remain cold. Existing enabled plugins are preserved; project bytes
+are restored and the observer removed even if the editor fails (unit-tested).
+Original parser errors still make import FAIL even with an index-ready marker
+and exit 0. The C01-B container/button parse gates remain unchanged and strict.
+No production editor-startup code is changed; C01-F remains queued.

@@ -1,0 +1,28 @@
+@tool
+extends EditorPlugin
+## Test-only metadata observer. Never preload or instantiate runtime scripts.
+var _stable := 0
+var _expected: Dictionary
+
+func _enter_tree() -> void:
+	_expected = JSON.parse_string(FileAccess.get_file_as_string("res://tests/c01_index/expected.json"))
+	set_process(true)
+
+func _process(_delta: float) -> void:
+	if get_editor_interface().get_resource_filesystem().is_scanning():
+		_stable = 0
+		return
+	var classes: Dictionary = {}
+	for entry in ProjectSettings.get_global_class_list():
+		classes[str(entry["class"])] = str(entry.path)
+	for name in _expected:
+		if classes.get(name) != _expected[name]:
+			_stable = 0
+			return
+	_stable += 1
+	if _stable == 3:
+		var file := FileAccess.open("res://tests/c01_index/classes.json", FileAccess.WRITE)
+		file.store_string(JSON.stringify(classes))
+		file.close()
+		print("C01_PROJECT_INDEX_READY")
+		get_tree().quit(0)

@@ -650,3 +650,9 @@ is BLOCKED where unavailable, while actual publication is a required PASS.
 The separate native_live_added_defaults observation retains the engine's live
 default-initialization limit; it does not weaken fresh-default or current-bytecode
 checks. See [C01-E final evidence](C01_E_VALIDATION.md).
+
+Initial/generation/publication imports now use a test-only filesystem/class-index
+observer rather than first-iteration --quit. This avoids an old-engine registry
+race without warming runtime scripts. Per-stage class registries/hashes are kept
+as artifacts, and copied project settings/plugins are restored on failure.
+All engine errors still fail import; index completion is not addon certification.
