@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "scope": "C01-E scripted native Counter graphics; not physical F5/F6 or mouse testing",
+  "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+  "engines": [
+    {
+      "version": "4.0.4.stable.official.fc0b241c9",
+      "official_binary_sha256": "da0fcddf2ab4a28fb8b0d370f287c4c3e166dc2205c49bbd42ecf95dc1595fad",
+      "backend": "OpenGL 4.1 Compatibility, AMD Radeon Pro 5300M",
+      "workflow": "transactional native publication",
+      "log_sha256": "6fd54cf5f2501619e10c13fdd287e066b4c53adfb3cc64995a13955a0c00c74f",
+      "result": "PASS",
+      "captures": [
+        {
+          "name": "zero",
+          "size": [
+            640,
+            360
+          ],
+          "sha256": "7ed8e5b8592463e513d83f80b050e8d50411cdf8dde2e54ac03a3c870a7efc24",
+          "inspection": "PASS: expected count, button disabled/enabled state, centered labels and responsive layout"
+        },
+        {
+          "name": "one",
+          "size": [
+            640,
+            360
+          ],
+          "sha256": "25b47c295946931b81d2fa322142141eb797c178c9c2ac99e011adedadb820cd",
+          "inspection": "PASS: expected count, button disabled/enabled state, centered labels and responsive layout"
+        },
+        {
+          "name": "reset-resized",
+          "size": [
+            800,
+            400
+          ],
+          "sha256": "7d984b47455bca8c7fba0b420d012aec8a0b7ee5bbe06212493354fcac355e91",
+          "inspection": "PASS: expected count, button disabled/enabled state, centered labels and responsive layout"
+        }
+      ]
+    },
+    {
+      "version": "4.7.2.stable.official.ed1daf0bf",
+      "official_binary_sha256": "c7cccbf8fb143e34e02fd6521e09be2c2b974f0d5db080b19071c9c570718ccf",
+      "backend": "OpenGL 4.1 Compatibility, AMD Radeon Pro 5300M",
+      "workflow": "isolated native candidate",
+      "log_sha256": "449aa220eb2ee720ad8191bad4496c6a4197a88bf8d2ae26a6417aa46616453c",
+      "result": "PASS",
+      "captures": [
+        {
+          "name": "zero",
+          "size": [
+            640,
+            360
+          ],
+          "sha256": "433bb5e124a224e674d84c6a2e5b57a5e49b4c171a2138a9a31ddd1bafa8036f",
+          "inspection": "PASS: expected count, button disabled/enabled state, centered labels and responsive layout"
+        },
+        {
+          "name": "one",
+          "size": [
+            640,
+            360
+          ],
+          "sha256": "fc05c3b0ce29ad649b811202b1f49288fb5fedb88a044990f33d1fabb558a6a6",
+          "inspection": "PASS: expected count, button disabled/enabled state, centered labels and responsive layout"
+        },
+        {
+          "name": "reset-resized",
+          "size": [
+            800,
+            400
+          ],
+          "sha256": "80cfbf0e5ee805ec90dc206111bb1997284c7373d5960c060d2f298df9d14659",
+          "inspection": "PASS: expected count, button disabled/enabled state, centered labels and responsive layout"
+        }
+      ]
+    }
+  ]
+}

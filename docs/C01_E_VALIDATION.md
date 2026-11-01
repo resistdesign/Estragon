@@ -2,7 +2,8 @@
 
 C01-E [#48](https://github.com/resistdesign/Estragon/issues/48) is active on
 `codex/c01-e-semantic-validation`, based on C01-D merge `bf2c426`.
-This is an investigation checkpoint, **not compatibility certification**.
+The scoped implementation and verification are ready for owner review in PR #60;
+**the PR is unmerged and this is not full-addon compatibility certification**.
 No semantic-validation requirement has been weakened.
 
 ## Reproduced path and cache constraints
@@ -121,24 +122,95 @@ cold invalid-font probes still require exactly one intended diagnostic. The
 matrix and current-engine regression harness gate these tests independently of
 other C01 failures.
 
-Full semantic, transactional/editor and graphical acceptance remain outstanding
-at this checkpoint. See issue #48 for actual commands, results and next action.
+## Final version matrix
 
-Recorded checkpoint evidence: [path API matrix](../tests/compatibility/c01-e-context.json)
-and [runtime cold-load sweep](../tests/compatibility/c01-e-cold.json). The runtime
-sweep passes component (63), layout (72), interaction (96), cold-positive and
-both strict font rejections on all nine engines. Its minimal-project editor
-import exits nonzero on 4.0–4.2 despite producing only warnings; those import
-outcomes remain FAIL. They are not silently converted into successful addon
-imports. The full collector is rerun from frozen source snapshots; an earlier
-in-progress run that read changing source between engines is excluded from
-before/after certification.
+The [frozen before snapshot](../tests/compatibility/c01-e-before.json) uses merged
+`bf2c426`; the [final scoped snapshot](../tests/compatibility/c01-e-results.json)
+uses clean frozen `d397048`. Every official executable is verified against the
+exact version and pristine binary SHA in `engines.json`, including both 4.7.0
+and 4.7.2. Raw commands/logs and metadata remain in the corresponding local/CI
+artifacts; snapshots retain all stage outcomes and log/report hashes.
 
-Pinned 4.7 local verification: Bun 180 tests / 663 expectations, Python 17,
-native generation 3632, semantics 127, signals 49, full Godot runtime/negative
-harness and fresh native editor build/Play/rollback/restart suite PASS at the
-cold-cycle checkpoint. Three native Counter captures (0, 1, reset/resized) were
-inspected: label centering, disabled Reset, responsive layout and rendering are
-preserved. This is scripted native graphics, not physical F5/F6 or mouse proof.
-Adapter changes have a separate native suite run; final-head CI and complete
-semantic/publication acceptance remain pending.
+| Official engine | Native semantics / Counter | Publication: registered / dependency / rollback / fresh repair | Cold Text / runtime | Isolated path preflight | Full addon startup |
+| --- | --- | --- | --- | --- | --- |
+| 4.0.4 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | BLOCKED | FAIL |
+| 4.1.4 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | BLOCKED | FAIL |
+| 4.2.2 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | BLOCKED | FAIL |
+| 4.3 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | BLOCKED | FAIL |
+| 4.4.1 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | PASS | FAIL |
+| 4.5.2 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | PASS | FAIL |
+| 4.6.3 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | PASS | FAIL |
+| 4.7.0 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | PASS | PASS |
+| 4.7.2 | PASS / PASS | PASS / PASS / PASS / PASS | PASS | PASS | PASS |
+
+All nine also pass frontend/emission/maps, generated signals and nine callback
+probes, component (63), layout (72), interaction (96), sizing/text negatives and
+native numeric-value preservation. The full semantic suite executes nine bad
+programs and lifecycle/callback guards with exactly 18 expected engine errors on
+4.0–4.2 and 20 on 4.3+, including both native type diagnostics where applicable.
+Mapped native locations are checked on Logger engines; older generic diagnostics
+explicitly identify their location limitation. Isolated invalid candidates leave
+cached application source and bytecode unchanged on supported engines; legacy
+unavailability returns no executable and causes no mutation.
+
+Additional research snapshots: [path API probes](../tests/compatibility/c01-e-context.json),
+[initial cold sweep](../tests/compatibility/c01-e-cold.json), and
+[semantic baseline](../tests/compatibility/c01-e-semantic-baseline.json).
+The final full snapshot supersedes these checkpoint runs. An initial collector
+that read changing source between engines is excluded; superseded `1aac73d`
+CI remains visible as the evidence revealing native live-default behavior.
+
+## Current-engine regressions and graphics
+
+- `bun install --frozen-lockfile && bun run check`: 180 tests, 663 expectations,
+  typecheck, canonical IR and generated examples/maps PASS.
+- `python3 -m unittest discover -s tests/compatibility -p 'test_*.py'`: 17 PASS.
+- `GODOT_BIN=<4.7.0> sh tools/check-native-generation.sh`: native generation
+  3632, semantic 149, signals 49, Counter/lifecycle/numeric suites PASS.
+- `GODOT_BIN=<4.7.0> bun run check:godot`: every-script parsing, full runtime,
+  mapped negative diagnostics and callback regressions PASS.
+- `GODOT_BIN=<4.7.0> sh tools/check-editor.sh`: fresh self-contained no-Bun
+  editor, native build (31), both Play paths, rollback, recovery and restart PASS.
+- [Native visual evidence](../tests/compatibility/c01-e-visual.json): 4.0.4
+  transactional publication and 4.7.2 isolated validation both execute Counter
+  with empty executable PATH. Inspected 0, 1 and reset/resized captures at
+  640×360 and 800×400: centered labels, disabled Reset and responsive layout
+  preserved. Earlier 4.7.0 captures were also inspected. These are scripted
+  native graphics; physical F5/F6/mouse testing was not run.
+
+Typical reproducible commands (fresh output directory required):
+
+```sh
+python3 tools/check-compatibility.py \
+  --engine 4.0.4=/absolute/official/godot \
+  --engine 4.7.0=/absolute/official/godot \
+  --engine 4.7.2=/absolute/official/godot \
+  --output /new/compatibility --editor --collect-only
+```
+
+Repeat `--engine` for every pinned version to reproduce the full matrix. The
+collector's successful exit is collection only; CI independently gates the
+required C01-B/C/D/E stages. Final-head CI links and exact branch/commit handoff
+are published in #48 / #60, avoiding a self-referencing commit in this file.
+
+## Remaining limitations and queue
+
+- C01-F #49 still owns real older editor startup; C01-G #50 owns unsaved Play.
+  Their red/BLOCKED stages remain visible. This PR does not implement them.
+- #44's filtered never-associated tab remains FAIL even on 4.7.
+- HybridEdges remains FAIL on 4.0/4.1 because native raw-string syntax is
+  unavailable. 4.2 supports that syntax but fails unqualified generated static
+  calls inside lambdas. Focused follow-up [#61](https://github.com/resistdesign/Estragon/issues/61)
+  records the minimal native reproducer and type-validation constraints; #51
+  must resolve broader authored-native syntax limits before certification.
+- Native IEEE parsing limits from C01-D and newly added inherited defaults on
+  existing live Script instances remain separate BLOCKED observations. Fresh
+  defaults/current bytecode are verified; application hot reload is not offered.
+- Minimal-project editor import exits nonzero through 4.2 despite warning-only
+  logs; these remain FAIL in research/publication-import stages, not hidden
+  successes. Native class registration and publication execute independently.
+- On 4.0–4.2, public link inspection is unavailable. Reports disclose this
+  optional missing guard; symlink-free projects remain required.
+
+The next implementation after owner review/merge is C01-F #49. Do not merge
+this PR automatically or start that milestone, C01-G or T09 from this branch.

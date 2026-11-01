@@ -5,10 +5,10 @@
 **Milestone:** interactive Gogo/GDScript `Counter.gogo` compiled to GDScript, built from independent Estragon components, running and resizing in Godot 4.7. See [EXECUTION_PLAN.md](EXECUTION_PLAN.md).
 
 **Start here:** C01-D #59 merged at `bf2c426` after the owner selected native
-Godot numeric parsing semantics and practical emission fixes. C01-E #48 is now
-active on `codex/c01-e-semantic-validation` in its dedicated worktree. See
+Godot numeric parsing semantics and practical emission fixes. C01-E #48 is in review in **unmerged PR #60** on
+`codex/c01-e-semantic-validation` in its dedicated worktree. See
 [C01_E_VALIDATION.md](C01_E_VALIDATION.md) and the live issue/PR for path/cache
-research, the cold Text-first correction, acceptance and remaining decisions.
+the accepted contract, final verification and remaining compatibility work.
 C01-F/G, reactive/Box/padding and `to_pixels()` remain queued and untouched.
 
 ## Current plan register
@@ -35,7 +35,7 @@ C01-F/G, reactive/Box/padding and `to_pixels()` remain queued and untouched.
 | **C01-B** | **Done (scoped fix merged PR #53)** | Scalar component maxima, button label clamp and 4.0 incoming-signal key parsing | [#45](https://github.com/resistdesign/Estragon/issues/45) | [Runtime evidence](C01_B_RUNTIME.md); merge `29fc202`, individual scoped stages are required by CI. Remaining cold Text-first negatives retained as FAIL under #48. |
 | **C01-C** | **Done (merged PR #57)** | Version-gated proactive arity checks; preserve valid callbacks and lifecycle | [#46](https://github.com/resistdesign/Estragon/issues/46) | [Nine-engine evidence](C01_C_CALLBACKS.md): Counter/signals/guard probes pass on 4.0–4.7.2; owner-approved diagnostic timing. Required CI passes; merged `68f1ec4`. |
 | **C01-D** | **Done (merged PR #59)** | Canonical numeric tokens and native-value preservation | [#47](https://github.com/resistdesign/Estragon/issues/47) | [Nine-engine evidence](C01_D_NUMBERS.md): numeric/native-preservation and C01-B/C gates pass; native conversion limits stay explicit. Required CI and native graphics pass. |
-| C01-E | Active; owner-approved legacy contract | Native semantic validation, resource paths and script identity | [#48](https://github.com/resistdesign/Estragon/issues/48) | [Investigation](C01_E_VALIDATION.md); cold Text-first correction drafted, transactional publication is mandatory; full semantic/transactional acceptance incomplete. |
+| C01-E | In review (PR #60; unmerged) | Native semantic validation, resource paths and script identity | [#48](https://github.com/resistdesign/Estragon/issues/48) | [Nine-engine evidence](C01_E_VALIDATION.md): native semantics, Counter, registered/cached identity, transactional rollback/recovery and cold runtime gates PASS; owner-approved preflight availability differs by engine. Other editor/grammar limits remain explicit. |
 | C01-F…H | Queued; one PR at a time | Editor startup → unsaved Play → integration/release | [#49](https://github.com/resistdesign/Estragon/issues/49), [#50](https://github.com/resistdesign/Estragon/issues/50), [#51](https://github.com/resistdesign/Estragon/issues/51) | Reviewed sequence in EXECUTION_PLAN; no later implementation started. E01-F #44 remains separate and precedes final release disposition. |
 | R02 | Deferred | Renderer-backend research | [#2](https://github.com/resistdesign/Estragon/issues/2) | Pending |
 
@@ -51,7 +51,7 @@ C01-F/G, reactive/Box/padding and `to_pixels()` remain queued and untouched.
 - Future work belongs in issues while the current PR is active. A blocked PR
   needs documented evidence and an owner decision, not another PR. No automatic
   merges. Every task has a durable issue, checkpoints, verification and handoff.
-- Queue: C01-D #47 → C01-E…H #48–51 with E01-F #44 → T09-A #43 →
+- Queue: current C01-E #48/#60 → C01-F…H #49–51 with E01-F #44 → T09-A #43 →
   T09-B/C/D #5. #40 merged. Check live issues before advancing.
 
 - **One work ID per focused implementation PR.** A planning/ADR/process-only PR may be unassigned if it is explicitly labeled as such and includes no implementation work. The task issue is the durable conversation: scope, current owner/session or branch, plan/checklist, evidence, blockers, handoffs and linked PR.

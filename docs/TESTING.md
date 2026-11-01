@@ -640,3 +640,13 @@ a fresh process and also counts the two existing cold invalid-font diagnostics.
 All three are required gates; component-first interaction coverage remains
 separate. The pinned-current-engine `bun run check:godot` also runs the new
 positive cold-load test.
+
+C01-E's collector also creates a separate native publication project and tests
+registered identity/live state, no-op stale bytecode, dependency and inheritance
+updates, failure rollback/cleanup and repair. Native semantic tests no longer
+require Logger on old engines; the harness requires exactly 18 expected errors
+on 4.0–4.2 and 20 on 4.3+ and rejects any extra/missing error. Isolated preflight
+is BLOCKED where unavailable, while actual publication is a required PASS.
+The separate native_live_added_defaults observation retains the engine's live
+default-initialization limit; it does not weaken fresh-default or current-bytecode
+checks. See [C01-E final evidence](C01_E_VALIDATION.md).
