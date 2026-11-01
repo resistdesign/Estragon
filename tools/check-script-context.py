@@ -53,8 +53,8 @@ def collect(engine, output):
         (project / "project.godot").write_text(
             'config_version=5\n[application]\nconfig/name="C01-E context probe"\n')
         base = [str(binary), "--headless", "--path", str(project)]
-        record["stages"]["import"] = compatibility.execute(
-            base + ["--editor", "--quit"], workspace, env, target / "import.log")
+        record["stages"]["import"] = compatibility.index_project(
+            binary, project, workspace, env, target / "import.log")
         for mode in ["cache", "paired", "collision", "alias", "ignore", "fresh"]:
             stage = compatibility.execute(base + ["--script", "res://probe.gd", "--", mode],
                                           workspace, env, target / (mode + ".log"))

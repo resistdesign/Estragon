@@ -126,7 +126,10 @@ other C01 failures.
 
 The [frozen before snapshot](../tests/compatibility/c01-e-before.json) uses merged
 `bf2c426`; the [final scoped snapshot](../tests/compatibility/c01-e-results.json)
-uses clean frozen `d397048`. Every official executable is verified against the
+uses clean `ab82873`: eight versions from successful official macOS CI
+run [41269015761](https://github.com/resistdesign/Estragon/actions/runs/41269015761),
+plus a fresh local frozen 4.7.0 baseline run. Runtime/compiler implementation is
+unchanged from `d397048`; the later correction waits for complete class indexing. Every official executable is verified against the
 exact version and pristine binary SHA in `engines.json`, including both 4.7.0
 and 4.7.2. Raw commands/logs and metadata remain in the corresponding local/CI
 artifacts; snapshots retain all stage outcomes and log/report hashes.
@@ -156,7 +159,9 @@ unavailability returns no executable and causes no mutation.
 Additional research snapshots: [path API probes](../tests/compatibility/c01-e-context.json),
 [initial cold sweep](../tests/compatibility/c01-e-cold.json), and
 [semantic baseline](../tests/compatibility/c01-e-semantic-baseline.json).
-The final full snapshot supersedes these checkpoint runs. An initial collector
+The final full snapshot supersedes these checkpoint runs. The path research
+collector also uses the same metadata-only index observer, verified on pinned
+4.7.0 with the expected unsafe strategies still FAIL. An initial collector
 that read changing source between engines is excluded; superseded `1aac73d`
 CI remains visible as the evidence revealing native live-default behavior.
 
@@ -231,4 +236,8 @@ processes remain cold. Existing enabled plugins are preserved; project bytes
 are restored and the observer removed even if the editor fails (unit-tested).
 Original parser errors still make import FAIL even with an index-ready marker
 and exit 0. The C01-B container/button parse gates remain unchanged and strict.
-No production editor-startup code is changed; C01-F remains queued.
+No production editor-startup code is changed; C01-F remains queued. The corrected
+setup passes both original container/button parse gates on all nine engines,
+and dedicated publication import now passes on every engine. Genuine old-addon
+parser/startup errors remain FAIL. The earlier import failures are preserved in
+the before/research snapshots rather than rewritten.

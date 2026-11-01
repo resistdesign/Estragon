@@ -1,78 +1,78 @@
 {
   "schema_version": 1,
-  "scope": "C01-E owner-approved semantic preflight/publication, script identity and cold loading; not full-addon certification",
+  "scope": "C01-E corrected class-index setup; eight official macOS CI engines and pinned 4.7.0 local baseline; scoped gates, not full certification",
   "raw_reports": [
     {
-      "date": "2026-11-01T02:59:38.495165+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:24:08.978374+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "be415f68bfe64b4dd3347c773a711189cc1c911454a013772a07e2e15d859627"
+      "sha256": "1ca0efe50d1dbb59b16573fc08626f28fd091cb197da903b3cad685c65cfb67c"
     },
     {
-      "date": "2026-11-01T02:59:38.496857+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:26:36.404384+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "65fa4712a38b14ac1000e6d6133129bd052f71de851a788fc73f3bbbde17230c"
+      "sha256": "3262e565ea8121bcc3d38edb828fe6781e84a1291d818f32c868a4292912a2d7"
     },
     {
-      "date": "2026-11-01T02:59:38.503147+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:24:12.208205+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "9547181c2b488edc2f002549a201d5f03302c4a0cdda2275fbbf6f481a46d04b"
+      "sha256": "ed8e3c3dd776ad010ce8888ca8d05c9f856de2d68716853e3844b47005437c85"
     },
     {
-      "date": "2026-11-01T02:59:38.500981+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:25:32.564645+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "2040076cf3aa1b478a348d46fba6a1899071dc3be64390c296de237d338cc750"
+      "sha256": "78674fe81e6f80e5db46be73612b1b457a03d7e216c6fb2070775ca40d6270d2"
     },
     {
-      "date": "2026-11-01T03:03:18.582783+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:24:15.835871+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "495bbab86884ba0ff2d9c31a6de8539ca2afbd55057e90ca8171262c4b7a957c"
+      "sha256": "e3d9d0edebb657f4fdd55542314aa5fcf1f8c441824fa66de9093cdcea19e12f"
     },
     {
-      "date": "2026-11-01T03:03:41.271707+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:24:20.840194+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "a8db8b84d27061ee7f141241532af38331ed977d99cdf9f2def925631f8e5748"
+      "sha256": "6a5605558fca4c6f9924836eff7729ee0ad61bac0e91ec965bd3954134e139df"
     },
     {
-      "date": "2026-11-01T03:03:52.113732+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:24:09.376757+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "f4c1f7ca4cb8d255d1827d301a3ef5f4cc6cfb4961f416c295a9297b57fd7935"
+      "sha256": "10bd5de67735fdc918c97a27a9122232d43e0cacdbdd9ef3c2bd60c26e22071a"
     },
     {
-      "date": "2026-11-01T03:04:02.428148+00:00",
-      "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "date": "2026-11-01T03:26:01.692089+00:00",
+      "platform": "macOS-26.6.2-arm64-arm-64bit",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "8a1aceca6e7ee94c93026306e144cc8e0802fb287bcf34a5503b4c9512d4d671"
+      "sha256": "1f527fbf5edcb8c2e5cc294b0f31352595e02a789dca269cc41f91a3bd4baa40"
     },
     {
-      "date": "2026-11-01T03:06:19.934498+00:00",
+      "date": "2026-11-01T15:57:26.754926+00:00",
       "platform": "macOS-26.6.2-x86_64-i386-64bit-Mach-O",
-      "source_commit": "d397048f6c9667d2e8b79ec7f1e8e8c74bceade3",
+      "source_commit": "ab82873213d04d915cbe50d7f1d89739f9d4b55d",
       "source_dirty": false,
       "collect_only": true,
-      "sha256": "ce80af50b8daebf57832201bd0fc3143fa10ebd1ef246705809eb87fafc7a95d"
+      "sha256": "69541ca61f2ca31175c171ad63d54786a0bd34c4f5db9bdaeb196a2c9ab39d5b"
     }
   ],
   "engines": [
@@ -622,11 +622,15 @@
         },
         "import": {
           "status": "FAIL",
-          "exit_code": 1,
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "acde6f90d339a757d13e94bacfe8e9ae3cafbc0461f83ad085ff8c2067c55d19",
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "0e3543d17dbba8b70c2f2d4373056b1a53fe6a0fc67ebde8dfbdd662f3f0b479",
           "diagnostics": [
             "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
             "     at: _editor_init (modules/gltf/register_types.cpp:70)",
@@ -638,7 +642,6 @@
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:50)"
           ],
           "log_tail": [
-            "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:50)",
             "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:51)",
@@ -653,7 +656,8 @@
             "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:139)",
             "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead.",
-            "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:152)"
+            "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:152)",
+            "C01_PROJECT_INDEX_READY"
           ]
         },
         "shipped_scripts": {
@@ -839,7 +843,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "numeric_literals.log",
-          "log_sha256": "3dc08721349baa3de851162a9b0591cb6873675900fb48218c4f1dd48cd23a3b"
+          "log_sha256": "0600b9438a2846fb8e1a42b14500fe0a30286af1ce0bf1ee39c08a13092d8c6d"
         },
         "numeric_native_preservation": {
           "status": "PASS"
@@ -854,7 +858,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_metadata_probe.log",
-          "log_sha256": "cc969b993b3f28a9e4b367464fff4eb9675a1c74f53e404e746016e70b5b86e8"
+          "log_sha256": "f98d03ccfdb5145b5f736ce1a0ecc473f1de851f7c074f159bd315d4c43adebd"
         },
         "callback_arity_api": {
           "status": "BLOCKED",
@@ -866,7 +870,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "frontend.log",
-          "log_sha256": "5699279f190801ebadfd515fac654925bd2b6256503a2a11d81f332fc86490e1"
+          "log_sha256": "26dfc367febc090a1a3859e3ca59d0c9a7a0b7732cbbc6f3f0650d46fedcd0e7"
         },
         "emission_maps": {
           "status": "PASS",
@@ -874,15 +878,19 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "emission_maps.log",
-          "log_sha256": "d8efebcc7fe553eb3d46a7c734002c9e4ab7ea7d74c15c73f1ed12c94fe3e853"
+          "log_sha256": "dc8792649e7098f4bdb9b35569eef209641423e7866b108c497eac564e28da1a"
         },
         "generated_import": {
           "status": "FAIL",
-          "exit_code": 1,
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "bc2723cb606381f5142e060d8c4709c73a1a3404aa74ec585ff123af546aa6e6",
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "008ebbdeef2e8ced1e4d2c73cd087f4c78a7de8019b6bd51407cfaa8ecc50921",
           "diagnostics": [
             "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
             "     at: _editor_init (modules/gltf/register_types.cpp:70)",
@@ -890,6 +898,7 @@
             "          at: GDScript::reload (res://tests/godot/native_build.gd:9)"
           ],
           "log_tail": [
+            "2026-11-01 03:24:57.049 godot[14969:42815] *** +[NSString stringWithUTF8String:]: NULL cString",
             "Godot Engine v4.0.4.stable.official.fc0b241c9 - https://godotengine.org",
             " ",
             "WARNING: Custom cursor shape not supported by this display server.",
@@ -897,7 +906,8 @@
             "WARNING: Blend file import is enabled in the project settings, but no Blender path is configured in the editor settings. Blend files will not be imported.",
             "     at: _editor_init (modules/gltf/register_types.cpp:70)",
             "SCRIPT ERROR: Parse Error: Could not find base class \"Logger\".",
-            "          at: GDScript::reload (res://tests/godot/native_build.gd:9)"
+            "          at: GDScript::reload (res://tests/godot/native_build.gd:9)",
+            "C01_PROJECT_INDEX_READY"
           ]
         },
         "legacy_scene": {
@@ -906,7 +916,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "legacy_scene.log",
-          "log_sha256": "2e22a581a487493c8841ddc38dd36edd63abeec5738a8bc586e0d7c83703248c"
+          "log_sha256": "75c74096f6bbd9f887c0e987e6a07eac5650dccf3d7cef72f621c85c82617caa"
         },
         "components": {
           "status": "PASS",
@@ -914,7 +924,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "components.log",
-          "log_sha256": "9e677dc25976ad5e2bf90b94d3f26f810be2fcf77636a8b100ca4ad96bc083d2"
+          "log_sha256": "5005cf5a3faa7a65487b78cfe962e59386532df353dd211285344cde52acf78d"
         },
         "layout": {
           "status": "PASS",
@@ -922,7 +932,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "layout.log",
-          "log_sha256": "60701597096d1b89af405b141ebeab1cd1e73f134492237cd31d083548c1e72c"
+          "log_sha256": "a2209b27dd5214f3d2fbdf304045b47fdf5c4cbe32c9a81f0e079fd59b2f6cac"
         },
         "input_text": {
           "status": "PASS",
@@ -930,7 +940,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "input_text.log",
-          "log_sha256": "e44395b4fee2f789d256cf27c6a3731c936b7c259d422b8d656380910efe82a2"
+          "log_sha256": "cf849c7af9bc91d3cbd538ee21821edeef20bd920dd0b41896eb8b91b860437e"
         },
         "cold_text": {
           "status": "PASS",
@@ -938,7 +948,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "cold_text.log",
-          "log_sha256": "ad995bead167a99dd7fcae0cfdd3e1f74c18d42162fe230eb06f2370b8d840c1"
+          "log_sha256": "23372591a639076787501ea4150eb433083fb3db2ab51587531273d4a82b17d2"
         },
         "semantic_baseline_valid": {
           "status": "PASS",
@@ -946,7 +956,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_valid.log",
-          "log_sha256": "8124860317385863264e997f2e3d2899d944b1cfd2805c532ef0cba5e50a49d2"
+          "log_sha256": "e7c1cc2457500db1ed8bcb088428e4317990a554d9e94a8a8c5b1031464a0dee"
         },
         "semantic_baseline_invalid": {
           "status": "PASS",
@@ -954,7 +964,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_invalid.log",
-          "log_sha256": "189a15a3ab8a1fbd4bada112072b3fcb4f7b3b62ddfeab34820ce1e4c5e5af2e"
+          "log_sha256": "dd7bcd9b5807ecd21d57facc8418351c1506b5bd70b8108a90aa21205c439854"
         },
         "semantic_baseline_isolated": {
           "status": "BLOCKED",
@@ -963,7 +973,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_isolated.log",
-          "log_sha256": "3f9cee0939c02061dff7bbefa7f45164129934ce27ba558a884f51213df79b42"
+          "log_sha256": "b53d7f99610b8a1ac400069405d3ce471cff008a7260648dbfaba21bfeaf5cf4"
         },
         "semantic_baseline_isolated_failure": {
           "status": "BLOCKED",
@@ -972,27 +982,19 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_isolated_failure.log",
-          "log_sha256": "3f9cee0939c02061dff7bbefa7f45164129934ce27ba558a884f51213df79b42"
+          "log_sha256": "5c29419c3762ff74e9e378e1fef2096cf855df29f41651128fa8b866cf0cc009"
         },
         "publication_import": {
-          "status": "FAIL",
-          "exit_code": 1,
+          "status": "PASS",
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "1c0b918c4242aa6b50478f8acd901c3dc4c6e76edbaf9db92098917b6136131a",
-          "diagnostics": [
-            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
-            "     at: _editor_init (modules/gltf/register_types.cpp:70)"
-          ],
-          "log_tail": [
-            "Godot Engine v4.0.4.stable.official.fc0b241c9 - https://godotengine.org",
-            " ",
-            "WARNING: Custom cursor shape not supported by this display server.",
-            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
-            "WARNING: Blend file import is enabled in the project settings, but no Blender path is configured in the editor settings. Blend files will not be imported.",
-            "     at: _editor_init (modules/gltf/register_types.cpp:70)"
-          ]
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "3e69acab0b426a9da8fad48080d5cd9eed96f46c7a20ee0ae84c7134e501d513"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -1000,7 +1002,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_registered.log",
-          "log_sha256": "5615cc428ce338ad8eb39f9015e625858ea92d0dc0a0fe6e42ca7813fc4fbc9e"
+          "log_sha256": "161868180a9d09af013b887c26a339355c11f7e80227e37530c05e3d2ce11988"
         },
         "native_publication_positive": {
           "status": "PASS",
@@ -1008,7 +1010,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_positive.log",
-          "log_sha256": "e2cf7743e577be514e2a1179a0568cf8db392ee19686e1c590bb1ff648c5e8dc"
+          "log_sha256": "346e6965f432d538cec89e663795cd583417b2b9a19cdfcf4e018a4c2c919e69"
         },
         "native_live_added_defaults": {
           "status": "BLOCKED",
@@ -1029,7 +1031,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_rollback.log",
-          "log_sha256": "e05050f20bd0e71b620838653cb069a4b8bc994a2dcc8a0aedcc0fc3ac894048"
+          "log_sha256": "1ed9ea37421ea868cc0be112dd16cb832b67892855ae188747cdb5e380e70eb3"
         },
         "native_publication_fresh_failure": {
           "status": "PASS",
@@ -1037,7 +1039,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_fresh_failure.log",
-          "log_sha256": "ad41c25459deaa5164da05b1149923b53c889375c23d5c032b2f0763358a3556"
+          "log_sha256": "89b32d2bbe98c9d30e7f950a9d117901f1f033fdc5cda0709862a09d71438832"
         },
         "reject_width": {
           "status": "PASS",
@@ -1045,7 +1047,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_width.log",
-          "log_sha256": "d9bf7740356ea87e2ff71838504c69cde162abf751549ca15b6f263c08563020"
+          "log_sha256": "a0ad0eb2192db220ccec9e23181a06beeb94de5ffaa61254b62dd42d59ae9f54"
         },
         "reject_height": {
           "status": "PASS",
@@ -1053,7 +1055,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_height.log",
-          "log_sha256": "bba1ac0739b7540dbbf8d8d36339a0c07300086a346781d546519a65df45d847"
+          "log_sha256": "c4db0bcdc7db820b7f2dd9ad8f961d096f6367f0749f9b742863eab2aa93e2c7"
         },
         "reject_negative_width": {
           "status": "PASS",
@@ -1061,7 +1063,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_negative_width.log",
-          "log_sha256": "d9bf7740356ea87e2ff71838504c69cde162abf751549ca15b6f263c08563020"
+          "log_sha256": "ce9bb885d5a1056bdb7c144996910d774cffcc9587902b61e14d3a708a15c70f"
         },
         "reject_gap": {
           "status": "PASS",
@@ -1069,7 +1071,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_gap.log",
-          "log_sha256": "ddb21bc37b04f8f555d7616647bbd37eecc1d671fe8362e68fff28c9b927f7d6"
+          "log_sha256": "c57bf4a9f76eb67903cab29f8e1c973e561c1917c2e60800c31fc152cbb12e17"
         },
         "reject_geometry": {
           "status": "PASS",
@@ -1077,7 +1079,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_geometry.log",
-          "log_sha256": "56cdb9bee2db3c03bde0fa5840710e802c5c091ff54987bca2972631eef989f3"
+          "log_sha256": "019fab1ee1ffc6e915ef36b4081f5bd890b5fc0b227292d4e8207c1dc0f63fc8"
         },
         "reject_null_font": {
           "status": "PASS",
@@ -1085,7 +1087,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_null_font.log",
-          "log_sha256": "04c775e66b2d0dd1bac8ce21ba5390fe05d49d424cba2d188c72663adfb2d2ec"
+          "log_sha256": "2ce1e3b64af3ee404062df7b95b5854203787adb990c8b59f63522f04e5867e8"
         },
         "reject_font_size": {
           "status": "PASS",
@@ -1093,7 +1095,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_font_size.log",
-          "log_sha256": "63a32871ea0332557cf85982cac4c63b93fa26ae87ddcd69dae9df95654a294b"
+          "log_sha256": "b3213825c5ad2a7efba0fb0e775d57414c6842be1f1338729bbb922cb2f8c94e"
         },
         "generated_layout": {
           "status": "PASS",
@@ -1101,7 +1103,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_layout.log",
-          "log_sha256": "df0cdbeb33323fe324cb52fc3b097c9d23858e4aad658155a43f313a5b1db111"
+          "log_sha256": "a82dd23bb3cefd7995cb2614f362e7576ac88f2fd6d16f1dfae62e2f14b037cb"
         },
         "hybrid_runtime": {
           "status": "FAIL",
@@ -1109,12 +1111,13 @@
           "timeout": false,
           "aborted_on_error": true,
           "log": "hybrid_runtime.log",
-          "log_sha256": "3e5394e4bae2f9ba75d28b57686ecd210f1fffe6adc915e8534da7e36438f379",
+          "log_sha256": "bfe32088caa75225567911427e1db44cbac1b77af302d39f3998326e09b54551",
           "diagnostics": [
             "SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.",
             "          at: _run (res://tests/godot/hybrid_gogo.gd:54)"
           ],
           "log_tail": [
+            "2026-11-01 03:25:35.639 godot[15836:45189] *** +[NSString stringWithUTF8String:]: NULL cString",
             "Godot Engine v4.0.4.stable.official.fc0b241c9 - https://godotengine.org",
             " ",
             "SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.",
@@ -1127,7 +1130,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_signals.log",
-          "log_sha256": "3ffbe9bd14da9659108e82ad6b33a6a3425022f60db409ff1fc798d3a5ec8091"
+          "log_sha256": "c9d5c6b999352b2ad99a00e682249e65618ac88835b783551d6a82e14c39a1d6"
         },
         "native_counter": {
           "status": "PASS",
@@ -1135,7 +1138,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_counter.log",
-          "log_sha256": "e521028d26c49df0634d19db0c37456e68df88a65f82522d5b2f604ec622163b"
+          "log_sha256": "b6eb1287d199240caa39e6db0a8c72cf33b54cb002eaed30e60eecba32c3a1f9"
         },
         "semantic_identity": {
           "status": "PASS",
@@ -1143,7 +1146,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_identity.log",
-          "log_sha256": "30a2046c28875858b571d2c62fbff7938768d1b8da10ddde5eca616b5b88fc2a"
+          "log_sha256": "c8d48d4190fae5909501c8bf963f64507cf6bd1c5e8c08d4f0fdf0abbb95d51a"
         },
         "callback_guard_empty": {
           "status": "PASS",
@@ -1151,7 +1154,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_empty.log",
-          "log_sha256": "d17a387d0e5e10c3b52e32710099a0e1d859c7445709905160d11aeb026de665"
+          "log_sha256": "a0dd33570976adc8be38fa8f9486e8a482ef1a13dfdc51afac3df2ceebed2092"
         },
         "callback_guard_missing": {
           "status": "PASS",
@@ -1159,7 +1162,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_missing.log",
-          "log_sha256": "d0965848bb2a098792219cb3e16cdd3792f9a0f3f21e15155d0ab24471468025"
+          "log_sha256": "7ecf8ee040d6f3353cfeee0dc42a67f02219e458f1341c5d897977cd72245984"
         },
         "callback_guard_freed": {
           "status": "PASS",
@@ -1167,7 +1170,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_freed.log",
-          "log_sha256": "31155747ceaac982aaa0ee3fe14c39d676f9890157fd7995c531bc883e19fb06"
+          "log_sha256": "a8b5277a422db9ac1eb834187924c1df7dcae2dcafd151143912e7b0904be076"
         },
         "callback_guard_disposed": {
           "status": "PASS",
@@ -1175,7 +1178,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_disposed.log",
-          "log_sha256": "b1062e0820313a2b57fbd43b3187c207ee88bc45cfb6caedfe3e25a836e67183"
+          "log_sha256": "a93a412179edbaf1ec98fa2e476865b5566e96a36c3e003ea6a30ea1c8f3bef1"
         },
         "callback_guard_required": {
           "status": "PASS",
@@ -1183,7 +1186,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_required.log",
-          "log_sha256": "3af7a243724774f2743643b5a6352fd463c560374f3d8b5404db97ed374dced2"
+          "log_sha256": "4a175f2e203604a0988e897c42ce9ee43d4cf5e6bee7b2559c4651b20a0420d3"
         },
         "callback_guard_optional": {
           "status": "PASS",
@@ -1191,7 +1194,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_optional.log",
-          "log_sha256": "68b802e0da0925d192e170f18cddb9352b99c52a01dbaebce648b4f764a5ca60"
+          "log_sha256": "0e76d6dafaec6a9483fe0b68fea006deb048caa6647c1d97bc9ee2a8bdf48a53"
         },
         "callback_guard_lambda_required": {
           "status": "PASS",
@@ -1199,7 +1202,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_lambda_required.log",
-          "log_sha256": "eb590f415433730dc4834386d5ef7fbd46f582894a0b24b62eecce3cba81bb45"
+          "log_sha256": "06b74f1ad6ac9c19b0c6a63b66c0336fe059964f572072c41132d37df1c76c33"
         },
         "callback_guard_lambda_optional": {
           "status": "PASS",
@@ -1207,7 +1210,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_lambda_optional.log",
-          "log_sha256": "94166ddbf59e99123c92655c0069c47ae580b3cdd8a5b92301af954f0abc9dc9"
+          "log_sha256": "cd40c831e5962ec74fa548c05cebf2989e0b5134ae47744c21018592a30c3450"
         },
         "callback_guard_unbound": {
           "status": "PASS",
@@ -1215,7 +1218,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_unbound.log",
-          "log_sha256": "7b38fef606b4f554ae21a2026acc503bd62ac20a10372f40a0b2792e57f3b6e3"
+          "log_sha256": "97595e66c735271d3fae4d9095fe7f22c801c40cfcb357583ea7a5b6b6d7e83f"
         },
         "api_dump": {
           "status": "PASS",
@@ -1223,7 +1226,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "api_dump.log",
-          "log_sha256": "53e623641cac42417fc2b2df39c299d062e710a49755827960ab3c12612426bc"
+          "log_sha256": "2ba44f199252965ec069c6bb3e979df21dd63a96a0ae406e879feae3f01aabe4"
         },
         "graphics_physical_keys": {
           "status": "UNTESTED",
@@ -1235,7 +1238,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "77f77cbe95693f96f4947d3061a8036e71ee55cd7292e273362e54449da717c9"
+          "log_sha256": "3c4534443ac7ee6ec985f415fcfd057d75736ee0fa5a172a01e3fe7fba7f27de"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -1800,11 +1803,15 @@
         },
         "import": {
           "status": "FAIL",
-          "exit_code": 1,
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "358fef296bf5b4b02cdfdf1e324ff19c36c89c3cdd2af0bfb111a72452dce965",
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "a99ee5c77ccc2a3133c468bb8c78119766362cf1ba43d022626ca3547d8bd0a1",
           "diagnostics": [
             "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
             "     at: _editor_init (modules/gltf/register_types.cpp:73)",
@@ -1816,7 +1823,6 @@
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:50)"
           ],
           "log_tail": [
-            "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:50)",
             "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:51)",
@@ -1831,7 +1837,8 @@
             "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_resource_filesystem()\" on the class \"EditorInterface\" directly. Make an instance instead.",
             "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:139)",
             "SCRIPT ERROR: Parse Error: Cannot call non-static function \"get_script_editor()\" on the class \"EditorInterface\" directly. Make an instance instead.",
-            "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:152)"
+            "          at: GDScript::reload (res://addons/estragon/editor/plugin.gd:152)",
+            "C01_PROJECT_INDEX_READY"
           ]
         },
         "shipped_scripts": {
@@ -2017,7 +2024,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "numeric_literals.log",
-          "log_sha256": "4b9366a49cc18d97f2012744e6a5e8c38e881976af6e54521aa5cf730bc07fdc"
+          "log_sha256": "fa0e95310fa57266c05a3dab38ffa6672abf1ba3adddeef2aaa2af7f16287d9f"
         },
         "numeric_native_preservation": {
           "status": "PASS"
@@ -2032,7 +2039,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_metadata_probe.log",
-          "log_sha256": "5700909ec90436684ed039eb6e4b414a683a2e5292f995127b82b5724d6db2a6"
+          "log_sha256": "229996cdf27e7cc6c9d2bd059e4f791b21304f9fbd7653da5b3b8a9362f09e2d"
         },
         "callback_arity_api": {
           "status": "BLOCKED",
@@ -2044,7 +2051,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "frontend.log",
-          "log_sha256": "891350757c63010a6bfdd71f7f1c5b134c318d42fcddee9b18779aca8e801e52"
+          "log_sha256": "17e902f0056ad78180cd4d12fa9fb7f36c8d24660def2f3e67099e4c670ff3f4"
         },
         "emission_maps": {
           "status": "PASS",
@@ -2052,15 +2059,19 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "emission_maps.log",
-          "log_sha256": "136b0dd1200141ac65ace5178f7f442efe14a7ad979f106e263f0850c05fca83"
+          "log_sha256": "4a8aca418da64d5a8a47f865030d79e5feb65b39ae0cd98cb5581967f7126fd1"
         },
         "generated_import": {
           "status": "FAIL",
-          "exit_code": 1,
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "354d3aecbb5c688ca5cddff1174a263a7f638fd60a50803aaac83ddbf736b30e",
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "b309ebcaa1e155ab89894946b4a36533d9ac1da2ae619f1ad343722217cae9aa",
           "diagnostics": [
             "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
             "     at: _editor_init (modules/gltf/register_types.cpp:73)",
@@ -2070,6 +2081,7 @@
             "          at: GDScript::reload (res://tests/godot/native_build.gd:9)"
           ],
           "log_tail": [
+            "2026-11-01 03:27:24.098 godot[10836:33487] *** +[NSString stringWithUTF8String:]: NULL cString",
             "Godot Engine v4.1.4.stable.official.fe0e8e557 - https://godotengine.org",
             " ",
             "WARNING: Custom cursor shape not supported by this display server.",
@@ -2079,7 +2091,8 @@
             "ERROR: Failed to load script \"res://tests/godot/generated/HybridEdges.gd\" with error \"Parse error\".",
             "   at: load (modules/gdscript/gdscript.cpp:2705)",
             "SCRIPT ERROR: Parse Error: Could not find base class \"Logger\".",
-            "          at: GDScript::reload (res://tests/godot/native_build.gd:9)"
+            "          at: GDScript::reload (res://tests/godot/native_build.gd:9)",
+            "C01_PROJECT_INDEX_READY"
           ]
         },
         "legacy_scene": {
@@ -2088,7 +2101,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "legacy_scene.log",
-          "log_sha256": "377abb95ce6d3d594aee900631e9d3d464e690747ea9525cc3c61758976c6718"
+          "log_sha256": "b881f28dfe875e318535e7b0bfc185506a4b8cc132bed5664a59c6f0ce8cf57b"
         },
         "components": {
           "status": "PASS",
@@ -2096,7 +2109,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "components.log",
-          "log_sha256": "10bfd10d65a0580187788fe8d1b1cf25172d1eb32ef1aefc7ab51bb893ec28e2"
+          "log_sha256": "788f762e2d57c2f48e008c214329b10d9fe6029c218aa275f2b9d173218f0f54"
         },
         "layout": {
           "status": "PASS",
@@ -2104,7 +2117,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "layout.log",
-          "log_sha256": "e0f5c23c86e9d100ab8220a16052743295d7e93daf51363acb77a3c3499956af"
+          "log_sha256": "5d76dbd29cf2e6518d8e1b4b76e6368529d3bd9158ba749faea98b1503b6c966"
         },
         "input_text": {
           "status": "PASS",
@@ -2112,7 +2125,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "input_text.log",
-          "log_sha256": "95e4bca175a1a92f10612803780f8166feb3e564e3ae4bcd6ca04334668dae98"
+          "log_sha256": "13e276278adaa735fb4b9196a1e10ed2016c2eec569d8981b5489b798e25f706"
         },
         "cold_text": {
           "status": "PASS",
@@ -2120,7 +2133,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "cold_text.log",
-          "log_sha256": "54940d47c619a6c635e92b13924f62aaa162277a7a1b4573ccf0549c467a4237"
+          "log_sha256": "e140b48d11a2a3ae3c11d02d943517c78a66cea1eccd7bebe691905a35514cc9"
         },
         "semantic_baseline_valid": {
           "status": "PASS",
@@ -2128,7 +2141,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_valid.log",
-          "log_sha256": "a63cf428141e63bc6dcdbb2b66a8a1e1b7c2e744349ec13dcae6a28972fddc2a"
+          "log_sha256": "21a09b5f2e593ebd46ac15d2531ada7cf6322a88b7bf7d0de72c052a66b670e1"
         },
         "semantic_baseline_invalid": {
           "status": "PASS",
@@ -2136,7 +2149,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_invalid.log",
-          "log_sha256": "0451bde8fa7b522b52b2aa299def96a21daceb2b01c9a11519876fa192533c2b"
+          "log_sha256": "1ae94c6075d48722a23c461c86a26d996ff0ac17bf1591eb5b96043c0251ffaf"
         },
         "semantic_baseline_isolated": {
           "status": "BLOCKED",
@@ -2145,7 +2158,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_isolated.log",
-          "log_sha256": "45358552e3fdb59972aac0f0afeaa7a5d8d5ce1bda3471411f708e932f6ed4b2"
+          "log_sha256": "e8edf8f1e055e43d71c8665afcd77f4c60dcc8183292ce244eed1751ad3bf52f"
         },
         "semantic_baseline_isolated_failure": {
           "status": "BLOCKED",
@@ -2154,27 +2167,19 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_baseline_isolated_failure.log",
-          "log_sha256": "45358552e3fdb59972aac0f0afeaa7a5d8d5ce1bda3471411f708e932f6ed4b2"
+          "log_sha256": "4348c8ffdfe1b962e7d48e5698674fdd47e6e78677c5b01bc146d4a2ffdf10f4"
         },
         "publication_import": {
-          "status": "FAIL",
-          "exit_code": 1,
+          "status": "PASS",
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "75881ad12f8d7a1d5f3ab35609f46c210722698aa5c31bf5704005b9630040f7",
-          "diagnostics": [
-            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
-            "     at: _editor_init (modules/gltf/register_types.cpp:73)"
-          ],
-          "log_tail": [
-            "Godot Engine v4.1.4.stable.official.fe0e8e557 - https://godotengine.org",
-            " ",
-            "WARNING: Custom cursor shape not supported by this display server.",
-            "     at: cursor_set_custom_image (servers/display_server.cpp:480)",
-            "WARNING: Blend file import is enabled in the project settings, but no Blender path is configured in the editor settings. Blend files will not be imported.",
-            "     at: _editor_init (modules/gltf/register_types.cpp:73)"
-          ]
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "519d8173eda07f0a1c14925131c84372e06f5a3a20cd3e18823fc36cb3488e59"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -2182,7 +2187,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_registered.log",
-          "log_sha256": "51899dfedf4c12381e1008a6643f9ed53b424bfc2b4b32b08dec7acc169d119f"
+          "log_sha256": "62d82000687bab96f3f310c93aae852cad9e47907cb2743aebbbdb22442afabe"
         },
         "native_publication_positive": {
           "status": "PASS",
@@ -2190,7 +2195,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_positive.log",
-          "log_sha256": "6408dbd7889496a0386cf5fcbd58c8457fd865b0d99034ac2f095f9f9f602af1"
+          "log_sha256": "80d31042771beaa3c7e2724f50f5c74b1af12732c51c88f8ad01a7520f3721d0"
         },
         "native_live_added_defaults": {
           "status": "BLOCKED",
@@ -2211,7 +2216,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_rollback.log",
-          "log_sha256": "780075d8c90bfbf09829edd523061d27490a2672d62100e4a71c5759d15fab41"
+          "log_sha256": "a4cf3fb85cc3d662629f496cb5b66e6bed7e837526f672b9444c5dcf58aac5b3"
         },
         "native_publication_fresh_failure": {
           "status": "PASS",
@@ -2219,7 +2224,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_publication_fresh_failure.log",
-          "log_sha256": "04288970f054f51bc3efcf14bb50456c5f5a488f4cb9d3882a94c6cdd35fec77"
+          "log_sha256": "f96c4822514ceb0bc0debecae2034258f5eddde45583392529805091c7afbe78"
         },
         "reject_width": {
           "status": "PASS",
@@ -2227,7 +2232,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_width.log",
-          "log_sha256": "27cab19104c4ca1448727a00e09796e7eeef207e4ada5c366c7e4410f6d742c2"
+          "log_sha256": "e6ab3fc40e886ed4fba55a124283f796e9e6a88a0ed34ed843e42a6a43779ec3"
         },
         "reject_height": {
           "status": "PASS",
@@ -2235,7 +2240,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_height.log",
-          "log_sha256": "520b3daf25aefb1947035cec44b66d6852cdd098b3066b5baf2d56808dfc35fb"
+          "log_sha256": "3e714648d3ca135a23288ace560b3422f09349b9f3b3594d2b7eae002e7c0238"
         },
         "reject_negative_width": {
           "status": "PASS",
@@ -2243,7 +2248,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_negative_width.log",
-          "log_sha256": "27cab19104c4ca1448727a00e09796e7eeef207e4ada5c366c7e4410f6d742c2"
+          "log_sha256": "487f86a6b72d38202d37797c5289f92b8461cfa14fa408ecae6f7ca6f445674e"
         },
         "reject_gap": {
           "status": "PASS",
@@ -2251,7 +2256,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_gap.log",
-          "log_sha256": "6cb768d3e5b89009e3fd66c2563db807f040bb314c76e1dfec70b4e4f2be839b"
+          "log_sha256": "46261b8daa514796b62bf94bdc8744073b574cf9b229954900f66dd510d430fc"
         },
         "reject_geometry": {
           "status": "PASS",
@@ -2259,7 +2264,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_geometry.log",
-          "log_sha256": "30a692e4b3f39053e34c2d6467809d13f451d73640e2eef73d7347cd7c654a0b"
+          "log_sha256": "bce911e7cb337afd1bbf0924bb7944ced8c063028589871d894ae3c86494a41d"
         },
         "reject_null_font": {
           "status": "PASS",
@@ -2267,7 +2272,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_null_font.log",
-          "log_sha256": "2a613c4b8e303007d196f5e61fe83c90a0678437cbcf4d88acab47d184c4f129"
+          "log_sha256": "b4ecd6102729565469d88b9a3f9b4a3b68091ec5c88614a92b0d3595e970d5ec"
         },
         "reject_font_size": {
           "status": "PASS",
@@ -2275,7 +2280,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "reject_font_size.log",
-          "log_sha256": "91a0d42c4e6b0e2ce4395467c25ea7682d171c556699157beeb6f2ff21c62b9c"
+          "log_sha256": "904708e57ec348d94baf3309753da0b71d6ac80a8b738a3b6d4096a45f849a13"
         },
         "generated_layout": {
           "status": "PASS",
@@ -2283,7 +2288,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_layout.log",
-          "log_sha256": "0fb1949e4ddf804eb6f9b5cec73a40ffa436c20cc97cc291ba5792a4eaaafd38"
+          "log_sha256": "234f7ebde69a96b0fe588af8cc1c44e9df1339198582b3cdb56ed0ded82bde36"
         },
         "hybrid_runtime": {
           "status": "FAIL",
@@ -2291,7 +2296,7 @@
           "timeout": false,
           "aborted_on_error": true,
           "log": "hybrid_runtime.log",
-          "log_sha256": "d0e3acd66f1a0d4495e9d80eff4fff998c961305b6ebfddbf9ac632d4a12dc2f",
+          "log_sha256": "c05118577f90aa33fb569f75a6161bad95bec2bd672babc7d0be6fe6d2bfdc2b",
           "diagnostics": [
             "ERROR: Failed to load script \"res://tests/godot/generated/HybridEdges.gd\" with error \"Parse error\".",
             "   at: load (modules/gdscript/gdscript.cpp:2705)",
@@ -2299,6 +2304,7 @@
             "          at: _run (res://tests/godot/hybrid_gogo.gd:54)"
           ],
           "log_tail": [
+            "2026-11-01 03:28:05.156 godot[11712:35939] *** +[NSString stringWithUTF8String:]: NULL cString",
             "Godot Engine v4.1.4.stable.official.fe0e8e557 - https://godotengine.org",
             " ",
             "ERROR: Failed to load script \"res://tests/godot/generated/HybridEdges.gd\" with error \"Parse error\".",
@@ -2313,7 +2319,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_signals.log",
-          "log_sha256": "c3a47465807add30e47b2c6746f7de960d0c5fd25b72155091cf8fab23cab696"
+          "log_sha256": "109017c06f503ffb29f9758b20676738272a845d7c9bc268f0b2684db3c8c80c"
         },
         "native_counter": {
           "status": "PASS",
@@ -2321,7 +2327,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "native_counter.log",
-          "log_sha256": "d36162a1acaf4bfaf435c703d270ee7f0c52a2fae3962364af09a4249ae735da"
+          "log_sha256": "d0b46c2d25f9bf081fca93bd97f877cbf4cb007369fe1fc6171e37d60259eb5d"
         },
         "semantic_identity": {
           "status": "PASS",
@@ -2329,7 +2335,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "semantic_identity.log",
-          "log_sha256": "d9b763bf674263d594938cc63e8fe0daaa1d3c5e3772cb216011d9e9134233d4"
+          "log_sha256": "31cc107e5fc41345ab6c1ce38fca51e4d53c741c0aa6444cd97aa8415ff92329"
         },
         "callback_guard_empty": {
           "status": "PASS",
@@ -2337,7 +2343,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_empty.log",
-          "log_sha256": "1ac98087a12601e74a24c1535955db680eab206d032c8d2f1a9140649e31d4ed"
+          "log_sha256": "961a9aa8b07ff1de2e1af01cb36b66f900a4e1d30a2b749c01019429f92d7d2e"
         },
         "callback_guard_missing": {
           "status": "PASS",
@@ -2345,7 +2351,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_missing.log",
-          "log_sha256": "79cdc93679e81f98087d22fd10d672696b2406e98db28f76bfbc91bb58daebdb"
+          "log_sha256": "a4a753f3806ce18bf9e21be8bfa4ee9a3ce5fa3fb10859b664bb27fc155d4859"
         },
         "callback_guard_freed": {
           "status": "PASS",
@@ -2353,7 +2359,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_freed.log",
-          "log_sha256": "28e1762852ddb8cedacf800f27d0fd6ba74727dd1a0c55c3238916ff14a582a2"
+          "log_sha256": "90b12878570153eea63632b6c80dc6553952f93d2d27812f4692230d96b6ebff"
         },
         "callback_guard_disposed": {
           "status": "PASS",
@@ -2361,7 +2367,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_disposed.log",
-          "log_sha256": "e0ac70d85d5697a37dbd1c97fc64defff14543f6e2edcb3176b3189060c4a70d"
+          "log_sha256": "d5caec3d5740dc524d50c5c890c0e9843353b16f09024772b4219c2ce56f63a4"
         },
         "callback_guard_required": {
           "status": "PASS",
@@ -2369,7 +2375,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_required.log",
-          "log_sha256": "5a54b3c87949fc5d98dc320fd77ce5035ce414e35f7dcacef117d0a7ee95b04a"
+          "log_sha256": "5e7210e52e0c21e56e8d558cca006f6b72e0966d86920eca7208fee1800b0c56"
         },
         "callback_guard_optional": {
           "status": "PASS",
@@ -2377,7 +2383,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_optional.log",
-          "log_sha256": "35cd188642ba6fbaffd7fea06a58ea065f8cbbe9623596a90cafdf7aa1b1181a"
+          "log_sha256": "477242e375c666079c11501d233bf1531d5856624bd18a211dedab0c086df6a9"
         },
         "callback_guard_lambda_required": {
           "status": "PASS",
@@ -2385,7 +2391,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_lambda_required.log",
-          "log_sha256": "cfc4aa11dfc0967b40b7cc93c1415c40a72f2e05cfd373720b05feb511218b0d"
+          "log_sha256": "961e6629c4d070ecce817e5a44b085dd080b02105d1b741b10f9d8dc7d25cdd6"
         },
         "callback_guard_lambda_optional": {
           "status": "PASS",
@@ -2393,7 +2399,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_lambda_optional.log",
-          "log_sha256": "6ed4b05803eeeae208615f1f486fc5ac29f8b5afac9a971e5793e7e0501056d4"
+          "log_sha256": "065b45e82f66afe033089915c1d393ce59e4bf0be23c2da8d825fb8016a5ddf1"
         },
         "callback_guard_unbound": {
           "status": "PASS",
@@ -2401,7 +2407,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_guard_unbound.log",
-          "log_sha256": "b52da0f4e0a09c5617041488aaeeeefcd71c68de546ea28efa3fb945e547f3c2"
+          "log_sha256": "f4ceabb985ebeb0f34c779a23bc1d19d772eda7904f8e4a46a83800b1ba99b2b"
         },
         "api_dump": {
           "status": "PASS",
@@ -2409,7 +2415,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "api_dump.log",
-          "log_sha256": "1b8db2345e59620719143d435bb10cd22be1c1121ed0fb30098abdd8f9ed3581"
+          "log_sha256": "13e01a6931decbf7ff1ec9c6da4f264e98889da305c2451e584d38e36e21f12a"
         },
         "graphics_physical_keys": {
           "status": "UNTESTED",
@@ -2421,7 +2427,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "8fbabf213b1d2f437e9f9ed45c6ce90520efa144f76162a34cecbad9e541f3ac"
+          "log_sha256": "3c2694076899999872303554c8e278b959395d6f0003f45f193881eb89bbe35d"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -2985,24 +2991,16 @@
           "status": "PASS"
         },
         "import": {
-          "status": "FAIL",
-          "exit_code": 1,
+          "status": "PASS",
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "731831590f9fea56dbbc685e38cc3a270fb9e4d1eb953244357ef81c804d27f0",
-          "diagnostics": [
-            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
-            "     at: _editor_init (modules/gltf/register_types.cpp:63)"
-          ],
-          "log_tail": [
-            "Godot Engine v4.2.2.stable.official.15073afe3 - https://godotengine.org",
-            " ",
-            "WARNING: Custom cursor shape not supported by this display server.",
-            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
-            "WARNING: Blend file import is enabled in the project settings, but no Blender path is configured in the editor settings. Blend files will not be imported.",
-            "     at: _editor_init (modules/gltf/register_types.cpp:63)"
-          ]
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "c15d2657b121f7148c8fa1b45e7d94be9dce23756d5e0a6015b4b654278ffc0f"
         },
         "shipped_scripts": {
           "status": "FAIL",
@@ -3202,7 +3200,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_metadata_probe.log",
-          "log_sha256": "4b508caa71930973a783f0ddc0f98d6bf2fa16a06f425e5c01fdfdb250726284"
+          "log_sha256": "89498c2fdc22dd53e5760a914b03a168e6a2d32bfd90b54aee3dfc2577d33789"
         },
         "callback_arity_api": {
           "status": "BLOCKED",
@@ -3226,11 +3224,15 @@
         },
         "generated_import": {
           "status": "FAIL",
-          "exit_code": 1,
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "dd26aec6cce2acd798f72d1da5ec05dba59af4be51d6b1f85b8d48dee0e9798e",
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "fc1cb83d3e1a91c52b16acdf91d1366fc225b38dd7ff6d60d5d888323793d594",
           "diagnostics": [
             "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
             "     at: _editor_init (modules/gltf/register_types.cpp:63)",
@@ -3249,7 +3251,8 @@
             "SCRIPT ERROR: Parse Error: Could not find base class \"Logger\".",
             "          at: GDScript::reload (res://tests/godot/native_build.gd:9)",
             "ERROR: Failed to load script \"res://tests/godot/native_build.gd\" with error \"Parse error\".",
-            "   at: load (modules/gdscript/gdscript.cpp:2726)"
+            "   at: load (modules/gdscript/gdscript.cpp:2726)",
+            "C01_PROJECT_INDEX_READY"
           ]
         },
         "legacy_scene": {
@@ -3327,24 +3330,16 @@
           "log_sha256": "33f936ba525630dd9ce5ee367e5713ce63f2665cd834c562d1d8d57c4657d712"
         },
         "publication_import": {
-          "status": "FAIL",
-          "exit_code": 1,
+          "status": "PASS",
+          "exit_code": 0,
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "731831590f9fea56dbbc685e38cc3a270fb9e4d1eb953244357ef81c804d27f0",
-          "diagnostics": [
-            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
-            "     at: _editor_init (modules/gltf/register_types.cpp:63)"
-          ],
-          "log_tail": [
-            "Godot Engine v4.2.2.stable.official.15073afe3 - https://godotengine.org",
-            " ",
-            "WARNING: Custom cursor shape not supported by this display server.",
-            "     at: cursor_set_custom_image (servers/display_server.cpp:505)",
-            "WARNING: Blend file import is enabled in the project settings, but no Blender path is configured in the editor settings. Blend files will not be imported.",
-            "     at: _editor_init (modules/gltf/register_types.cpp:63)"
-          ]
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "c15d2657b121f7148c8fa1b45e7d94be9dce23756d5e0a6015b4b654278ffc0f"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -3600,7 +3595,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "a107681ece1e80d9a0065d0751af0452a77afcf86f166377992423ecf0517456"
+          "log_sha256": "242a8b3dce68e4bc17ded0b0c13b563888681fead381110cb2661a0822c97c24"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -4171,7 +4166,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "7c442a33a3c01a64a339ab9ecd652773f0fce5483f2f512b642cd9f3767b0ce4"
         },
         "shipped_scripts": {
           "status": "PASS",
@@ -4371,7 +4370,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_metadata_probe.log",
-          "log_sha256": "3ab8e0bbed14f36afce529c8aba74387922eb3ef523b46422c47b68db172d4c0"
+          "log_sha256": "64b63ea56702a22c823c0a739d719146d689b09b7489ad235a06928926256279"
         },
         "callback_arity_api": {
           "status": "PASS",
@@ -4399,7 +4398,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "436d345cfd6eeed73f145e85236eef40fe21faba6e5c6a5b5211396848f4e651",
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "73720c27c3e95f327808ae307b876208bc119100825ebec198a165fdc2bb0aa7",
           "diagnostics": [
             "SCRIPT ERROR: Parse Error: Could not find base class \"Logger\".",
             "          at: GDScript::reload (res://tests/godot/native_build.gd:9)",
@@ -4412,7 +4415,8 @@
             "SCRIPT ERROR: Parse Error: Could not find base class \"Logger\".",
             "          at: GDScript::reload (res://tests/godot/native_build.gd:9)",
             "ERROR: Failed to load script \"res://tests/godot/native_build.gd\" with error \"Parse error\".",
-            "   at: load (modules/gdscript/gdscript.cpp:2936)"
+            "   at: load (modules/gdscript/gdscript.cpp:2936)",
+            "C01_PROJECT_INDEX_READY"
           ]
         },
         "legacy_scene": {
@@ -4495,7 +4499,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "552a8b7308afeeaa13d27772382204c907145770b2a7869b3a14c79bb747cffa"
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "7c442a33a3c01a64a339ab9ecd652773f0fce5483f2f512b642cd9f3767b0ce4"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -4728,7 +4736,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "9a57bcecaf1271aa9390ca1cdc31776189aa69d3cba775ac0de759caef514e9c"
+          "log_sha256": "c200b81f2ec9e0ded17f52db9f7b8861f3b633c89e09efb3bd61032ce7490eb2"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -5300,7 +5308,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "3e1f81b57daa61e72c87ac5f61e5c1f944d830beb52aa1fe7bfa10a52ba3e8b7"
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "59784e54516684293987cb8d45887cfa4ece02785c78b6b94bfdfd9e5f49629e"
         },
         "shipped_scripts": {
           "status": "PASS",
@@ -5500,7 +5512,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "callback_metadata_probe.log",
-          "log_sha256": "7f2ec214bd988ba94cdd182ad0a2043cb73b5794209404e03951041c96637022"
+          "log_sha256": "6e3fb19a07299da0f1fe6070032dd021a57b9df93bea78490082d713aeaa7034"
         },
         "callback_arity_api": {
           "status": "PASS",
@@ -5528,15 +5540,19 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "6f394e10354f84d96fc8d20b13fbdbdb0611656c616d9dddf8f7a6cb396ae271",
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "f9862d20b30ddb6cc64cb7fd2f355f29326504dc4ae432c03f83fae0f0a5f035",
           "diagnostics": [
+            "     at: _process_file_system (editor/editor_file_system.cpp:1344)",
             "SCRIPT ERROR: Parse Error: Could not find base class \"Logger\".",
             "          at: GDScript::reload (res://tests/godot/native_build.gd:9)",
             "ERROR: Failed to load script \"res://tests/godot/native_build.gd\" with error \"Parse error\".",
             "   at: load (modules/gdscript/gdscript.cpp:3022)"
           ],
           "log_tail": [
-            "ERROR: Failed to load script \"res://tests/godot/native_build.gd\" with error \"Parse error\".",
             "   at: load (modules/gdscript/gdscript.cpp:3022)",
             "\tupdate_script_paths_documentation: step 19: native_build.gd",
             "\tupdate_script_paths_documentation: step 20: native_counter.gd",
@@ -5551,7 +5567,8 @@
             "update_script_paths_documentation: end",
             "loading_editor_layout: begin: Loading editor steps: 5",
             "\tloading_editor_layout: step 0: Loading editor layout...",
-            "loading_editor_layout: end"
+            "loading_editor_layout: end",
+            "C01_PROJECT_INDEX_READY"
           ]
         },
         "legacy_scene": {
@@ -5632,7 +5649,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "e27a682c03f7398936132e23aaaec61ac26a8d21304faa2fa01b672fcce6349b"
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "bf396850c7b8c90d85c2d72a5d583895345ee0b6a9834271affd1cadf8f291dc"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -5865,7 +5886,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "be76dbd57c5aa120a06fb19737c44a970c38316ff1b3db0e8645158e49a9811c"
+          "log_sha256": "8147e8763e964f4e0fd8a0f0a7edef7866b373f46069c8767945bbd6ec1ec583"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -6439,7 +6460,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "c173397524ecfec0b057db8c80d238c168b5ffcc0b19ed903abaa9f6cfa5cbe7"
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "190d46023e2d2dd0da9db70144d10f955e604f764f0fa14716bc4145307f4bcd"
         },
         "shipped_scripts": {
           "status": "PASS",
@@ -6667,7 +6692,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "5cfc0658764a470db6b64d94876189dc0ddc7c7be3bd4c29a3ce69a746d47db0"
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "60cc059bf91a75ac6cc1674c93dfa683ed9b976c1acc03734c4a641d30e59341"
         },
         "legacy_scene": {
           "status": "PASS",
@@ -6747,7 +6776,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "7d078ce334a8915b1fe66b670ca971c84ed2a316c7fe2c6b45288f51da2296cc"
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "d71723d26d5cb81ae97b196a72f4ae7f0edbdf731197462a10753da9ea8e9074"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -6980,7 +7013,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "654c93af795d09f7f72707c61b02bf0a9a2b262fbef986f3e9977df7684f2ee4"
+          "log_sha256": "ce8b3324115fbcbcbf095e9e0c2cac27cdcaa9e8869f34db32a5eb8e7e6638e9"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -7554,7 +7587,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "4590342a5caca2fbec85485b47f2c3cf15ccb312c88a143e6dbcb80608b3bb71"
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "80a0e3050cace037c567f49cf1d704e69e1e73a9891a8cbf92ee9ccad4b0ffbd"
         },
         "shipped_scripts": {
           "status": "PASS",
@@ -7782,7 +7819,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "e1d3dc8f746a4e99f37418f84b37534247a145724af6d0f562fe75283ade92c3"
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "c5495d9a73bc99d718ce4f405d56dad420ca173cbe1623e42011651faf5c5bf5"
         },
         "legacy_scene": {
           "status": "PASS",
@@ -7862,7 +7903,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "33ea970cbaaed5a93dec4a32d1193c3c104264baa4d07e8bee6a9b4d17b34bbb"
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "6e2f08ac066ef61634c194c25e4cd594976c558012a81dc4adc96826e6a90ce5"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -8095,7 +8140,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "ec558fce4e11025bb30cbd949d9b0c07f4615b55a2794aa4e54307d763e8b6a4"
+          "log_sha256": "daebfcfcc4919bb4b16e894db44ca119ea9b812a4984300a8b01a9b53c135a06"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -8672,7 +8717,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "2f15be69e341e4bb6e807d3b582f895503149f6e20ac33eef11ccbea36b195d8"
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "88885e90d9e047c7a3e136744b55661352d1b9b10ac133908e99aa77d348729e"
         },
         "shipped_scripts": {
           "status": "PASS",
@@ -8900,7 +8949,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "1a16f2ae5bcb65cc077fdb4daf38383f854f402bd1913045a9e7b658f4964827"
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "0cdd7a56d9e5c28301684c98fb6464a746c8e35d3f065f07dc1ed73f4b264d3d"
         },
         "legacy_scene": {
           "status": "PASS",
@@ -8980,7 +9033,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "268159160039bfe914e1b19b24bdd404b02310ca32ff366fa708688a18f60a6b"
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "044888168299487d23c02e030186dd8fd629d06e3072b58671c32e2d6cbc118d"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -9213,7 +9270,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "0796fcf8989d2639955a08df92a7940b22522532859d32a6855af3df9ab5c179"
+          "log_sha256": "c541567524bae5dfc5dc4aca7b08194324edb5683a5b0d87443d1dc93aa1e77d"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -9231,7 +9288,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor_play_recovery.log",
-          "log_sha256": "53e2246911f3046c5f31b6c185263479f7502529bf98aeb52c041c7b58e46ac0"
+          "log_sha256": "90e220624da125bd895ddb3d4fb56ea813ba15136c4f0b1c35ac76fff55ed2f9"
         }
       }
     },
@@ -9793,7 +9850,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "import.log",
-          "log_sha256": "5feeefc3cded21f4dc754c0c419833841e43b36ab9a23ed5548c2521c19fdb57"
+          "evidence": {
+            "class_registry_sha256": "fd6c08d1a0646f4daf93fa5684f1821f7dbe27e7d36aac58508aa4b8d6e8a79e",
+            "class_registry_log": "import.classes.json"
+          },
+          "log_sha256": "0bc17ee92e4f1d7957f075d2f00c3048ceda536c10e5108bf28cb5ed7f7098c5"
         },
         "shipped_scripts": {
           "status": "PASS",
@@ -10021,7 +10082,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "generated_import.log",
-          "log_sha256": "9e0e1540a8554f158362457025938420521eaf96a6c2c6313bc5fbc43158e4ed"
+          "evidence": {
+            "class_registry_sha256": "9700b573f58be758a1020859759a7bfab83c9d6e90c7784314eaf07f75fa69fd",
+            "class_registry_log": "generated_import.classes.json"
+          },
+          "log_sha256": "96d5677b242e1c662d7adc15776c9fff8fbfa1f7673e6240e60174d801e603fc"
         },
         "legacy_scene": {
           "status": "PASS",
@@ -10101,7 +10166,11 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "publication_import.log",
-          "log_sha256": "2c65a531c06436e44f34c09a782ccfc6d7354c1859d85e30444e00e7ee9bf43b"
+          "evidence": {
+            "class_registry_sha256": "9ceeee71ded5d9934bf2deaad9f5ea5e3aac1aa66db683f3cc68522f55e76069",
+            "class_registry_log": "publication_import.classes.json"
+          },
+          "log_sha256": "068801bf700658279d90b2f17d0e0e919b0ad83bdc0f1930012eaf2781cd63c9"
         },
         "native_publication_registered": {
           "status": "PASS",
@@ -10334,7 +10403,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor.log",
-          "log_sha256": "7babcbca6b06e2dac4dce71c704d834c89d9a3bdf842d91f6a659618135f55b3"
+          "log_sha256": "d746e4dba780c1f5c38d36bb8ed0b61170bbd9ed420037a4337f63d19ef4dac6"
         },
         "normal_highlighting": {
           "status": "PASS"
@@ -10352,7 +10421,7 @@
           "timeout": false,
           "aborted_on_error": false,
           "log": "editor_play_recovery.log",
-          "log_sha256": "3739a99e851d9cac97d6ad6621d90b17947d10c6b6ea2040efc7a72bde82a3a8"
+          "log_sha256": "2fca23500cfbd86f1857bdb4d35bc87c2816d509a4d0a6d15a87cea5b2e401f0"
         }
       }
     }
