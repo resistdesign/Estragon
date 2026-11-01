@@ -6,11 +6,13 @@ Install Godot and the addon, enable the plugin, edit Gogo and press Play.
 required.** Repository TypeScript tools are optional contributor/reference tools.
 Completion, debugger remapping, live preview and bindings remain future work.
 
-**Compatibility:** ADR-0014 requires Godot 4.0+. The complete workflow below is
-verified on 4.7; older addon startup is currently blocked. Isolated E01 results,
-remaining filtered-tab limits and exact failures are in [E01_COMPATIBILITY](E01_COMPATIBILITY.md).
-The broader [C01-A matrix and implementation queue](C01_COMPATIBILITY.md) include
-actual compiler/runtime/semantic/startup results for every 4.0–4.7 minor.
+**Compatibility:** ADR-0014 requires Godot 4.0+. C01-F / merged PR #62
+verified actual addon startup and saved-source lifecycle on nine official
+4.0–4.7 builds ([evidence](C01_F_EDITOR.md)). Unsaved F5/F6 Play on older
+versions is still pending C01-G #50; full cross-version release acceptance
+remains C01-H #51. Isolated highlighting and filtered-tab limitations are
+in [E01_COMPATIBILITY](E01_COMPATIBILITY.md); see the
+[C01 matrix and queue](C01_COMPATIBILITY.md) for scoped results.
 
 ## Getting started
 
