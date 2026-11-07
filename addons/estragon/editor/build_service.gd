@@ -226,7 +226,9 @@ func _refresh_cache(item: Dictionary, state: Array[Dictionary]) -> void:
 	# Matching source bytes cannot prove which implementation is compiled.
 	# Reload the actual Script even on no-op builds; keep_state preserves owners.
 	state.append({"script": script, "previous": script.source_code if was_cached else _previous_code.get(item.output), "output": item.output})
+	print("E03_CACHE_BEFORE ",path," element=",preload("../runtime/composition/element.gd").resource_path)
 	var checked := Validation.reload_script(item.result, script, true)
+	print("E03_CACHE_AFTER ",path," element=",preload("../runtime/composition/element.gd").resource_path)
 	for diagnostic in checked.diagnostics: _fail_source(diagnostic)
 
 func _restore_cache(state: Array[Dictionary]) -> void:

@@ -47,12 +47,14 @@ for(const selection of options.engines){
   const settings='config_version=5\n[application]\nconfig/name="E02 direct Yarn editor"\nconfig/features=PackedStringArray("4.0", "GL Compatibility")\n[rendering]\nrenderer/rendering_method="gl_compatibility"\n';
   fs.writeFileSync(path.join(box.project,'project.godot'),settings);
   await command('lexical-and-template',[box.binary,'--headless','--audio-driver','Dummy','--path',box.project,'--script','res://tests/editor_ux/probe.gd'],box.env,'E02_PROBE_OK');
+  fs.copyFileSync(path.join(box.project,'e03-capabilities.json'),path.join(out,'capabilities.json'));
   // Probe outputs are disposable and must not add un-authored fixtures to builds.
   fs.rmSync(path.join(box.project,'app/Screens/generated'),{recursive:true,force:true});
-  fs.appendFileSync(path.join(box.project,'project.godot'),'\n[editor_plugins]\nenabled=PackedStringArray("res://'+addonRoot+'/editor/plugin.cfg", "res://tests/editor_ux/plugin.cfg")\n[editor]\nrun/main_run_args="--headless --audio-driver Dummy"\n');
+  fs.appendFileSync(path.join(box.project,'project.godot'),'\n[editor_plugins]\nenabled=PackedStringArray("res://'+addonRoot+'/editor/plugin.cfg", "res://tests/editor_ux/plugin.cfg")\n[editor]\nrun/main_run_args="--audio-driver Dummy --rendering-method gl_compatibility --rendering-driver opengl3"\n');
   await command('editor',[box.binary,'--audio-driver','Dummy','--rendering-method','gl_compatibility','--rendering-driver','opengl3','--path',box.project,'--editor'],box.env,'E02_EDITOR_OK',true);
+  fs.copyFileSync(path.join(box.project,'e03-editor-capabilities.json'),path.join(out,'editor-capabilities.json'));
   await command('editor-restart',[box.binary,'--audio-driver','Dummy','--rendering-method','gl_compatibility','--rendering-driver','opengl3','--path',box.project,'--editor'],box.env,'E02_EDITOR_OK',true);
-  for(const file of fs.readdirSync(box.project).filter(name=>/^e02-.*\.png$/.test(name)))fs.copyFileSync(path.join(box.project,file),path.join(out,file.slice(4)));
+  for(const file of fs.readdirSync(box.project).filter(name=>/^e0[23]-.*\.png$/.test(name)))fs.copyFileSync(path.join(box.project,file),path.join(out,file.slice(4)));
   for(const [name,hash]of Object.entries(packed.manifest.files))if(sha256(path.join(installed,name))!==hash)throw Error('Editor changed installed package bytes/UIDs: '+name);
   if(fs.existsSync(path.join(box.project,'addons/estragon')) || fs.existsSync(path.join(box.project,'node_modules/.gdignore')))throw Error('Forbidden copy/ignore fallback');
   // Focused template-only path proofs; no repeated three-layout editor suites.
@@ -63,5 +65,12 @@ for(const selection of options.engines){
    await command('template-'+label,[box.binary,'--headless','--audio-driver','Dummy','--path',box.project,'--script','res://tests/editor_ux/probe.gd'],box.env,'E02_PROBE_OK');
   }
   writeJSON(path.join(out,'consumer.json'),{source:gitHead(),tarball_sha256:packed.manifest.tarball_sha256,direct_yarn:true,package_unchanged:true,template_layouts:['direct','relocated','standard'],external_compiler:false});
- }finally{writeJSON(path.join(out,'results.json'),results);box.dispose();}
+ }finally{
+  // Preserve actual graphics even when a later native/lifecycle assertion fails.
+  if(fs.existsSync(box.project))for(const file of fs.readdirSync(box.project).filter(name=>/^e0[23]-.*\.png$/.test(name)))fs.copyFileSync(path.join(box.project,file),path.join(out,file.slice(4)));
+  for(const relative of ['app/Screens/Home.gogo','app/Screens/Spatial.gogo','app/Screens/generated/Home.gd']){
+   const file=path.join(box.project,relative);if(fs.existsSync(file)&&fs.statSync(file).isFile())fs.copyFileSync(file,path.join(out,relative.replaceAll('/','-')));
+  }
+  writeJSON(path.join(out,'results.json'),results);box.dispose();
+ }
 }

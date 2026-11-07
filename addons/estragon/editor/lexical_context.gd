@@ -36,8 +36,8 @@ func context(index: int, column: int) -> Dictionary:
 	end["suppressed"] = end.comment or not end.quote.is_empty()
 	return end
 
-static func _add(tokens: Array, kind: String, start: int, end: int, word: String) -> void:
-	if end > start: tokens.append({"kind":kind, "start":start, "end":end, "text":word})
+static func _add(tokens: Array, kind: String, start: int, end: int, word: String, native: bool = true) -> void:
+	if end > start: tokens.append({"kind":kind, "start":start, "end":end, "text":word,"native":native})
 
 func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 	var tokens: Array = []
@@ -50,7 +50,7 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 		if state.comment:
 			var end := text.find("-->", i)
 			i = text.length() if end < 0 else end + 3
-			_add(tokens,"comment",start,i,text.substr(start,i-start))
+			_add(tokens,"comment",start,i,text.substr(start,i-start),false)
 			if end >= 0: state.comment = false
 			continue
 		if not state.quote.is_empty():
@@ -62,14 +62,14 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 					state.quote = ""
 					break
 				else: i += 1
-			_add(tokens,"string",start,i,text.substr(start,i-start))
+			_add(tokens,"string",start,i,text.substr(start,i-start),state.mode == "gd")
 			state.operand = false
 			continue
 		if ch in [" ","\t","\r"]: i += 1; continue
 		if state.mode != "gd" and text.substr(i,4) == "<!--":
 			state.comment = true
 			i += 4
-			_add(tokens,"comment",start,i,"<!--")
+			_add(tokens,"comment",start,i,"<!--",false)
 			continue
 		if state.mode == "gd" and ch == "#":
 			_add(tokens,"comment",i,text.length(),text.substr(i))
@@ -88,7 +88,7 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 			state.tag = ""
 			state.name_pending = true
 			i += 2 if state.closing else 1
-			_add(tokens,"tag",start,i,text.substr(start,i-start))
+			_add(tokens,"tag",start,i,text.substr(start,i-start),false)
 			continue
 		if state.mode == "tag":
 			if text.substr(i,2) == "/>" or ch == ">":
@@ -108,7 +108,7 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 				i += 1
 				while i < text.length() and (lexer.identifier_part(text[i]) or text[i] in [".",":","-"]): i += 1
 				var name := text.substr(start,i-start)
-				_add(tokens,"tag" if state.name_pending else "property",start,i,name)
+				_add(tokens,"tag" if state.name_pending else "property",start,i,name,false)
 				if state.name_pending: state.tag = name; state.name_pending = false
 				continue
 		if state.mode != "gd" and ch == "{":
@@ -116,7 +116,7 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 			state.mode = "gd"
 			state.depth = 0
 			state.operand = true
-			_add(tokens,"expression",i,i+1,ch)
+			_add(tokens,"expression",i,i+1,ch,false)
 			i += 1
 			continue
 		if state.mode == "gd" and ch == "}" and state.depth == 0 and not state.frames.is_empty():
@@ -130,7 +130,7 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 			i += 1
 			continue
 		if state.mode == "body":
-			_add(tokens,"code",i,i+1,ch)
+			_add(tokens,"code",i,i+1,ch,false)
 			i += 1
 			continue
 		var token = lexer.next_token(i)
@@ -142,7 +142,7 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 			kind = "keyword" if word in KEYWORDS else "code"
 			if previous == "@": kind = "annotation"
 			elif previous in ["func","signal"] or text.substr(i).strip_edges().begins_with("(") and kind == "code": kind = "function"
-			elif ClassDB.class_exists(word) or word in state.declared or word in ["int","float","bool","String","Array","Dictionary","Vector2","Vector3","Color","Callable","StringName","NodePath"] or previous in [":","->","extends","class_name","class"]: kind = "type"
+			elif kind == "code" and (ClassDB.class_exists(word) or word in state.declared or word in ["int","float","bool","String","Array","Dictionary","Vector2","Vector3","Color","Callable","StringName","NodePath"] or previous in [":","->","extends","class_name","class"]): kind = "type"
 			if previous in ["class_name","class"] or previous == "const" and text.substr(i).strip_edges().begins_with("= preload("):
 				if word not in state.declared: state.declared.append(word)
 			state.operand = word in Parser.OPERANDS
@@ -151,7 +151,7 @@ func scan(text: String, state: Dictionary, newline: bool = true) -> Dictionary:
 			if word in ["(","[","{"]: state.depth += 1
 			elif word in [")","]","}"]: state.depth = maxi(0,state.depth-1)
 			state.operand = word not in [".",")","]","}"]
-		_add(tokens,kind,start,i,word)
+		_add(tokens,kind,start,i,word,state.mode == "gd")
 		previous = word
 	if newline:
 		if state.quote.length() == 1: state.quote = ""

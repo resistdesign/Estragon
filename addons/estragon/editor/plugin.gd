@@ -55,6 +55,7 @@ func _enter_tree() -> void:
 	_new_script = NewScript.new(_interface,_navigation)
 	_new_script.start(self)
 	add_tool_menu_item("New Gogo Script…",_new_script.show_dialog)
+	add_tool_menu_item("Add Missing Gogo Imports",_services.add_missing_imports)
 	_timer = Timer.new()
 	_timer.one_shot = true
 	_timer.wait_time = 0.4
@@ -182,8 +183,10 @@ func _build() -> bool:
 	if not _active or _building:
 		return false
 	_timer.stop()
+	print("E03_SAVE_BEFORE ",preload("../runtime/composition/element.gd").resource_path)
 	var saved := BufferGuard.save_and_verify(_interface.get_script_editor(), _highlighter_association._path.bind(false))
 	_timer.stop()
+	print("E03_SAVE_AFTER ",preload("../runtime/composition/element.gd").resource_path)
 	_play_save_failed = not saved.ok
 	if not saved.ok:
 		last_report = {"ok": false, "changed": [], "outputs": [], "diagnostics": saved.diagnostics}
@@ -235,6 +238,7 @@ func _show_report() -> void:
 func _exit_tree() -> void:
 	_active = false
 	remove_tool_menu_item("New Gogo Script…")
+	remove_tool_menu_item("Add Missing Gogo Imports")
 	if _navigation != null: _navigation.stop()
 	if _new_script != null: _new_script.stop(); _new_script = null
 	if _services != null: _services.stop(); _services.free(); _services = null

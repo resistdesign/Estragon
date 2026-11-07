@@ -7,7 +7,7 @@ on:
       engines:
         description: Approved focused engines
         type: choice
-        options: ['4.7', both]
+        options: ['4.7', '4.0.4', both]
         default: both
 permissions:
   contents: read
@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ${{ fromJSON((inputs.engines == 'both' || github.event.label.name == 'editor-ux-acceptance') && '["4.0.4","4.7"]' || '["4.7"]') }}
+        version: ${{ fromJSON((inputs.engines == 'both' || github.event.label.name == 'editor-ux-acceptance') && '["4.0.4","4.7"]' || (inputs.engines == '4.0.4' && '["4.0.4"]' || '["4.7"]')) }}
     env:
       LIBGL_ALWAYS_SOFTWARE: '1'
       GODOT_VERSION: ${{ matrix.version }}
